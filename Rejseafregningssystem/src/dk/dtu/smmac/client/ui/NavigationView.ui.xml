@@ -1,0 +1,19 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+	
+	</ui:style>
+		
+	<g:VerticalPanel>
+		<g:Button text="Mine opgaver" ui:field="opgaver"/>
+		<g:Button text="Dokumentetarkiv" ui:field="arkiv"/>
+		<g:Button ui:field="rapporter" text="Rapporter"/>
+		<g:Button text="Mine oplysninger" ui:field="oplysninger"/>
+		<g:Button text="Indstillinger" ui:field="indstillinger"/>
+		<g:Button ui:field="links" text="Intranet link"/>
+		<g:Button text="Hjælp" ui:field="hjælp"/>
+		
+	</g:VerticalPanel>
+
+</ui:UiBinder> 

@@ -23,6 +23,7 @@
   <entry-point class='dk.dtu.smmac.client.Rejseafregningssystem'/>
 
   <!-- Specify the paths for translatable code                    -->
+  <source path='logik'/>
   <source path='client'/>
   <source path='shared'/>
 

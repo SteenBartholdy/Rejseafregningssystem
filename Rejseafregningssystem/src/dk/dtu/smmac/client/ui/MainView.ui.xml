@@ -1,0 +1,21 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+	
+	</ui:style>
+	
+	<g:DockLayoutPanel unit="PX" ui:field="layoutPanel">
+		<g:north size="50">
+			<g:DeckLayoutPanel ui:field="topPanel" />
+		</g:north>
+		<g:west size="150">
+			<g:DeckLayoutPanel ui:field="contentPanel" />
+		</g:west>
+		<g:center>
+			<g:DeckLayoutPanel ui:field="navigationPanel" />
+		</g:center>
+	</g:DockLayoutPanel>
+
+
+</ui:UiBinder> 
