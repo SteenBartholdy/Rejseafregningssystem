@@ -31,12 +31,12 @@ CREATE TABLE Ansatte
 	Afdeling varchar(100),
 	Postnummer int(4),
 	Fornavn varchar(50) NOT NULL,
-	Anviser tinyint,
-	Godkender tinyint,
+	Anviser tinyint NOT NULL,
+	Godkender tinyint NOT NULL,
 	Efternavn varchar(50) NOT NULL,
 	Adresse varchar(100),
 	Telefon int(20),
-	Email varchar(100),
+	Email varchar(100) NOT NULL,
 	PRIMARY KEY (Id)
 );
 
@@ -93,28 +93,28 @@ CREATE TABLE Regninger
 CREATE TABLE Rejseafregning
 (
 	Nummer int(10) NOT NULL,
-	Projekt varchar(50),
+	Projekt varchar(50) NOT NULL,
 	Id int NOT NULL,
-	Opgave varchar(50),
+	Opgave varchar(50) NOT NULL,
 	PRIMARY KEY (Nummer)
 );
 
 
 CREATE TABLE RejseDag
 (
-	Starttid int(4),
-	Sluttid int(4),
-	Byen varchar(50),
-	Land varchar(30),
-	Dato int(4),
-	RejseFormaal varchar(30),
+	Starttid int(4) NOT NULL,
+	Sluttid int(4) NOT NULL,
+	Byen varchar(50) NOT NULL,
+	Land varchar(30) NOT NULL,
+	Dato int(4) NOT NULL,
+	RejseFormaal varchar(30) NOT NULL,
 	Forklaring varchar(1000),
-	Nattilaeg tinyint,
-	Morgenmad tinyint,
-	Frokost tinyint,
-	Middag tinyint,
-	Refunderes tinyint,
-	RejseAfbrudt tinyint,
+	Nattilaeg tinyint NOT NULL,
+	Morgenmad tinyint NOT NULL,
+	Frokost tinyint NOT NULL,
+	Middag tinyint NOT NULL,
+	Refunderes tinyint NOT NULL,
+	RejseAfbrudt tinyint NOT NULL,
 	Nummer int(10) NOT NULL
 );
 
