@@ -6,13 +6,13 @@
 	</ui:style>
 		
 	<g:VerticalPanel>
-		<g:Button text="Mine opgaver" ui:field="opgaver"/>
-		<g:Button text="Dokumentetarkiv" ui:field="arkiv"/>
-		<g:Button ui:field="rapporter" text="Rapporter"/>
-		<g:Button text="Mine oplysninger" ui:field="oplysninger"/>
-		<g:Button text="Indstillinger" ui:field="indstillinger"/>
-		<g:Button ui:field="links" text="Intranet link"/>
-		<g:Button text="Hjælp" ui:field="hjælp"/>
+		<g:Anchor text="Mine opgaver" ui:field="opgaver" styleName="spacing"/>
+		<g:Anchor text="Dokumentetarkiv" ui:field="arkiv" styleName="spacing"/>
+		<g:Anchor ui:field="rapporter" text="Rapporter" styleName="spacing"/>
+		<g:Anchor text="Mine oplysninger" ui:field="oplysninger" styleName="spacing"/>
+		<g:Anchor text="Indstillinger" ui:field="indstillinger" styleName="spacing"/>
+		<g:Anchor ui:field="links" text="Intranet link" styleName="spacing"/>
+		<g:Anchor text="Hjælp" ui:field="hjælp" styleName="spacing"/>
 		
 	</g:VerticalPanel>
 

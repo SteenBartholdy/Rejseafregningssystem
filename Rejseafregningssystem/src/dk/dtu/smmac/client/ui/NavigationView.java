@@ -3,7 +3,7 @@ package dk.dtu.smmac.client.ui;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -15,19 +15,19 @@ public class NavigationView extends Composite {
 	}
 	
 	@UiField
-	Button opgaver;
+	Anchor opgaver;
 	@UiField
-	Button arkiv;
+	Anchor arkiv;
 	@UiField
-	Button rapporter;
+	Anchor rapporter;
 	@UiField
-	Button oplysninger;
+	Anchor oplysninger;
 	@UiField
-	Button indstillinger;
+	Anchor indstillinger;
 	@UiField
-	Button links;
+	Anchor links;
 	@UiField
-	Button hjælp;
+	Anchor hjælp;
 
 	public NavigationView() {
 		initWidget(uiBinder.createAndBindUi(this));

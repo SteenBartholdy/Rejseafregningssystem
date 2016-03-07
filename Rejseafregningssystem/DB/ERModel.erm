@@ -10,7 +10,7 @@
 		<right_margin>30</right_margin>
 	</page_setting>
 	<category_index>0</category_index>
-	<zoom>1.0</zoom>
+	<zoom>0.75</zoom>
 	<x>0</x>
 	<y>0</y>
 	<default_color>
@@ -41,11 +41,11 @@
 		<suspend_validator>false</suspend_validator>
 		<export_setting>
 			<export_ddl_setting>
-				<output_path></output_path>
-				<encoding></encoding>
-				<line_feed></line_feed>
+				<output_path>DB\ERModel.sql</output_path>
+				<encoding>UTF-8</encoding>
+				<line_feed>CR+LF</line_feed>
 				<is_open_after_saved>true</is_open_after_saved>
-				<environment_id>null</environment_id>
+				<environment_id>0</environment_id>
 				<category_id>null</category_id>
 				<ddl_target>
 					<create_comment>true</create_comment>
@@ -135,7 +135,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2016-02-22 16:30:53</creation_date>
-			<updated_date>2016-03-06 21:25:14</updated_date>
+			<updated_date>2016-03-07 13:26:58</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>

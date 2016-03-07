@@ -24,9 +24,9 @@ public class MainView extends Composite {
 	@UiField
 	DeckLayoutPanel topPanel;
 	
-	LoginTopView login;
+	private LoginTopView login;
 	
-	NavigationView nav;
+	private NavigationView nav;
 
 
 	private HTML emptyView;
@@ -38,8 +38,8 @@ public class MainView extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 
 		layoutPanel.getWidgetContainerElement(contentPanel).getStyle().setOverflowY(Overflow.AUTO);
-
-		emptyView = new HTML("");
+		
+		emptyView = new HTML("looooooool");
 
 		login = new LoginTopView();
 		nav = new NavigationView();
@@ -48,8 +48,12 @@ public class MainView extends Composite {
 		topPanel.add(login);
 
 		navigationPanel.add(nav);
+		
+		contentPanel.add(emptyView);
 
 		showContentWidget(emptyView);
+		navigationPanel.showWidget(nav);
+		topPanel.showWidget(login);
 	}
 
 	private void showContentWidget(Widget w) {

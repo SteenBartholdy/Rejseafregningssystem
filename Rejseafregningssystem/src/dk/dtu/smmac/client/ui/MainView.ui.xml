@@ -4,17 +4,18 @@
 	<ui:style>
 	
 	</ui:style>
-	
-	<g:DockLayoutPanel unit="PX" ui:field="layoutPanel">
+
+	<g:DockLayoutPanel unit="PX" ui:field="layoutPanel" styleName="docklayout-panel">
 		<g:north size="50">
 			<g:DeckLayoutPanel ui:field="topPanel" />
 		</g:north>
-		<g:west size="150">
-			<g:DeckLayoutPanel ui:field="contentPanel" />
-		</g:west>
 		<g:center>
-			<g:DeckLayoutPanel ui:field="navigationPanel" />
+			<g:DeckLayoutPanel ui:field="contentPanel" />
 		</g:center>
+		<g:west size="150">
+			<g:DeckLayoutPanel ui:field="navigationPanel" />
+		</g:west>
+
 	</g:DockLayoutPanel>
 
 
