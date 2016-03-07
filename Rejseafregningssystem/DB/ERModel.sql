@@ -52,7 +52,7 @@ CREATE TABLE Bilag
 CREATE TABLE Byer
 (
 	Postnummer int(4) NOT NULL,
-	By varchar(50),
+	Byen varchar(50),
 	PRIMARY KEY (Postnummer)
 );
 
@@ -95,7 +95,7 @@ CREATE TABLE Rejseafregning
 	Nummer int(10) NOT NULL,
 	Projekt varchar(50),
 	Id int NOT NULL,
-	Opgave ,
+	Opgave varchar(50),
 	PRIMARY KEY (Nummer)
 );
 
@@ -104,7 +104,7 @@ CREATE TABLE RejseDag
 (
 	Starttid int(4),
 	Sluttid int(4),
-	By varchar(50),
+	Byen varchar(50),
 	Land varchar(30),
 	Dato int(4),
 	RejseFormaal varchar(30),
