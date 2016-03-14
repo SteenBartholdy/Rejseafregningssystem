@@ -1,4 +1,4 @@
-package dk.dtu.smmac.server;
+package dk.dtu.smmac.client;
 
 public interface LoginServiceAsync {
 

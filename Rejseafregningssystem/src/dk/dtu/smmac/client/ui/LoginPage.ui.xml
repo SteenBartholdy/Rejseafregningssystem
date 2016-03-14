@@ -1,0 +1,14 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+	
+	</ui:style>
+	<g:VerticalPanel>
+		<g:Label>Brugernavn:</g:Label>
+		<g:TextBox></g:TextBox>
+		<g:Label>Password:</g:Label>
+		<g:PasswordTextBox></g:PasswordTextBox>
+		<g:Button>Login</g:Button>
+	</g:VerticalPanel>
+</ui:UiBinder> 
