@@ -8,11 +8,12 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
 public class NavigationView extends Composite {
-
+	
 	private static NavigationViewUiBinder uiBinder = GWT.create(NavigationViewUiBinder.class);
 
 	interface NavigationViewUiBinder extends UiBinder<Widget, NavigationView> {
 	}
+	
 	
 	@UiField
 	Anchor opgaver;
@@ -28,11 +29,11 @@ public class NavigationView extends Composite {
 	Anchor links;
 	@UiField
 	Anchor hjælp;
+	
+
 
 	public NavigationView() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
-
-	
 }
