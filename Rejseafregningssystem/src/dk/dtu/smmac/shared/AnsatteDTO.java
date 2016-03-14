@@ -7,7 +7,7 @@ public class AnsatteDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private int ID, postnummer, telefon;
-	private String fornavn, efternavn, afdeling, adresse, email;
+	private String fornavn, efternavn, afdeling, vejnavn, husnr, etage, doer, email;
 	private boolean anviser, godkender;
 	
 	public AnsatteDTO(){
@@ -24,7 +24,7 @@ public class AnsatteDTO implements Serializable {
 		this.godkender = godkender;
 	}
 	
-	public AnsatteDTO(int ID, int postnr, int tlf, String fornavn, String efternavn, String afd, String add, String email, boolean anviser, boolean godkender){
+	public AnsatteDTO(int ID, int postnr, int tlf, String fornavn, String efternavn, String afd, String vejnavn, String husnr, String etage, String doer, String email, boolean anviser, boolean godkender){
 		super();
 		this.ID = ID;
 		this.postnummer = postnr;
@@ -32,7 +32,10 @@ public class AnsatteDTO implements Serializable {
 		this.fornavn = fornavn;
 		this.efternavn = efternavn;
 		this.afdeling = afd;
-		this.adresse = add;
+		this.vejnavn = vejnavn;
+		this.husnr = husnr;
+		this.etage = etage;
+		this.doer = doer;
 		this.email = email;
 		this.anviser = anviser;
 		this.godkender = godkender;
@@ -44,6 +47,14 @@ public class AnsatteDTO implements Serializable {
 	
 	public int getPostnr(){
 		return this.postnummer;
+	}
+	
+	public void setTlf(int tlf){
+		this.telefon = tlf;
+	}
+	
+	public int getTlf(){
+		return this.telefon;
 	}
 
 	public void setFornavn(String fornavn){
@@ -61,6 +72,74 @@ public class AnsatteDTO implements Serializable {
 	public String getEfternavn(){
 		return this.efternavn;
 	}
+	
+	public void setAfdeling(String afd){
+		this.afdeling = afd;
+	}
+	
+	public String getAfdeling(){
+		return this.afdeling;
+	}
+	
+	public void setVejnavn(String vej){
+		this.vejnavn = vej;
+	}
+	
+	public String getVejnavn(){
+		return this.vejnavn;
+	}
+	
+	public void setHusnr(String husnr){
+		this.husnr = husnr;
+	}
+	
+	public String gethusnr(){
+		return this.husnr;
+	}
+	
+	public void setEtage(String etage){
+		this.etage = etage;
+	}
+	
+	public String getEtage(){
+		return this.etage;
+	}
+	
+	public void setDoer(String doer){
+		this.doer = doer;
+	}
+	
+	public String getDoer(){
+		return this.doer;
+	}
+	
+	public void setEmail(String email){
+		this.email = email;
+	}
+	
+	public String getEmail(){
+		return this.email;
+	}
+	
+	public void setAnviser(boolean anviser){
+		this.anviser = anviser;
+	}
+	
+	public boolean getAnviser(){
+		return this.anviser;
+	}
+	
+	public void setGodkender(boolean godkender){
+		this.godkender = godkender;
+	}
+	
+	public boolean getGodkender(){
+		return this.godkender;
+	}
+	
+	
+	
+	
 	
 	
 	
