@@ -4,6 +4,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DeckLayoutPanel;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
@@ -24,9 +25,11 @@ public class MainView extends Composite {
 	@UiField
 	DeckLayoutPanel topPanel;
 	
-	private LoginTopView login;
+	private LoginTopView loginTopView;
 	
 	private NavigationView nav;
+	
+	private LoginPage loginPage;
 
 
 	private HTML emptyView;
@@ -41,11 +44,12 @@ public class MainView extends Composite {
 		
 		emptyView = new HTML("looooooool");
 
-		login = new LoginTopView();
+		loginTopView = new LoginTopView();
 		nav = new NavigationView();
+		loginPage = new LoginPage();
 
 
-		topPanel.add(login);
+		topPanel.add(loginTopView);
 
 		navigationPanel.add(nav);
 		
@@ -53,11 +57,22 @@ public class MainView extends Composite {
 
 		showContentWidget(emptyView);
 		navigationPanel.showWidget(nav);
-		topPanel.showWidget(login);
+		topPanel.showWidget(loginTopView);
 	}
 
-	private void showContentWidget(Widget w) {
+	public void showContentWidget(Widget w) {
 		contentPanel.showWidget(w);
+	}
+	
+	public void showLoginPage()
+	{
+		contentPanel.showWidget(loginPage);
+		
+	}
+	
+	public LoginTopView getLoginTopView()
+	{
+		return loginTopView;
 	}
 
 

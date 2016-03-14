@@ -12,7 +12,7 @@ h1 {
 
 
 .alignRight {
-  float: right;
+  float: right !important;
   padding: 5px;
 }
 
@@ -25,5 +25,11 @@ h1 {
 }
 
 .spacing {
-	padding-bottom: 5px: 
+	padding: 5px;
+	color: black;
+	margin-bottom: 10px;
+}
+
+.borderColor {
+	border: 1px solid black;
 }

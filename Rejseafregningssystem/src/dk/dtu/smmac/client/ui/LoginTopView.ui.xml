@@ -4,9 +4,11 @@
 	<ui:style>
 	
 	</ui:style>
+	
 	<g:HorizontalPanel styleName="header">
 		<g:Cell verticalAlignment="ALIGN_BOTTOM">
 			<g:Anchor text="Login" ui:field="login" styleName="alignRight" />
 		</g:Cell>
 	</g:HorizontalPanel>
+	
 </ui:UiBinder> 

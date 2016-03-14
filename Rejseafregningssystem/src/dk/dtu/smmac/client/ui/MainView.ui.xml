@@ -6,14 +6,14 @@
 	</ui:style>
 
 	<g:DockLayoutPanel unit="PX" ui:field="layoutPanel" styleName="docklayout-panel">
-		<g:north size="50">
-			<g:DeckLayoutPanel ui:field="topPanel" />
+		<g:north size="75">
+			<g:DeckLayoutPanel ui:field="topPanel" styleName="borderColor"/>
 		</g:north>
 		<g:center>
-			<g:DeckLayoutPanel ui:field="contentPanel" />
+			<g:DeckLayoutPanel ui:field="contentPanel" styleName="borderColor"/>
 		</g:center>
 		<g:west size="150">
-			<g:DeckLayoutPanel ui:field="navigationPanel" />
+			<g:DeckLayoutPanel ui:field="navigationPanel" styleName="borderColor"/>
 		</g:west>
 
 	</g:DockLayoutPanel>
