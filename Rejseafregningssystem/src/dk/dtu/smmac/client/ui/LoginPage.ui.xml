@@ -6,9 +6,9 @@
 	</ui:style>
 	<g:VerticalPanel styleName="padding">
 		<g:Label styleName="paddingButtom">Brugernavn:</g:Label>
-		<g:TextBox styleName="paddingButtom" ui:field="brugernavn"></g:TextBox>
+		<g:TextBox styleName="marginButtom" ui:field="brugernavn"></g:TextBox>
 		<g:Label styleName="paddingButtom">Password:</g:Label>
-		<g:PasswordTextBox styleName="paddingButtom"
+		<g:PasswordTextBox styleName="marginButtom"
 			ui:field="password"></g:PasswordTextBox>
 		<g:HorizontalPanel styleName="paddingTop">
 			<g:Button styleName="marginRight" ui:field="login" height="30px">Login</g:Button>

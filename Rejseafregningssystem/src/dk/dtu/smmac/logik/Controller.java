@@ -28,6 +28,7 @@ public class Controller {
 		// Laver handler
 		loginTopView.getLoginAnchor().addClickHandler(new ShowLoginHandler());
 		loginPage.getLoginButton().addClickHandler(new LoginHandler());
+		loginPage.getGlemtPasswordButton().addClickHandler(new GlemtLoginHandler());
 		
 		RootLayoutPanel.get().add(mainView);
 	}
@@ -56,5 +57,17 @@ public class Controller {
 					+ "\n" + "Dit indtastede password er: " + loginPage.getPassword());
 			
 		}
+	}
+	
+	private class GlemtLoginHandler implements ClickHandler
+	{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			//Her skal vi bruge serveren
+			Window.alert("Ej hvor er du bare dum at du har glemt dit password!!!!");
+			
+		}
+		
 	}
 }

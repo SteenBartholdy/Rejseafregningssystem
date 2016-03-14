@@ -19,6 +19,8 @@ public class LoginPage extends Composite {
 	@UiField
 	Button login;
 	@UiField
+	Button glemtPassword;
+	@UiField
 	TextBox brugernavn;
 	@UiField 
 	PasswordTextBox password;
@@ -29,6 +31,11 @@ public class LoginPage extends Composite {
 
 	public Button getLoginButton(){
 		return login;
+	}
+	
+	public Button getGlemtPasswordButton()
+	{
+		return glemtPassword;
 	}
 	
 	public String getBrugernavn()
