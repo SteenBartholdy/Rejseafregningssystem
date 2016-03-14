@@ -34,9 +34,12 @@ CREATE TABLE Ansatte
 	Anviser tinyint NOT NULL,
 	Godkender tinyint NOT NULL,
 	Efternavn varchar(50) NOT NULL,
-	Adresse varchar(100),
 	Telefon int(20),
 	Email varchar(100) NOT NULL,
+	vejanvn varchar(50),
+	Husnr varchar(10),
+	Etage varchar(10),
+	Doer varbinary(10),
 	PRIMARY KEY (Id)
 );
 
