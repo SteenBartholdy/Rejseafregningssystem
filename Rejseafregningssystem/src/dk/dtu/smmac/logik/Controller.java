@@ -20,7 +20,7 @@ public class Controller {
 		
 		loginTopView = mainView.getLoginTopView();
 		
-		
+
 		loginTopView.getLoginAnchor().addClickHandler(new ShowLoginHandler());
 		
 		RootLayoutPanel.get().add(mainView);

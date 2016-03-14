@@ -54,6 +54,7 @@ public class MainView extends Composite {
 		navigationPanel.add(nav);
 		
 		contentPanel.add(emptyView);
+		contentPanel.add(loginPage);
 
 		showContentWidget(emptyView);
 		navigationPanel.showWidget(nav);
