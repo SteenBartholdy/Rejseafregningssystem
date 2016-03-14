@@ -48,13 +48,16 @@ public class MainView extends Composite {
 		nav = new NavigationView();
 		loginPage = new LoginPage();
 
-
+		//Tilføjer til top bunken
 		topPanel.add(loginTopView);
-
+		
+		//Tilføjer til navigation bunken
 		navigationPanel.add(nav);
 		
+		//Tilføjer til content bunken
 		contentPanel.add(emptyView);
 		contentPanel.add(loginPage);
+		
 
 		showContentWidget(emptyView);
 		navigationPanel.showWidget(nav);
@@ -74,6 +77,11 @@ public class MainView extends Composite {
 	public LoginTopView getLoginTopView()
 	{
 		return loginTopView;
+	}
+	
+	public LoginPage getLoginPage()
+	{
+		return loginPage;
 	}
 
 

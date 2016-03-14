@@ -4,11 +4,11 @@
 	<ui:style>
 	
 	</ui:style>
-	<g:VerticalPanel>
-		<g:Label>Brugernavn:</g:Label>
-		<g:TextBox></g:TextBox>
-		<g:Label>Password:</g:Label>
-		<g:PasswordTextBox></g:PasswordTextBox>
-		<g:Button>Login</g:Button>
+	<g:VerticalPanel styleName="padding">
+		<g:Label styleName="paddingButtom">Brugernavn:</g:Label>
+		<g:TextBox styleName="paddingButtom" ui:field="brugernavn"></g:TextBox>
+		<g:Label styleName="paddingButtom">Password:</g:Label>
+		<g:PasswordTextBox styleName="paddingButtom" ui:field="password"></g:PasswordTextBox>
+		<g:Button styleName="paddingTop" ui:field="login">Login</g:Button>
 	</g:VerticalPanel>
 </ui:UiBinder> 

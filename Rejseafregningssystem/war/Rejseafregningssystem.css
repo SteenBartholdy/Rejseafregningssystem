@@ -33,3 +33,15 @@ h1 {
 .borderColor {
 	border: 1px solid black;
 }
+
+.padding {
+	padding: 10px;
+}
+
+.paddingButtom {
+	padding-bottom: 5px;
+}
+
+.paddingTop {
+	padding-top: 5px;
+}
