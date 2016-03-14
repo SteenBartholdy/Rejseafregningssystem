@@ -8,7 +8,11 @@
 		<g:Label styleName="paddingButtom">Brugernavn:</g:Label>
 		<g:TextBox styleName="paddingButtom" ui:field="brugernavn"></g:TextBox>
 		<g:Label styleName="paddingButtom">Password:</g:Label>
-		<g:PasswordTextBox styleName="paddingButtom" ui:field="password"></g:PasswordTextBox>
-		<g:Button styleName="paddingTop" ui:field="login">Login</g:Button>
+		<g:PasswordTextBox styleName="paddingButtom"
+			ui:field="password"></g:PasswordTextBox>
+		<g:HorizontalPanel styleName="paddingTop">
+			<g:Button styleName="marginRight" ui:field="login" height="30px">Login</g:Button>
+			<g:Button ui:field="glemtPassword" height="30px">Glemt password</g:Button>
+		</g:HorizontalPanel>
 	</g:VerticalPanel>
 </ui:UiBinder> 
