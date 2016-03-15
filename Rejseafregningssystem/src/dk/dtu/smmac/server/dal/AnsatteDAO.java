@@ -15,9 +15,9 @@ import dk.dtu.smmac.shared.AnsatteDTO;
 
 public class AnsatteDAO extends RemoteServiceServlet implements AnsatteService {
 
-	private static final String URL = "";
-	private static final String USERNAME = "";
-	private static final String PASSWORD = "";
+	private static final String URL = "jdbc:mysql://mysql-tem.c7btx7pemwav.eu-central-1.rds.amazonaws.com:3306/TEM";
+	private static final String USERNAME = "SMMAC";
+	private static final String PASSWORD = "MsU-7dH-ZHQ-KyQ";
 
 	private Connection connection = null;
 	
