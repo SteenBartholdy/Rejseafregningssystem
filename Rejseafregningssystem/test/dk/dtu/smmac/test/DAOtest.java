@@ -11,7 +11,7 @@ public class DAOtest {
 		AnsatteDAO DAO = new AnsatteDAO();
 		List<AnsatteDTO> list = DAO.getAnsatte();
 		
-		System.out.println(list.get(0).getEfternavn());
+		System.out.println(list.get(1).getEfternavn());
 	}
 	
 }
