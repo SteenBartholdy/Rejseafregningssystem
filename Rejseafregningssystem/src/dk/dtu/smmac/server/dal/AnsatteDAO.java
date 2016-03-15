@@ -30,7 +30,7 @@ public class AnsatteDAO extends RemoteServiceServlet implements AnsatteService {
 			connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 			
 			//Laver query, der henter all ansatte
-			getAnsatteStmt = connection.prepareStatement("SELECT * FROM Ansatte");
+			getAnsatteStmt = connection.prepareStatement("SELECT * FROM Ansatte;");
 			
 			//Laver query, der opdaterer en ansat
 			updateAnsatStmt = connection.prepareStatement("");

@@ -1,6 +1,5 @@
 package dk.dtu.smmac.test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import dk.dtu.smmac.server.dal.AnsatteDAO;
