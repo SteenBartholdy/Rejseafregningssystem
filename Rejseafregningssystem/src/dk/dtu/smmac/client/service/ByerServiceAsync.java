@@ -1,4 +1,4 @@
-package dk.dtu.smmac.client;
+package dk.dtu.smmac.client.service;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import dk.dtu.smmac.client.ByerService;
+import dk.dtu.smmac.client.service.ByerService;
 
 public class ByerDAO extends RemoteServiceServlet implements ByerService {
 
