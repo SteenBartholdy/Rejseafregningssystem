@@ -28,8 +28,9 @@ public class AnsatteDAO extends RemoteServiceServlet implements AnsatteService {
 
 	public AnsatteDAO() throws Exception {
 		try {
+			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-
+			
 			//Laver query, der henter all ansatte
 			getAnsatteStmt = connection.prepareStatement("SELECT * FROM Ansatte;");
 
@@ -47,7 +48,7 @@ public class AnsatteDAO extends RemoteServiceServlet implements AnsatteService {
 			deleteAnsatStmt = connection.prepareStatement("DELETE FROM Ansatte WHERE Id = ?;");
 
 		} catch (SQLException sqlE) {
-
+			System.out.println(sqlE.getMessage());
 		}
 	}
 
