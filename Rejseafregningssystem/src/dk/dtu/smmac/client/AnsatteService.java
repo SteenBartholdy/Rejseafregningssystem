@@ -13,5 +13,6 @@ public interface AnsatteService {
 	public void updateAnsat(AnsatDTO ansat) throws Exception;
 	public void createAnsat(AnsatDTO ansat) throws Exception;
 	public void deleteAnsat(AnsatDTO ansat) throws Exception;
+	public int getSize() throws Exception;
 	
 }

@@ -12,5 +12,6 @@ public interface AnsatteServiceAsync {
 	void updateAnsat(AnsatDTO ansat, AsyncCallback<Void> callback);
 	void createAnsat(AnsatDTO ansat, AsyncCallback<Void> callback);
 	void deleteAnsat(AnsatDTO ansat, AsyncCallback<Void> callback);
+	void getSize(AsyncCallback<Integer> callback);
 	
 }

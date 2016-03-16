@@ -25,6 +25,7 @@ public class AnsatteDAO extends RemoteServiceServlet implements AnsatteService {
 	private PreparedStatement updateAnsatStmt = null;
 	private PreparedStatement createAnsatStmt = null;
 	private PreparedStatement deleteAnsatStmt = null;
+	private PreparedStatement getSizeStmt = null;
 
 	public AnsatteDAO() throws Exception {
 		try {
@@ -47,6 +48,9 @@ public class AnsatteDAO extends RemoteServiceServlet implements AnsatteService {
 			//Laver query, der sletter en ansat
 			deleteAnsatStmt = connection.prepareStatement("DELETE FROM Ansatte WHERE Id = ?;");
 
+			//Laver query, der finder størrelsen på tabellen
+			getSizeStmt = connection.prepareStatement("SELECT COUNT(*) FROM Ansatte;");
+			
 		} catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
 		}
@@ -89,7 +93,8 @@ public class AnsatteDAO extends RemoteServiceServlet implements AnsatteService {
 			} 
 			catch (SQLException sqlE) {
 				System.out.println(sqlE.getMessage());
-			} 
+				connection.close();
+			}
 		} 
 
 		return list;
@@ -161,6 +166,21 @@ public class AnsatteDAO extends RemoteServiceServlet implements AnsatteService {
 		catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
 		} 
+	}
+
+	@Override
+	public int getSize() throws Exception {
+		ResultSet resultSet = null;
+		
+		try {
+			resultSet = getSizeStmt.executeQuery();
+			resultSet.next();
+			return resultSet.getInt(1);
+		} catch (SQLException sqlE) {
+			System.out.println(sqlE.getMessage());
+		}
+		
+		return 0;
 	}
 
 }
