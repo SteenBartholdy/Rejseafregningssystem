@@ -10,7 +10,7 @@ public class DAOtest {
 	public static void main(String[] args) throws Exception {
 		AnsatteDAO DAO = new AnsatteDAO();
 		
-		DAO.createAnsat(new AnsatDTO(DAO.getSize() + 1, 2400, "Christoffer", "Svendsen", "s145089@student.dtu.dk", true, true));
+		//DAO.createAnsat(new AnsatDTO(DAO.getSize() + 1, 2400, "Christoffer", "Svendsen", "s145089@student.dtu.dk", true, true));
 		
 		List<AnsatDTO> list = DAO.getAnsatte();
 		
