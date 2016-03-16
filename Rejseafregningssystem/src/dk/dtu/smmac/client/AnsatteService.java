@@ -4,13 +4,14 @@ import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-import dk.dtu.smmac.shared.AnsatteDTO;
+import dk.dtu.smmac.shared.AnsatDTO;
 
 @RemoteServiceRelativePath("ansatteService")
 public interface AnsatteService {
 
-	public List<AnsatteDTO> getAnsatte() throws Exception;
-	public void updateAnsat(AnsatteDTO ansat) throws Exception;
-	public void createAnsat(AnsatteDTO ansat) throws Exception;
+	public List<AnsatDTO> getAnsatte() throws Exception;
+	public void updateAnsat(AnsatDTO ansat) throws Exception;
+	public void createAnsat(AnsatDTO ansat) throws Exception;
+	public void deleteAnsat(AnsatDTO ansat) throws Exception;
 	
 }

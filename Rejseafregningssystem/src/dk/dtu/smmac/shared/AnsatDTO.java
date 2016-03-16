@@ -2,7 +2,7 @@ package dk.dtu.smmac.shared;
 
 import java.io.Serializable;
 
-public class AnsatteDTO implements Serializable {
+public class AnsatDTO implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -10,13 +10,14 @@ public class AnsatteDTO implements Serializable {
 	private String fornavn, efternavn, afdeling, vejnavn, husnr, etage, doer, email;
 	private boolean anviser, godkender;
 	
-	public AnsatteDTO(){
+	public AnsatDTO(){
 		
 	}
 	
-	public AnsatteDTO(int ID, String fornavn, String efternavn, String email, boolean anviser, boolean godkender){
+	public AnsatDTO(int ID, int postnr, String fornavn, String efternavn, String email, boolean anviser, boolean godkender){
 		super();
 		this.ID = ID;
+		this.postnummer = postnr;
 		this.fornavn = fornavn;
 		this.efternavn = efternavn;
 		this.email = email;
@@ -24,7 +25,7 @@ public class AnsatteDTO implements Serializable {
 		this.godkender = godkender;
 	}
 	
-	public AnsatteDTO(int ID, int postnr, int tlf, String fornavn, String efternavn, String afd, String vejnavn, String husnr, String etage, String doer, String email, boolean anviser, boolean godkender){
+	public AnsatDTO(int ID, int postnr, int tlf, String fornavn, String efternavn, String afd, String vejnavn, String husnr, String etage, String doer, String email, boolean anviser, boolean godkender){
 		super();
 		this.ID = ID;
 		this.postnummer = postnr;
@@ -137,7 +138,9 @@ public class AnsatteDTO implements Serializable {
 		return this.godkender;
 	}
 	
-	
+	public int getID() {
+		return this.ID;
+	}
 	
 	
 	
