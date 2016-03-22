@@ -53,3 +53,8 @@ h1 {
 .marginButtom {
 	margin-bottom: 10px;
 }
+
+.invisibleButton
+{
+	visibility:hidden;
+}

@@ -12,7 +12,8 @@
 			ui:field="password"></g:PasswordTextBox>
 		<g:HorizontalPanel styleName="paddingTop">
 			<g:Button styleName="marginRight" ui:field="login" height="30px">Login</g:Button>
-			<g:Button ui:field="glemtPassword" height="30px">Glemt password</g:Button>
+			<g:Button ui:field="glemtPassword" height="30px" styleName="marginRight">Glemt password</g:Button>
+			<g:Button height="30px" styleName="invisibleButton">Usynlig knap</g:Button>
 		</g:HorizontalPanel>
 	</g:VerticalPanel>
 </ui:UiBinder> 
