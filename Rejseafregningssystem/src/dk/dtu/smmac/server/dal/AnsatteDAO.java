@@ -15,10 +15,6 @@ import dk.dtu.smmac.shared.AnsatDTO;
 
 public class AnsatteDAO extends RemoteServiceServlet implements AnsatteService {
 
-	private static final String URL = "jdbc:mysql://mysql-tem.cxjp73j45toh.eu-west-1.rds.amazonaws.com:3306/TEM";
-	private static final String USERNAME = "SMMAC";
-	private static final String PASSWORD = "MsU-7dH-ZHQ-KyQ";
-
 	private Connection connection = null;
 
 	private PreparedStatement getAnsatteStmt = null;
@@ -30,7 +26,7 @@ public class AnsatteDAO extends RemoteServiceServlet implements AnsatteService {
 	public AnsatteDAO() throws Exception {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+			connection = DriverManager.getConnection(DAO.URL, DAO.USERNAME, DAO.PASSWORD);
 			
 			//Laver query, der henter all ansatte
 			getAnsatteStmt = connection.prepareStatement("SELECT * FROM Ansatte;");

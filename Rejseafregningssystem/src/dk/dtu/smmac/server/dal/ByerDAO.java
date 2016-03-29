@@ -12,10 +12,6 @@ import dk.dtu.smmac.client.service.ByerService;
 
 public class ByerDAO extends RemoteServiceServlet implements ByerService {
 
-	private static final String URL = "jdbc:mysql://mysql-tem.cxjp73j45toh.eu-west-1.rds.amazonaws.com:3306/TEM";
-	private static final String USERNAME = "SMMAC";
-	private static final String PASSWORD = "MsU-7dH-ZHQ-KyQ";
-
 	private Connection connection = null;
 	
 	private PreparedStatement createByStmt = null;
@@ -24,7 +20,7 @@ public class ByerDAO extends RemoteServiceServlet implements ByerService {
 	public ByerDAO() throws Exception {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+			connection = DriverManager.getConnection(DAO.URL, DAO.USERNAME, DAO.PASSWORD);
 			
 			//Laver query, der opretter en by
 			createByStmt = connection.prepareStatement("INSERT INTO Byer ( Postnummer, Byen ) VALUES ( ?, ? );");
