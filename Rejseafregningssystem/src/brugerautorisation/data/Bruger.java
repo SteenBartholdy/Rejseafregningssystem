@@ -1,4 +1,4 @@
-package dk.dtu.smmac.client.service;
+package brugerautorisation.data;
 import java.io.*;
 import java.util.HashMap;
 public class Bruger implements Serializable

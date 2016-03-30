@@ -7,12 +7,12 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
-import dk.dtu.smmac.client.service.Bruger;
 import dk.dtu.smmac.client.service.LoginService;
 import dk.dtu.smmac.client.service.LoginServiceAsync;
 import dk.dtu.smmac.client.ui.LoginPage;
 import dk.dtu.smmac.client.ui.LoginTopView;
 import dk.dtu.smmac.client.ui.MainView;
+import brugerautorisation.data.Bruger;
 
 public class Controller {
 
