@@ -12,7 +12,7 @@ import dk.dtu.smmac.client.service.LoginServiceAsync;
 import dk.dtu.smmac.client.ui.LoginPage;
 import dk.dtu.smmac.client.ui.LoginTopView;
 import dk.dtu.smmac.client.ui.MainView;
-import brugerautorisation.data.Bruger;
+import dk.dtu.smmac.shared.Bruger;
 
 public class Controller {
 

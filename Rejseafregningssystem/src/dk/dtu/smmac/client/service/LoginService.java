@@ -2,7 +2,7 @@ package dk.dtu.smmac.client.service;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-import brugerautorisation.data.Bruger;
+import dk.dtu.smmac.shared.Bruger;
 
 @RemoteServiceRelativePath("loginservice")
 public interface LoginService extends java.rmi.Remote {

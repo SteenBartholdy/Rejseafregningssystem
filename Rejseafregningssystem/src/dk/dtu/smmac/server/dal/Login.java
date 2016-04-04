@@ -1,16 +1,16 @@
 package dk.dtu.smmac.server.dal;
 
 import java.rmi.Naming;
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 
-import brugerautorisation.data.Bruger;
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+import dk.dtu.smmac.shared.Bruger;
 import brugerautorisation.transport.rmi.Brugeradmin;
 import dk.dtu.smmac.client.service.LoginService;
 
-public class Login extends UnicastRemoteObject implements LoginService {
+public class Login extends RemoteServiceServlet implements LoginService {
 
-	public Login() throws RemoteException {
+	public Login() throws Exception {
 		super();
 	}
 
