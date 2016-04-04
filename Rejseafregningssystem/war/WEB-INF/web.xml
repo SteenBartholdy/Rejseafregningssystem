@@ -6,8 +6,8 @@
 
 	<!-- Servlets -->
 	<servlet>
-		<servlet-name>loginservlet</servlet-name>
-		<servlet-class>dk.dtu.smmac.server.dal.LoginServiceImpl</servlet-class>
+		<servlet-name>loginservice</servlet-name>
+		<servlet-class>dk.dtu.smmac.server.dal.Login</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>loginservice</servlet-name>
