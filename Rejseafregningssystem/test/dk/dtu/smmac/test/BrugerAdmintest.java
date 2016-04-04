@@ -16,7 +16,7 @@ public class BrugerAdmintest {
 			
 			LoginService login = (LoginService) Naming.lookup("rmi://localhost/Login");
 			
-			Bruger b = login.logIn("s145094", "1q2w3e4r");
+			Bruger b = (Bruger) login.logIn("s145094", "1q2w3e4r");
 			
 			System.out.println(b.brugernavn);
 			
