@@ -4,7 +4,7 @@ import java.rmi.Naming;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import dk.dtu.smmac.shared.Bruger;
+import brugerautorisation.data.Bruger;
 import brugerautorisation.transport.rmi.Brugeradmin;
 import dk.dtu.smmac.client.service.LoginService;
 
