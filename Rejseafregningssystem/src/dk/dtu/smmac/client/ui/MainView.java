@@ -30,6 +30,10 @@ public class MainView extends Composite {
 	private NavigationView nav;
 	
 	private LoginPage loginPage;
+	
+	private Rejseafregning rejseafregningPage;
+	
+	private MainPage mainPage;
 
 
 	private HTML emptyView;
@@ -47,6 +51,8 @@ public class MainView extends Composite {
 		loginTopView = new LoginTopView();
 		nav = new NavigationView();
 		loginPage = new LoginPage();
+		rejseafregningPage = new Rejseafregning();
+		mainPage = new MainPage();
 
 		//Tilføjer til top bunken
 		topPanel.add(loginTopView);
@@ -57,9 +63,11 @@ public class MainView extends Composite {
 		//Tilføjer til content bunken
 		contentPanel.add(emptyView);
 		contentPanel.add(loginPage);
+		contentPanel.add(rejseafregningPage);
+		contentPanel.add(mainPage);
 		
 
-		showContentWidget(emptyView);
+		showContentWidget(mainPage);
 		navigationPanel.showWidget(nav);
 		topPanel.showWidget(loginTopView);
 	}
@@ -84,6 +92,9 @@ public class MainView extends Composite {
 		return loginPage;
 	}
 
-
+	public Rejseafregning getRejseafregningPage()
+	{
+		return rejseafregningPage;
+	}
 
 }

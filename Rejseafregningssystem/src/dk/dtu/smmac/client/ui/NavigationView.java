@@ -36,4 +36,86 @@ public class NavigationView extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
+	
+	public Anchor getOpgaver() {
+		return opgaver;
+	}
+
+
+
+	public void setOpgaver(Anchor opgaver) {
+		this.opgaver = opgaver;
+	}
+
+
+
+	public Anchor getArkiv() {
+		return arkiv;
+	}
+
+
+
+	public void setArkiv(Anchor arkiv) {
+		this.arkiv = arkiv;
+	}
+
+
+
+	public Anchor getRapporter() {
+		return rapporter;
+	}
+
+
+
+	public void setRapporter(Anchor rapporter) {
+		this.rapporter = rapporter;
+	}
+
+
+
+	public Anchor getOplysninger() {
+		return oplysninger;
+	}
+
+
+
+	public void setOplysninger(Anchor oplysninger) {
+		this.oplysninger = oplysninger;
+	}
+
+
+
+	public Anchor getIndstillinger() {
+		return indstillinger;
+	}
+
+
+
+	public void setIndstillinger(Anchor indstillinger) {
+		this.indstillinger = indstillinger;
+	}
+
+
+
+	public Anchor getLinks() {
+		return links;
+	}
+
+
+
+	public void setLinks(Anchor links) {
+		this.links = links;
+	}
+
+
+
+	public Anchor getHjælp() {
+		return hjælp;
+	}
+
+
+
+	public void setHjælp(Anchor hjælp) {
+		this.hjælp = hjælp;
+	}
 }

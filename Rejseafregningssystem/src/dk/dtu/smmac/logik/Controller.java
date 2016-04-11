@@ -11,6 +11,7 @@ import dk.dtu.smmac.client.service.LoginServiceAsync;
 import dk.dtu.smmac.client.ui.LoginPage;
 import dk.dtu.smmac.client.ui.LoginTopView;
 import dk.dtu.smmac.client.ui.MainView;
+import dk.dtu.smmac.client.ui.Rejseafregning;
 
 public class Controller {
 
@@ -19,6 +20,8 @@ public class Controller {
 	private LoginTopView loginTopView;
 	
 	private LoginPage loginPage;
+	
+	private Rejseafregning rejseafregningPage;
 	
 	//private LoginServiceAsync loginService = GWT.create(LoginService.class);
 	
@@ -29,6 +32,8 @@ public class Controller {
 		loginTopView = mainView.getLoginTopView();
 		
 		loginPage = mainView.getLoginPage();
+		
+		rejseafregningPage = mainView.getRejseafregningPage();
 		
 		// Laver handler
 		loginTopView.getLoginAnchor().addClickHandler(new ShowLoginHandler());

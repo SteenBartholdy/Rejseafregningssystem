@@ -5,11 +5,11 @@
 	
 	</ui:style>
 	<g:VerticalPanel>
-		<g:Button>Opret nyt dokument</g:Button>
-		<g:Button>Ikke afsluttet</g:Button>
-		<g:Button>Dokumenter til godkendelse</g:Button>
-		<g:Button>Til anvisning</g:Button>
+		<g:Button text="Opret nyt dokument" ui:field="opret"/>
+		<g:Button text="Ikke afsluttet" ui:field="ikkeAfsluttet"/>
+		<g:Button text="Dokumenter til godkendelse" ui:field="godkendelser"/>
+		<g:Button text="Til anvisning" ui:field="anvisning"/>
 		<g:Label>Beskeder</g:Label>
-		<g:Button>Vis alle beskeder</g:Button>
+		<g:Button text="Vis alle beskeder" ui:field="beskeder"/>
 	</g:VerticalPanel>
 </ui:UiBinder> 
