@@ -5,6 +5,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
+import dk.dtu.smmac.client.ui.Bilag;
 import dk.dtu.smmac.client.ui.LoginPage;
 import dk.dtu.smmac.client.ui.LoginTopView;
 import dk.dtu.smmac.client.ui.MainPage;
@@ -22,6 +23,8 @@ public class Controller {
 	private Rejseafregning rejseafregningPage;
 	
 	private MainPage mainPage;
+	
+	private Bilag bilagPage;
 	
 	//private LoginServiceAsync loginService = GWT.create(LoginService.class);
 	
@@ -42,6 +45,7 @@ public class Controller {
 		loginPage.getLoginButton().addClickHandler(new LoginHandler());
 		loginPage.getGlemtPasswordButton().addClickHandler(new GlemtLoginHandler());
 		mainPage.getOpret().addClickHandler(new ShowRejseafregningHandler());
+		rejseafregningPage.getBilagButton().addClickHandler(new ShowBilagHandler());
 		
 		RootLayoutPanel.get().add(mainView);
 	}
@@ -105,7 +109,17 @@ public class Controller {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			mainView.showRejseafregningPage();
+			mainView.showContentWidget(rejseafregningPage);
+		}
+		
+	}
+	
+	private class ShowBilagHandler implements ClickHandler
+	{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			mainView.showContentWidget(bilagPage);
 		}
 		
 	}

@@ -1,19 +1,16 @@
 /** Add css rules here for your application. */
-
-
 /** Example rules used by the template application (remove for your app) */
 h1 {
-  font-size: 2em;
-  font-weight: bold;
-  color: #777777;
-  margin: 40px 0px 70px;
-  text-align: center;
+	font-size: 2em;
+	font-weight: bold;
+	color: #777777;
+	margin: 40px 0px 70px;
+	text-align: center;
 }
 
-
 .alignRight {
-  float: right !important;
-  padding: 5px;
+	float: right !important;
+	padding: 5px;
 }
 
 .docklayout-panel {
@@ -54,11 +51,18 @@ h1 {
 	margin-bottom: 10px;
 }
 
+.marginTop {
+	margin-top: 10px;
+}
+
 .margin {
 	margin: 10px;
 }
 
-.invisibleButton
-{
-	visibility:hidden;
+.invisibleButton {
+	visibility: hidden;
+}
+
+.anchorStyle {
+	color: black;
 }

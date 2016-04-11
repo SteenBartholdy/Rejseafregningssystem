@@ -1,5 +1,6 @@
 package dk.dtu.smmac.client.ui;
 
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DateLabel;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -14,6 +15,7 @@ public class Rejseafregning extends Composite {
 	private Label date, dateTo, startTimeLabel, endTimeLabel;
 	private DateLabel startDateLabel, endDateLabel;
 	private ListBox startTime, endTime;
+	private Anchor bilag;
 	
 	public Rejseafregning()
 	{
@@ -31,11 +33,20 @@ public class Rejseafregning extends Composite {
 		startTimeLabel = new Label("Starttid:");
 		endTimeLabel = new Label("Sluttid:");
 		
+		bilag = new Anchor();
+		bilag.setText("Tilføj bilag");
+		bilag.setStyleName("anchorStyle");
+		
 		//Skal have en changeHandler
 		startTime = new ListBox();
 		endTime = new ListBox();
 		
-		for(int i = 0; i<24; i++)
+		for(int i = 0; i<10; i++)
+		{
+			startTime.addItem("0" + i + ":00");
+			endTime.addItem("0" + i + ":00");
+		}
+		for(int i = 10; i<24; i++)
 		{
 			startTime.addItem("" + i + ":00");
 			endTime.addItem("" + i + ":00");
@@ -50,8 +61,14 @@ public class Rejseafregning extends Composite {
 		fTable.setWidget(1, 1, startTime);
 		fTable.setWidget(1, 2, endTimeLabel);
 		fTable.setWidget(1, 3, endTime);
+		fTable.setWidget(2, 0, bilag);
 		
 		vPanel.setStyleName("margin");
 		vPanel.add(fTable);
+	}
+	
+	public Anchor getBilagButton()
+	{
+		return bilag;
 	}
 }
