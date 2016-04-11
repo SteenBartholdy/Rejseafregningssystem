@@ -46,7 +46,7 @@ public class MainView extends Composite {
 
 		layoutPanel.getWidgetContainerElement(contentPanel).getStyle().setOverflowY(Overflow.AUTO);
 		
-		emptyView = new HTML("looooooool");
+		emptyView = new HTML();
 
 		loginTopView = new LoginTopView();
 		nav = new NavigationView();
@@ -82,6 +82,11 @@ public class MainView extends Composite {
 		
 	}
 	
+	public void showRejseafregningPage()
+	{
+		contentPanel.showWidget(rejseafregningPage);
+	}
+	
 	public LoginTopView getLoginTopView()
 	{
 		return loginTopView;
@@ -96,5 +101,12 @@ public class MainView extends Composite {
 	{
 		return rejseafregningPage;
 	}
+	
+	public MainPage getMainPage()
+	{
+		return mainPage;
+	}
+	
+	
 
 }

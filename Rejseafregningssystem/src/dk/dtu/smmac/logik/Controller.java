@@ -1,15 +1,13 @@
 package dk.dtu.smmac.logik;
 
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
-import dk.dtu.smmac.client.service.LoginService;
-import dk.dtu.smmac.client.service.LoginServiceAsync;
 import dk.dtu.smmac.client.ui.LoginPage;
 import dk.dtu.smmac.client.ui.LoginTopView;
+import dk.dtu.smmac.client.ui.MainPage;
 import dk.dtu.smmac.client.ui.MainView;
 import dk.dtu.smmac.client.ui.Rejseafregning;
 
@@ -23,6 +21,8 @@ public class Controller {
 	
 	private Rejseafregning rejseafregningPage;
 	
+	private MainPage mainPage;
+	
 	//private LoginServiceAsync loginService = GWT.create(LoginService.class);
 	
 	public Controller()
@@ -33,12 +33,15 @@ public class Controller {
 		
 		loginPage = mainView.getLoginPage();
 		
+		mainPage = mainView.getMainPage();
+		
 		rejseafregningPage = mainView.getRejseafregningPage();
 		
 		// Laver handler
 		loginTopView.getLoginAnchor().addClickHandler(new ShowLoginHandler());
 		loginPage.getLoginButton().addClickHandler(new LoginHandler());
 		loginPage.getGlemtPasswordButton().addClickHandler(new GlemtLoginHandler());
+		mainPage.getOpret().addClickHandler(new ShowRejseafregningHandler());
 		
 		RootLayoutPanel.get().add(mainView);
 	}
@@ -93,6 +96,16 @@ public class Controller {
 			//Her skal vi bruge serveren
 			Window.alert("Ej hvor er du bare dum at du har glemt dit password!!!!");
 			
+		}
+		
+	}
+	
+	private class ShowRejseafregningHandler implements ClickHandler
+	{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			mainView.showRejseafregningPage();
 		}
 		
 	}

@@ -54,6 +54,10 @@ h1 {
 	margin-bottom: 10px;
 }
 
+.margin {
+	margin: 10px;
+}
+
 .invisibleButton
 {
 	visibility:hidden;
