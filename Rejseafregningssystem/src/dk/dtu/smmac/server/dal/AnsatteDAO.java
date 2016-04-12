@@ -22,12 +22,13 @@ public class AnsatteDAO extends RemoteServiceServlet implements AnsatteService {
 	private PreparedStatement createAnsatStmt = null;
 	private PreparedStatement deleteAnsatStmt = null;
 	private PreparedStatement getSizeStmt = null;
+	private PreparedStatement getAnsatStmt = null;
 
 	public AnsatteDAO() throws Exception {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(DAO.URL, DAO.USERNAME, DAO.PASSWORD);
-			
+
 			//Laver query, der henter all ansatte
 			getAnsatteStmt = connection.prepareStatement("SELECT * FROM Ansatte;");
 
@@ -46,7 +47,10 @@ public class AnsatteDAO extends RemoteServiceServlet implements AnsatteService {
 
 			//Laver query, der finder størrelsen på tabellen
 			getSizeStmt = connection.prepareStatement("SELECT COUNT(*) FROM Ansatte;");
-			
+
+			//Laver query, der finder en ansat efter personens mail
+			getAnsatStmt = connection.prepareStatement("SELECT * FROM Ansatte WHERE Email LIKE '?';");
+
 		} catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
 		}
@@ -167,7 +171,7 @@ public class AnsatteDAO extends RemoteServiceServlet implements AnsatteService {
 	@Override
 	public int getSize() throws Exception {
 		ResultSet resultSet = null;
-		
+
 		try {
 			resultSet = getSizeStmt.executeQuery();
 			resultSet.next();
@@ -175,8 +179,38 @@ public class AnsatteDAO extends RemoteServiceServlet implements AnsatteService {
 		} catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
 		}
-		
+
 		return 0;
+	}
+
+	@Override
+	public AnsatDTO getAnsat(String mail) throws Exception {
+		ResultSet resultSet = null;
+		
+		try {
+			getAnsatStmt.setString(1, mail);
+			resultSet = getAnsatteStmt.executeQuery(); 
+			return new AnsatDTO(
+					resultSet.getInt("Id"),
+					resultSet.getInt("Postnummer"),
+					resultSet.getInt("Telefon"),
+					resultSet.getString("Fornavn"),
+					resultSet.getString("Efternavn"),
+					resultSet.getString("Afdeling"),
+					resultSet.getString("Vejnavn"),
+					resultSet.getString("Husnr"),
+					resultSet.getString("Etage"),
+					resultSet.getString("Doer"),
+					resultSet.getString("Email"),
+					resultSet.getBoolean("Anviser"),
+					resultSet.getBoolean("Godkender")
+					);
+		} 
+		catch (SQLException sqlE) {
+			System.out.println(sqlE.getMessage());
+		} 
+
+		return null;
 	}
 
 }

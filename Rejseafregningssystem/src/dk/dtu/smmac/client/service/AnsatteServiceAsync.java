@@ -13,5 +13,6 @@ public interface AnsatteServiceAsync {
 	void createAnsat(AnsatDTO ansat, AsyncCallback<Void> callback);
 	void deleteAnsat(AnsatDTO ansat, AsyncCallback<Void> callback);
 	void getSize(AsyncCallback<Integer> callback);
+	void getAnsat(String mail, AsyncCallback<AnsatDTO> callback);
 	
 }

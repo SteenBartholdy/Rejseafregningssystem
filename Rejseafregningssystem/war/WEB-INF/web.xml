@@ -13,6 +13,15 @@
 		<servlet-name>loginservice</servlet-name>
 		<url-pattern>/rejseafregningssystem/loginservice</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ansatteservice</servlet-name>
+		<servlet-class>dk.dtu.smmac.server.dal.AnsatteDAO</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ansatteservice</servlet-name>
+		<url-pattern>/rejseafregningssystem/ansatteservice</url-pattern>
+	</servlet-mapping>
 
 	<!-- Default page to serve -->
 	<welcome-file-list>
