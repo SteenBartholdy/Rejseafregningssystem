@@ -19,7 +19,6 @@
   <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
   <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
   <inherits name='brugerautorisation.Bruger_admin'/>
-  <inherits name='brugerautorisation.data.data'/>
 
   <!-- Other module inherits                                      -->
 
@@ -30,7 +29,6 @@
   <source path='logik'/>
   <source path='client'/>
   <source path='shared'/>
-  <source path='data'/>
 
   <!-- allow Super Dev Mode -->
   <add-linker name="xsiframe"/>
