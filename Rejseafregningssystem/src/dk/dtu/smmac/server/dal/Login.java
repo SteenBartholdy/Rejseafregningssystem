@@ -5,8 +5,9 @@ import java.rmi.Naming;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import brugerautorisation.data.Bruger;
-import brugerautorisation.transport.rmi.Brugeradmin;
 import dk.dtu.smmac.client.service.LoginService;
+import dk.dtu.smmac.server.BrugerAdminServer;
+import dk.dtu.smmac.server.logik.LoginLogikI;
 
 public class Login extends RemoteServiceServlet implements LoginService {
 
@@ -14,30 +15,52 @@ public class Login extends RemoteServiceServlet implements LoginService {
 		super();
 	}
 
-//	@Override
-//	public Bruger logIn(String brugernavn, String kode) throws Exception {
-//		try {
-//            Brugeradmin ba = (Brugeradmin) Naming.lookup("rmi://javabog.dk/brugeradmin");
-//            Bruger b = ba.hentBruger(brugernavn, kode);
-//            System.out.println("Fik bruger = " + b);
-//            return b;
-//        } catch (Exception e) {
-//            e.printStackTrace(System.out);
-//        }
-//		return null;
-//	}
+	@Override
+	public Bruger logIn(String brugernavn, String kode) throws Exception {
+		BrugerAdminServer server = new BrugerAdminServer();
+		Bruger b = null;
+		
+		try {
+			server.start();
+			LoginLogikI login = (LoginLogikI) Naming.lookup("rmi://localhost/Login");
+			
+			b = login.logIn(brugernavn, kode);
+            
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        } finally {
+			try {
+				server.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return b;
+	}
 
 	@Override
 	public boolean changePassword(String brugernavn, String kode, String nyKode) throws Exception {
+		BrugerAdminServer server = new BrugerAdminServer();
+		
 		try {
-            Brugeradmin ba = (Brugeradmin) Naming.lookup("rmi://javabog.dk/brugeradmin");
-            ba.ændrAdgangskode(brugernavn, kode, nyKode);
-            Bruger b = ba.hentBruger(brugernavn, nyKode);
-            System.out.println("Koden er ændret til " + nyKode + " hos bruger = " + b);
+			server.start();
+			LoginLogikI login = (LoginLogikI) Naming.lookup("rmi://localhost/Login");
+			
+			login.changePassword(brugernavn, kode, nyKode);
+
+            System.out.println("Koden er ændret til " + nyKode + " hos bruger = " + brugernavn);
             return true;
 		} catch (Exception e) {
             e.printStackTrace(System.out);
-        }
+        } finally {
+			try {
+				server.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 		return false;
 	}
 

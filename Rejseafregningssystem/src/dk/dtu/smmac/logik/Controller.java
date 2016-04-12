@@ -1,10 +1,15 @@
 package dk.dtu.smmac.logik;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
+import brugerautorisation.data.Bruger;
+import dk.dtu.smmac.client.service.LoginService;
+import dk.dtu.smmac.client.service.LoginServiceAsync;
 import dk.dtu.smmac.client.ui.Bilag;
 import dk.dtu.smmac.client.ui.LoginPage;
 import dk.dtu.smmac.client.ui.LoginTopView;
@@ -26,7 +31,7 @@ public class Controller {
 	
 	private Bilag bilagPage;
 	
-	//private LoginServiceAsync loginService = GWT.create(LoginService.class);
+	private LoginServiceAsync loginService = GWT.create(LoginService.class);
 	
 	public Controller()
 	{
@@ -68,27 +73,22 @@ public class Controller {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			
-//			loginService.logIn(loginPage.getBrugernavn(), loginPage.getPassword(), new AsyncCallback<Bruger>(){
-//
-//				@Override
-//				public void onFailure(Throwable caught) {
-//					System.out.println("An error has occured");
-//				}
-//
-//				@Override
-//				public void onSuccess(Bruger result) {
-//					
-//					Window.alert("Velkommen " + result.efternavn + ". Din mail er " + result.email);
-//					
-//				}
-//				
-//			});
-			
-			//Her skal der være interaktion med Jakobs loginhaløj
-			Window.alert("Dit indtastede brugernavn var: " + loginPage.getBrugernavn()
-					+ "\n" + "Dit indtastede password er: " + loginPage.getPassword());
-			
+
+			loginService.logIn(loginPage.getBrugernavn(), loginPage.getPassword(), new AsyncCallback<Bruger>(){
+
+				@Override
+				public void onFailure(Throwable caught) {
+					System.out.println("An error has occured");
+				}
+
+				@Override
+				public void onSuccess(Bruger result) {
+					if (result == null) 
+						Window.alert("Forkert brugernavn eller kodeord");
+
+					Window.alert("Velkommen " + result.fornavn + " " + result.efternavn + ". Din mail er: " + result.email);
+				}
+			});
 		}
 	}
 	

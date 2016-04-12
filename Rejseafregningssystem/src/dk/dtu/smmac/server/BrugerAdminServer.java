@@ -5,8 +5,8 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
-import dk.dtu.smmac.client.service.LoginService;
-import dk.dtu.smmac.server.dal.Login;
+import dk.dtu.smmac.server.logik.LoginLogik;
+import dk.dtu.smmac.server.logik.LoginLogikI;
 
 public class BrugerAdminServer {
 
@@ -15,7 +15,7 @@ public class BrugerAdminServer {
 	
 	public void start() throws Exception {
 		registry = LocateRegistry.createRegistry(1099); 
-        LoginService login = new Login();
+        LoginLogikI login = new LoginLogik();
         
         Naming.rebind(rmi, login);
         System.out.println("BrugerAdminServer registreret.");
@@ -24,6 +24,7 @@ public class BrugerAdminServer {
 	public void close() throws Exception {
 		Naming.unbind(rmi);
         UnicastRemoteObject.unexportObject(registry, true);
+        System.out.println("BrugerAdminServer lukket.");
 	}
 	
 }

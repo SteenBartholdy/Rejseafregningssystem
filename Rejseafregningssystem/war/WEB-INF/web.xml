@@ -11,7 +11,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>loginservice</servlet-name>
-		<url-pattern>/dk.dtu.smmac/loginservice</url-pattern>
+		<url-pattern>/rejseafregningssystem/loginservice</url-pattern>
 	</servlet-mapping>
 
 	<!-- Default page to serve -->
