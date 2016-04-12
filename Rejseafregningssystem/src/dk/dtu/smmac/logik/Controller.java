@@ -15,6 +15,7 @@ import dk.dtu.smmac.client.ui.LoginPage;
 import dk.dtu.smmac.client.ui.LoginTopView;
 import dk.dtu.smmac.client.ui.MainPage;
 import dk.dtu.smmac.client.ui.MainView;
+import dk.dtu.smmac.client.ui.NavigationView;
 import dk.dtu.smmac.client.ui.Rejseafregning;
 
 public class Controller {
@@ -31,6 +32,8 @@ public class Controller {
 	
 	private Bilag bilagPage;
 	
+	private NavigationView navPage;
+	
 	private LoginServiceAsync loginService = GWT.create(LoginService.class);
 	
 	public Controller()
@@ -45,12 +48,15 @@ public class Controller {
 		
 		rejseafregningPage = mainView.getRejseafregningPage();
 		
+		navPage = mainView.getNavPage();
+		
 		// Laver handler
 		loginTopView.getLoginAnchor().addClickHandler(new ShowLoginHandler());
 		loginPage.getLoginButton().addClickHandler(new LoginHandler());
 		loginPage.getGlemtPasswordButton().addClickHandler(new GlemtLoginHandler());
 		mainPage.getOpret().addClickHandler(new ShowRejseafregningHandler());
 		rejseafregningPage.getBilagButton().addClickHandler(new ShowBilagHandler());
+		navPage.getOpgaver().addClickHandler(new ShowOpgaveHandler());
 		
 		RootLayoutPanel.get().add(mainView);
 	}
@@ -120,6 +126,17 @@ public class Controller {
 		@Override
 		public void onClick(ClickEvent event) {
 			mainView.showContentWidget(bilagPage);
+		}
+		
+	}
+	
+	private class ShowOpgaveHandler implements ClickHandler
+	{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			mainView.showContentWidget(mainPage);
+			
 		}
 		
 	}
