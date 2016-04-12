@@ -110,6 +110,8 @@ public class Controller {
 
 						@Override
 						public void onSuccess(AnsatDTO result) {
+							//Henter ikke korrekt ansat
+							Window.alert(result.getEfternavn());
 							mainView.showContentWidget(mainPage);
 							//Mangler at bruge result 
 						}
