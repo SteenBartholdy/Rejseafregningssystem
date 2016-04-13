@@ -12,8 +12,8 @@ public class Oplysninger extends Composite {
 
 	private VerticalPanel vPanel = new VerticalPanel();
 	private FlexTable fTable;
-	private Label lName, lSurname, lZipcode, lCity, lCityName, lDepartment;
-	private TextBox name, surname, zipcode, department;
+	private Label lName, lSurname, lZipcode, lCity, lCityName, lDepartment, lTelephone;
+	private TextBox name, surname, zipcode, department, telephone;
 	
 	public Oplysninger() {
 		initWidget(this.vPanel);
@@ -33,6 +33,9 @@ public class Oplysninger extends Composite {
 		
 		lDepartment = new Label();
 		department = new TextBox();
+		
+		lTelephone = new Label();
+		telephone = new TextBox();
 		
 		fTable.setWidget(0, 0, lName);
 		fTable.setWidget(0, 1, name);
@@ -109,8 +112,8 @@ public class Oplysninger extends Composite {
 		return lCityName;
 	}
 
-	public void setlCityName(Label lCityName) {
-		this.lCityName = lCityName;
+	public void setlCityName(String lCityName) {
+		this.lCityName.setText(lCityName);
 	}
 
 	public Label getlDepartment() {
