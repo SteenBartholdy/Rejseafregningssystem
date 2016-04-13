@@ -5,15 +5,17 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.sun.jndi.url.ldaps.ldapsURLContextFactory;
 
 import dk.dtu.smmac.shared.AnsatDTO;
+import java_cup.lr_item_core;
 
 public class Oplysninger extends Composite {
 
 	private VerticalPanel vPanel = new VerticalPanel();
 	private FlexTable fTable;
-	private Label lName, lSurname, lZipcode, lCity, lCityName, lDepartment, lTelephone;
-	private TextBox name, surname, zipcode, department, telephone;
+	private Label lName, lSurname, lZipcode, lCity, lCityName, lDepartment, lTelephone, lEmail, lRoad, lHouseNr, lFloor, lDoor;
+	private TextBox name, surname, zipcode, department, telephone, email, road, houseNr, floor, door;
 	
 	public Oplysninger() {
 		initWidget(this.vPanel);
@@ -37,6 +39,21 @@ public class Oplysninger extends Composite {
 		lTelephone = new Label("Telefon:");
 		telephone = new TextBox();
 		
+		lEmail = new Label("Email:");
+		email = new TextBox();
+		
+		lRoad = new Label("Vejnavn");
+		road = new TextBox();
+		
+		lHouseNr = new Label("Hus nr.:");
+		houseNr = new TextBox();
+		
+		lFloor = new Label("Etage:");
+		floor = new TextBox();
+		
+		lDoor = new Label("Dør:");
+		door = new TextBox();
+		
 		//Table
 		fTable.setWidget(0, 0, lName);
 		fTable.setWidget(0, 1, name);
@@ -46,11 +63,20 @@ public class Oplysninger extends Composite {
 		fTable.setWidget(2, 1, department);
 		fTable.setWidget(3, 0, lTelephone);
 		fTable.setWidget(3, 1, telephone);
-		
+		fTable.setWidget(4, 0, lEmail);
+		fTable.setWidget(4, 1, email);
 		fTable.setWidget(5, 0, lZipcode);
 		fTable.setWidget(5, 1, zipcode);
 		fTable.setWidget(6, 0, lCity);
 		fTable.setWidget(6, 1, lCityName);
+		fTable.setWidget(7, 0, lRoad);
+		fTable.setWidget(7, 1, road);
+		fTable.setWidget(8, 0, lHouseNr);
+		fTable.setWidget(8, 1, houseNr);
+		fTable.setWidget(9, 0, lFloor);
+		fTable.setWidget(9, 1, floor);
+		fTable.setWidget(10, 0, lDoor);
+		fTable.setWidget(10, 1, door);
 		
 		vPanel.setStyleName("margin");
 		vPanel.add(fTable);
