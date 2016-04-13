@@ -37,6 +37,7 @@ public class Oplysninger extends Composite {
 		lTelephone = new Label("Telefon:");
 		telephone = new TextBox();
 		
+		//Table
 		fTable.setWidget(0, 0, lName);
 		fTable.setWidget(0, 1, name);
 		fTable.setWidget(1, 0, lSurname);
