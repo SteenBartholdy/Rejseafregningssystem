@@ -121,6 +121,8 @@ public class Controller {
 							if (result == null) {
 								//Skal ændres til noget label ændring eller lign
 								Window.alert("Brugeren er ikke oprettet korrekt i systemet");
+								
+								
 							} else {
 								//Mangler at bruge result 
 								Window.alert(result.getFornavn() + " " + result.getEfternavn());
