@@ -1,6 +1,8 @@
 package dk.dtu.smmac.logik;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -11,6 +13,8 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 import brugerautorisation.data.Bruger;
 import dk.dtu.smmac.client.service.AnsatteService;
 import dk.dtu.smmac.client.service.AnsatteServiceAsync;
+import dk.dtu.smmac.client.service.ByerService;
+import dk.dtu.smmac.client.service.ByerServiceAsync;
 import dk.dtu.smmac.client.service.LoginService;
 import dk.dtu.smmac.client.service.LoginServiceAsync;
 import dk.dtu.smmac.client.ui.Bilag;
@@ -47,6 +51,7 @@ public class Controller {
 
 	private LoginServiceAsync loginService = GWT.create(LoginService.class);
 	private AnsatteServiceAsync ansatteService = GWT.create(AnsatteService.class);
+	private ByerServiceAsync byerService = GWT.create(ByerService.class);
 	
 	public Controller()
 	{
@@ -76,10 +81,31 @@ public class Controller {
 		rejseafregningPage.getBilagButton().addClickHandler(new ShowBilagHandler());
 		navPage.getOpgaver().addClickHandler(new ShowOpgaveHandler());
 		navPage.getOplysninger().addClickHandler(new ShowOplysningHandler());
+		oplysningerPage.getZipcode().addBlurHandler(new ZipCodeHandler());
 
 		RootLayoutPanel.get().add(mainView);
 	}
 
+	private class ZipCodeHandler implements BlurHandler
+	{
+		@Override
+		public void onBlur(BlurEvent event) {
+			byerService.getBy(Integer.parseInt(oplysningerPage.getZipcode().getText()), new AsyncCallback<String>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					System.out.println("An error has occured");		
+				}
+
+				@Override
+				public void onSuccess(String result) {
+					oplysningerPage.setlCityName(result);
+				}
+				
+			});
+		}
+	}
+	
 	private class ShowLoginHandler implements ClickHandler 
 	{
 		@Override
@@ -124,14 +150,24 @@ public class Controller {
 								
 								
 							} else {
-								//Mangler at bruge result 
-								Window.alert(result.getFornavn() + " " + result.getEfternavn());
-								
 								mainView.showContentWidget(mainPage);
 								mainView.showNavWidget(navPage);
 								mainView.showTopWidget(loginTopView);
 								
 								oplysningerPage.setAnsat(result);
+								byerService.getBy(result.getPostnr(), new AsyncCallback<String>() {
+
+									@Override
+									public void onFailure(Throwable caught) {
+										System.out.println("An error has occured");		
+									}
+
+									@Override
+									public void onSuccess(String result) {
+										oplysningerPage.setlCityName(result);
+									}
+									
+								});
 							}
 						}
 						

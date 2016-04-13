@@ -20,21 +20,21 @@ public class Oplysninger extends Composite {
 		fTable = new FlexTable();
 		
 		lName = new Label("Navn:");
-		lSurname = new Label("Efternavn:");
-		
 		name = new TextBox();
+		
+		lSurname = new Label("Efternavn:");
 		surname = new TextBox();
 		
-		lZipcode = new Label();
+		lZipcode = new Label("Postnr:");
 		zipcode = new TextBox();
 		
-		lCity = new Label();
+		lCity = new Label("By:");
 		lCityName = new Label();
 		
-		lDepartment = new Label();
+		lDepartment = new Label("Afdeling:");
 		department = new TextBox();
 		
-		lTelephone = new Label();
+		lTelephone = new Label("Telefon:");
 		telephone = new TextBox();
 		
 		fTable.setWidget(0, 0, lName);
@@ -43,7 +43,8 @@ public class Oplysninger extends Composite {
 		fTable.setWidget(1, 1, surname);
 		fTable.setWidget(2, 0, lDepartment);
 		fTable.setWidget(2, 1, department);
-		
+		fTable.setWidget(3, 0, lTelephone);
+		fTable.setWidget(3, 1, telephone);
 		
 		fTable.setWidget(5, 0, lZipcode);
 		fTable.setWidget(5, 1, zipcode);
@@ -58,6 +59,9 @@ public class Oplysninger extends Composite {
 	{
 		name.setText(ansat.getFornavn());
 		surname.setText(ansat.getEfternavn());
+		zipcode.setText(ansat.getPostnr()+"");
+		department.setText(ansat.getAfdeling());
+		telephone.setText(ansat.getTlf()+"");
 	}
 
 	public VerticalPanel getvPanel() {

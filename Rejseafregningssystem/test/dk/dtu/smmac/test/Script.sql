@@ -1,1 +1,1 @@
-SELECT * FROM Byer;
+SELECT * FROM Ansatte;
