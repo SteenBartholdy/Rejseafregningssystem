@@ -37,7 +37,7 @@ public class Controller {
 
 	private Bilag bilagPage;
 	
-	private Oplysninger oplysninger;
+	private Oplysninger oplysningerPage;
 
 	private NavigationView navPage;
 	
@@ -64,7 +64,7 @@ public class Controller {
 
 		rejseafregningPage = mainView.getRejseafregningPage();
 		
-		oplysninger = mainView.getOplysninger();
+		oplysningerPage = mainView.getOplysninger();
 
 		navPage = mainView.getNavPage();
 
@@ -129,7 +129,7 @@ public class Controller {
 								mainView.showNavWidget(navPage);
 								mainView.showTopWidget(loginTopView);
 								
-								oplysninger.setAnsat(result);
+								oplysningerPage.setAnsat(result);
 							}
 						}
 						
@@ -182,7 +182,7 @@ public class Controller {
 	{
 		@Override
 		public void onClick(ClickEvent event) {
-			mainView.showContentWidget(oplysninger);
+			mainView.showContentWidget(oplysningerPage);
 			
 		}
 	}

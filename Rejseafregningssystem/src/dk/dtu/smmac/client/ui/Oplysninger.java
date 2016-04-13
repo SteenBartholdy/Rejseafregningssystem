@@ -25,9 +25,9 @@ public class Oplysninger extends Composite {
 		surname = new Label();
 		
 		fTable.setWidget(0, 0, lName);
-		fTable.setWidget(0, 0, lSurname);
-		fTable.setWidget(0, 1, name);
-		fTable.setWidget(0, 2, surname);
+		fTable.setWidget(0, 1, lSurname);
+		fTable.setWidget(1, 0, name);
+		fTable.setWidget(1, 1, surname);
 	}
 	
 	public void setAnsat(AnsatDTO ansat)
