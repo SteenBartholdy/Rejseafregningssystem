@@ -27,6 +27,8 @@ public class LoginPage extends Composite {
 	
 	public LoginPage() {
 		initWidget(uiBinder.createAndBindUi(this));
+		brugernavn.setText("");
+		password.setText("");
 	}
 
 	public Button getLoginButton(){
