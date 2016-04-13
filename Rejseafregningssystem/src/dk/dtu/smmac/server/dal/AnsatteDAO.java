@@ -49,7 +49,7 @@ public class AnsatteDAO extends RemoteServiceServlet implements AnsatteService {
 			getSizeStmt = connection.prepareStatement("SELECT COUNT(*) FROM Ansatte;");
 
 			//Laver query, der finder en ansat efter personens mail
-			getAnsatStmt = connection.prepareStatement("SELECT * FROM Ansatte WHERE Email LIKE '?';");
+			getAnsatStmt = connection.prepareStatement("SELECT * FROM Ansatte WHERE Email LIKE ?;");
 
 		} catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
@@ -189,7 +189,8 @@ public class AnsatteDAO extends RemoteServiceServlet implements AnsatteService {
 		
 		try {
 			getAnsatStmt.setString(1, mail);
-			resultSet = getAnsatteStmt.executeQuery(); 
+			resultSet = getAnsatStmt.executeQuery();
+			resultSet.next();
 			return new AnsatDTO(
 					resultSet.getInt("Id"),
 					resultSet.getInt("Postnummer"),

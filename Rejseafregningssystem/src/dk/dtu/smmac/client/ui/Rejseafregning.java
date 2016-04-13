@@ -52,7 +52,6 @@ public class Rejseafregning extends Composite {
 			endTime.addItem("" + i + ":00");
 		}
 		
-		
 		fTable.setWidget(0, 0, date);
 		fTable.setWidget(0, 1, startDateLabel);
 		fTable.setWidget(0, 2, dateTo);

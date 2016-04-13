@@ -10,7 +10,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class MainPage extends Composite {
 
 	private static MainPageUiBinder uiBinder = GWT.create(MainPageUiBinder.class);
-
+	
 	interface MainPageUiBinder extends UiBinder<Widget, MainPage> {
 	}
 
