@@ -39,4 +39,21 @@ public class FieldVerifier {
 		}
 		return name.length() > 3;
 	}
+
+	public static boolean isValidZipzode(String zipcode)
+	{
+		if(zipcode == null)
+		{
+			return false;
+		}
+		for (int n=0 ; n < zipcode.length() ;n++) {
+			if (!Character.isDigit(zipcode.charAt(n))) 
+				return false;
+		}
+		if(zipcode.length()!= 4)
+		{
+			return false;
+		}
+		return true;
+	}
 }
