@@ -2,7 +2,7 @@ package dk.dtu.smmac.client.service;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-import brugerautorisation.data.*;
+import brugerautorisation.data.Bruger;
 
 public interface LoginServiceAsync {
 

@@ -2,7 +2,8 @@ package dk.dtu.smmac.client.service;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import brugerautorisation.data.*;
+
+import brugerautorisation.data.Bruger;
 
 @RemoteServiceRelativePath("loginservice")
 public interface LoginService extends RemoteService

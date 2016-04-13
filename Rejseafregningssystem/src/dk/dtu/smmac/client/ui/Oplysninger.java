@@ -5,10 +5,8 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.sun.jndi.url.ldaps.ldapsURLContextFactory;
 
 import dk.dtu.smmac.shared.AnsatDTO;
-import java_cup.lr_item_core;
 
 public class Oplysninger extends Composite {
 
@@ -16,6 +14,7 @@ public class Oplysninger extends Composite {
 	private FlexTable fTable;
 	private Label lName, lSurname, lZipcode, lCity, lCityName, lDepartment, lTelephone, lEmail, lRoad, lHouseNr, lFloor, lDoor;
 	private TextBox name, surname, zipcode, department, telephone, email, road, houseNr, floor, door;
+	private AnsatDTO ansat;
 	
 	public Oplysninger() {
 		initWidget(this.vPanel);
@@ -84,11 +83,34 @@ public class Oplysninger extends Composite {
 	
 	public void setAnsat(AnsatDTO ansat)
 	{
+		this.ansat = ansat;
+		
 		name.setText(ansat.getFornavn());
 		surname.setText(ansat.getEfternavn());
 		zipcode.setText(ansat.getPostnr()+"");
 		department.setText(ansat.getAfdeling());
 		telephone.setText(ansat.getTlf()+"");
+		email.setText(ansat.getEmail());
+		road.setText(ansat.getVejnavn());
+		houseNr.setText(ansat.gethusnr());
+		floor.setText(ansat.getEtage());
+		door.setText(ansat.getDoer());
+	}
+	
+	public AnsatDTO getAnsat() 
+	{
+		ansat.setFornavn(name.getText());
+		ansat.setEfternavn(surname.getText());
+		ansat.setPostnr(Integer.parseInt(zipcode.getText()));
+		ansat.setAfdeling(department.getText());
+		ansat.setTlf(Integer.parseInt(telephone.getText()));
+		ansat.setEmail(email.getText());
+		ansat.setVejnavn(road.getText());
+		ansat.setHusnr(houseNr.getText());
+		ansat.setEtage(floor.getText());
+		ansat.setDoer(door.getText());
+		
+		return ansat;
 	}
 
 	public VerticalPanel getvPanel() {
