@@ -209,6 +209,28 @@ public class Oplysninger extends Composite {
 		this.department = department;
 	}
 
+	public TextBox getTelephone() {
+		return telephone;
+	}
 	
+	public TextBox getEmail() {
+		return email;
+	}
+	
+	public TextBox getRoad() {
+		return road;
+	}
+	
+	public TextBox getHouseNr() {
+		return houseNr;
+	}
+	
+	public TextBox getFloor() {
+		return floor;
+	}
+	
+	public TextBox getDoor() {
+		return door;
+	}
 	
 }

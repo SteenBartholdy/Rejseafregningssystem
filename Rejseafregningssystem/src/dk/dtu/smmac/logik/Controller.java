@@ -73,7 +73,7 @@ public class Controller {
 
 		navPage = mainView.getNavPage();
 
-		// Laver handler
+		//Clickhandler
 		loginTopView.getLoginAnchor().addClickHandler(new ShowLoginHandler());
 		loginPage.getLoginButton().addClickHandler(new LoginHandler());
 		loginPage.getGlemtPasswordButton().addClickHandler(new GlemtLoginHandler());
@@ -81,11 +81,41 @@ public class Controller {
 		rejseafregningPage.getBilagButton().addClickHandler(new ShowBilagHandler());
 		navPage.getOpgaver().addClickHandler(new ShowOpgaveHandler());
 		navPage.getOplysninger().addClickHandler(new ShowOplysningHandler());
+		
+		//BlurHandler
+		oplysningerPage.getName().addBlurHandler(new UpdateAnsatHandler());
+		oplysningerPage.getSurname().addBlurHandler(new UpdateAnsatHandler());
+		oplysningerPage.getDepartment().addBlurHandler(new UpdateAnsatHandler());
+		oplysningerPage.getTelephone().addBlurHandler(new UpdateAnsatHandler());
+		oplysningerPage.getEmail().addBlurHandler(new UpdateAnsatHandler());
 		oplysningerPage.getZipcode().addBlurHandler(new ZipCodeHandler());
-
+		oplysningerPage.getRoad().addBlurHandler(new UpdateAnsatHandler());
+		oplysningerPage.getHouseNr().addBlurHandler(new UpdateAnsatHandler());
+		oplysningerPage.getFloor().addBlurHandler(new UpdateAnsatHandler());
+		oplysningerPage.getDoor().addBlurHandler(new UpdateAnsatHandler());
+		
 		RootLayoutPanel.get().add(mainView);
 	}
 
+	private class UpdateAnsatHandler implements BlurHandler
+	{
+		@Override
+		public void onBlur(BlurEvent event) {
+			ansatteService.updateAnsat(oplysningerPage.getAnsat(), new AsyncCallback<Void>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					System.out.println("An error has occured");	
+				}
+
+				@Override
+				public void onSuccess(Void result) {
+					
+				}
+			});	
+		}
+	}
+	
 	private class ZipCodeHandler implements BlurHandler
 	{
 		@Override
@@ -101,8 +131,21 @@ public class Controller {
 				public void onSuccess(String result) {
 					oplysningerPage.setlCityName(result);
 				}
-				
 			});
+			
+			ansatteService.updateAnsat(oplysningerPage.getAnsat(), new AsyncCallback<Void>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					System.out.println("An error has occured");	
+				}
+
+				@Override
+				public void onSuccess(Void result) {
+					
+				}
+			});
+			
 		}
 	}
 	
