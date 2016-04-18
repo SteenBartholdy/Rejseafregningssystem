@@ -37,9 +37,9 @@ public class Rejse extends Composite {
 		addProject.setText("Tilføj flere opgaver/projekter");
 		
 		date = new DateBox();
-		date.setPixelSize(70, 15);
+		date.setPixelSize(80, 15);
 		dateTo = new DateBox();
-		dateTo.setPixelSize(70, 15);
+		dateTo.setPixelSize(80, 15);
 		
 		country = new ListBox();
 		country.addItem("Danmark");
