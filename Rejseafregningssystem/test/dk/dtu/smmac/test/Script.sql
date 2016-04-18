@@ -1,1 +1,4 @@
-SELECT * FROM Ansatte;
+
+
+SELECT * FROM Afdeling;
+
