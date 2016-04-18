@@ -76,6 +76,8 @@ public class Rejseafregning extends Composite {
 		hPanel.add(edit);
 		hPanel.add(delete);
 		
+	
+		
 		addTravel = new Anchor();
 		addTravel.setText("Tilføj rejse");
 		addTravel.setStyleName("anchorStyle");

@@ -29,13 +29,13 @@ public class Rejse extends Composite {
 		
 		countryL = new Label("Land:");
 		dateL = new Label("Dato:");
-		dateToL = new Label("til");
+		dateToL = new Label("til:");
 		dateToL.setStyleName("center");
 		
-		projectL = new Label("Projekt");
-		assignmentL = new Label("Opgave");
-		projectL2 = new Label("Projekt");
-		assignmentL2 = new Label("Opgave");
+		projectL = new Label("Projekt: ");
+		assignmentL = new Label("Opgave: ");
+		projectL2 = new Label("Projekt: ");
+		assignmentL2 = new Label("Opgave: ");
 		
 		addProject = new Anchor();
 		addProject.setText("Tilføj flere opgaver/projekter");
@@ -53,19 +53,19 @@ public class Rejse extends Composite {
 		project2 = new ListBox();
 		assignment2 = new ListBox();
 		
-		shareL = new Label("Andel");
+		shareL = new Label("Andel: ");
 		shareT = new TextBox();
 		shareT.setPixelSize(60, 15);
 		shareList = new ListBox();
 		shareList.addItem("%");
-		shareList.addItem("kr.");
+		shareList.addItem("kr");
 
-		shareL2 = new Label("Andel");
+		shareL2 = new Label("Andel: ");
 		shareT2 = new TextBox();
 		shareT2.setPixelSize(60, 15);
 		shareList2 = new ListBox();
 		shareList2.addItem("%");
-		shareList2.addItem("kr.");
+		shareList2.addItem("kr");
 		
 		dateFormat = DateTimeFormat.getFormat("dd/MM-yyyy");
 		
@@ -89,7 +89,7 @@ public class Rejse extends Composite {
 		
 		//SKAL IKKE GØRE SÅDAN HER. HENTES FRA DATABASE HVIS DER ER LAVET NOGET ANDET
 		setShareForProject1("100", "%");
-		
+
 		fTable.setStyleName("flextable");
 		
 		vPanel.setStyleName("margin");
@@ -145,24 +145,25 @@ public class Rejse extends Composite {
 	public void setShareForProject1(String share, String type)
 	{
 		shareT.setText(share);
-		if(type == "kr")
-		{
-			shareList.setItemSelected(2, true);
-		}
-		else
+		
+		if(type.equals("kr"))
 		{
 			shareList.setItemSelected(1, true);
+		}
+		else if(type.equals("%"))
+		{
+			shareList.setItemSelected(0, true);
 		}
 	}
 	
 	public void setShareForProject2(String share, String type)
 	{
 		shareT2.setText(share);
-		if(type == "kr")
+		if(type.equals("kr"))
 		{
 			shareList2.setItemSelected(1, true);
 		}
-		else
+		else if (type.equals("%"))
 		{
 			shareList2.setItemSelected(0, true);
 		}
