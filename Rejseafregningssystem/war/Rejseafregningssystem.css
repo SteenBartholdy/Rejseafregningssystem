@@ -66,3 +66,23 @@ h1 {
 .anchorStyle {
 	color: black;
 }
+
+.center {
+	vertical-align: middle;
+}
+
+table.flextable td:nth-child(1){
+	hight: 40px;
+}
+
+table.flextable td:nth-child(2) {
+	hight: 40px;
+}
+
+table.flextable td:nth-child(3) {
+	height: 40px;
+}
+
+table.flextable td:nth-child(4) {
+	height: 40px;
+}

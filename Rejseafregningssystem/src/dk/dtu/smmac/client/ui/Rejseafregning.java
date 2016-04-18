@@ -80,6 +80,7 @@ public class Rejseafregning extends Composite {
 		addTravel.setText("Tilføj rejse");
 		addTravel.setStyleName("anchorStyle");
 		
+		fTable.setStyleName("flextable");
 		vPanel.setStyleName("margin");
 		vPanel.add(fTable);
 		vPanel.add(hPanel);
