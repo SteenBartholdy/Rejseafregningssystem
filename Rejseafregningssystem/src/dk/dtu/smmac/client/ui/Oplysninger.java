@@ -21,6 +21,8 @@ public class Oplysninger extends Composite {
 	private ListBox department;
 	private AnsatDTO ansat;
 	private List<AfdelingDTO> afdelinger;
+	private String width = "200px";
+	private String height = "12px";
 	
 	public Oplysninger() {
 		initWidget(this.vPanel);
@@ -28,36 +30,58 @@ public class Oplysninger extends Composite {
 		
 		lName = new Label("Navn:");
 		name = new TextBox();
+		name.setWidth(width);
+		name.setHeight(height);
 		
 		lSurname = new Label("Efternavn:");
 		surname = new TextBox();
+		surname.setWidth(width);
+		surname.setHeight(height);
 		
 		lZipcode = new Label("Postnr:");
 		zipcode = new TextBox();
+		zipcode.setWidth(width);
+		zipcode.setHeight(height);
 		
 		lCity = new Label("By:");
 		lCityName = new Label();
+		lCityName.setWidth(width);
+		lCityName.setHeight(height);
 		
 		lDepartment = new Label("Afdeling:");
 		department = new ListBox();
+		department.setWidth(width);
+		department.setHeight(height);
 		
 		lTelephone = new Label("Telefon:");
 		telephone = new TextBox();
+		telephone.setWidth(width);
+		telephone.setHeight(height);
 		
 		lEmail = new Label("Email:");
 		email = new TextBox();
+		email.setWidth(width);
+		email.setHeight(height);
 		
 		lRoad = new Label("Vejnavn");
 		road = new TextBox();
+		road.setWidth(width);
+		road.setHeight(height);
 		
 		lHouseNr = new Label("Hus nr.:");
 		houseNr = new TextBox();
+		houseNr.setWidth(width);
+		houseNr.setHeight(height);
 		
 		lFloor = new Label("Etage:");
 		floor = new TextBox();
+		floor.setWidth(width);
+		floor.setHeight(height);
 		
 		lDoor = new Label("Dør:");
 		door = new TextBox();
+		door.setWidth(width);
+		door.setHeight(height);
 		
 		//Table
 		fTable.setWidget(0, 0, lName);
