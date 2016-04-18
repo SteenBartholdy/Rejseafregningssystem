@@ -108,6 +108,22 @@ public class Controller {
 		oplysningerPage.getFloor().addBlurHandler(new UpdateAnsatHandler());
 		oplysningerPage.getDoor().addBlurHandler(new UpdateAnsatHandler());
 
+		//Afdeling load
+		afdelingerService.getAfdelinger(new AsyncCallback<List<AfdelingDTO>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("An error has occured");	
+			}
+
+			@Override
+			public void onSuccess(List<AfdelingDTO> result) {
+				oplysningerPage.setAfdelinger(result);
+				oplysningerPage.setDepartmentItems();
+			}
+
+		});
+		
 		RootLayoutPanel.get().add(mainView);
 	}
 
@@ -191,21 +207,6 @@ public class Controller {
 						//Skal ændres til noget label ændring eller lign
 						Window.alert("Forkert brugernavn eller kodeord");
 					}
-
-					afdelingerService.getAfdelinger(new AsyncCallback<List<AfdelingDTO>>() {
-
-						@Override
-						public void onFailure(Throwable caught) {
-							System.out.println("An error has occured");	
-						}
-
-						@Override
-						public void onSuccess(List<AfdelingDTO> result) {
-							oplysningerPage.setAfdelinger(result);
-							oplysningerPage.setDepartmentItems();
-						}
-
-					});
 					
 					ansatteService.getAnsat(result.email, new AsyncCallback<AnsatDTO>() {
 
@@ -219,8 +220,6 @@ public class Controller {
 							if (result == null) {
 								//Skal ændres til noget label ændring eller lign
 								Window.alert("Brugeren er ikke oprettet korrekt i systemet");
-
-
 							} else {
 								mainView.showContentWidget(mainPage);
 								mainView.showNavWidget(navPage);
