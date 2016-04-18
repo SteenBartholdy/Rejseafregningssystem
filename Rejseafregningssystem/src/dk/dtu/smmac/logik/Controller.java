@@ -1,5 +1,7 @@
 package dk.dtu.smmac.logik;
 
+import java.util.List;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -11,6 +13,8 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 import brugerautorisation.data.Bruger;
+import dk.dtu.smmac.client.service.AfdelingerService;
+import dk.dtu.smmac.client.service.AfdelingerServiceAsync;
 import dk.dtu.smmac.client.service.AnsatteService;
 import dk.dtu.smmac.client.service.AnsatteServiceAsync;
 import dk.dtu.smmac.client.service.ByerService;
@@ -26,6 +30,7 @@ import dk.dtu.smmac.client.ui.NavigationView;
 import dk.dtu.smmac.client.ui.Oplysninger;
 import dk.dtu.smmac.client.ui.Rejse;
 import dk.dtu.smmac.client.ui.Rejseafregning;
+import dk.dtu.smmac.shared.AfdelingDTO;
 import dk.dtu.smmac.shared.AnsatDTO;
 
 public class Controller {
@@ -41,13 +46,13 @@ public class Controller {
 	private MainPage mainPage;
 
 	private Bilag bilagPage;
-	
+
 	private Oplysninger oplysningerPage;
 
 	private NavigationView navPage;
-	
+
 	private Rejse rejsePage;
-	
+
 	private HTML emptyView;
 	private HTML emptyTopView;
 	private HTML emptyNavView;
@@ -55,11 +60,12 @@ public class Controller {
 	private LoginServiceAsync loginService = GWT.create(LoginService.class);
 	private AnsatteServiceAsync ansatteService = GWT.create(AnsatteService.class);
 	private ByerServiceAsync byerService = GWT.create(ByerService.class);
-	
+	private AfdelingerServiceAsync afdelingerService = GWT.create(AfdelingerService.class);
+
 	public Controller()
 	{
 		mainView = new MainView();
-		
+
 		emptyView = mainView.getEmptyView();
 		emptyTopView = mainView.getEmptyTopView();
 		emptyNavView = mainView.getEmptyNavView();
@@ -71,11 +77,11 @@ public class Controller {
 		mainPage = mainView.getMainPage();
 
 		rejseafregningPage = mainView.getRejseafregningPage();
-		
+
 		oplysningerPage = mainView.getOplysninger();
 
 		navPage = mainView.getNavPage();
-		
+
 		rejsePage = mainView.getRejsePage();
 
 		//Clickhandler
@@ -88,7 +94,7 @@ public class Controller {
 		navPage.getOplysninger().addClickHandler(new ShowOplysningHandler());
 		rejseafregningPage.getAddTravelAnchor().addClickHandler(new ShowAddTravelHandler());
 		rejsePage.getAddProjectAnchor().addClickHandler(new AddProjectHandler());
-		
+
 		//BlurHandler
 		oplysningerPage.getName().addBlurHandler(new UpdateAnsatHandler());
 		oplysningerPage.getSurname().addBlurHandler(new UpdateAnsatHandler());
@@ -100,7 +106,7 @@ public class Controller {
 		oplysningerPage.getHouseNr().addBlurHandler(new UpdateAnsatHandler());
 		oplysningerPage.getFloor().addBlurHandler(new UpdateAnsatHandler());
 		oplysningerPage.getDoor().addBlurHandler(new UpdateAnsatHandler());
-		
+
 		RootLayoutPanel.get().add(mainView);
 	}
 
@@ -117,12 +123,12 @@ public class Controller {
 
 				@Override
 				public void onSuccess(Void result) {
-					
+
 				}
 			});	
 		}
 	}
-	
+
 	private class ZipCodeHandler implements BlurHandler
 	{
 		@Override
@@ -139,7 +145,7 @@ public class Controller {
 					oplysningerPage.setlCityName(result);
 				}
 			});
-			
+
 			ansatteService.updateAnsat(oplysningerPage.getAnsat(), new AsyncCallback<Void>() {
 
 				@Override
@@ -149,13 +155,13 @@ public class Controller {
 
 				@Override
 				public void onSuccess(Void result) {
-					
+
 				}
 			});
-			
+
 		}
 	}
-	
+
 	private class ShowLoginHandler implements ClickHandler 
 	{
 		@Override
@@ -185,6 +191,21 @@ public class Controller {
 						Window.alert("Forkert brugernavn eller kodeord");
 					}
 
+					afdelingerService.getAfdelinger(new AsyncCallback<List<AfdelingDTO>>() {
+
+						@Override
+						public void onFailure(Throwable caught) {
+							System.out.println("An error has occured");	
+						}
+
+						@Override
+						public void onSuccess(List<AfdelingDTO> result) {
+							oplysningerPage.setAfdelinger(result);
+							oplysningerPage.setDepartmentItems();
+						}
+
+					});
+					
 					ansatteService.getAnsat(result.email, new AsyncCallback<AnsatDTO>() {
 
 						@Override
@@ -197,13 +218,13 @@ public class Controller {
 							if (result == null) {
 								//Skal ændres til noget label ændring eller lign
 								Window.alert("Brugeren er ikke oprettet korrekt i systemet");
-								
-								
+
+
 							} else {
 								mainView.showContentWidget(mainPage);
 								mainView.showNavWidget(navPage);
 								mainView.showTopWidget(loginTopView);
-								
+					
 								oplysningerPage.setAnsat(result);
 								byerService.getBy(result.getPostnr(), new AsyncCallback<String>() {
 
@@ -216,11 +237,11 @@ public class Controller {
 									public void onSuccess(String result) {
 										oplysningerPage.setlCityName(result);
 									}
-									
+
 								});
 							}
 						}
-						
+
 					});
 				}
 			});
@@ -265,36 +286,36 @@ public class Controller {
 
 		}
 	}
-	
+
 	private class ShowOplysningHandler implements ClickHandler
 	{
 		@Override
 		public void onClick(ClickEvent event) {
 			mainView.showContentWidget(oplysningerPage);
-			
+
 		}
 	}
-	
+
 	private class ShowAddTravelHandler implements ClickHandler
 	{
 
 		@Override
 		public void onClick(ClickEvent event) {
 			mainView.showContentWidget(rejsePage);
-			
+
 		}
-		
+
 	}
-	
+
 	private class AddProjectHandler implements ClickHandler
 	{
 
 		@Override
 		public void onClick(ClickEvent event) {
 			rejsePage.addNewProject(rejsePage.getFlexTable());
-			
+
 		}
-		
+
 	}
-	
+
 }

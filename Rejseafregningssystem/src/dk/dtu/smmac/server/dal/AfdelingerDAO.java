@@ -11,9 +11,7 @@ import java.util.List;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import dk.dtu.smmac.client.service.AfdelingerService;
-import dk.dtu.smmac.client.service.AnsatteService;
 import dk.dtu.smmac.shared.AfdelingDTO;
-import dk.dtu.smmac.shared.AnsatDTO;
 
 public class AfdelingerDAO extends RemoteServiceServlet implements AfdelingerService {
 

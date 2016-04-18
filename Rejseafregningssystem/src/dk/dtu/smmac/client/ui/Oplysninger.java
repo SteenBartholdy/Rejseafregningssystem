@@ -1,11 +1,15 @@
 package dk.dtu.smmac.client.ui;
 
+import java.util.List;
+
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import dk.dtu.smmac.shared.AfdelingDTO;
 import dk.dtu.smmac.shared.AnsatDTO;
 
 public class Oplysninger extends Composite {
@@ -13,8 +17,10 @@ public class Oplysninger extends Composite {
 	private VerticalPanel vPanel = new VerticalPanel();
 	private FlexTable fTable;
 	private Label lName, lSurname, lZipcode, lCity, lCityName, lDepartment, lTelephone, lEmail, lRoad, lHouseNr, lFloor, lDoor;
-	private TextBox name, surname, zipcode, department, telephone, email, road, houseNr, floor, door;
+	private TextBox name, surname, zipcode, telephone, email, road, houseNr, floor, door;
+	private ListBox department;
 	private AnsatDTO ansat;
+	private List<AfdelingDTO> afdelinger;
 	
 	public Oplysninger() {
 		initWidget(this.vPanel);
@@ -33,7 +39,7 @@ public class Oplysninger extends Composite {
 		lCityName = new Label();
 		
 		lDepartment = new Label("Afdeling:");
-		department = new TextBox();
+		department = new ListBox();
 		
 		lTelephone = new Label("Telefon:");
 		telephone = new TextBox();
@@ -88,7 +94,7 @@ public class Oplysninger extends Composite {
 		name.setText(ansat.getFornavn());
 		surname.setText(ansat.getEfternavn());
 		zipcode.setText(ansat.getPostnr()+"");
-		department.setText(ansat.getAfdeling());
+		department.setItemSelected(getDepartmentIndex(ansat.getAfdeling()), true);
 		telephone.setText(ansat.getTlf()+"");
 		email.setText(ansat.getEmail());
 		road.setText(ansat.getVejnavn());
@@ -102,7 +108,7 @@ public class Oplysninger extends Composite {
 		ansat.setFornavn(name.getText());
 		ansat.setEfternavn(surname.getText());
 		ansat.setPostnr(Integer.parseInt(zipcode.getText()));
-		ansat.setAfdeling(department.getText());
+		ansat.setAfdeling(department.getValue(department.getSelectedIndex()));
 		ansat.setTlf(Integer.parseInt(telephone.getText()));
 		ansat.setEmail(email.getText());
 		ansat.setVejnavn(road.getText());
@@ -111,6 +117,30 @@ public class Oplysninger extends Composite {
 		ansat.setDoer(door.getText());
 		
 		return ansat;
+	}
+	
+	public void setAfdelinger(List<AfdelingDTO> afdelinger)
+	{
+		this.afdelinger = afdelinger;
+	}
+	
+	public void setDepartmentItems() {
+		for(int i = 0; i < this.afdelinger.size(); i++)
+		{
+			department.addItem(this.afdelinger.get(i).getAfdeling());
+		}
+	}
+	
+	public int getDepartmentIndex(String afdeling)
+	{
+		for(int i = 0; i < afdelinger.size(); i++)
+		{
+			if(afdelinger.get(i).getAfdeling().equals(afdeling))
+			{
+				return i;
+			}
+		}
+		return 0;
 	}
 
 	public VerticalPanel getvPanel() {
@@ -201,11 +231,11 @@ public class Oplysninger extends Composite {
 		this.zipcode = zipcode;
 	}
 
-	public TextBox getDepartment() {
+	public ListBox getDepartment() {
 		return department;
 	}
 
-	public void setDepartment(TextBox department) {
+	public void setDepartment(ListBox department) {
 		this.department = department;
 	}
 
