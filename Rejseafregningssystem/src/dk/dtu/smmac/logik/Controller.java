@@ -24,6 +24,7 @@ import dk.dtu.smmac.client.ui.MainPage;
 import dk.dtu.smmac.client.ui.MainView;
 import dk.dtu.smmac.client.ui.NavigationView;
 import dk.dtu.smmac.client.ui.Oplysninger;
+import dk.dtu.smmac.client.ui.Rejse;
 import dk.dtu.smmac.client.ui.Rejseafregning;
 import dk.dtu.smmac.shared.AnsatDTO;
 
@@ -44,6 +45,8 @@ public class Controller {
 	private Oplysninger oplysningerPage;
 
 	private NavigationView navPage;
+	
+	private Rejse rejsePage;
 	
 	private HTML emptyView;
 	private HTML emptyTopView;
@@ -72,6 +75,8 @@ public class Controller {
 		oplysningerPage = mainView.getOplysninger();
 
 		navPage = mainView.getNavPage();
+		
+		rejsePage = mainView.getRejsePage();
 
 		//Clickhandler
 		loginTopView.getLoginAnchor().addClickHandler(new ShowLoginHandler());
@@ -81,6 +86,7 @@ public class Controller {
 		rejseafregningPage.getBilagButton().addClickHandler(new ShowBilagHandler());
 		navPage.getOpgaver().addClickHandler(new ShowOpgaveHandler());
 		navPage.getOplysninger().addClickHandler(new ShowOplysningHandler());
+		rejseafregningPage.getAddTravelAnchor().addClickHandler(new ShowAddTravelHandler());
 		
 		//BlurHandler
 		oplysningerPage.getName().addBlurHandler(new UpdateAnsatHandler());
@@ -266,6 +272,17 @@ public class Controller {
 			mainView.showContentWidget(oplysningerPage);
 			
 		}
+	}
+	
+	private class ShowAddTravelHandler implements ClickHandler
+	{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			mainView.showContentWidget(rejsePage);
+			
+		}
+		
 	}
 	
 }
