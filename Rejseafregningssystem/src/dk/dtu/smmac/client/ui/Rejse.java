@@ -6,6 +6,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
 
@@ -13,11 +14,12 @@ public class Rejse extends Composite {
 	
 	private VerticalPanel vPanel = new VerticalPanel();
 	private FlexTable fTable;
-	private Label countryL, dateL, dateToL, projectL, assignmentL;
-	private ListBox country, project, assignment;
+	private Label countryL, dateL, dateToL, projectL, assignmentL, projectL2, assignmentL2, shareL, shareL2;
+	private ListBox country, project, assignment, project2, assignment2, shareList, shareList2;
 	private DateBox date, dateTo;
 	private DateTimeFormat dateFormat;
 	private Anchor addProject;
+	private TextBox shareT, shareT2;
 	
 	public Rejse()
 	{
@@ -32,6 +34,8 @@ public class Rejse extends Composite {
 		
 		projectL = new Label("Projekt");
 		assignmentL = new Label("Opgave");
+		projectL2 = new Label("Projekt");
+		assignmentL2 = new Label("Opgave");
 		
 		addProject = new Anchor();
 		addProject.setText("Tilføj flere opgaver/projekter");
@@ -46,6 +50,22 @@ public class Rejse extends Composite {
 		
 		project = new ListBox();
 		assignment = new ListBox();
+		project2 = new ListBox();
+		assignment2 = new ListBox();
+		
+		shareL = new Label("Andel");
+		shareT = new TextBox();
+		shareT.setPixelSize(60, 15);
+		shareList = new ListBox();
+		shareList.addItem("%");
+		shareList.addItem("kr.");
+
+		shareL2 = new Label("Andel");
+		shareT2 = new TextBox();
+		shareT2.setPixelSize(60, 15);
+		shareList2 = new ListBox();
+		shareList2.addItem("%");
+		shareList2.addItem("kr.");
 		
 		dateFormat = DateTimeFormat.getFormat("dd/MM-yyyy");
 		
@@ -63,6 +83,12 @@ public class Rejse extends Composite {
 		fTable.setWidget(2, 1, project);
 		fTable.setWidget(2, 2, assignmentL);
 		fTable.setWidget(2, 3, assignment);
+		fTable.setWidget(2, 4, shareL);
+		fTable.setWidget(2, 5, shareT);
+		fTable.setWidget(2, 6, shareList);
+		
+		//SKAL IKKE GØRE SÅDAN HER. HENTES FRA DATABASE HVIS DER ER LAVET NOGET ANDET
+		setShareForProject1("100", "%");
 		
 		fTable.setStyleName("flextable");
 		
@@ -101,5 +127,51 @@ public class Rejse extends Composite {
 	{
 		return dateFormat.format(dateTo.getValue());
 	}
+	
+	public void addNewProject(FlexTable flextable)
+	{
+		int numRows = flextable.getRowCount();
+		
+		fTable.setWidget(numRows, 0, projectL2);
+		fTable.setWidget(numRows, 1, project2);
+		fTable.setWidget(numRows, 2, assignmentL2);
+		fTable.setWidget(numRows, 3, assignment2);
+		fTable.setWidget(numRows, 4, shareL2);
+		fTable.setWidget(numRows, 5, shareT2);
+		fTable.setWidget(numRows, 6, shareList2);
+		this.addProject.setVisible(false);
+	}
+	
+	public void setShareForProject1(String share, String type)
+	{
+		shareT.setText(share);
+		if(type == "kr")
+		{
+			shareList.setItemSelected(2, true);
+		}
+		else
+		{
+			shareList.setItemSelected(1, true);
+		}
+	}
+	
+	public void setShareForProject2(String share, String type)
+	{
+		shareT2.setText(share);
+		if(type == "kr")
+		{
+			shareList2.setItemSelected(1, true);
+		}
+		else
+		{
+			shareList2.setItemSelected(0, true);
+		}
+	}
+	
+	public FlexTable getFlexTable()
+	{
+		return fTable;
+	}
+	
 
 }

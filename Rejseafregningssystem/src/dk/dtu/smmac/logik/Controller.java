@@ -87,6 +87,7 @@ public class Controller {
 		navPage.getOpgaver().addClickHandler(new ShowOpgaveHandler());
 		navPage.getOplysninger().addClickHandler(new ShowOplysningHandler());
 		rejseafregningPage.getAddTravelAnchor().addClickHandler(new ShowAddTravelHandler());
+		rejsePage.getAddProjectAnchor().addClickHandler(new AddProjectHandler());
 		
 		//BlurHandler
 		oplysningerPage.getName().addBlurHandler(new UpdateAnsatHandler());
@@ -280,6 +281,17 @@ public class Controller {
 		@Override
 		public void onClick(ClickEvent event) {
 			mainView.showContentWidget(rejsePage);
+			
+		}
+		
+	}
+	
+	private class AddProjectHandler implements ClickHandler
+	{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			rejsePage.addNewProject(rejsePage.getFlexTable());
 			
 		}
 		
