@@ -86,3 +86,8 @@ table.flextable td:nth-child(3) {
 table.flextable td:nth-child(4) {
 	height: 40px;
 }
+
+.navView {
+	padding: 10px;
+	height: 150px;
+}

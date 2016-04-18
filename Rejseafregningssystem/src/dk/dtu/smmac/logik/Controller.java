@@ -94,6 +94,7 @@ public class Controller {
 		navPage.getOplysninger().addClickHandler(new ShowOplysningHandler());
 		rejseafregningPage.getAddTravelAnchor().addClickHandler(new ShowAddTravelHandler());
 		rejsePage.getAddProjectAnchor().addClickHandler(new AddProjectHandler());
+		rejsePage.getDeleteProjectButton().addClickHandler(new DeleteProjectHandler());
 
 		//BlurHandler
 		oplysningerPage.getName().addBlurHandler(new UpdateAnsatHandler());
@@ -318,4 +319,14 @@ public class Controller {
 
 	}
 
+	private class DeleteProjectHandler implements ClickHandler
+	{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			rejsePage.deleteNewProject(rejsePage.getFlexTable());
+			
+		}
+		
+	}
 }

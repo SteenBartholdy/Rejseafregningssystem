@@ -5,7 +5,7 @@
 	
 	</ui:style>
 		
-	<g:VerticalPanel styleName="padding">
+	<g:VerticalPanel styleName="navView">
 		<g:Anchor text="Mine opgaver" ui:field="opgaver" styleName="spacing"/>
 		<g:Anchor text="Dokumentetarkiv" ui:field="arkiv" styleName="spacing"/>
 		<g:Anchor ui:field="rapporter" text="Rapporter" styleName="spacing"/>
