@@ -22,6 +22,8 @@ import dk.dtu.smmac.client.service.AnsatteService;
 import dk.dtu.smmac.client.service.AnsatteServiceAsync;
 import dk.dtu.smmac.client.service.ByerService;
 import dk.dtu.smmac.client.service.ByerServiceAsync;
+import dk.dtu.smmac.client.service.DAWAService;
+import dk.dtu.smmac.client.service.DAWAServiceAsync;
 import dk.dtu.smmac.client.service.LoginService;
 import dk.dtu.smmac.client.service.LoginServiceAsync;
 import dk.dtu.smmac.client.ui.Bilag;
@@ -67,7 +69,8 @@ public class Controller {
 	private AnsatteServiceAsync ansatteService = GWT.create(AnsatteService.class);
 	private ByerServiceAsync byerService = GWT.create(ByerService.class);
 	private AfdelingerServiceAsync afdelingerService = GWT.create(AfdelingerService.class);
-
+	private DAWAServiceAsync dawaService = GWT.create(DAWAService.class);
+	
 	AsyncCallback<Void> asyncEmpty;
 
 	public Controller()
