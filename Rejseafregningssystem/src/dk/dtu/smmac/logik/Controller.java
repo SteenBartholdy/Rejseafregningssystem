@@ -120,6 +120,7 @@ public class Controller {
 		rejseafregningPage.getAddTravelAnchor().addClickHandler(new ShowAddTravelHandler());
 		rejsePage.getAddProjectAnchor().addClickHandler(new AddProjectHandler());
 		rejsePage.getDeleteProjectButton().addClickHandler(new DeleteProjectHandler());
+		glemtPasswordPage.getbtnAnnullerPassword().addClickHandler(new ShowLoginHandler());
 
 		//BlurHandler
 		oplysningerPage.getName().addBlurHandler(new UpdateAnsatHandler());

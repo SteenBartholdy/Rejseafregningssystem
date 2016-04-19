@@ -2,6 +2,7 @@ package dk.dtu.smmac.client.ui;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Label;
@@ -9,23 +10,33 @@ import com.google.gwt.user.client.ui.Label;
 public class GlemtPassword extends Composite 
 {	
 	private VerticalPanel vPanel = new VerticalPanel();
+	private HorizontalPanel hPanel = new HorizontalPanel();
 	private TextBox mail;
-	private Button btnOK;
+	private Button btnSend, btnAnnuller;
 	private Label info;
 	
 	public GlemtPassword()
 	{
 		initWidget(this.vPanel);
 		
-		info = new Label("Indtast mailadressen (brugernavn) for at få tilsendt dit kodeord: ");
+		info = new Label("Indtast din mailadresse for at få tilsendt dit kodeord: ");
 		mail = new TextBox();
-		btnOK = new Button("OK");
+		btnSend = new Button("Send");
+		btnAnnuller = new Button("Annuller");
 		
 		vPanel.add(info);
 		vPanel.add(mail);
-		vPanel.add(btnOK);
+		hPanel.add(btnSend);
+		hPanel.add(btnAnnuller);
+		vPanel.add(hPanel);
+		
 	}
 	
+	public Button getbtnSendPassword(){
+		return btnSend;
+	}
 	
-	
+	public Button getbtnAnnullerPassword(){
+		return btnAnnuller;
+	}
 }
