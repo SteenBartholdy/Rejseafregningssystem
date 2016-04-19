@@ -8,7 +8,7 @@ import java.rmi.server.UnicastRemoteObject;
 import dk.dtu.smmac.server.logik.LoginLogik;
 import dk.dtu.smmac.server.logik.LoginLogikI;
 
-public class BrugerAdminServer {
+public class BrugerAdminRMI {
 
 	private final String rmi = "rmi://localhost/Login";
 	private Registry registry;
@@ -18,13 +18,13 @@ public class BrugerAdminServer {
         LoginLogikI login = new LoginLogik();
         
         Naming.rebind(rmi, login);
-        System.out.println("BrugerAdminServer registreret.");
+        System.out.println("BrugerAdmin rmi server registreret.");
 	}
 	
 	public void close() throws Exception {
 		Naming.unbind(rmi);
         UnicastRemoteObject.unexportObject(registry, true);
-        System.out.println("BrugerAdminServer lukket.");
+        System.out.println("BrugerAdmin rmi server lukket.");
 	}
 	
 }

@@ -6,7 +6,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import brugerautorisation.data.Bruger;
 import dk.dtu.smmac.client.service.LoginService;
-import dk.dtu.smmac.server.BrugerAdminServer;
+import dk.dtu.smmac.server.BrugerAdminRMI;
 import dk.dtu.smmac.server.logik.LoginLogikI;
 
 public class Login extends RemoteServiceServlet implements LoginService {
@@ -17,7 +17,7 @@ public class Login extends RemoteServiceServlet implements LoginService {
 
 	@Override
 	public Bruger logIn(String brugernavn, String kode) throws Exception {
-		BrugerAdminServer server = new BrugerAdminServer();
+		BrugerAdminRMI server = new BrugerAdminRMI();
 		Bruger b = null;
 		
 		try {
@@ -41,7 +41,7 @@ public class Login extends RemoteServiceServlet implements LoginService {
 
 	@Override
 	public boolean changePassword(String brugernavn, String kode, String nyKode) throws Exception {
-		BrugerAdminServer server = new BrugerAdminServer();
+		BrugerAdminRMI server = new BrugerAdminRMI();
 		
 		try {
 			server.start();
