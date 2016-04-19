@@ -122,6 +122,8 @@ public class Controller {
 		rejsePage.getDeleteProjectButton().addClickHandler(new DeleteProjectHandler());
 		glemtPasswordPage.getbtnSendPassword().addClickHandler(new SendPasswordHandler());
 		glemtPasswordPage.getbtnAnnullerPassword().addClickHandler(new ShowLoginHandler());
+		bilagPage.getAddBilag().addClickHandler(new AddBilagHandler());
+		bilagPage.getDelete().addClickHandler(new DeleteBilagHandler());
 
 		//BlurHandler
 		oplysningerPage.getName().addBlurHandler(new UpdateAnsatHandler());
@@ -373,6 +375,28 @@ public class Controller {
 		@Override
 		public void onClick(ClickEvent event) {
 			rejsePage.deleteNewProject(rejsePage.getFlexTable());
+
+		}
+
+	}
+	
+	private class AddBilagHandler implements ClickHandler
+	{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			bilagPage.addNewBilag(bilagPage.getFlexTable());
+
+		}
+
+	}
+	
+	private class DeleteBilagHandler implements ClickHandler
+	{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			bilagPage.deleteNewBilag(bilagPage.getFlexTable());
 
 		}
 

@@ -1,6 +1,5 @@
 package dk.dtu.smmac.client.ui;
 
-import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Anchor;
@@ -14,7 +13,7 @@ public class Bilag extends Composite {
 	// private CellTable<Bilag> table;
 	private VerticalPanel vPanel = new VerticalPanel();
 	private FlexTable fTable;
-	private Button delete;
+	private Button delete, edit, upload;
 	private Anchor addBilag;
 	private Label bilagName;
 	private TextBox info;
@@ -26,18 +25,19 @@ public class Bilag extends Composite {
 		fTable = new FlexTable();
 		
 		bilagName = new Label("Bilag 1");
-		
 		info = new TextBox();
 		
 		delete = new Button();
 		delete.setText("Slet");
 		
+		edit = new Button();
+		edit.setText("Redigér");
+		
+		upload = new Button();
+		upload.setText("Tilføj fil");
+		
 		addBilag = new Anchor();
 		addBilag.setText("Tilføj bilag");
-		
-		fTable.setWidget(0, 0, bilagName);
-		fTable.setWidget(0, 1, info);
-		fTable.setWidget(0, 2, delete);
 		
 		fTable.setStyleName("flextable");
 		
@@ -45,6 +45,38 @@ public class Bilag extends Composite {
 		
 		vPanel.add(fTable);
 		vPanel.add(addBilag);			
+	}
+	
+	public void addNewBilag(FlexTable flextable)
+	{
+		int numRows = flextable.getRowCount();
+		
+		fTable.setWidget(numRows, 0, bilagName);
+		fTable.setWidget(numRows, 1, info);
+		fTable.setWidget(numRows, 2, upload);
+		fTable.setWidget(numRows, 3, edit);
+		fTable.setWidget(numRows, 4, delete);
+	}
+	
+	public void deleteNewBilag(FlexTable flextable)
+	{
+		flextable.removeRow(flextable.getRowCount() - 1);
+		// this.addBilag.setVisible(true);
+	}
+	
+	public Anchor getAddBilag()
+	{
+		return addBilag;
+	}
+
+	public FlexTable getFlexTable()
+	{
+		return fTable;
+	}
+	
+	public Button getDelete()
+	{
+		return delete;
 	}
 	
 }
