@@ -40,6 +40,15 @@
 		<servlet-name>afdelingerservice</servlet-name>
 		<url-pattern>/rejseafregningssystem/afdelingerservice</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>dawaservice</servlet-name>
+		<servlet-class>dk.dtu.smmac.server.dal.DAWA</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dawaservice</servlet-name>
+		<url-pattern>/rejseafregningssystem/dawaservice</url-pattern>
+	</servlet-mapping>
 
 	<!-- Default page to serve -->
 	<welcome-file-list>

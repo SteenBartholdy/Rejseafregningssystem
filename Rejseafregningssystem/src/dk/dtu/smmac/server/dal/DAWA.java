@@ -12,9 +12,13 @@ import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+import dk.dtu.smmac.client.service.DAWAService;
+import dk.dtu.smmac.client.service.LoginService;
 import dk.dtu.smmac.shared.PostNrDTO;
 
-public class DAWA {
+public class DAWA extends RemoteServiceServlet implements DAWAService {
 	
 	private String data;
     private JSONArray json;
@@ -23,6 +27,7 @@ public class DAWA {
     private final String API = "http://dawa.aws.dk/";
     
     //Henter post nummer listen
+    @Override
     public List<PostNrDTO> getZip() throws Exception {
     	List<PostNrDTO> zip = new ArrayList<PostNrDTO>();
     	
@@ -38,6 +43,7 @@ public class DAWA {
     }
     
     //Henter vejnavn listen
+    @Override
     public List<String> getRoad(String zip) throws Exception {
 		List<String> road = new ArrayList<String>();
 		
@@ -53,6 +59,7 @@ public class DAWA {
     }
     
     //Henter husnr listen
+    @Override
     public List<String> getHouseNo(String zip, String road) throws Exception {
     	List<String> houseNo = new ArrayList<String>();
     	
@@ -68,6 +75,7 @@ public class DAWA {
     }
     
     //Henter etagenr listen
+    @Override
     public List<String> getFloor(String zip, String road, String houseNo) throws Exception {
     	List<String> floor = new ArrayList<String>();
     	
@@ -88,6 +96,7 @@ public class DAWA {
     }
     
     //Henter dør listen
+    @Override
     public List<String> getDoor(String zip, String road, String houseNo, String floor) throws Exception {
     	List<String> door = new ArrayList<String>();
     	
