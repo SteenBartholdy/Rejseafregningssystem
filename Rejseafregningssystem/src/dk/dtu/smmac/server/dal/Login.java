@@ -1,13 +1,19 @@
 package dk.dtu.smmac.server.dal;
 
+import java.net.URL;
 import java.rmi.Naming;
+
+import javax.xml.namespace.QName;
+import javax.xml.ws.Service;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import brugerautorisation.data.Bruger;
 import dk.dtu.smmac.client.service.LoginService;
 import dk.dtu.smmac.server.BrugerAdminRMI;
+import dk.dtu.smmac.server.BrugerAdminSOAP;
 import dk.dtu.smmac.server.logik.LoginLogikI;
+import dk.dtu.smmac.server.logik.PasswordLogikI;
 
 public class Login extends RemoteServiceServlet implements LoginService {
 
@@ -66,7 +72,27 @@ public class Login extends RemoteServiceServlet implements LoginService {
 
 	@Override
 	public boolean forgotPassword(String brugernavn) throws Exception {
-		// TODO Auto-generated method stub
+		BrugerAdminSOAP server = new BrugerAdminSOAP();
+
+		try {
+			server.start();
+			URL url = new URL("http://localhost:9901/password?wsdl");
+			QName qname = new QName("http://logik.server.smmac.dtu.dk/", "PasswordLogikService"); 
+			Service service = Service.create(url, qname);
+			PasswordLogikI pass = service.getPort(PasswordLogikI.class);
+
+			pass.forgotPassword(brugernavn);
+			return true;
+		} catch (Exception e) {
+            e.printStackTrace(System.out);
+        } finally {
+			try {
+				server.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 		return false;
 	}
 	
