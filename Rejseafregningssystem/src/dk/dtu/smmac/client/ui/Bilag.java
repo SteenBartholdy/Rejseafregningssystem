@@ -74,6 +74,11 @@ public class Bilag extends Composite {
 		return fTable;
 	}
 	
+	public Button[] getBList()
+	{
+		return bList;
+	}
+	
 	public Button getDelete()
 	{
 		return delete;
