@@ -30,13 +30,25 @@ public class GlemtPassword extends Composite
 		hPanel.add(btnAnnuller);
 		vPanel.add(hPanel);
 		
+		vPanel.setStyleName("margin");
+		info.setStyleName("marginButtom");
+		mail.setStyleName("marginButtom");
+		btnSend.setStyleName("marginRight");
+		
 	}
 	
-	public Button getbtnSendPassword(){
+	public Button getbtnSendPassword()
+	{
 		return btnSend;
 	}
 	
-	public Button getbtnAnnullerPassword(){
+	public Button getbtnAnnullerPassword()
+	{
 		return btnAnnuller;
+	}
+
+	public String getMailPassword()
+	{
+		return mail.getText();
 	}
 }
