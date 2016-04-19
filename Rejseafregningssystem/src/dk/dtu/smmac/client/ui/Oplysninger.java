@@ -22,7 +22,7 @@ public class Oplysninger extends Composite {
 	private AnsatDTO ansat;
 	private List<AfdelingDTO> afdelinger;
 	private String width = "200px";
-	private String height = "12px";
+	private String height = "20px";
 	
 	public Oplysninger() {
 		initWidget(this.vPanel);

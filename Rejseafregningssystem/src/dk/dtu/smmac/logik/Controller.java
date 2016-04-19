@@ -7,6 +7,9 @@ import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTML;
@@ -63,7 +66,7 @@ public class Controller {
 	private AfdelingerServiceAsync afdelingerService = GWT.create(AfdelingerService.class);
 
 	AsyncCallback<Void> asyncEmpty;
-	
+
 	public Controller()
 	{
 		mainView = new MainView();
@@ -88,7 +91,7 @@ public class Controller {
 
 		//Async
 		asyncEmpty = new AsyncCallback<Void>() {
-			
+
 			@Override
 			public void onFailure(Throwable caught) {
 				System.out.println("An error has occured");	
@@ -98,7 +101,7 @@ public class Controller {
 			public void onSuccess(Void result) {
 			}
 		};
-		
+
 		//Clickhandler
 		loginTopView.getLoginAnchor().addClickHandler(new ShowLoginHandler());
 		loginPage.getLoginButton().addClickHandler(new LoginHandler());
@@ -123,6 +126,16 @@ public class Controller {
 		oplysningerPage.getFloor().addBlurHandler(new UpdateAnsatHandler());
 		oplysningerPage.getDoor().addBlurHandler(new UpdateAnsatHandler());
 
+		//Enter Handler
+		EnterKeyHandler enterHandler = new EnterKeyHandler() {
+			public void enterKeyDown(KeyDownEvent event) {
+
+				LoginHandler login = new LoginHandler(); 
+				login.onClick(login.getEvent());
+			}
+		};
+		loginPage.getPasswordTextField().addKeyDownHandler(enterHandler);
+
 		//Afdeling load
 		afdelingerService.getAfdelinger(new AsyncCallback<List<AfdelingDTO>>() {
 
@@ -138,7 +151,7 @@ public class Controller {
 			}
 
 		});
-		
+
 		//Rootpanel
 		RootLayoutPanel.get().add(mainView);
 	}
@@ -185,9 +198,11 @@ public class Controller {
 
 	private class LoginHandler implements ClickHandler
 	{
+		
+		ClickEvent event;
 		@Override
 		public void onClick(ClickEvent event) {
-
+			this.event = event;
 			loginService.logIn(loginPage.getBrugernavn(), loginPage.getPassword(), new AsyncCallback<Bruger>(){
 
 				@Override
@@ -201,7 +216,7 @@ public class Controller {
 						//Skal ændres til noget label ændring eller lign
 						Window.alert("Forkert brugernavn eller kodeord");
 					}
-					
+
 					ansatteService.getAnsat(result.email, new AsyncCallback<AnsatDTO>() {
 
 						@Override
@@ -218,7 +233,7 @@ public class Controller {
 								mainView.showContentWidget(mainPage);
 								mainView.showNavWidget(navPage);
 								mainView.showTopWidget(loginTopView);
-					
+
 								oplysningerPage.setAnsat(result);
 								byerService.getBy(result.getPostnr(), new AsyncCallback<String>() {
 
@@ -239,6 +254,11 @@ public class Controller {
 					});
 				}
 			});
+		}
+		
+		public ClickEvent getEvent()
+		{
+			return this.event;
 		}
 	}
 
@@ -318,8 +338,17 @@ public class Controller {
 		@Override
 		public void onClick(ClickEvent event) {
 			rejsePage.deleteNewProject(rejsePage.getFlexTable());
-			
+
 		}
-		
+
 	}
+
+	private abstract class EnterKeyHandler implements KeyDownHandler {
+		public void onKeyDown(KeyDownEvent event) {
+			if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER)
+				enterKeyDown(event);
+		}
+		public abstract void enterKeyDown(KeyDownEvent event);
+	}
+
 }

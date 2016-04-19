@@ -49,4 +49,9 @@ public class LoginPage extends Composite {
 	{
 		return password.getText();
 	}
+	
+	public PasswordTextBox getPasswordTextField()
+	{
+		return password;
+	}
 }
