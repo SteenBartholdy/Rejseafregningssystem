@@ -87,6 +87,7 @@ public class DAWA {
     	return floor;
     }
     
+    //Henter dør listen
     public List<String> getDoor(String zip, String road, String houseNo, String floor) throws Exception {
     	List<String> door = new ArrayList<String>();
     	
