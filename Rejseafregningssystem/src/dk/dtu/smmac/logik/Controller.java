@@ -156,6 +156,7 @@ public class Controller {
 			@Override
 			public void onFailure(Throwable caught) {
 				System.out.println("An error has occured");	
+				Window.alert(caught.getMessage());
 			}
 
 			@Override
@@ -179,6 +180,7 @@ public class Controller {
 				@Override
 				public void onFailure(Throwable caught) {
 					System.out.println("An error has occured");
+					Window.alert(caught.getMessage());
 				}
 
 				@Override
@@ -212,7 +214,8 @@ public class Controller {
 
 				@Override
 				public void onFailure(Throwable caught) {
-					System.out.println("An error has occured");		
+					System.out.println("An error has occured");	
+					Window.alert(caught.getMessage());
 				}
 
 				@Override
@@ -248,6 +251,7 @@ public class Controller {
 				@Override
 				public void onFailure(Throwable caught) {
 					System.out.println("An error has occured");
+					Window.alert(caught.getMessage());
 				}
 
 				@Override
@@ -262,6 +266,7 @@ public class Controller {
 						@Override
 						public void onFailure(Throwable caught) {
 							System.out.println("An error has occured");
+							Window.alert(caught.getMessage());
 						}
 
 						@Override
