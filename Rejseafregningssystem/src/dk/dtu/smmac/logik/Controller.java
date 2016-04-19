@@ -25,6 +25,7 @@ import dk.dtu.smmac.client.service.ByerServiceAsync;
 import dk.dtu.smmac.client.service.LoginService;
 import dk.dtu.smmac.client.service.LoginServiceAsync;
 import dk.dtu.smmac.client.ui.Bilag;
+import dk.dtu.smmac.client.ui.GlemtPassword;
 import dk.dtu.smmac.client.ui.LoginPage;
 import dk.dtu.smmac.client.ui.LoginTopView;
 import dk.dtu.smmac.client.ui.MainPage;
@@ -55,6 +56,8 @@ public class Controller {
 	private NavigationView navPage;
 
 	private Rejse rejsePage;
+	
+	private GlemtPassword glemtPasswordPage;
 
 	private HTML emptyView;
 	private HTML emptyTopView;
@@ -88,6 +91,8 @@ public class Controller {
 		navPage = mainView.getNavPage();
 
 		rejsePage = mainView.getRejsePage();
+		
+		glemtPasswordPage = mainView.getGlemtPasswordPage();
 
 		//Async
 		asyncEmpty = new AsyncCallback<Void>() {
@@ -268,7 +273,7 @@ public class Controller {
 		@Override
 		public void onClick(ClickEvent event) {
 			//Her skal vi bruge serveren
-			Window.alert("Ej hvor er du bare dum at du har glemt dit password!!!!");
+			mainView.showContentWidget(glemtPasswordPage);
 
 		}
 
