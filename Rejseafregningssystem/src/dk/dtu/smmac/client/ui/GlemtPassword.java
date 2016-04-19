@@ -19,7 +19,7 @@ public class GlemtPassword extends Composite
 	{
 		initWidget(this.vPanel);
 		
-		info = new Label("Indtast din mailadresse for at få tilsendt dit kodeord: ");
+		info = new Label("Indtast dit brugernavn for at få tilsendt dit kodeord: ");
 		mail = new TextBox();
 		btnSend = new Button("Send");
 		btnAnnuller = new Button("Annuller");
@@ -33,7 +33,7 @@ public class GlemtPassword extends Composite
 		vPanel.setStyleName("margin");
 		info.setStyleName("marginButtom");
 		mail.setStyleName("marginButtom");
-		btnSend.setStyleName("marginRight");
+		//btnSend.setStyleName("marginRight");
 		
 	}
 	
