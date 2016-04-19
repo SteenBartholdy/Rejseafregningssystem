@@ -127,14 +127,14 @@ public class Controller {
 		oplysningerPage.getDoor().addBlurHandler(new UpdateAnsatHandler());
 
 		//Enter Handler
-		EnterKeyHandler enterHandler = new EnterKeyHandler() {
+		EnterKeyHandler enterLoginHandler = new EnterKeyHandler() {
 			public void enterKeyDown(KeyDownEvent event) {
 
 				LoginHandler login = new LoginHandler(); 
 				login.onClick(login.getEvent());
 			}
 		};
-		loginPage.getPasswordTextField().addKeyDownHandler(enterHandler);
+		loginPage.getPasswordTextField().addKeyDownHandler(enterLoginHandler);
 
 		//Afdeling load
 		afdelingerService.getAfdelinger(new AsyncCallback<List<AfdelingDTO>>() {
