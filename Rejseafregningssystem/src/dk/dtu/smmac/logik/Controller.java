@@ -62,6 +62,8 @@ public class Controller {
 	private ByerServiceAsync byerService = GWT.create(ByerService.class);
 	private AfdelingerServiceAsync afdelingerService = GWT.create(AfdelingerService.class);
 
+	AsyncCallback<Void> asyncEmpty;
+	
 	public Controller()
 	{
 		mainView = new MainView();
@@ -84,6 +86,19 @@ public class Controller {
 
 		rejsePage = mainView.getRejsePage();
 
+		//Async
+		asyncEmpty = new AsyncCallback<Void>() {
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("An error has occured");	
+			}
+
+			@Override
+			public void onSuccess(Void result) {
+			}
+		};
+		
 		//Clickhandler
 		loginTopView.getLoginAnchor().addClickHandler(new ShowLoginHandler());
 		loginPage.getLoginButton().addClickHandler(new LoginHandler());
@@ -124,6 +139,7 @@ public class Controller {
 
 		});
 		
+		//Rootpanel
 		RootLayoutPanel.get().add(mainView);
 	}
 
@@ -131,18 +147,7 @@ public class Controller {
 	{
 		@Override
 		public void onBlur(BlurEvent event) {
-			ansatteService.updateAnsat(oplysningerPage.getAnsat(), new AsyncCallback<Void>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					System.out.println("An error has occured");	
-				}
-
-				@Override
-				public void onSuccess(Void result) {
-
-				}
-			});	
+			ansatteService.updateAnsat(oplysningerPage.getAnsat(), asyncEmpty);
 		}
 	}
 
@@ -163,18 +168,7 @@ public class Controller {
 				}
 			});
 
-			ansatteService.updateAnsat(oplysningerPage.getAnsat(), new AsyncCallback<Void>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					System.out.println("An error has occured");	
-				}
-
-				@Override
-				public void onSuccess(Void result) {
-
-				}
-			});
+			ansatteService.updateAnsat(oplysningerPage.getAnsat(), asyncEmpty);
 
 		}
 	}
