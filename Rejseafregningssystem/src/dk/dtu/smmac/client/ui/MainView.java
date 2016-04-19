@@ -83,6 +83,7 @@ public class MainView extends Composite {
 		contentPanel.add(oplysningerPage);
 		contentPanel.add(rejsePage);
 		contentPanel.add(glemtPasswordPage);
+		contentPanel.add(bilagPage);
 		
 		//Load
 		showContentWidget(loginPage);

@@ -93,6 +93,8 @@ public class Controller {
 		rejsePage = mainView.getRejsePage();
 		
 		glemtPasswordPage = mainView.getGlemtPasswordPage();
+		
+		bilagPage = mainView.getBilagPage();
 
 		//Async
 		asyncEmpty = new AsyncCallback<Void>() {
