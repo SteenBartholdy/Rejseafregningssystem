@@ -120,6 +120,7 @@ public class Controller {
 		rejseafregningPage.getAddTravelAnchor().addClickHandler(new ShowAddTravelHandler());
 		rejsePage.getAddProjectAnchor().addClickHandler(new AddProjectHandler());
 		rejsePage.getDeleteProjectButton().addClickHandler(new DeleteProjectHandler());
+		glemtPasswordPage.getbtnSendPassword().addClickHandler(new SendPasswordHandler());
 		glemtPasswordPage.getbtnAnnullerPassword().addClickHandler(new ShowLoginHandler());
 
 		//BlurHandler
@@ -164,6 +165,32 @@ public class Controller {
 		RootLayoutPanel.get().add(mainView);
 	}
 
+	private class SendPasswordHandler implements ClickHandler 
+	{
+		@Override
+		public void onClick(ClickEvent event) {
+			loginService.forgotPassword(glemtPasswordPage.getMailPassword(), new AsyncCallback<Boolean>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					System.out.println("An error has occured");
+				}
+
+				@Override
+				public void onSuccess(Boolean result) {
+					if (result == true) {
+						Window.alert("Der er sendt en email med din kode i.");
+						mainView.showLoginPage();
+					} else if (result == false) {
+						Window.alert("Brugeren eksisterer ikke!");
+					}
+				}
+				
+			});
+			
+		}
+	}
+	
 	private class UpdateAnsatHandler implements BlurHandler
 	{
 		@Override
