@@ -1,6 +1,5 @@
 package dk.dtu.smmac.client.service;
 
-import java.io.IOException;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteService;
