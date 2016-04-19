@@ -32,8 +32,10 @@ public class GlemtPassword extends Composite
 		
 		vPanel.setStyleName("margin");
 		info.setStyleName("marginButtom");
+		mail.setHeight("20px");
 		mail.setStyleName("marginButtom");
-		//btnSend.setStyleName("marginRight");
+		btnSend.setStyleName("marginRight");
+		btnAnnuller.setStyleName("marginRight");
 		
 	}
 	
