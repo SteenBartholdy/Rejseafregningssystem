@@ -22,6 +22,8 @@ public class DAWAtest {
 			System.out.println(dawa.getFloor("2650", "Brostykkevej", "121"));
 			
 			System.out.println(dawa.getDoor("2650", "Brostykkevej", "121", "st"));
+			
+			System.out.println(dawa.getUrl("http://dawa.aws.dk/adgangsadresser?vejnavn=L%C3%A6rkevej&postnr=2400"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -74,7 +74,8 @@ public class DAWA extends RemoteServiceServlet implements DAWAService {
     	List<String> houseNo = new ArrayList<String>();
     	
     	this.data = getUrl(this.API + "adgangsadresser?vejnavn=" + road + "&postnr=" + zip);
-		this.json = new JSONArray(data);
+		//this.data = getUrl("http://dawa.aws.dk/adgangsadresser?vejnavn=Lærkevej&postnr=2400");
+    	this.json = new JSONArray(data);
     	
 		for (int i = 0; i < this.json.length(); i++) {
     		this.obj = this.json.getJSONObject(i);
@@ -131,6 +132,14 @@ public class DAWA extends RemoteServiceServlet implements DAWAService {
     
     //Henter indholdet fra en url og omskriver det til en string
     public String getUrl(String url) throws IOException {
+    	url = url.replace("æ", "%C3%A6");
+    	url = url.replace("ø", "%C3%B8");
+    	url = url.replace("å", "%C3%A5");
+    	url = url.replace("Æ", "%C3%86");
+    	url = url.replace("Ø", "%C3%98");
+    	url = url.replace("Å", "%C3%85");
+    	url = url.replace(" ", "%20");
+    	
         BufferedReader br = new BufferedReader(new InputStreamReader(new URL(url).openStream()));
         StringBuilder sb = new StringBuilder();
         String linje = br.readLine();
