@@ -21,9 +21,9 @@ public class Oplysninger extends Composite {
 	private VerticalPanel vPanel = new VerticalPanel();
 	private FlexTable fTable;
 	private Label lName, lSurname, lZipcode, lCity, lCityName, lDepartment, lTelephone, lEmail, lRoad, lHouseNr, lFloor, lDoor;
-	private TextBox name, surname, telephone, email, road, houseNr, floor, door;
+	private TextBox name, surname, telephone, email;
 	private ListBox department;
-	private SuggestBox zip;
+	private SuggestBox zip, road, houseNo, floor, door;
 	private AnsatDTO ansat;
 	private List<AfdelingDTO> afdelinger;
 	private String width = "200px";
@@ -69,22 +69,22 @@ public class Oplysninger extends Composite {
 		email.setHeight(height);
 
 		lRoad = new Label("Vejnavn");
-		road = new TextBox();
+		road = new SuggestBox(new MultiWordSuggestOracle());
 		road.setWidth(width);
 		road.setHeight(height);
 
 		lHouseNr = new Label("Hus nr.:");
-		houseNr = new TextBox();
-		houseNr.setWidth(width);
-		houseNr.setHeight(height);
+		houseNo = new SuggestBox(new MultiWordSuggestOracle());
+		houseNo.setWidth(width);
+		houseNo.setHeight(height);
 
 		lFloor = new Label("Etage:");
-		floor = new TextBox();
+		floor = new SuggestBox(new MultiWordSuggestOracle());
 		floor.setWidth(width);
 		floor.setHeight(height);
 
 		lDoor = new Label("Dør:");
-		door = new TextBox();
+		door = new SuggestBox(new MultiWordSuggestOracle());
 		door.setWidth(width);
 		door.setHeight(height);
 
@@ -106,7 +106,7 @@ public class Oplysninger extends Composite {
 		fTable.setWidget(7, 0, lRoad);
 		fTable.setWidget(7, 1, road);
 		fTable.setWidget(8, 0, lHouseNr);
-		fTable.setWidget(8, 1, houseNr);
+		fTable.setWidget(8, 1, houseNo);
 		fTable.setWidget(9, 0, lFloor);
 		fTable.setWidget(9, 1, floor);
 		fTable.setWidget(10, 0, lDoor);
@@ -116,13 +116,68 @@ public class Oplysninger extends Composite {
 		vPanel.add(fTable);
 	}
 
-	public void setZip(List<PostNrDTO> list)
-	{
+	public void setZip(List<PostNrDTO> list) {
 		MultiWordSuggestOracle oracle = (MultiWordSuggestOracle) zip.getSuggestOracle();
 		
 		for(int i = 0; i < list.size(); i++) {
 			oracle.add(list.get(i).getNo());
 		}
+	}
+	
+	public void setRoad(List<String> list) {
+		MultiWordSuggestOracle oracle = (MultiWordSuggestOracle) road.getSuggestOracle();
+		
+		for(int i = 0; i < list.size(); i++) {
+			oracle.add(list.get(i));
+		}
+	}
+	
+	public void setHouseNo(List<String> list) {
+		MultiWordSuggestOracle oracle = (MultiWordSuggestOracle) houseNo.getSuggestOracle();
+		
+		for(int i = 0; i < list.size(); i++) {
+			oracle.add(list.get(i));
+		}
+	}
+	
+	public void setFloor(List<String> list) {
+		MultiWordSuggestOracle oracle = (MultiWordSuggestOracle) floor.getSuggestOracle();
+		
+		for(int i = 0; i < list.size(); i++) {
+			oracle.add(list.get(i));
+		}
+	}
+	
+	public void setDoor(List<String> list) {
+		MultiWordSuggestOracle oracle = (MultiWordSuggestOracle) door.getSuggestOracle();
+		
+		for(int i = 0; i < list.size(); i++) {
+			oracle.add(list.get(i));
+		}
+	}
+	
+	public void resetRoad() {
+		MultiWordSuggestOracle oracle = (MultiWordSuggestOracle) road.getSuggestOracle();
+		oracle.clear();
+		road.setText("");
+	}
+	
+	public void resetHouseNo() {
+		MultiWordSuggestOracle oracle = (MultiWordSuggestOracle) houseNo.getSuggestOracle();
+		oracle.clear();
+		houseNo.setText("");
+	}
+	
+	public void resetFloor() {
+		MultiWordSuggestOracle oracle = (MultiWordSuggestOracle) floor.getSuggestOracle();
+		oracle.clear();
+		floor.setText("");
+	}
+	
+	public void resetDoor() {
+		MultiWordSuggestOracle oracle = (MultiWordSuggestOracle) door.getSuggestOracle();
+		oracle.clear();
+		door.setText("");
 	}
 	
 	public SuggestBox getZip() {
@@ -140,7 +195,7 @@ public class Oplysninger extends Composite {
 		telephone.setText(ansat.getTlf()+"");
 		email.setText(ansat.getEmail());
 		road.setText(ansat.getVejnavn());
-		houseNr.setText(ansat.gethusnr());
+		houseNo.setText(ansat.gethusnr());
 		floor.setText(ansat.getEtage());
 		door.setText(ansat.getDoer());
 	}
@@ -154,7 +209,7 @@ public class Oplysninger extends Composite {
 		ansat.setTlf(Integer.parseInt(telephone.getText()));
 		ansat.setEmail(email.getText());
 		ansat.setVejnavn(road.getText());
-		ansat.setHusnr(houseNr.getText());
+		ansat.setHusnr(houseNo.getText());
 		ansat.setEtage(floor.getText());
 		ansat.setDoer(door.getText());
 
@@ -281,19 +336,19 @@ public class Oplysninger extends Composite {
 		return email;
 	}
 
-	public TextBox getRoad() {
+	public SuggestBox getRoad() {
 		return road;
 	}
 
-	public TextBox getHouseNr() {
-		return houseNr;
+	public SuggestBox getHouseNr() {
+		return houseNo;
 	}
 
-	public TextBox getFloor() {
+	public SuggestBox getFloor() {
 		return floor;
 	}
 
-	public TextBox getDoor() {
+	public SuggestBox getDoor() {
 		return door;
 	}
 

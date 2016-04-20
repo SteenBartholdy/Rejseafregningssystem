@@ -73,6 +73,8 @@ public class Controller {
 	private DAWAServiceAsync dawaService = GWT.create(DAWAService.class);
 	
 	AsyncCallback<Void> asyncEmpty;
+	AsyncCallback<String> asyncCity;
+	AsyncCallback<List<String>> asyncRoad, asyncHouseNo, asyncFloor, asyncDoor;
 
 	@SuppressWarnings("deprecation")
 	public Controller()
@@ -113,7 +115,72 @@ public class Controller {
 			public void onSuccess(Void result) {
 			}
 		};
+		
+		asyncCity = new AsyncCallback<String>() {
 
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("An error has occured");		
+			}
+
+			@Override
+			public void onSuccess(String result) {
+				oplysningerPage.setlCityName(result);
+			}
+		};
+
+		asyncRoad = new AsyncCallback<List<String>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("An error has occured");
+			}
+
+			@Override
+			public void onSuccess(List<String> result) {
+				oplysningerPage.setRoad(result);
+			}
+		};
+		
+		asyncHouseNo = new AsyncCallback<List<String>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("An error has occured");
+			}
+
+			@Override
+			public void onSuccess(List<String> result) {
+				oplysningerPage.setHouseNo(result);
+			}
+		};
+		
+		asyncFloor = new AsyncCallback<List<String>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("An error has occured");
+			}
+
+			@Override
+			public void onSuccess(List<String> result) {
+				oplysningerPage.setFloor(result);
+			}
+		};
+		
+		asyncDoor = new AsyncCallback<List<String>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("An error has occured");
+			}
+
+			@Override
+			public void onSuccess(List<String> result) {
+				oplysningerPage.setDoor(result);
+			}
+		};
+		
 		//Clickhandler
 		loginTopView.getLoginAnchor().addClickHandler(new ShowLoginHandler());
 		loginPage.getLoginButton().addClickHandler(new LoginHandler());
@@ -136,14 +203,13 @@ public class Controller {
 		oplysningerPage.getDepartment().addBlurHandler(new UpdateAnsatHandler());
 		oplysningerPage.getTelephone().addBlurHandler(new UpdateAnsatHandler());
 		oplysningerPage.getEmail().addBlurHandler(new UpdateAnsatHandler());
-// ?	oplysningerPage.getZipcode().addBlurHandler(new ZipCodeHandler());
-		oplysningerPage.getRoad().addBlurHandler(new UpdateAnsatHandler());
-		oplysningerPage.getHouseNr().addBlurHandler(new UpdateAnsatHandler());
-		oplysningerPage.getFloor().addBlurHandler(new UpdateAnsatHandler());
-		oplysningerPage.getDoor().addBlurHandler(new UpdateAnsatHandler());
 
-		//
-		oplysningerPage.getZip().addFocusListener(new ZipCodeHandler());
+		//FocusListener
+		oplysningerPage.getZip().addFocusListener(new ZipCodeListener());
+		oplysningerPage.getRoad().addFocusListener(new RoadListener());
+		oplysningerPage.getHouseNr().addFocusListener(new HouseNoListener());
+		oplysningerPage.getFloor().addFocusListener(new FloorListener());
+		oplysningerPage.getDoor().addFocusListener(new DoorListener());
 		
 		//Enter Handler
 		EnterKeyHandler enterLoginHandler = new EnterKeyHandler() {
@@ -227,7 +293,7 @@ public class Controller {
 	}
 
 	@SuppressWarnings("deprecation")
-	private class ZipCodeHandler implements FocusListener
+	private class ZipCodeListener implements FocusListener
 	{
 
 		@Override
@@ -237,20 +303,77 @@ public class Controller {
 
 		@Override
 		public void onLostFocus(Widget sender) {
-			dawaService.getCity(oplysningerPage.getZip().getText(), new AsyncCallback<String>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					System.out.println("An error has occured");
-				}
-
-				@Override
-				public void onSuccess(String result) {
-					oplysningerPage.setlCityName(result);
-				}
-				
-			});
+			dawaService.getCity(oplysningerPage.getZip().getText(), asyncCity);
+			oplysningerPage.resetRoad();
+			oplysningerPage.resetHouseNo();
+			oplysningerPage.resetFloor();
+			oplysningerPage.resetDoor();
+			dawaService.getRoad(oplysningerPage.getZip().getText(), asyncRoad);
 			
+			ansatteService.updateAnsat(oplysningerPage.getAnsat(), asyncEmpty);
+		}
+	}
+	
+	private class RoadListener implements FocusListener
+	{
+		@Override
+		public void onFocus(Widget sender) {
+			
+		}
+
+		@Override
+		public void onLostFocus(Widget sender) {
+			oplysningerPage.resetHouseNo();
+			oplysningerPage.resetFloor();
+			oplysningerPage.resetDoor();
+			dawaService.getHouseNo(oplysningerPage.getZip().getText(), oplysningerPage.getRoad().getText(), asyncHouseNo);
+			
+			ansatteService.updateAnsat(oplysningerPage.getAnsat(), asyncEmpty);
+		}
+	}
+	
+	private class HouseNoListener implements FocusListener
+	{
+		@Override
+		public void onFocus(Widget sender) {
+			
+		}
+
+		@Override
+		public void onLostFocus(Widget sender) {
+			oplysningerPage.resetFloor();
+			oplysningerPage.resetDoor();
+			dawaService.getFloor(oplysningerPage.getZip().getText(), oplysningerPage.getRoad().getText(), oplysningerPage.getHouseNr().getText(), asyncFloor);
+			
+			ansatteService.updateAnsat(oplysningerPage.getAnsat(), asyncEmpty);
+		}
+	}
+	
+	private class FloorListener implements FocusListener
+	{
+		@Override
+		public void onFocus(Widget sender) {
+			
+		}
+
+		@Override
+		public void onLostFocus(Widget sender) {
+			oplysningerPage.resetDoor();
+			dawaService.getDoor(oplysningerPage.getZip().getText(), oplysningerPage.getRoad().getText(), oplysningerPage.getHouseNr().getText(), oplysningerPage.getFloor().getText(), asyncDoor);
+			
+			ansatteService.updateAnsat(oplysningerPage.getAnsat(), asyncEmpty);
+		}
+	}
+	
+	private class DoorListener implements FocusListener
+	{
+		@Override
+		public void onFocus(Widget sender) {
+			
+		}
+
+		@Override
+		public void onLostFocus(Widget sender) {
 			ansatteService.updateAnsat(oplysningerPage.getAnsat(), asyncEmpty);
 		}
 	}
@@ -306,19 +429,11 @@ public class Controller {
 								mainView.showTopWidget(loginTopView);
 
 								oplysningerPage.setAnsat(result);
-								dawaService.getCity(""+result.getPostnr(), new AsyncCallback<String>() {
-
-									@Override
-									public void onFailure(Throwable caught) {
-										System.out.println("An error has occured");		
-									}
-
-									@Override
-									public void onSuccess(String result) {
-										oplysningerPage.setlCityName(result);
-									}
-
-								});
+								dawaService.getCity(""+result.getPostnr(), asyncCity);
+								dawaService.getRoad(""+result.getPostnr(), asyncRoad);
+								dawaService.getHouseNo(""+result.getPostnr(), result.getVejnavn(), asyncHouseNo);
+								dawaService.getFloor(""+result.getPostnr(), result.getVejnavn(), result.gethusnr(), asyncFloor);
+								dawaService.getDoor(""+result.getPostnr(), result.getVejnavn(), result.gethusnr(), result.getEtage(), asyncDoor);
 							}
 						}
 

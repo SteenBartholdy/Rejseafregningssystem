@@ -47,7 +47,11 @@ public class DAWA extends RemoteServiceServlet implements DAWAService {
     //Henter vejnavn listen
     @Override
     public List<String> getRoad(String zip) throws Exception {
-		List<String> road = new ArrayList<String>();
+		if (zip.equals("")) {
+			return null;
+		}
+    	
+    	List<String> road = new ArrayList<String>();
 		
 		this.data = getUrl(this.API + "vejnavne?postnr=" + zip);
 		this.json = new JSONArray(data);
@@ -63,6 +67,10 @@ public class DAWA extends RemoteServiceServlet implements DAWAService {
     //Henter husnr listen
     @Override
     public List<String> getHouseNo(String zip, String road) throws Exception {
+    	if (zip.equals("")) {
+			return null;
+		}
+    	
     	List<String> houseNo = new ArrayList<String>();
     	
     	this.data = getUrl(this.API + "adgangsadresser?vejnavn=" + road + "&postnr=" + zip);
@@ -79,6 +87,10 @@ public class DAWA extends RemoteServiceServlet implements DAWAService {
     //Henter etagenr listen
     @Override
     public List<String> getFloor(String zip, String road, String houseNo) throws Exception {
+    	if (zip.equals("")) {
+			return null;
+		}
+    	
     	List<String> floor = new ArrayList<String>();
     	
     	this.data = getUrl(this.API + "adresser?vejnavn=" + road + "&husnr=" + houseNo + "&postnr=" + zip);
@@ -100,6 +112,10 @@ public class DAWA extends RemoteServiceServlet implements DAWAService {
     //Henter dør listen
     @Override
     public List<String> getDoor(String zip, String road, String houseNo, String floor) throws Exception {
+    	if (zip.equals("")) {
+			return null;
+		}
+    	
     	List<String> door = new ArrayList<String>();
     	
     	this.data = getUrl(this.API + "adresser?vejnavn=" + road + "&husnr=" + houseNo + "&etage=" + floor + "&postnr=" + zip);
