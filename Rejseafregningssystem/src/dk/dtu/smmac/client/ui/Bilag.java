@@ -2,6 +2,8 @@ package dk.dtu.smmac.client.ui;
 
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -15,8 +17,7 @@ public class Bilag extends Composite {
 	private FlexTable fTable;
 	private Button delete, upload;
 	private Anchor addBilag;
-	private Button[] bList, cList;
-	private TextBox[] tList;
+	private int count = 0;
 	
 	public Bilag()
 	{
@@ -29,11 +30,7 @@ public class Bilag extends Composite {
 
 		upload = new Button();
 		upload.setText("Tilføj fil");
-		
-		bList = new Button[]{};
-		cList = new Button[]{};
-		tList = new TextBox[]{};
-		
+
 		addBilag = new Anchor();
 		addBilag.setText("Tilføj bilag");
 		
@@ -49,19 +46,32 @@ public class Bilag extends Composite {
 	{
 		int numRows = flextable.getRowCount();
 		
-		fTable.setWidget(numRows, 0, addLabel("Bilag " + numRows));
+		count ++;
+
+		fTable.setWidget(numRows, 0, addLabel("Bilag: " + count));
 		fTable.setWidget(numRows, 1, addTextBox());
 		fTable.setWidget(numRows, 2, addFilButton());
-		fTable.setWidget(numRows, 3, addSletButton());
-		
-		Window.alert("tList: " + tList.length);
-		Window.alert("cList: " + tList.length);
-		Window.alert("bList: " + tList.length);
+		fTable.setWidget(numRows, 3, addSletButton(numRows));
 	}
 	
 	public void deleteNewBilag(FlexTable flextable)
 	{
-		flextable.removeRow(flextable.getRowCount() - 1);
+		flextable.removeRow(flextable.getRowCount());
+	}
+	
+	public void deleteNewBilag(FlexTable flextable, int row)
+	{
+		Window.alert(" " + row);
+		
+		if (row == flextable.getRowCount())
+		{
+			flextable.removeRow(row);
+		}
+		if (row == flextable.getRowCount()+1)
+		{
+			flextable.removeRow(row-1);
+		}
+		else flextable.removeRow(row);
 	}
 	
 	public Anchor getAddBilag()
@@ -74,21 +84,23 @@ public class Bilag extends Composite {
 		return fTable;
 	}
 	
-	public Button[] getBList()
-	{
-		return bList;
-	}
-	
 	public Button getDelete()
 	{
 		return delete;
 	}
 	
-	public Button addSletButton()
+	public Button addSletButton(int row)
 	{
 		Button b = new Button();
+		final int a = row;
+		
+		b.addClickHandler(new ClickHandler(){
+			public void onClick(ClickEvent event) {
+				deleteNewBilag(getFlexTable(), a);
+			}
+		});
+		
 		b.setText("Slet");
-		bList[bList.length] = b;
 		return b;
 	}
 	
@@ -96,7 +108,6 @@ public class Bilag extends Composite {
 	{
 		Button c = new Button();
 		c.setText("Tilføj fil");
-		cList[cList.length] = c;
 		return c;
 	}
 	
@@ -104,7 +115,6 @@ public class Bilag extends Composite {
 	{
 		Label l = new Label();
 		l.setText(name);
-		l.setSize("150px", "20px");
 		return l;
 	}
 	
@@ -112,7 +122,6 @@ public class Bilag extends Composite {
 	{
 		TextBox t = new TextBox();
 		t.setSize("500px", "20px");
-		tList[tList.length] = t;
 		return t;
 	}
 	
