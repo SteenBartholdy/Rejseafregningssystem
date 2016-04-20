@@ -76,7 +76,6 @@ public class Controller {
 	AsyncCallback<String> asyncCity;
 	AsyncCallback<List<String>> asyncRoad, asyncHouseNo, asyncFloor, asyncDoor;
 
-	@SuppressWarnings("deprecation")
 	public Controller()
 	{
 		mainView = new MainView();
@@ -291,7 +290,6 @@ public class Controller {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	private class ZipCodeListener implements FocusListener
 	{
 
