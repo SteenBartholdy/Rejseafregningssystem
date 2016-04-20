@@ -3,11 +3,18 @@ package dk.dtu.smmac.client.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.cell.client.CheckboxCell;
+import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
+
+
+
 
 //http://www.mytechtip.com/2010/11/gwt-celltable-example-using_8168.html
 
@@ -20,25 +27,20 @@ public class DageInfo extends Composite
 	
 	private class RejseDag
 	{
-	private String dato;
-	private String land;
-	private boolean morgenmad;
-	private boolean frokost;
-	private boolean aftensmad;
-	private boolean nattill;
-	private boolean refunderes;
-	private boolean afbrudtRejse;
+		private String dato;
+		private String land;
+		private boolean morgenmad;
+		private boolean frokost;
+		//private boolean aftensmad;
+		//private boolean nattill;
+		//private boolean refunderes;
+		//private boolean afbrudtRejse;
 	
-	public void RejseDag(String dato, String land, boolean morgenmad, boolean frokost, boolean aftensmad, boolean nattill, boolean refunderes, boolean afbrudtRejse)
+	@SuppressWarnings("unused")
+	public RejseDag(String dato, String land)
 	{
 		this.dato = dato;
 		this.land = land;
-		this.morgenmad = morgenmad;
-		this.frokost = frokost;
-		this.aftensmad = aftensmad;
-		this.nattill = nattill;
-		this.refunderes = refunderes;
-		this.afbrudtRejse = afbrudtRejse;
 	}
 	
 		public String getRejseDagDato()
@@ -50,26 +52,52 @@ public class DageInfo extends Composite
 		{
 			return land;
 		}
+	
+		public Boolean getRejseDagMorgenmad()
+		{
+			return morgenmad;
+		}
+	
+		public void setRejseDagMorgenmad(boolean morgenmad)
+		{
+			this.morgenmad = morgenmad; 
+		}
+		
+		public Boolean getRejseDagFrokost()
+		{
+			return frokost;
+		}
+	
+		public void setRejseDagFrokost(boolean frokost)
+		{
+			this.frokost = frokost; 
+		}
 	}
 	
-	ArrayList<RejseDag> REJSEDAG = new ArrayList<RejseDag>();
+	List<RejseDag> rejsedage = new ArrayList<RejseDag>();
+	RejseDag rd = new RejseDag("14-03-20015", "Holland");
+	//rejsedage.add(rd);
+	
+	
+//	ArrayList<RejseDag> REJSEDAG = new ArrayList<RejseDag>();
 	
 //	RejseDag dag = new RejseDag(dato, land, morgenmad, frokost, aftensmad, nattill, refunderes, afbrudtRejse);
 //	REJSEDAG.add(new RejseDag(dato, land, morgenmad, frokost, aftensmad, nattill, refunderes, afbrudtRejse));
 	
-//	@SuppressWarnings("deprecation")
-//	private static final List<RejseDag> REJSEDAG = Array.asList(
-//		new RejseDag("13-05-2015", "Burkinafaso", true, true, true, false, false, false));
-		
-		//new RejseDag("14-05-2015", "Burkinafaso", true, false, true, false, false, false),
-		//new RejseDag("15-05-2015", "Burkinafaso", false, false, true, false, false, false),
-		//new RejseDag("16-05-2015", "Burkinafaso", true, true, true, false, false, false));
+/*	@SuppressWarnings("deprecation")
+	private static final List<RejseDag> REJSEDAG = Array.asList(
+		new RejseDag("13-05-2015", "Burkinafaso"),
+		new RejseDag("14-05-2015", "Burkinafaso"),
+		new RejseDag("15-05-2015", "Burkinafaso"),
+		new RejseDag("16-05-2015", "Burkinafaso"));
+*/
+	
 	public DageInfo()
 	{
 		initWidget(this.vPanel);
 		
-		table = new CellTable();
-		table.setPageSize(2);
+		table = new CellTable<RejseDag>();
+		table.setPageSize(4);
 		
 		btnAnnuller = new Button("Annuller");
 		
@@ -93,8 +121,47 @@ public class DageInfo extends Composite
 		};
 		table.addColumn(landColumn, "Land:");
 		
+		Column<RejseDag, Boolean> morgenmadColumn = new Column<RejseDag, Boolean>(new CheckboxCell()) { 
+		      @Override 
+		      public Boolean getValue(RejseDag object) { 
+		        return object.getRejseDagMorgenmad(); 
+		      } 
+		    }; 
+
+		    morgenmadColumn.setFieldUpdater(new FieldUpdater<RejseDag, Boolean>() { 
+		      public void update(int index, RejseDag object, Boolean value) {
+		        object.setRejseDagMorgenmad(value); 
+		      } 
+		    }); 
+		    
+		    table.addColumn(morgenmadColumn, "Morgenmad:");
+		    
+		    Column<RejseDag, Boolean> frokostColumn = new Column<RejseDag, Boolean>(new CheckboxCell()) { 
+			      @Override 
+			      public Boolean getValue(RejseDag object) { 
+			        return object.getRejseDagFrokost(); 
+			      } 
+			    }; 
+
+			    frokostColumn.setFieldUpdater(new FieldUpdater<RejseDag, Boolean>() { 
+			      public void update(int index, RejseDag object, Boolean value) {
+			        object.setRejseDagFrokost(value); 
+			      } 
+			    }); 
+			    
+			    table.addColumn(frokostColumn, "Frokost:");
+		
+		
+		
+		
+		
+		
+		
+		
 		vPanel.add(table);
 		vPanel.add(btnAnnuller);
+		
+		vPanel.setStyleName("margin");
 	
 	}
 
