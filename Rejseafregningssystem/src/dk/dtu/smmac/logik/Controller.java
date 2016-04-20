@@ -27,6 +27,7 @@ import dk.dtu.smmac.client.service.DAWAServiceAsync;
 import dk.dtu.smmac.client.service.LoginService;
 import dk.dtu.smmac.client.service.LoginServiceAsync;
 import dk.dtu.smmac.client.ui.Bilag;
+import dk.dtu.smmac.client.ui.DageInfo;
 import dk.dtu.smmac.client.ui.GlemtPassword;
 import dk.dtu.smmac.client.ui.LoginPage;
 import dk.dtu.smmac.client.ui.LoginTopView;
@@ -62,6 +63,8 @@ public class Controller {
 	private Rejse rejsePage;
 
 	private GlemtPassword glemtPasswordPage;
+	
+	private DageInfo dageInfoPage;
 
 	private HTML emptyView;
 	private HTML emptyTopView;
@@ -101,6 +104,8 @@ public class Controller {
 		glemtPasswordPage = mainView.getGlemtPasswordPage();
 
 		bilagPage = mainView.getBilagPage();
+		
+		dageInfoPage = mainView.getDageInfoPage();
 
 		//Async
 		asyncEmpty = new AsyncCallback<Void>() {
