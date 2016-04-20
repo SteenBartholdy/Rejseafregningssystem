@@ -201,6 +201,7 @@ public class Controller {
 		glemtPasswordPage.getbtnDageInfoPassword().addClickHandler(new DageInfoHandler());
 		bilagPage.getAddBilag().addClickHandler(new AddBilagHandler());
 		bilagPage.getDelete().addClickHandler(new DeleteBilagHandler());
+		dageInfoPage.getbtnAnnullerDageInfo().addClickHandler(new ShowLoginHandler());
 
 		//BlurHandler
 		oplysningerPage.getName().addBlurHandler(new UpdateAnsatHandler());

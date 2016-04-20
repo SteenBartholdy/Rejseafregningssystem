@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -14,6 +15,7 @@ public class DageInfo extends Composite
 {
 	private CellTable<RejseDag> table;
 	private VerticalPanel vPanel = new VerticalPanel();
+	private Button btnAnnuller;
 	
 	
 	private class RejseDag
@@ -69,6 +71,8 @@ public class DageInfo extends Composite
 		table = new CellTable();
 		table.setPageSize(2);
 		
+		btnAnnuller = new Button("Annuller");
+		
 		TextColumn<RejseDag> datoColumn = new TextColumn<RejseDag>()
 		{
 			@Override
@@ -90,6 +94,12 @@ public class DageInfo extends Composite
 		table.addColumn(landColumn, "Land:");
 		
 		vPanel.add(table);
+		vPanel.add(btnAnnuller);
 	
+	}
+
+	public Button getbtnAnnullerDageInfo()
+	{
+		return btnAnnuller;
 	}
 }
