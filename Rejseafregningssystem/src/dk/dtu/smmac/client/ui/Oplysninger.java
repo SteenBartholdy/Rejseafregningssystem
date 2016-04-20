@@ -27,6 +27,7 @@ public class Oplysninger extends Composite {
 	private AnsatDTO ansat;
 	private List<AfdelingDTO> afdelinger;
 	private String width = "200px";
+	private String lwidth = "75px";
 	private String height = "20px";
 
 	public Oplysninger() {
@@ -34,56 +35,78 @@ public class Oplysninger extends Composite {
 		fTable = new FlexTable();
 
 		lName = new Label("Navn:");
+		lName.setWidth(lwidth);
+		lName.setHeight(height);
 		name = new TextBox();
 		name.setWidth(width);
 		name.setHeight(height);
 
 		lSurname = new Label("Efternavn:");
+		lSurname.setWidth(lwidth);
+		lSurname.setHeight(height);
 		surname = new TextBox();
 		surname.setWidth(width);
 		surname.setHeight(height);
 
 		lZipcode = new Label("Postnr:");
+		lZipcode.setWidth(lwidth);
+		lZipcode.setHeight(height);
 		zip = new SuggestBox(new MultiWordSuggestOracle());
 		zip.setWidth(width);
 		zip.setHeight(height);
 
 		lCity = new Label("By:");
+		lCity.setWidth(lwidth);
+		lCity.setHeight(height);
 		lCityName = new Label();
 		lCityName.setWidth(width);
 		lCityName.setHeight(height);
 
 		lDepartment = new Label("Afdeling:");
+		lDepartment.setWidth(lwidth);
+		lDepartment.setHeight(height);
 		department = new ListBox();
 		department.setWidth(width);
 		department.setHeight(height);
 
 		lTelephone = new Label("Telefon:");
+		lTelephone.setWidth(lwidth);
+		lTelephone.setHeight(height);
 		telephone = new TextBox();
 		telephone.setWidth(width);
 		telephone.setHeight(height);
 
 		lEmail = new Label("Email:");
+		lEmail.setWidth(lwidth);
+		lEmail.setHeight(height);
 		email = new Label();
 		email.setWidth(width);
 		email.setHeight(height);
 
-		lRoad = new Label("Vejnavn");
+		lRoad = new Label("Vejnavn:");
+		lRoad.setWidth(lwidth);
+		lRoad.setHeight(height);
 		road = new SuggestBox(new MultiWordSuggestOracle());
 		road.setWidth(width);
 		road.setHeight(height);
 
 		lHouseNr = new Label("Hus nr.:");
+		lHouseNr.setWidth(lwidth);
+		lHouseNr.setHeight(height);
 		houseNo = new SuggestBox(new MultiWordSuggestOracle());
 		houseNo.setWidth(width);
 		houseNo.setHeight(height);
 
 		lFloor = new Label("Etage:");
+		lFloor.setWidth(lwidth);
+		lFloor.setHeight(height);
 		floor = new SuggestBox(new MultiWordSuggestOracle());
 		floor.setWidth(width);
 		floor.setHeight(height);
 
 		lDoor = new Label("Dør:");
+		lDoor.setWidth(lwidth);
+		lDoor.setHeight(height);
 		door = new SuggestBox(new MultiWordSuggestOracle());
 		door.setWidth(width);
 		door.setHeight(height);
@@ -99,18 +122,19 @@ public class Oplysninger extends Composite {
 		fTable.setWidget(3, 1, telephone);
 		fTable.setWidget(4, 0, lEmail);
 		fTable.setWidget(4, 1, email);
-		fTable.setWidget(5, 0, lZipcode);
-		fTable.setWidget(5, 1, zip);
-		fTable.setWidget(6, 0, lCity);
-		fTable.setWidget(6, 1, lCityName);
-		fTable.setWidget(7, 0, lRoad);
-		fTable.setWidget(7, 1, road);
-		fTable.setWidget(8, 0, lHouseNr);
-		fTable.setWidget(8, 1, houseNo);
-		fTable.setWidget(9, 0, lFloor);
-		fTable.setWidget(9, 1, floor);
-		fTable.setWidget(10, 0, lDoor);
-		fTable.setWidget(10, 1, door);
+		
+		fTable.setWidget(0, 2, lZipcode);
+		fTable.setWidget(0, 3, zip);
+		fTable.setWidget(1, 2, lCity);
+		fTable.setWidget(1, 3, lCityName);
+		fTable.setWidget(2, 2, lRoad);
+		fTable.setWidget(2, 3, road);
+		fTable.setWidget(3, 2, lHouseNr);
+		fTable.setWidget(3, 3, houseNo);
+		fTable.setWidget(4, 2, lFloor);
+		fTable.setWidget(4, 3, floor);
+		fTable.setWidget(5, 2, lDoor);
+		fTable.setWidget(5, 3, door);
 
 		vPanel.setStyleName("margin");
 		vPanel.add(fTable);
