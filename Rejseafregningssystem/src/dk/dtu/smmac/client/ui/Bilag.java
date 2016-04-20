@@ -17,6 +17,7 @@ public class Bilag extends Composite {
 	private FlexTable fTable;
 	private Button delete, upload;
 	private Anchor addBilag;
+	private Button[] bList;
 	private int count = 0;
 	
 	public Bilag()
@@ -27,6 +28,8 @@ public class Bilag extends Composite {
 		
 		delete = new Button();
 		delete.setText("Slet");
+		
+		bList = new Button[]{};
 
 		upload = new Button();
 		upload.setText("Tilføj fil");
@@ -74,6 +77,12 @@ public class Bilag extends Composite {
 		else flextable.removeRow(row);
 	}
 	
+	public void updateRow(FlexTable fTable, Button[] b)
+	{
+		for (int i = 0; i < fTable.getRowCount(); i++){
+		}
+	}
+	
 	public Anchor getAddBilag()
 	{
 		return addBilag;
@@ -91,9 +100,10 @@ public class Bilag extends Composite {
 	
 	public Button addSletButton(int row)
 	{
-		Button b = new Button();
+		Button b = new Button("row");
+		bList[bList.length] = b;
 		final int a = row;
-		
+
 		b.addClickHandler(new ClickHandler(){
 			public void onClick(ClickEvent event) {
 				deleteNewBilag(getFlexTable(), a);
