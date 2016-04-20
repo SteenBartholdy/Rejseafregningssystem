@@ -12,16 +12,16 @@ import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 import brugerautorisation.data.Bruger;
 import dk.dtu.smmac.client.service.AfdelingerService;
 import dk.dtu.smmac.client.service.AfdelingerServiceAsync;
 import dk.dtu.smmac.client.service.AnsatteService;
 import dk.dtu.smmac.client.service.AnsatteServiceAsync;
-import dk.dtu.smmac.client.service.ByerService;
-import dk.dtu.smmac.client.service.ByerServiceAsync;
 import dk.dtu.smmac.client.service.DAWAService;
 import dk.dtu.smmac.client.service.DAWAServiceAsync;
 import dk.dtu.smmac.client.service.LoginService;
@@ -38,7 +38,9 @@ import dk.dtu.smmac.client.ui.Rejse;
 import dk.dtu.smmac.client.ui.Rejseafregning;
 import dk.dtu.smmac.shared.AfdelingDTO;
 import dk.dtu.smmac.shared.AnsatDTO;
+import dk.dtu.smmac.shared.PostNrDTO;
 
+@SuppressWarnings("deprecation")
 public class Controller {
 
 	private MainView mainView;
@@ -67,12 +69,12 @@ public class Controller {
 
 	private LoginServiceAsync loginService = GWT.create(LoginService.class);
 	private AnsatteServiceAsync ansatteService = GWT.create(AnsatteService.class);
-	private ByerServiceAsync byerService = GWT.create(ByerService.class);
 	private AfdelingerServiceAsync afdelingerService = GWT.create(AfdelingerService.class);
 	private DAWAServiceAsync dawaService = GWT.create(DAWAService.class);
 	
 	AsyncCallback<Void> asyncEmpty;
 
+	@SuppressWarnings("deprecation")
 	public Controller()
 	{
 		mainView = new MainView();
@@ -134,12 +136,15 @@ public class Controller {
 		oplysningerPage.getDepartment().addBlurHandler(new UpdateAnsatHandler());
 		oplysningerPage.getTelephone().addBlurHandler(new UpdateAnsatHandler());
 		oplysningerPage.getEmail().addBlurHandler(new UpdateAnsatHandler());
-		oplysningerPage.getZipcode().addBlurHandler(new ZipCodeHandler());
+// ?	oplysningerPage.getZipcode().addBlurHandler(new ZipCodeHandler());
 		oplysningerPage.getRoad().addBlurHandler(new UpdateAnsatHandler());
 		oplysningerPage.getHouseNr().addBlurHandler(new UpdateAnsatHandler());
 		oplysningerPage.getFloor().addBlurHandler(new UpdateAnsatHandler());
 		oplysningerPage.getDoor().addBlurHandler(new UpdateAnsatHandler());
 
+		//
+		oplysningerPage.getZip().addFocusListener(new ZipCodeHandler());
+		
 		//Enter Handler
 		EnterKeyHandler enterLoginHandler = new EnterKeyHandler() {
 			public void enterKeyDown(KeyDownEvent event) {
@@ -165,6 +170,21 @@ public class Controller {
 				oplysningerPage.setDepartmentItems();
 			}
 
+		});
+		
+		//Postnr load
+		dawaService.getZip(new AsyncCallback<List<PostNrDTO>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("An error has occured");	
+			}
+
+			@Override
+			public void onSuccess(List<PostNrDTO> result) {
+				oplysningerPage.setZip(result);
+			}
+			
 		});
 
 		//Rootpanel
@@ -206,26 +226,32 @@ public class Controller {
 		}
 	}
 
-	private class ZipCodeHandler implements BlurHandler
+	@SuppressWarnings("deprecation")
+	private class ZipCodeHandler implements FocusListener
 	{
+
 		@Override
-		public void onBlur(BlurEvent event) {
-			byerService.getBy(Integer.parseInt(oplysningerPage.getZipcode().getText()), new AsyncCallback<String>() {
+		public void onFocus(Widget sender) {
+
+		}
+
+		@Override
+		public void onLostFocus(Widget sender) {
+			dawaService.getCity(oplysningerPage.getZip().getText(), new AsyncCallback<String>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
-					System.out.println("An error has occured");	
-					Window.alert(caught.getMessage());
+					System.out.println("An error has occured");
 				}
 
 				@Override
 				public void onSuccess(String result) {
 					oplysningerPage.setlCityName(result);
 				}
+				
 			});
-
+			
 			ansatteService.updateAnsat(oplysningerPage.getAnsat(), asyncEmpty);
-
 		}
 	}
 
@@ -280,7 +306,7 @@ public class Controller {
 								mainView.showTopWidget(loginTopView);
 
 								oplysningerPage.setAnsat(result);
-								byerService.getBy(result.getPostnr(), new AsyncCallback<String>() {
+								dawaService.getCity(""+result.getPostnr(), new AsyncCallback<String>() {
 
 									@Override
 									public void onFailure(Throwable caught) {

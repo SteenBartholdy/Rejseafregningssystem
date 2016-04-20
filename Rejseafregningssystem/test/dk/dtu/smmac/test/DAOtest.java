@@ -4,15 +4,12 @@ import java.util.List;
 
 import dk.dtu.smmac.server.dal.AfdelingerDAO;
 import dk.dtu.smmac.server.dal.AnsatteDAO;
-import dk.dtu.smmac.server.dal.ByerDAO;
 import dk.dtu.smmac.shared.AfdelingDTO;
-import dk.dtu.smmac.shared.AnsatDTO;
 
 public class DAOtest {
 
 	public static void main(String[] args) throws Exception {
 		AnsatteDAO aDAO = new AnsatteDAO();
-		ByerDAO bDAO = new ByerDAO();
 		AfdelingerDAO afDAO = new AfdelingerDAO();
 		
 		//aDAO.createAnsat(new AnsatDTO(aDAO.getSize() + 1, 2300, "Steen", "Bartholdy", "s145090@student.dtu.dk", true, true));

@@ -24,12 +24,14 @@ public class DAWA extends RemoteServiceServlet implements DAWAService {
     private JSONArray json;
     private JSONObject obj;
     
+    private List<PostNrDTO> zip;
+    
     private final String API = "http://dawa.aws.dk/";
     
     //Henter post nummer listen
     @Override
     public List<PostNrDTO> getZip() throws Exception {
-    	List<PostNrDTO> zip = new ArrayList<PostNrDTO>();
+    	zip = new ArrayList<PostNrDTO>();
     	
     	this.data = getUrl(this.API + "postnumre/");
     	this.json = new JSONArray(data);
@@ -122,5 +124,17 @@ public class DAWA extends RemoteServiceServlet implements DAWAService {
         }
         return sb.toString();
     }
+
+	@Override
+	public String getCity(String zipCode) throws Exception {
+		for(int i = 0; i < zip.size(); i++) {
+			if (zip.get(i).getNo().equals(zipCode))
+			{
+				return zip.get(i).getName();
+			}
+		}
+		
+		return "";
+	}
     
 }

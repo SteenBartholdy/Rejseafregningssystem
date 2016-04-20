@@ -6,83 +6,88 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
+import com.google.gwt.user.client.ui.SuggestBox;
+import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import dk.dtu.smmac.shared.AfdelingDTO;
 import dk.dtu.smmac.shared.AnsatDTO;
+import dk.dtu.smmac.shared.PostNrDTO;
 
 public class Oplysninger extends Composite {
 
 	private VerticalPanel vPanel = new VerticalPanel();
 	private FlexTable fTable;
 	private Label lName, lSurname, lZipcode, lCity, lCityName, lDepartment, lTelephone, lEmail, lRoad, lHouseNr, lFloor, lDoor;
-	private TextBox name, surname, zipcode, telephone, email, road, houseNr, floor, door;
+	private TextBox name, surname, telephone, email, road, houseNr, floor, door;
 	private ListBox department;
+	private SuggestBox zip;
 	private AnsatDTO ansat;
 	private List<AfdelingDTO> afdelinger;
 	private String width = "200px";
 	private String height = "20px";
-	
+
 	public Oplysninger() {
 		initWidget(this.vPanel);
 		fTable = new FlexTable();
-		
+
 		lName = new Label("Navn:");
 		name = new TextBox();
 		name.setWidth(width);
 		name.setHeight(height);
-		
+
 		lSurname = new Label("Efternavn:");
 		surname = new TextBox();
 		surname.setWidth(width);
 		surname.setHeight(height);
-		
+
 		lZipcode = new Label("Postnr:");
-		zipcode = new TextBox();
-		zipcode.setWidth(width);
-		zipcode.setHeight(height);
-		
+		zip = new SuggestBox(new MultiWordSuggestOracle());
+		zip.setWidth(width);
+		zip.setHeight(height);
+
 		lCity = new Label("By:");
 		lCityName = new Label();
 		lCityName.setWidth(width);
 		lCityName.setHeight(height);
-		
+
 		lDepartment = new Label("Afdeling:");
 		department = new ListBox();
 		department.setWidth(width);
 		department.setHeight(height);
-		
+
 		lTelephone = new Label("Telefon:");
 		telephone = new TextBox();
 		telephone.setWidth(width);
 		telephone.setHeight(height);
-		
+
 		lEmail = new Label("Email:");
 		email = new TextBox();
 		email.setWidth(width);
 		email.setHeight(height);
-		
+
 		lRoad = new Label("Vejnavn");
 		road = new TextBox();
 		road.setWidth(width);
 		road.setHeight(height);
-		
+
 		lHouseNr = new Label("Hus nr.:");
 		houseNr = new TextBox();
 		houseNr.setWidth(width);
 		houseNr.setHeight(height);
-		
+
 		lFloor = new Label("Etage:");
 		floor = new TextBox();
 		floor.setWidth(width);
 		floor.setHeight(height);
-		
+
 		lDoor = new Label("Dør:");
 		door = new TextBox();
 		door.setWidth(width);
 		door.setHeight(height);
-		
+
 		//Table
 		fTable.setWidget(0, 0, lName);
 		fTable.setWidget(0, 1, name);
@@ -95,7 +100,7 @@ public class Oplysninger extends Composite {
 		fTable.setWidget(4, 0, lEmail);
 		fTable.setWidget(4, 1, email);
 		fTable.setWidget(5, 0, lZipcode);
-		fTable.setWidget(5, 1, zipcode);
+		fTable.setWidget(5, 1, zip);
 		fTable.setWidget(6, 0, lCity);
 		fTable.setWidget(6, 1, lCityName);
 		fTable.setWidget(7, 0, lRoad);
@@ -106,18 +111,31 @@ public class Oplysninger extends Composite {
 		fTable.setWidget(9, 1, floor);
 		fTable.setWidget(10, 0, lDoor);
 		fTable.setWidget(10, 1, door);
-		
+
 		vPanel.setStyleName("margin");
 		vPanel.add(fTable);
 	}
+
+	public void setZip(List<PostNrDTO> list)
+	{
+		MultiWordSuggestOracle oracle = (MultiWordSuggestOracle) zip.getSuggestOracle();
+		
+		for(int i = 0; i < list.size(); i++) {
+			oracle.add(list.get(i).getNo());
+		}
+	}
 	
+	public SuggestBox getZip() {
+		return zip;
+	}
+
 	public void setAnsat(AnsatDTO ansat)
 	{
 		this.ansat = ansat;
-		
+
 		name.setText(ansat.getFornavn());
 		surname.setText(ansat.getEfternavn());
-		zipcode.setText(ansat.getPostnr()+"");
+		zip.setText(ansat.getPostnr()+"");
 		department.setItemSelected(getDepartmentIndex(ansat.getAfdeling()), true);
 		telephone.setText(ansat.getTlf()+"");
 		email.setText(ansat.getEmail());
@@ -126,12 +144,12 @@ public class Oplysninger extends Composite {
 		floor.setText(ansat.getEtage());
 		door.setText(ansat.getDoer());
 	}
-	
+
 	public AnsatDTO getAnsat() 
 	{
 		ansat.setFornavn(name.getText());
 		ansat.setEfternavn(surname.getText());
-		ansat.setPostnr(Integer.parseInt(zipcode.getText()));
+		ansat.setPostnr(Integer.parseInt(zip.getText()));
 		ansat.setAfdeling(department.getValue(department.getSelectedIndex()));
 		ansat.setTlf(Integer.parseInt(telephone.getText()));
 		ansat.setEmail(email.getText());
@@ -139,22 +157,22 @@ public class Oplysninger extends Composite {
 		ansat.setHusnr(houseNr.getText());
 		ansat.setEtage(floor.getText());
 		ansat.setDoer(door.getText());
-		
+
 		return ansat;
 	}
-	
+
 	public void setAfdelinger(List<AfdelingDTO> afdelinger)
 	{
 		this.afdelinger = afdelinger;
 	}
-	
+
 	public void setDepartmentItems() {
 		for(int i = 0; i < this.afdelinger.size(); i++)
 		{
 			department.addItem(this.afdelinger.get(i).getAfdeling());
 		}
 	}
-	
+
 	public int getDepartmentIndex(String afdeling)
 	{
 		for(int i = 0; i < afdelinger.size(); i++)
@@ -247,14 +265,6 @@ public class Oplysninger extends Composite {
 		this.surname = surname;
 	}
 
-	public TextBox getZipcode() {
-		return zipcode;
-	}
-
-	public void setZipcode(TextBox zipcode) {
-		this.zipcode = zipcode;
-	}
-
 	public ListBox getDepartment() {
 		return department;
 	}
@@ -266,25 +276,25 @@ public class Oplysninger extends Composite {
 	public TextBox getTelephone() {
 		return telephone;
 	}
-	
+
 	public TextBox getEmail() {
 		return email;
 	}
-	
+
 	public TextBox getRoad() {
 		return road;
 	}
-	
+
 	public TextBox getHouseNr() {
 		return houseNr;
 	}
-	
+
 	public TextBox getFloor() {
 		return floor;
 	}
-	
+
 	public TextBox getDoor() {
 		return door;
 	}
-	
+
 }

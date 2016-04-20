@@ -15,15 +15,6 @@
 	</servlet-mapping>
 	
 	<servlet>
-		<servlet-name>byerservice</servlet-name>
-		<servlet-class>dk.dtu.smmac.server.dal.ByerDAO</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>byerservice</servlet-name>
-		<url-pattern>/rejseafregningssystem/byerservice</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
 		<servlet-name>ansatteservice</servlet-name>
 		<servlet-class>dk.dtu.smmac.server.dal.AnsatteDAO</servlet-class>
 	</servlet>

@@ -9,6 +9,7 @@ import dk.dtu.smmac.shared.PostNrDTO;
 public interface DAWAServiceAsync {
 	
 	void getZip(AsyncCallback<List<PostNrDTO>> callback);
+	void getCity(String zipCode, AsyncCallback<String> callback);
 	void getRoad(String zip, AsyncCallback<List<String>> callback);
 	void getHouseNo(String zip, String road, AsyncCallback<List<String>> callback);
 	void getFloor(String zip, String road, String houseNo, AsyncCallback<List<String>> callback);

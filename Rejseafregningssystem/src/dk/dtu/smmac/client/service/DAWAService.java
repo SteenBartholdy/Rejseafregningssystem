@@ -11,6 +11,7 @@ import dk.dtu.smmac.shared.PostNrDTO;
 public interface DAWAService extends RemoteService {
 
 	public List<PostNrDTO> getZip() throws Exception;
+	public String getCity(String zipCode) throws Exception;
 	public List<String> getRoad(String zip) throws Exception;
 	public List<String> getHouseNo(String zip, String road) throws Exception;
 	public List<String> getFloor(String zip, String road, String houseNo) throws Exception;
