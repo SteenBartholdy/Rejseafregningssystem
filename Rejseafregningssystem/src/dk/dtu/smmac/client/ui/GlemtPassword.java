@@ -56,4 +56,9 @@ public class GlemtPassword extends Composite
 	{
 		return mail.getText();
 	}
+
+	public Button getbtnDageInfoPassword()
+	{
+		return btnDageInfo;
+	}
 }

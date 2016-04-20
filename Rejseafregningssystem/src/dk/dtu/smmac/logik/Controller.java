@@ -198,6 +198,7 @@ public class Controller {
 		rejsePage.getDeleteProjectButton().addClickHandler(new DeleteProjectHandler());
 		glemtPasswordPage.getbtnSendPassword().addClickHandler(new SendPasswordHandler());
 		glemtPasswordPage.getbtnAnnullerPassword().addClickHandler(new ShowLoginHandler());
+		glemtPasswordPage.getbtnDageInfoPassword().addClickHandler(new DageInfoHandler());
 		bilagPage.getAddBilag().addClickHandler(new AddBilagHandler());
 		bilagPage.getDelete().addClickHandler(new DeleteBilagHandler());
 
@@ -458,6 +459,15 @@ public class Controller {
 
 	}
 
+	private class DageInfoHandler implements ClickHandler
+	{
+		@Override
+		public void onClick(ClickEvent event)
+		{
+			mainView.showContentWidget(dageInfoPage);
+		}
+	}
+	
 	private class ShowRejseafregningHandler implements ClickHandler
 	{
 
