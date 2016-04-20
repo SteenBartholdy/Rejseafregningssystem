@@ -1,4 +1,21 @@
-
-
 SELECT * FROM Ansatte;
 
+INSERT INTO Afdeling ( Afdeling ) VALUES ( Aqua );
+INSERT INTO Afdeling ( Afdeling ) VALUES ( Chemical Engineering );
+INSERT INTO Afdeling ( Afdeling ) VALUES ( Chemistry );
+INSERT INTO Afdeling ( Afdeling ) VALUES ( Civil Engineering );
+INSERT INTO Afdeling ( Afdeling ) VALUES ( Compute );
+INSERT INTO Afdeling ( Afdeling ) VALUES ( Electrical Engineering );
+INSERT INTO Afdeling ( Afdeling ) VALUES ( Energy );
+INSERT INTO Afdeling ( Afdeling ) VALUES ( Environment );
+INSERT INTO Afdeling ( Afdeling ) VALUES ( Food );
+INSERT INTO Afdeling ( Afdeling ) VALUES ( Fotonik );
+INSERT INTO Afdeling ( Afdeling ) VALUES ( Management Engineering );
+INSERT INTO Afdeling ( Afdeling ) VALUES ( Mechanical Engineering );
+INSERT INTO Afdeling ( Afdeling ) VALUES ( Nanotech );
+INSERT INTO Afdeling ( Afdeling ) VALUES ( Physics );
+INSERT INTO Afdeling ( Afdeling ) VALUES ( Space );
+INSERT INTO Afdeling ( Afdeling ) VALUES ( Systems Biology );
+INSERT INTO Afdeling ( Afdeling ) VALUES ( Transport );
+INSERT INTO Afdeling ( Afdeling ) VALUES ( Vet );
+INSERT INTO Afdeling ( Afdeling ) VALUES ( Wind Energy );

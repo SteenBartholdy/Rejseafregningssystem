@@ -20,8 +20,8 @@ public class Oplysninger extends Composite {
 
 	private VerticalPanel vPanel = new VerticalPanel();
 	private FlexTable fTable;
-	private Label lName, lSurname, lZipcode, lCity, lCityName, lDepartment, lTelephone, lEmail, lRoad, lHouseNr, lFloor, lDoor;
-	private TextBox name, surname, telephone, email;
+	private Label lName, lSurname, lZipcode, lCity, lCityName, lDepartment, lTelephone, lEmail, lRoad, lHouseNr, lFloor, lDoor, email;
+	private TextBox name, surname, telephone;
 	private ListBox department;
 	private SuggestBox zip, road, houseNo, floor, door;
 	private AnsatDTO ansat;
@@ -64,7 +64,7 @@ public class Oplysninger extends Composite {
 		telephone.setHeight(height);
 
 		lEmail = new Label("Email:");
-		email = new TextBox();
+		email = new Label();
 		email.setWidth(width);
 		email.setHeight(height);
 
@@ -332,7 +332,7 @@ public class Oplysninger extends Composite {
 		return telephone;
 	}
 
-	public TextBox getEmail() {
+	public Label getEmail() {
 		return email;
 	}
 

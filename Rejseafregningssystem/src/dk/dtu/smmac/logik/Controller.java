@@ -202,7 +202,6 @@ public class Controller {
 		oplysningerPage.getSurname().addBlurHandler(new UpdateAnsatHandler());
 		oplysningerPage.getDepartment().addBlurHandler(new UpdateAnsatHandler());
 		oplysningerPage.getTelephone().addBlurHandler(new UpdateAnsatHandler());
-		oplysningerPage.getEmail().addBlurHandler(new UpdateAnsatHandler());
 
 		//FocusListener
 		oplysningerPage.getZip().addFocusListener(new ZipCodeListener());
