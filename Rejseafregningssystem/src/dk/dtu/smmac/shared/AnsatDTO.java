@@ -14,10 +14,9 @@ public class AnsatDTO implements Serializable {
 		
 	}
 	
-	public AnsatDTO(int ID, int postnr, String fornavn, String efternavn, String email, boolean anviser, boolean godkender){
+	public AnsatDTO(int ID, String fornavn, String efternavn, String email, boolean anviser, boolean godkender){
 		super();
 		this.ID = ID;
-		this.postnummer = postnr;
 		this.fornavn = fornavn;
 		this.efternavn = efternavn;
 		this.email = email;

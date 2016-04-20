@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+import brugerautorisation.data.Bruger;
 import dk.dtu.smmac.client.service.AnsatteService;
 import dk.dtu.smmac.shared.AnsatDTO;
 
@@ -184,14 +185,15 @@ public class AnsatteDAO extends RemoteServiceServlet implements AnsatteService {
 	}
 
 	@Override
-	public AnsatDTO getAnsat(String mail) throws Exception {
+	public AnsatDTO getAnsat(Bruger b) throws Exception {
+		AnsatDTO ansat = null;
 		ResultSet resultSet = null;
 		
 		try {
-			getAnsatStmt.setString(1, mail);
+			getAnsatStmt.setString(1, b.email);
 			resultSet = getAnsatStmt.executeQuery();
 			resultSet.next();
-			return new AnsatDTO(
+			ansat = new AnsatDTO(
 					resultSet.getInt("Id"),
 					resultSet.getInt("Postnummer"),
 					resultSet.getInt("Telefon"),
@@ -211,7 +213,20 @@ public class AnsatteDAO extends RemoteServiceServlet implements AnsatteService {
 			System.out.println(sqlE.getMessage());
 		} 
 
-		return null;
+		if(ansat == null) {
+			ansat = new AnsatDTO(
+					getSize()+1,
+					b.fornavn,
+					b.efternavn,
+					b.email,
+					false,
+					false
+					);
+			
+			createAnsat(ansat);
+		}
+		
+		return ansat;
 	}
 
 }

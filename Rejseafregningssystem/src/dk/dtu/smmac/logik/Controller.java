@@ -60,7 +60,7 @@ public class Controller {
 	private NavigationView navPage;
 
 	private Rejse rejsePage;
-	
+
 	private GlemtPassword glemtPasswordPage;
 
 	private HTML emptyView;
@@ -71,7 +71,7 @@ public class Controller {
 	private AnsatteServiceAsync ansatteService = GWT.create(AnsatteService.class);
 	private AfdelingerServiceAsync afdelingerService = GWT.create(AfdelingerService.class);
 	private DAWAServiceAsync dawaService = GWT.create(DAWAService.class);
-	
+
 	AsyncCallback<Void> asyncEmpty;
 	AsyncCallback<String> asyncCity;
 	AsyncCallback<List<String>> asyncRoad, asyncHouseNo, asyncFloor, asyncDoor;
@@ -98,9 +98,9 @@ public class Controller {
 		navPage = mainView.getNavPage();
 
 		rejsePage = mainView.getRejsePage();
-		
+
 		glemtPasswordPage = mainView.getGlemtPasswordPage();
-		
+
 		bilagPage = mainView.getBilagPage();
 
 		//Async
@@ -115,7 +115,7 @@ public class Controller {
 			public void onSuccess(Void result) {
 			}
 		};
-		
+
 		asyncCity = new AsyncCallback<String>() {
 
 			@Override
@@ -141,7 +141,7 @@ public class Controller {
 				oplysningerPage.setRoad(result);
 			}
 		};
-		
+
 		asyncHouseNo = new AsyncCallback<List<String>>() {
 
 			@Override
@@ -154,7 +154,7 @@ public class Controller {
 				oplysningerPage.setHouseNo(result);
 			}
 		};
-		
+
 		asyncFloor = new AsyncCallback<List<String>>() {
 
 			@Override
@@ -167,7 +167,7 @@ public class Controller {
 				oplysningerPage.setFloor(result);
 			}
 		};
-		
+
 		asyncDoor = new AsyncCallback<List<String>>() {
 
 			@Override
@@ -180,7 +180,7 @@ public class Controller {
 				oplysningerPage.setDoor(result);
 			}
 		};
-		
+
 		//Clickhandler
 		loginTopView.getLoginAnchor().addClickHandler(new ShowLoginHandler());
 		loginPage.getLoginButton().addClickHandler(new LoginHandler());
@@ -210,7 +210,7 @@ public class Controller {
 		oplysningerPage.getHouseNr().addFocusListener(new HouseNoListener());
 		oplysningerPage.getFloor().addFocusListener(new FloorListener());
 		oplysningerPage.getDoor().addFocusListener(new DoorListener());
-		
+
 		//Enter Handler
 		EnterKeyHandler enterLoginHandler = new EnterKeyHandler() {
 			public void enterKeyDown(KeyDownEvent event) {
@@ -237,7 +237,7 @@ public class Controller {
 			}
 
 		});
-		
+
 		//Postnr load
 		dawaService.getZip(new AsyncCallback<List<PostNrDTO>>() {
 
@@ -250,7 +250,7 @@ public class Controller {
 			public void onSuccess(List<PostNrDTO> result) {
 				oplysningerPage.setZip(result);
 			}
-			
+
 		});
 
 		//Rootpanel
@@ -278,12 +278,12 @@ public class Controller {
 						Window.alert("Brugeren eksisterer ikke!");
 					}
 				}
-				
+
 			});
-			
+
 		}
 	}
-	
+
 	private class UpdateAnsatHandler implements BlurHandler
 	{
 		@Override
@@ -309,16 +309,16 @@ public class Controller {
 			oplysningerPage.resetFloor();
 			oplysningerPage.resetDoor();
 			dawaService.getRoad(oplysningerPage.getZip().getText(), asyncRoad);
-			
+
 			ansatteService.updateAnsat(oplysningerPage.getAnsat(), asyncEmpty);
 		}
 	}
-	
+
 	private class RoadListener implements FocusListener
 	{
 		@Override
 		public void onFocus(Widget sender) {
-			
+
 		}
 
 		@Override
@@ -327,16 +327,16 @@ public class Controller {
 			oplysningerPage.resetFloor();
 			oplysningerPage.resetDoor();
 			dawaService.getHouseNo(oplysningerPage.getZip().getText(), oplysningerPage.getRoad().getText(), asyncHouseNo);
-			
+
 			ansatteService.updateAnsat(oplysningerPage.getAnsat(), asyncEmpty);
 		}
 	}
-	
+
 	private class HouseNoListener implements FocusListener
 	{
 		@Override
 		public void onFocus(Widget sender) {
-			
+
 		}
 
 		@Override
@@ -344,32 +344,32 @@ public class Controller {
 			oplysningerPage.resetFloor();
 			oplysningerPage.resetDoor();
 			dawaService.getFloor(oplysningerPage.getZip().getText(), oplysningerPage.getRoad().getText(), oplysningerPage.getHouseNr().getText(), asyncFloor);
-			
+
 			ansatteService.updateAnsat(oplysningerPage.getAnsat(), asyncEmpty);
 		}
 	}
-	
+
 	private class FloorListener implements FocusListener
 	{
 		@Override
 		public void onFocus(Widget sender) {
-			
+
 		}
 
 		@Override
 		public void onLostFocus(Widget sender) {
 			oplysningerPage.resetDoor();
 			dawaService.getDoor(oplysningerPage.getZip().getText(), oplysningerPage.getRoad().getText(), oplysningerPage.getHouseNr().getText(), oplysningerPage.getFloor().getText(), asyncDoor);
-			
+
 			ansatteService.updateAnsat(oplysningerPage.getAnsat(), asyncEmpty);
 		}
 	}
-	
+
 	private class DoorListener implements FocusListener
 	{
 		@Override
 		public void onFocus(Widget sender) {
-			
+
 		}
 
 		@Override
@@ -390,7 +390,7 @@ public class Controller {
 
 	private class LoginHandler implements ClickHandler
 	{
-		
+
 		ClickEvent event;
 		@Override
 		public void onClick(ClickEvent event) {
@@ -410,7 +410,7 @@ public class Controller {
 						Window.alert("Forkert brugernavn eller kodeord");
 					}
 
-					ansatteService.getAnsat(result.email, new AsyncCallback<AnsatDTO>() {
+					ansatteService.getAnsat(result, new AsyncCallback<AnsatDTO>() {
 
 						@Override
 						public void onFailure(Throwable caught) {
@@ -420,28 +420,24 @@ public class Controller {
 
 						@Override
 						public void onSuccess(AnsatDTO result) {
-							if (result == null) {
-								//Skal ændres til noget label ændring eller lign
-								Window.alert("Brugeren er ikke oprettet korrekt i systemet");
-							} else {
-								mainView.showContentWidget(mainPage);
-								mainView.showNavWidget(navPage);
-								mainView.showTopWidget(loginTopView);
+							mainView.showContentWidget(mainPage);
+							mainView.showNavWidget(navPage);
+							mainView.showTopWidget(loginTopView);
 
-								oplysningerPage.setAnsat(result);
-								dawaService.getCity(""+result.getPostnr(), asyncCity);
-								dawaService.getRoad(""+result.getPostnr(), asyncRoad);
-								dawaService.getHouseNo(""+result.getPostnr(), result.getVejnavn(), asyncHouseNo);
-								dawaService.getFloor(""+result.getPostnr(), result.getVejnavn(), result.gethusnr(), asyncFloor);
-								dawaService.getDoor(""+result.getPostnr(), result.getVejnavn(), result.gethusnr(), result.getEtage(), asyncDoor);
-							}
+							oplysningerPage.setAnsat(result);
+							dawaService.getCity(""+result.getPostnr(), asyncCity);
+							dawaService.getRoad(""+result.getPostnr(), asyncRoad);
+							dawaService.getHouseNo(""+result.getPostnr(), result.getVejnavn(), asyncHouseNo);
+							dawaService.getFloor(""+result.getPostnr(), result.getVejnavn(), result.gethusnr(), asyncFloor);
+							dawaService.getDoor(""+result.getPostnr(), result.getVejnavn(), result.gethusnr(), result.getEtage(), asyncDoor);
+
 						}
 
 					});
 				}
 			});
 		}
-		
+
 		public ClickEvent getEvent()
 		{
 			return this.event;
@@ -528,7 +524,7 @@ public class Controller {
 		}
 
 	}
-	
+
 	private class AddBilagHandler implements ClickHandler
 	{
 
@@ -539,7 +535,7 @@ public class Controller {
 		}
 
 	}
-	
+
 	private class DeleteBilagHandler implements ClickHandler
 	{
 

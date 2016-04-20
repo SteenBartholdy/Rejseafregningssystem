@@ -191,13 +191,13 @@ public class Oplysninger extends Composite {
 		name.setText(ansat.getFornavn());
 		surname.setText(ansat.getEfternavn());
 		zip.setText(ansat.getPostnr()+"");
-		department.setItemSelected(getDepartmentIndex(ansat.getAfdeling()), true);
 		telephone.setText(ansat.getTlf()+"");
 		email.setText(ansat.getEmail());
 		road.setText(ansat.getVejnavn());
 		houseNo.setText(ansat.gethusnr());
 		floor.setText(ansat.getEtage());
 		door.setText(ansat.getDoer());
+		department.setItemSelected(getDepartmentIndex(ansat.getAfdeling()), true);
 	}
 
 	public AnsatDTO getAnsat() 
@@ -205,13 +205,13 @@ public class Oplysninger extends Composite {
 		ansat.setFornavn(name.getText());
 		ansat.setEfternavn(surname.getText());
 		ansat.setPostnr(Integer.parseInt(zip.getText()));
-		ansat.setAfdeling(department.getValue(department.getSelectedIndex()));
 		ansat.setTlf(Integer.parseInt(telephone.getText()));
 		ansat.setEmail(email.getText());
 		ansat.setVejnavn(road.getText());
 		ansat.setHusnr(houseNo.getText());
 		ansat.setEtage(floor.getText());
 		ansat.setDoer(door.getText());
+		ansat.setAfdeling(department.getValue(department.getSelectedIndex()));
 
 		return ansat;
 	}
