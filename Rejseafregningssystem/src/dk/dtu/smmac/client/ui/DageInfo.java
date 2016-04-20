@@ -1,9 +1,12 @@
 package dk.dtu.smmac.client.ui;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Arrays;
+
 
 import com.google.gwt.user.client.ui.Composite;
+
+//http://www.mytechtip.com/2010/11/gwt-celltable-example-using_8168.html
 
 public class DageInfo extends Composite 
 {
@@ -31,8 +34,18 @@ public class DageInfo extends Composite
 	}
 	
 	}
-	@SuppressWarnings("deprecation")
-	private static final List<RejseDag> REJSEDAG = Array.asList(
-			)
+	
+	ArrayList<RejseDag> REJSEDAG = new ArrayList<RejseDag>();
+	
+//	RejseDag dag = new RejseDag(dato, land, morgenmad, frokost, aftensmad, nattill, refunderes, afbrudtRejse);
+//	REJSEDAG.add(new RejseDag(dato, land, morgenmad, frokost, aftensmad, nattill, refunderes, afbrudtRejse));
+	
+//	@SuppressWarnings("deprecation")
+//	private static final List<RejseDag> REJSEDAG = Array.asList(
+//		new RejseDag("13-05-2015", "Burkinafaso", true, true, true, false, false, false));
+		
+		//new RejseDag("14-05-2015", "Burkinafaso", true, false, true, false, false, false),
+		//new RejseDag("15-05-2015", "Burkinafaso", false, false, true, false, false, false),
+		//new RejseDag("16-05-2015", "Burkinafaso", true, true, true, false, false, false));
 	
 }
