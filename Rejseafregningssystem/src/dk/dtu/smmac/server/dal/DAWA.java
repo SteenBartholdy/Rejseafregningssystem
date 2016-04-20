@@ -139,6 +139,8 @@ public class DAWA extends RemoteServiceServlet implements DAWAService {
     	url = url.replace("Ø", "%C3%98");
     	url = url.replace("Å", "%C3%85");
     	url = url.replace(" ", "%20");
+    	url = url.replace("é", "%C3%A9");
+    	url = url.replace("ü", "%C3%BC");
     	
         BufferedReader br = new BufferedReader(new InputStreamReader(new URL(url).openStream()));
         StringBuilder sb = new StringBuilder();
