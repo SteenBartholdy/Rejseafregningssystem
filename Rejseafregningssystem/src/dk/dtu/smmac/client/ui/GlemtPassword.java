@@ -12,7 +12,7 @@ public class GlemtPassword extends Composite
 	private VerticalPanel vPanel = new VerticalPanel();
 	private HorizontalPanel hPanel = new HorizontalPanel();
 	private TextBox mail;
-	private Button btnSend, btnAnnuller;
+	private Button btnSend, btnAnnuller, btnDageInfo;
 	private Label info;
 	
 	public GlemtPassword()
@@ -23,11 +23,13 @@ public class GlemtPassword extends Composite
 		mail = new TextBox();
 		btnSend = new Button("Send");
 		btnAnnuller = new Button("Annuller");
+		btnDageInfo = new Button("DageInfo");
 		
 		vPanel.add(info);
 		vPanel.add(mail);
 		hPanel.add(btnSend);
 		hPanel.add(btnAnnuller);
+		hPanel.add(btnDageInfo);
 		vPanel.add(hPanel);
 		
 		vPanel.setStyleName("margin");
@@ -35,6 +37,7 @@ public class GlemtPassword extends Composite
 		mail.setStyleName("marginButtom");
 		btnSend.setHeight("30px");
 		btnAnnuller.setHeight("30px");
+		btnDageInfo.setHeight("30px");
 		btnSend.setStyleName("marginRight");
 		btnAnnuller.setStyleName("marginRight");		
 	}
@@ -52,5 +55,10 @@ public class GlemtPassword extends Composite
 	public String getMailPassword()
 	{
 		return mail.getText();
+	}
+
+	public Button getbtnDageInfoPassword()
+	{
+		return btnDageInfo;
 	}
 }

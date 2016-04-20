@@ -27,6 +27,7 @@ import dk.dtu.smmac.client.service.DAWAServiceAsync;
 import dk.dtu.smmac.client.service.LoginService;
 import dk.dtu.smmac.client.service.LoginServiceAsync;
 import dk.dtu.smmac.client.ui.Bilag;
+import dk.dtu.smmac.client.ui.DageInfo;
 import dk.dtu.smmac.client.ui.GlemtPassword;
 import dk.dtu.smmac.client.ui.LoginPage;
 import dk.dtu.smmac.client.ui.LoginTopView;
@@ -62,6 +63,8 @@ public class Controller {
 	private Rejse rejsePage;
 
 	private GlemtPassword glemtPasswordPage;
+	
+	private DageInfo dageInfoPage;
 
 	private HTML emptyView;
 	private HTML emptyTopView;
@@ -101,6 +104,8 @@ public class Controller {
 		glemtPasswordPage = mainView.getGlemtPasswordPage();
 
 		bilagPage = mainView.getBilagPage();
+		
+		dageInfoPage = mainView.getDageInfoPage();
 
 		//Async
 		asyncEmpty = new AsyncCallback<Void>() {
@@ -193,8 +198,10 @@ public class Controller {
 		rejsePage.getDeleteProjectButton().addClickHandler(new DeleteProjectHandler());
 		glemtPasswordPage.getbtnSendPassword().addClickHandler(new SendPasswordHandler());
 		glemtPasswordPage.getbtnAnnullerPassword().addClickHandler(new ShowLoginHandler());
+		glemtPasswordPage.getbtnDageInfoPassword().addClickHandler(new DageInfoHandler());
 		bilagPage.getAddBilag().addClickHandler(new AddBilagHandler());
 		bilagPage.getDelete().addClickHandler(new DeleteBilagHandler());
+		dageInfoPage.getbtnAnnullerDageInfo().addClickHandler(new ShowLoginHandler());
 
 		//BlurHandler
 		oplysningerPage.getName().addBlurHandler(new UpdateAnsatHandler());
@@ -453,6 +460,15 @@ public class Controller {
 
 	}
 
+	private class DageInfoHandler implements ClickHandler
+	{
+		@Override
+		public void onClick(ClickEvent event)
+		{
+			mainView.showContentWidget(dageInfoPage);
+		}
+	}
+	
 	private class ShowRejseafregningHandler implements ClickHandler
 	{
 
