@@ -8,7 +8,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.SuggestBox;
-import com.google.gwt.user.client.ui.SuggestOracle;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -20,8 +19,8 @@ public class Oplysninger extends Composite {
 
 	private VerticalPanel vPanel = new VerticalPanel();
 	private FlexTable fTable;
-	private Label lName, lSurname, lZipcode, lCity, lCityName, lDepartment, lTelephone, lEmail, lRoad, lHouseNr, lFloor, lDoor, email, lBank, lKontoNo, lRegNo;
-	private TextBox name, surname, telephone;
+	private Label h1, h2, h3, lName, lSurname, lZipcode, lCity, lCityName, lDepartment, lTelephone, lEmail, lRoad, lHouseNr, lFloor, lDoor, email, lKontoNo, lRegNo;
+	private TextBox name, surname, telephone, regNo, kontoNo;
 	private ListBox department;
 	private SuggestBox zip, road, houseNo, floor, door;
 	private AnsatDTO ansat;
@@ -34,6 +33,13 @@ public class Oplysninger extends Composite {
 		initWidget(this.vPanel);
 		fTable = new FlexTable();
 
+		h1 = new Label("Info");
+		h1.setStyleName("boldText");
+		h2 = new Label("Adresse");
+		h2.setStyleName("boldText");
+		h3 = new Label("Bank");
+		h3.setStyleName("boldText");
+		
 		lName = new Label("Navn:");
 		lName.setWidth(lwidth);
 		lName.setHeight(height);
@@ -110,50 +116,53 @@ public class Oplysninger extends Composite {
 		door = new SuggestBox(new MultiWordSuggestOracle());
 		door.setWidth(width);
 		door.setHeight(height);
-
-		lBank = new Label("Bank:");
-		lBank.setWidth(lwidth);
-		lBank.setHeight(height);
 		
 		lRegNo = new Label("Reg nr.:");
 		lRegNo.setWidth(lwidth);
 		lRegNo.setHeight(height);
+		regNo = new TextBox();
+		regNo.setWidth(width);
+		regNo.setHeight(height);
 		
 		lKontoNo = new Label("Kontonr.:");
 		lKontoNo.setWidth(lwidth);
 		lKontoNo.setHeight(height);
+		kontoNo = new TextBox();
+		kontoNo.setWidth(width);
+		kontoNo.setHeight(height);
 		
 		//Table
-		fTable.setWidget(0, 0, lName);
-		fTable.setWidget(0, 1, name);
-		fTable.setWidget(1, 0, lSurname);
-		fTable.setWidget(1, 1, surname);
-		fTable.setWidget(2, 0, lDepartment);
-		fTable.setWidget(2, 1, department);
-		fTable.setWidget(3, 0, lTelephone);
-		fTable.setWidget(3, 1, telephone);
-		fTable.setWidget(4, 0, lEmail);
-		fTable.setWidget(4, 1, email);
+		fTable.setWidget(0, 1, h1);
+		fTable.setWidget(1, 0, lName);
+		fTable.setWidget(1, 1, name);
+		fTable.setWidget(2, 0, lSurname);
+		fTable.setWidget(2, 1, surname);
+		fTable.setWidget(3, 0, lDepartment);
+		fTable.setWidget(3, 1, department);
+		fTable.setWidget(4, 0, lTelephone);
+		fTable.setWidget(4, 1, telephone);
+		fTable.setWidget(5, 0, lEmail);
+		fTable.setWidget(5, 1, email);
 		
-		fTable.setWidget(0, 3, lZipcode);
-		fTable.setWidget(0, 4, zip);
-		fTable.setWidget(1, 3, lCity);
-		fTable.setWidget(1, 4, lCityName);
-		fTable.setWidget(2, 3, lRoad);
-		fTable.setWidget(2, 4, road);
-		fTable.setWidget(3, 3, lHouseNr);
-		fTable.setWidget(3, 4, houseNo);
-		fTable.setWidget(4, 3, lFloor);
-		fTable.setWidget(4, 4, floor);
-		fTable.setWidget(5, 3, lDoor);
-		fTable.setWidget(5, 4, door);
+		fTable.setWidget(0, 4, h2);
+		fTable.setWidget(1, 3, lZipcode);
+		fTable.setWidget(1, 4, zip);
+		fTable.setWidget(2, 3, lCity);
+		fTable.setWidget(2, 4, lCityName);
+		fTable.setWidget(3, 3, lRoad);
+		fTable.setWidget(3, 4, road);
+		fTable.setWidget(4, 3, lHouseNr);
+		fTable.setWidget(4, 4, houseNo);
+		fTable.setWidget(5, 3, lFloor);
+		fTable.setWidget(5, 4, floor);
+		fTable.setWidget(6, 3, lDoor);
+		fTable.setWidget(6, 4, door);
 
-		fTable.setWidget(0, 6, lBank);
-//		fTable.setWidget(0, 7, );
+		fTable.setWidget(0, 7, h3);
 		fTable.setWidget(1, 6, lRegNo);
-//		fTable.setWidget(1, 7, );
+		fTable.setWidget(1, 7, regNo);
 		fTable.setWidget(2, 6, lKontoNo);
-//		fTable.setWidget(2, 7, );
+		fTable.setWidget(2, 7, kontoNo);
 		
 		vPanel.setStyleName("margin");
 		vPanel.add(fTable);
@@ -393,6 +402,14 @@ public class Oplysninger extends Composite {
 
 	public SuggestBox getDoor() {
 		return door;
+	}
+	
+	public TextBox getKontoNo() {
+		return kontoNo;
+	}
+	
+	public TextBox getRegNo() {
+		return regNo;
 	}
 
 }
