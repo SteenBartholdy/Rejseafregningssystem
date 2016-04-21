@@ -411,5 +411,13 @@ public class Oplysninger extends Composite {
 	public TextBox getRegNo() {
 		return regNo;
 	}
+	
+	public void setKontoNo(String no) {
+		kontoNo.setText(no);
+	}
 
+	public void setRegNo(String no) {
+		regNo.setText(no);
+	}
+	
 }

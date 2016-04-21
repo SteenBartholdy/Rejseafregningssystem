@@ -41,6 +41,15 @@
 		<url-pattern>/rejseafregningssystem/dawaservice</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>bankservice</servlet-name>
+		<servlet-class>dk.dtu.smmac.server.dal.BankDAO</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>bankservice</servlet-name>
+		<url-pattern>/rejseafregningssystem/bankservice</url-pattern>
+	</servlet-mapping>
+	
 	<!-- Default page to serve -->
 	<welcome-file-list>
 		<welcome-file>Rejseafregningssystem.html</welcome-file>

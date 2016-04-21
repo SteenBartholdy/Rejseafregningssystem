@@ -22,6 +22,8 @@ import dk.dtu.smmac.client.service.AfdelingerService;
 import dk.dtu.smmac.client.service.AfdelingerServiceAsync;
 import dk.dtu.smmac.client.service.AnsatteService;
 import dk.dtu.smmac.client.service.AnsatteServiceAsync;
+import dk.dtu.smmac.client.service.BankService;
+import dk.dtu.smmac.client.service.BankServiceAsync;
 import dk.dtu.smmac.client.service.DAWAService;
 import dk.dtu.smmac.client.service.DAWAServiceAsync;
 import dk.dtu.smmac.client.service.LoginService;
@@ -39,6 +41,7 @@ import dk.dtu.smmac.client.ui.Rejse;
 import dk.dtu.smmac.client.ui.Rejseafregning;
 import dk.dtu.smmac.shared.AfdelingDTO;
 import dk.dtu.smmac.shared.AnsatDTO;
+import dk.dtu.smmac.shared.BankDTO;
 import dk.dtu.smmac.shared.PostNrDTO;
 
 @SuppressWarnings("deprecation")
@@ -74,6 +77,7 @@ public class Controller {
 	private AnsatteServiceAsync ansatteService = GWT.create(AnsatteService.class);
 	private AfdelingerServiceAsync afdelingerService = GWT.create(AfdelingerService.class);
 	private DAWAServiceAsync dawaService = GWT.create(DAWAService.class);
+	private BankServiceAsync bankService = GWT.create(BankService.class);
 
 	AsyncCallback<Void> asyncEmpty;
 	AsyncCallback<String> asyncCity;
@@ -208,6 +212,8 @@ public class Controller {
 		oplysningerPage.getSurname().addBlurHandler(new UpdateAnsatHandler());
 		oplysningerPage.getDepartment().addBlurHandler(new UpdateAnsatHandler());
 		oplysningerPage.getTelephone().addBlurHandler(new UpdateAnsatHandler());
+		oplysningerPage.getRegNo().addBlurHandler(new BankHandler());
+		oplysningerPage.getKontoNo().addBlurHandler(new BankHandler());
 
 		//FocusListener
 		oplysningerPage.getZip().addFocusListener(new ZipCodeListener());
@@ -262,6 +268,28 @@ public class Controller {
 		RootLayoutPanel.get().add(mainView);
 	}
 
+	private class BankHandler implements BlurHandler
+	{
+		@Override
+		public void onBlur(BlurEvent event) {
+			BankDTO konto = new BankDTO(oplysningerPage.getAnsat().getID(), Integer.parseInt(oplysningerPage.getRegNo().getText()), Integer.parseInt(oplysningerPage.getKontoNo().getText()));
+			
+			bankService.updateBank(konto, new AsyncCallback<Void>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					System.out.println("An error has occured");		
+				}
+
+				@Override
+				public void onSuccess(Void result) {
+					
+				}
+				
+			});
+		}
+	}
+	
 	private class SendPasswordHandler implements ClickHandler 
 	{
 		@Override
@@ -434,7 +462,20 @@ public class Controller {
 							dawaService.getHouseNo(""+result.getPostnr(), result.getVejnavn(), asyncHouseNo);
 							dawaService.getFloor(""+result.getPostnr(), result.getVejnavn(), result.gethusnr(), asyncFloor);
 							dawaService.getDoor(""+result.getPostnr(), result.getVejnavn(), result.gethusnr(), result.getEtage(), asyncDoor);
+							bankService.getBank(result.getID(), new AsyncCallback<BankDTO>() {
 
+								@Override
+								public void onFailure(Throwable caught) {
+									System.out.println("An error has occured");
+								}
+
+								@Override
+								public void onSuccess(BankDTO result) {
+									oplysningerPage.setRegNo(""+result.getRegNo());
+									oplysningerPage.setKontoNo(""+result.getKontoNo());
+								}
+							});
+							
 						}
 
 					});
