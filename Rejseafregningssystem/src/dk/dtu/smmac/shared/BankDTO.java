@@ -1,7 +1,10 @@
 package dk.dtu.smmac.shared;
 
-public class BankDTO {
+import java.io.Serializable;
 
+public class BankDTO implements Serializable {
+
+	private static final long serialVersionUID = 5L;
 	private int id;
 	private int kontoNo;
 	private int regNo;
