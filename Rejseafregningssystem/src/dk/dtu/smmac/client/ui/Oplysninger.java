@@ -20,14 +20,14 @@ public class Oplysninger extends Composite {
 
 	private VerticalPanel vPanel = new VerticalPanel();
 	private FlexTable fTable;
-	private Label lName, lSurname, lZipcode, lCity, lCityName, lDepartment, lTelephone, lEmail, lRoad, lHouseNr, lFloor, lDoor, email;
+	private Label lName, lSurname, lZipcode, lCity, lCityName, lDepartment, lTelephone, lEmail, lRoad, lHouseNr, lFloor, lDoor, email, lBank, lKontoNo, lRegNo;
 	private TextBox name, surname, telephone;
 	private ListBox department;
 	private SuggestBox zip, road, houseNo, floor, door;
 	private AnsatDTO ansat;
 	private List<AfdelingDTO> afdelinger;
 	private String width = "200px";
-	private String lwidth = "75px";
+	private String lwidth = "65px";
 	private String height = "20px";
 
 	public Oplysninger() {
@@ -111,6 +111,18 @@ public class Oplysninger extends Composite {
 		door.setWidth(width);
 		door.setHeight(height);
 
+		lBank = new Label("Bank:");
+		lBank.setWidth(lwidth);
+		lBank.setHeight(height);
+		
+		lRegNo = new Label("Reg nr.:");
+		lRegNo.setWidth(lwidth);
+		lRegNo.setHeight(height);
+		
+		lKontoNo = new Label("Kontonr.:");
+		lKontoNo.setWidth(lwidth);
+		lKontoNo.setHeight(height);
+		
 		//Table
 		fTable.setWidget(0, 0, lName);
 		fTable.setWidget(0, 1, name);
@@ -123,19 +135,26 @@ public class Oplysninger extends Composite {
 		fTable.setWidget(4, 0, lEmail);
 		fTable.setWidget(4, 1, email);
 		
-		fTable.setWidget(0, 2, lZipcode);
-		fTable.setWidget(0, 3, zip);
-		fTable.setWidget(1, 2, lCity);
-		fTable.setWidget(1, 3, lCityName);
-		fTable.setWidget(2, 2, lRoad);
-		fTable.setWidget(2, 3, road);
-		fTable.setWidget(3, 2, lHouseNr);
-		fTable.setWidget(3, 3, houseNo);
-		fTable.setWidget(4, 2, lFloor);
-		fTable.setWidget(4, 3, floor);
-		fTable.setWidget(5, 2, lDoor);
-		fTable.setWidget(5, 3, door);
+		fTable.setWidget(0, 3, lZipcode);
+		fTable.setWidget(0, 4, zip);
+		fTable.setWidget(1, 3, lCity);
+		fTable.setWidget(1, 4, lCityName);
+		fTable.setWidget(2, 3, lRoad);
+		fTable.setWidget(2, 4, road);
+		fTable.setWidget(3, 3, lHouseNr);
+		fTable.setWidget(3, 4, houseNo);
+		fTable.setWidget(4, 3, lFloor);
+		fTable.setWidget(4, 4, floor);
+		fTable.setWidget(5, 3, lDoor);
+		fTable.setWidget(5, 4, door);
 
+		fTable.setWidget(0, 6, lBank);
+//		fTable.setWidget(0, 7, );
+		fTable.setWidget(1, 6, lRegNo);
+//		fTable.setWidget(1, 7, );
+		fTable.setWidget(2, 6, lKontoNo);
+//		fTable.setWidget(2, 7, );
+		
 		vPanel.setStyleName("margin");
 		vPanel.add(fTable);
 	}
