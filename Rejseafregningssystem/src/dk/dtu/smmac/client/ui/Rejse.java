@@ -86,7 +86,7 @@ public class Rejse extends Composite {
 		date.setFormat(new DateBox.DefaultFormat(dateFormat));
 		dateTo.setFormat(new DateBox.DefaultFormat(dateFormat));
 
-		fTable.setWidget(0, 7, save);
+		//fTable.setWidget(0, 7, save);
 		fTable.setWidget(0, 0, countryL);
 		fTable.setWidget(0, 1, country);
 		fTable.setWidget(1, 0, dateL);
@@ -114,9 +114,9 @@ public class Rejse extends Composite {
 
 		vPanel.setStyleName("margin");
 		vPanel.add(fTable);
-
+		save.addStyleName("alignButtomRight");
 		vPanel.add(addProject);
-		//vPanel.add(grid);
+		vPanel.add(save);
 	}
 
 	public void addCountry(String country)
