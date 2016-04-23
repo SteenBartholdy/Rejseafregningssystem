@@ -28,8 +28,11 @@ import dk.dtu.smmac.client.service.DAWAService;
 import dk.dtu.smmac.client.service.DAWAServiceAsync;
 import dk.dtu.smmac.client.service.LoginService;
 import dk.dtu.smmac.client.service.LoginServiceAsync;
+import dk.dtu.smmac.client.service.RejseService;
+import dk.dtu.smmac.client.service.RejseServiceAsync;
+import dk.dtu.smmac.client.service.RejseafregningService;
+import dk.dtu.smmac.client.service.RejseafregningServiceAsync;
 import dk.dtu.smmac.client.ui.Bilag;
-import dk.dtu.smmac.client.ui.DageInfo;
 import dk.dtu.smmac.client.ui.GlemtPassword;
 import dk.dtu.smmac.client.ui.LoginPage;
 import dk.dtu.smmac.client.ui.LoginTopView;
@@ -78,6 +81,8 @@ public class Controller {
 	private AfdelingerServiceAsync afdelingerService = GWT.create(AfdelingerService.class);
 	private DAWAServiceAsync dawaService = GWT.create(DAWAService.class);
 	private BankServiceAsync bankService = GWT.create(BankService.class);
+	private RejseafregningServiceAsync rejseafregningService = GWT.create(RejseafregningService.class);
+	private RejseServiceAsync rejseService = GWT.create(RejseService.class);
 
 	AsyncCallback<Void> asyncEmpty;
 	AsyncCallback<String> asyncCity;
@@ -206,6 +211,7 @@ public class Controller {
 		bilagPage.getAddBilag().addClickHandler(new AddBilagHandler());
 		bilagPage.getDelete().addClickHandler(new DeleteBilagHandler());
 		//dageInfoPage.getbtnAnnullerDageInfo().addClickHandler(new ShowLoginHandler());
+		rejsePage.getSaveButton().addClickHandler(new SaveRejseHandler());
 
 		//BlurHandler
 		oplysningerPage.getName().addBlurHandler(new UpdateAnsatHandler());
@@ -269,6 +275,15 @@ public class Controller {
 		RootLayoutPanel.get().add(mainView);
 	}
 
+	private class SaveRejseHandler implements ClickHandler
+	{
+		@Override
+		public void onClick(ClickEvent event) {
+			
+			
+		}
+	}
+	
 	private class BankHandler implements BlurHandler
 	{
 		@Override

@@ -50,6 +50,24 @@
 		<url-pattern>/rejseafregningssystem/bankservice</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>rejseafregningservice</servlet-name>
+		<servlet-class>dk.dtu.smmac.server.dal.RejseafregningDAO</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>rejseafregningservice</servlet-name>
+		<url-pattern>/rejseafregningssystem/rejseafregningservice</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>rejseservice</servlet-name>
+		<servlet-class>dk.dtu.smmac.server.dal.RejseDAO</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>rejseservice</servlet-name>
+		<url-pattern>/rejseafregningssystem/rejseservice</url-pattern>
+	</servlet-mapping>
+	
 	<!-- Default page to serve -->
 	<welcome-file-list>
 		<welcome-file>Rejseafregningssystem.html</welcome-file>
