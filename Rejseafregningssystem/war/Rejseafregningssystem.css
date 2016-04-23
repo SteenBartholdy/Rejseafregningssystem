@@ -97,6 +97,6 @@ table.flextable td:nth-child(4) {
 }
 
 .alignButtomRight {
-	margin-right: 90%;
+	margin-left: 90%;
 	margin-top: 70%;
 }
