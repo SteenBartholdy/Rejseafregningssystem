@@ -67,7 +67,7 @@ public class Controller {
 
 	private GlemtPassword glemtPasswordPage;
 	
-	private DageInfo dageInfoPage;
+	//private DageInfo dageInfoPage;
 
 	private HTML emptyView;
 	private HTML emptyTopView;
@@ -109,7 +109,7 @@ public class Controller {
 
 		bilagPage = mainView.getBilagPage();
 		
-		dageInfoPage = mainView.getDageInfoPage();
+		//dageInfoPage = mainView.getDageInfoPage();
 
 		//Async
 		asyncEmpty = new AsyncCallback<Void>() {
@@ -202,10 +202,10 @@ public class Controller {
 		rejsePage.getDeleteProjectButton().addClickHandler(new DeleteProjectHandler());
 		glemtPasswordPage.getbtnSendPassword().addClickHandler(new SendPasswordHandler());
 		glemtPasswordPage.getbtnAnnullerPassword().addClickHandler(new ShowLoginHandler());
-		glemtPasswordPage.getbtnDageInfoPassword().addClickHandler(new DageInfoHandler());
+		//glemtPasswordPage.getbtnDageInfoPassword().addClickHandler(new DageInfoHandler());
 		bilagPage.getAddBilag().addClickHandler(new AddBilagHandler());
 		bilagPage.getDelete().addClickHandler(new DeleteBilagHandler());
-		dageInfoPage.getbtnAnnullerDageInfo().addClickHandler(new ShowLoginHandler());
+		//dageInfoPage.getbtnAnnullerDageInfo().addClickHandler(new ShowLoginHandler());
 
 		//BlurHandler
 		oplysningerPage.getName().addBlurHandler(new UpdateAnsatHandler());
@@ -502,14 +502,14 @@ public class Controller {
 
 	}
 
-	private class DageInfoHandler implements ClickHandler
-	{
-		@Override
-		public void onClick(ClickEvent event)
-		{
-			mainView.showContentWidget(dageInfoPage);
-		}
-	}
+//	private class DageInfoHandler implements ClickHandler
+//	{
+//		@Override
+//		public void onClick(ClickEvent event)
+//		{
+//			mainView.showContentWidget(dageInfoPage);
+//		}
+//	}
 	
 	private class ShowRejseafregningHandler implements ClickHandler
 	{

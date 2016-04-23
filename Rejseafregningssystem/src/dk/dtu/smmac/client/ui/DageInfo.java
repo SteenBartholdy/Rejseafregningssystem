@@ -1,18 +1,12 @@
 package dk.dtu.smmac.client.ui;
 
-import com.google.gwt.cell.client.CheckboxCell;
-import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.cellview.client.CellTable;
-import com.google.gwt.user.cellview.client.Column;
-import com.google.gwt.user.cellview.client.TextColumn;
-import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ProvidesKey;
 
-import dk.dtu.smmac.server.dal.RejseDAO;
 import dk.dtu.smmac.shared.RejseDTO;
 
 
@@ -30,7 +24,7 @@ public class DageInfo extends Composite
 		    }
 		  };
 	
-	public DageInfo(RejseDAO did)
+	public DageInfo()//RejseDAO did)
 	{
 //		table = new CellTable<RejseDTO>(KEY_PROVIDER);
 //		table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
@@ -94,8 +88,8 @@ public class DageInfo extends Composite
 //
 //		vPanel.add(table);
 //		vPanel.add(btnAnnuller);
-//
-//		vPanel.setStyleName("margin");
+
+		vPanel.setStyleName("margin");
 	
 
 	}

@@ -41,7 +41,7 @@ public class MainView extends Composite {
 	
 	private GlemtPassword glemtPasswordPage;
 	
-	private DageInfo dageInfoPage;
+	//private DageInfo dageInfoPage;
 
 	private HTML emptyView;
 	private HTML emptyTopView;
@@ -52,7 +52,7 @@ public class MainView extends Composite {
 
 	public MainView() {
 		initWidget(uiBinder.createAndBindUi(this));
-
+		
 		layoutPanel.getWidgetContainerElement(contentPanel).getStyle().setOverflowY(Overflow.AUTO);
 		
 		emptyView = new HTML("");
@@ -69,7 +69,7 @@ public class MainView extends Composite {
 		rejsePage = new Rejse();
 		glemtPasswordPage = new GlemtPassword();
 		//dageInfoPage = new DageInfo();
-
+		
 		//Tilføjer til top bunken
 		topPanel.add(emptyTopView);
 		topPanel.add(loginTopView);
@@ -87,7 +87,7 @@ public class MainView extends Composite {
 		contentPanel.add(rejsePage);
 		contentPanel.add(glemtPasswordPage);
 		contentPanel.add(bilagPage);
-		contentPanel.add(dageInfoPage);
+		//contentPanel.add(dageInfoPage);
 		
 		//Load
 		showContentWidget(loginPage);
@@ -172,8 +172,8 @@ public class MainView extends Composite {
 		return glemtPasswordPage;
 	}
 
-	public DageInfo getDageInfoPage()
-	{
-		return dageInfoPage;
-	}
+//	public DageInfo getDageInfoPage()
+//	{
+//		return dageInfoPage;
+//	}
 }
