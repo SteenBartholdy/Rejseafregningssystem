@@ -10,7 +10,7 @@ public class BrugerAdmintest {
 		try {
 			Login login = new Login();
 			
-			Bruger b = (Bruger) login.logIn("s145094", "1q2w3e4r");
+			Bruger b = login.logIn("s145094", "1q2w3e4r");
 			System.out.println(b.brugernavn);
 			System.out.println(b.email);
 			

@@ -15,7 +15,6 @@ import org.json.JSONObject;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import dk.dtu.smmac.client.service.DAWAService;
-import dk.dtu.smmac.client.service.LoginService;
 import dk.dtu.smmac.shared.PostNrDTO;
 
 public class DAWA extends RemoteServiceServlet implements DAWAService {

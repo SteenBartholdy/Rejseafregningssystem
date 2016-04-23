@@ -224,6 +224,7 @@ public class Controller {
 
 		//Enter Handler
 		EnterKeyHandler enterLoginHandler = new EnterKeyHandler() {
+			@Override
 			public void enterKeyDown(KeyDownEvent event) {
 
 				LoginHandler login = new LoginHandler(); 
@@ -602,6 +603,7 @@ public class Controller {
 	}
 
 	private abstract class EnterKeyHandler implements KeyDownHandler {
+		@Override
 		public void onKeyDown(KeyDownEvent event) {
 			if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER)
 				enterKeyDown(event);

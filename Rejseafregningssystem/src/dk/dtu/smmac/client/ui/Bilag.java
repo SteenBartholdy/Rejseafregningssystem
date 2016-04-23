@@ -105,6 +105,7 @@ public class Bilag extends Composite {
 		final int a = row;
 
 		b.addClickHandler(new ClickHandler(){
+			@Override
 			public void onClick(ClickEvent event) {
 				deleteNewBilag(getFlexTable(), a);
 			}

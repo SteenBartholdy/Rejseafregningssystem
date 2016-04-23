@@ -137,6 +137,7 @@ public class DageInfo extends Composite
 		}; 
 
 		morgenmadColumn.setFieldUpdater(new FieldUpdater<RejseDag, Boolean>() { 
+			@Override
 			public void update(int index, RejseDag object, Boolean value) {
 				object.setRejseDagMorgenmad(value); 
 			} 
@@ -152,6 +153,7 @@ public class DageInfo extends Composite
 		}; 
 
 		frokostColumn.setFieldUpdater(new FieldUpdater<RejseDag, Boolean>() { 
+			@Override
 			public void update(int index, RejseDag object, Boolean value) {
 				object.setRejseDagFrokost(value); 
 			} 
