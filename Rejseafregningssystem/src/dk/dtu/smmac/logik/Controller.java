@@ -279,7 +279,7 @@ public class Controller {
 	{
 		@Override
 		public void onClick(ClickEvent event) {
-			
+			//rejseService.updateRejse(rejse, callback);
 			
 		}
 	}
