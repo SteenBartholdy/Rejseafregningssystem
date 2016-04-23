@@ -3,7 +3,7 @@ package dk.dtu.smmac.shared;
 import java.io.Serializable;
 import java.sql.Date;
 
-public class DageInfoDTO implements Serializable
+public class RejseDTO implements Serializable
 {
 	private static final long serialVersionUID = 6L;
 
@@ -14,9 +14,9 @@ public class DageInfoDTO implements Serializable
 	private Date DatoFra;
 	private Date DatoTil;
 	
-	public DageInfoDTO() {}
+	public RejseDTO() {}
 	
-	public DageInfoDTO(int RejseID, int Nummer, String Land, String By, Date DatoFra, Date DatoTil)
+	public RejseDTO(int RejseID, int Nummer, String Land, String By, Date DatoFra, Date DatoTil)
 	{
 		this.RejseID = RejseID;
 		this.Nummer = Nummer;

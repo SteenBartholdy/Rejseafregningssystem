@@ -10,43 +10,43 @@ import java.util.List;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import dk.dtu.smmac.client.service.DageInfoService;
-import dk.dtu.smmac.shared.DageInfoDTO;
+import dk.dtu.smmac.client.service.RejseService;
+import dk.dtu.smmac.shared.RejseDTO;
 
-public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
+public class RejseDAO extends RemoteServiceServlet implements RejseService
 {
 
 	private Connection connection = null;
 
-	private PreparedStatement getDageInfoStmt = null;
-	private PreparedStatement updateDageInfoStmt = null;
-	private PreparedStatement createDageInfoStmt = null;
-	private PreparedStatement deleteDageInfoStmt = null;
+	private PreparedStatement getRejseStmt = null;
+	private PreparedStatement updateRejseStmt = null;
+	private PreparedStatement createRejseStmt = null;
+	private PreparedStatement deleteRejseStmt = null;
 	private PreparedStatement getSizeStmt = null;
 	
-	public DageInfoDAO() throws Exception {
+	public RejseDAO() throws Exception {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(DAO.URL, DAO.USERNAME, DAO.PASSWORD);
 
 			//Laver query, der henter alle rejsedage
-			getDageInfoStmt = connection.prepareStatement("SELECT * FROM DageInfo;");
+			getRejseStmt = connection.prepareStatement("SELECT * FROM Rejse;");
 
 			//Laver query, der opdaterer en rejsedag
-			updateDageInfoStmt = connection.prepareStatement("UPDATE DageInfo "
+			updateRejseStmt = connection.prepareStatement("UPDATE Rejse "
 					+ "SET Land = ?, Byen = ?, DatoFra = ?, DatoTil = ? "
 					+ "WHERE RejseID = ? AND Nummer = ?;");
 
 			//Laver query, der opretter en rejsedag
-			createDageInfoStmt = connection.prepareStatement("INSERT INTO DageInfo "
+			createRejseStmt = connection.prepareStatement("INSERT INTO Rejse "
 					+ "( RejseID, Nummer, Land, Byen, DatoFra, DatoTil) "
 					+ "VALUES ( ?, ?, ?, ?, ?, ? );");
 
 			//Laver query, der sletter en rejsedag
-			deleteDageInfoStmt = connection.prepareStatement("DELETE FROM DageInfo WHERE RejseID = ? AND Nummer = ?;");
+			deleteRejseStmt = connection.prepareStatement("DELETE FROM Rejse WHERE RejseID = ? AND Nummer = ?;");
 
 			//Laver query, der finder størrelsen på tabellen
-			getSizeStmt = connection.prepareStatement("SELECT COUNT(*) FROM DageInfo;");
+			getSizeStmt = connection.prepareStatement("SELECT COUNT(*) FROM Rejse;");
 
 		} catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
@@ -54,18 +54,18 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 	}
 	
 	@Override
-	public List<DageInfoDTO> getDageInfo() throws Exception {
-		List<DageInfoDTO> list = null;
+	public List<RejseDTO> getRejse() throws Exception {
+		List<RejseDTO> list = null;
 		ResultSet resultSet = null;
 		
 		try {
-			resultSet = getDageInfoStmt.executeQuery(); 
-			list = new ArrayList<DageInfoDTO>();
+			resultSet = getRejseStmt.executeQuery(); 
+			list = new ArrayList<RejseDTO>();
 
 			while(resultSet.next())
 			{
 				//Tilføjer rejsedag til listen
-				list.add(new DageInfoDTO(
+				list.add(new RejseDTO(
 						resultSet.getInt("RejseID"),
 						resultSet.getInt("Nummer"),
 						resultSet.getString("Land"),
@@ -91,17 +91,17 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 	}
 
 	@Override
-	public void updateDageInfo(DageInfoDTO dag) throws Exception 
+	public void updateRejse(RejseDTO rejse) throws Exception 
 	{
 		try {
-			updateDageInfoStmt.setInt(1, dag.getRejseID());
-			updateDageInfoStmt.setInt(2, dag.getNummer());
-			updateDageInfoStmt.setString(3, dag.getLand());
-			updateDageInfoStmt.setString(4, dag.getBy());
-			updateDageInfoStmt.setDate(5, dag.getDatoFra());
-			updateDageInfoStmt.setDate(6, dag.getDatoTil());
+			updateRejseStmt.setInt(1, rejse.getRejseID());
+			updateRejseStmt.setInt(2, rejse.getNummer());
+			updateRejseStmt.setString(3, rejse.getLand());
+			updateRejseStmt.setString(4, rejse.getBy());
+			updateRejseStmt.setDate(5, rejse.getDatoFra());
+			updateRejseStmt.setDate(6, rejse.getDatoTil());
 
-			updateDageInfoStmt.executeUpdate();
+			updateRejseStmt.executeUpdate();
 		} 
 		catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
@@ -110,17 +110,17 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 	}
 
 	@Override
-	public void createDageInfo(DageInfoDTO dag) throws Exception 
+	public void createRejse(RejseDTO rejse) throws Exception 
 	{
 		try {
-			createDageInfoStmt.setInt(1, dag.getRejseID());
-			createDageInfoStmt.setInt(2, dag.getNummer());
-			createDageInfoStmt.setString(3, dag.getLand());
-			createDageInfoStmt.setString(4, dag.getBy());
-			createDageInfoStmt.setDate(5, dag.getDatoFra());
-			createDageInfoStmt.setDate(6, dag.getDatoTil());
+			createRejseStmt.setInt(1, rejse.getRejseID());
+			createRejseStmt.setInt(2, rejse.getNummer());
+			createRejseStmt.setString(3, rejse.getLand());
+			createRejseStmt.setString(4, rejse.getBy());
+			createRejseStmt.setDate(5, rejse.getDatoFra());
+			createRejseStmt.setDate(6, rejse.getDatoTil());
 
-			createDageInfoStmt.executeUpdate();
+			createRejseStmt.executeUpdate();
 		} 
 		catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
@@ -129,12 +129,12 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 	}
 
 	@Override
-	public void deleteDageInfo(DageInfoDTO dag) throws Exception 
+	public void deleteRejse(RejseDTO rejse) throws Exception 
 	{
 		try {
-			deleteDageInfoStmt.setInt(1, dag.getRejseID());
+			deleteRejseStmt.setInt(1, rejse.getRejseID());
 
-			deleteDageInfoStmt.executeUpdate();
+			deleteRejseStmt.executeUpdate();
 		} 
 		catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());

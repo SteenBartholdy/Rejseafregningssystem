@@ -1,111 +1,42 @@
 package dk.dtu.smmac.client.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.ProvidesKey;
 
+import dk.dtu.smmac.server.dal.RejseDAO;
+import dk.dtu.smmac.shared.RejseDTO;
 
-
-
-
-//http://www.mytechtip.com/2010/11/gwt-celltable-example-using_8168.html
 
 public class DageInfo extends Composite 
 {
-	private CellTable<RejseDag> table;
+	private CellTable<RejseDTO> table;
 	private VerticalPanel vPanel = new VerticalPanel();
 	private Button btnAnnuller;
+	DateTimeFormat dtFmt = DateTimeFormat.getFormat("dd/MM yyyy");
 
-
-	private class RejseDag
-	{
-		private String dato;
-		private String land;
-		private boolean morgenmad;
-		private boolean frokost;
-		//private boolean aftensmad;
-		//private boolean nattill;
-		//private boolean refunderes;
-		//private boolean afbrudtRejse;
-
-		@SuppressWarnings("unused")
-		public RejseDag(String dato, String land)
-		{
-			this.dato = dato;
-			this.land = land;
-		}
-
-		public String getRejseDagDato()
-		{
-			return dato;
-		}
-
-		public String getRejseDagLand()
-		{
-			return land;
-		}
-
-		public Boolean getRejseDagMorgenmad()
-		{
-			return morgenmad;
-		}
-
-		public void setRejseDagMorgenmad(boolean morgenmad)
-		{
-			this.morgenmad = morgenmad; 
-		}
-
-		public Boolean getRejseDagFrokost()
-		{
-			return frokost;
-		}
-
-		public void setRejseDagFrokost(boolean frokost)
-		{
-			this.frokost = frokost; 
-		}
-	}
-
-	public void rejsedagetest()
-	{
-	List<RejseDag> rejsedage = new ArrayList<RejseDag>();
-	RejseDag r1 = new RejseDag("14-03-2015", "Holland");
-	RejseDag r2 = new RejseDag("15-03-2015", "Holland");
+	 private static final ProvidesKey<RejseDTO> KEY_PROVIDER = new ProvidesKey<RejseDTO>() {
+		    @Override
+		    public Object getKey(RejseDTO dag) {
+		      return dag.getRejseID();
+		    }
+		  };
 	
-	rejsedage.add(r1);
-	rejsedage.add(r2);	
-	}
-
-
-	//	ArrayList<RejseDag> REJSEDAG = new ArrayList<RejseDag>();
-
-	//	RejseDag dag = new RejseDag(dato, land, morgenmad, frokost, aftensmad, nattill, refunderes, afbrudtRejse);
-	//	REJSEDAG.add(new RejseDag(dato, land, morgenmad, frokost, aftensmad, nattill, refunderes, afbrudtRejse));
-
-	/*	@SuppressWarnings("deprecation")
-	private static final List<RejseDag> REJSEDAG = Array.asList(
-		new RejseDag("13-05-2015", "Burkinafaso"),
-		new RejseDag("14-05-2015", "Burkinafaso"),
-		new RejseDag("15-05-2015", "Burkinafaso"),
-		new RejseDag("16-05-2015", "Burkinafaso"));
-	 */
-
-	public DageInfo()
+	public DageInfo(RejseDAO did)
 	{
-		initWidget(this.vPanel);
-
-		table = new CellTable<RejseDag>();
+		table = new CellTable<RejseDTO>(KEY_PROVIDER);
+		table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 		table.setPageSize(4);
-
-		rejsedagetest();
+		
+		initWidget(this.vPanel);
 		
 		btnAnnuller = new Button("Annuller");
 
