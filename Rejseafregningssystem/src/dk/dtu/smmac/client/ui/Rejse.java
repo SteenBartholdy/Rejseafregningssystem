@@ -5,6 +5,10 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HTMLTable;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
@@ -22,12 +26,15 @@ public class Rejse extends Composite {
 	private Anchor addProject;
 	private TextBox shareT, shareT2;
 	private Button save, deleteProject;
+	private Grid grid;
 
 	public Rejse()
 	{
 		initWidget(vPanel);
 
 		fTable = new FlexTable();
+		
+		//grid = new Grid(1,1);
 
 		countryL = new Label("Land:");
 		dateL = new Label("Dato:");
@@ -94,6 +101,12 @@ public class Rejse extends Composite {
 		fTable.setWidget(2, 5, shareT);
 		fTable.setWidget(2, 6, shareList);
 
+//		HTMLTable.CellFormatter formatter = grid.getCellFormatter();
+//		formatter.setHorizontalAlignment(0, 0, HasHorizontalAlignment.ALIGN_RIGHT); 
+//		formatter.setVerticalAlignment(0, 0, HasVerticalAlignment.ALIGN_BOTTOM);
+//		
+//		grid.setWidget(0, 0, save);
+		
 		//SKAL IKKE GØRE SÅDAN HER. HENTES FRA DATABASE HVIS DER ER LAVET NOGET ANDET
 		setShareForProject1("100", "%");
 
@@ -103,6 +116,7 @@ public class Rejse extends Composite {
 		vPanel.add(fTable);
 
 		vPanel.add(addProject);
+		//vPanel.add(grid);
 	}
 
 	public void addCountry(String country)
