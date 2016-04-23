@@ -21,7 +21,7 @@ public class Rejse extends Composite {
 	private DateTimeFormat dateFormat;
 	private Anchor addProject;
 	private TextBox shareT, shareT2;
-	private Button deleteProject;
+	private Button save, deleteProject;
 
 	public Rejse()
 	{
@@ -71,26 +71,28 @@ public class Rejse extends Composite {
 		
 		deleteProject = new Button();
 		deleteProject.setText("Slet projekt");
+		
+		save = new Button("Gem");
 
 		dateFormat = DateTimeFormat.getFormat("dd/MM-yyyy");
 
 		date.setFormat(new DateBox.DefaultFormat(dateFormat));
 		dateTo.setFormat(new DateBox.DefaultFormat(dateFormat));
 
-
-		fTable.setWidget(0, 0, countryL);
-		fTable.setWidget(0, 1, country);
-		fTable.setWidget(1, 0, dateL);
-		fTable.setWidget(1, 1, date);
-		fTable.setWidget(1, 2, dateToL);
-		fTable.setWidget(1, 3, dateTo);
-		fTable.setWidget(2, 0, projectL);
-		fTable.setWidget(2, 1, project);
-		fTable.setWidget(2, 2, assignmentL);
-		fTable.setWidget(2, 3, assignment);
-		fTable.setWidget(2, 4, shareL);
-		fTable.setWidget(2, 5, shareT);
-		fTable.setWidget(2, 6, shareList);
+		fTable.setWidget(0, 0, save);
+		fTable.setWidget(0, 1, countryL);
+		fTable.setWidget(0, 2, country);
+		fTable.setWidget(1, 1, dateL);
+		fTable.setWidget(1, 2, date);
+		fTable.setWidget(1, 3, dateToL);
+		fTable.setWidget(1, 4, dateTo);
+		fTable.setWidget(2, 1, projectL);
+		fTable.setWidget(2, 2, project);
+		fTable.setWidget(2, 3, assignmentL);
+		fTable.setWidget(2, 4, assignment);
+		fTable.setWidget(2, 5, shareL);
+		fTable.setWidget(2, 6, shareT);
+		fTable.setWidget(2, 7, shareList);
 
 		//SKAL IKKE GØRE SÅDAN HER. HENTES FRA DATABASE HVIS DER ER LAVET NOGET ANDET
 		setShareForProject1("100", "%");

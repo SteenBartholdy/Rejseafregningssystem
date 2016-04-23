@@ -68,7 +68,7 @@ public class MainView extends Composite {
 		oplysningerPage = new Oplysninger();
 		rejsePage = new Rejse();
 		glemtPasswordPage = new GlemtPassword();
-		dageInfoPage = new DageInfo();
+		//dageInfoPage = new DageInfo();
 
 		//Tilføjer til top bunken
 		topPanel.add(emptyTopView);

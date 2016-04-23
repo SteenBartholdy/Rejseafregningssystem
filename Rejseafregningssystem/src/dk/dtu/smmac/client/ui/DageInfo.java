@@ -32,70 +32,70 @@ public class DageInfo extends Composite
 	
 	public DageInfo(RejseDAO did)
 	{
-		table = new CellTable<RejseDTO>(KEY_PROVIDER);
-		table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
-		table.setPageSize(4);
-		
-		initWidget(this.vPanel);
-		
-		btnAnnuller = new Button("Annuller");
-
-		TextColumn<RejseDag> datoColumn = new TextColumn<RejseDag>()
-		{
-			@Override
-			public String getValue(RejseDag object) 
-			{
-				return object.getRejseDagDato();
-			}
-		};
-		table.addColumn(datoColumn, "Dato:");
-
-		TextColumn<RejseDag> landColumn = new TextColumn<RejseDag>()
-		{
-			@Override
-			public String getValue(RejseDag object) 
-			{
-				return object.getRejseDagLand();
-			}
-		};
-		table.addColumn(landColumn, "Land:");
-
-		Column<RejseDag, Boolean> morgenmadColumn = new Column<RejseDag, Boolean>(new CheckboxCell()) { 
-			@Override 
-			public Boolean getValue(RejseDag object) { 
-				return object.getRejseDagMorgenmad(); 
-			} 
-		}; 
-
-		morgenmadColumn.setFieldUpdater(new FieldUpdater<RejseDag, Boolean>() { 
-			@Override
-			public void update(int index, RejseDag object, Boolean value) {
-				object.setRejseDagMorgenmad(value); 
-			} 
-		}); 
-
-		table.addColumn(morgenmadColumn, "Morgenmad:");
-
-		Column<RejseDag, Boolean> frokostColumn = new Column<RejseDag, Boolean>(new CheckboxCell()) { 
-			@Override 
-			public Boolean getValue(RejseDag object) { 
-				return object.getRejseDagFrokost(); 
-			} 
-		}; 
-
-		frokostColumn.setFieldUpdater(new FieldUpdater<RejseDag, Boolean>() { 
-			@Override
-			public void update(int index, RejseDag object, Boolean value) {
-				object.setRejseDagFrokost(value); 
-			} 
-		}); 
-
-		table.addColumn(frokostColumn, "Frokost:");
-
-		vPanel.add(table);
-		vPanel.add(btnAnnuller);
-
-		vPanel.setStyleName("margin");
+//		table = new CellTable<RejseDTO>(KEY_PROVIDER);
+//		table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+//		table.setPageSize(4);
+//		
+//		initWidget(this.vPanel);
+//		
+//		btnAnnuller = new Button("Annuller");
+//
+//		TextColumn<RejseDag> datoColumn = new TextColumn<RejseDag>()
+//		{
+//			@Override
+//			public String getValue(RejseDag object) 
+//			{
+//				return object.getRejseDagDato();
+//			}
+//		};
+//		table.addColumn(datoColumn, "Dato:");
+//
+//		TextColumn<RejseDag> landColumn = new TextColumn<RejseDag>()
+//		{
+//			@Override
+//			public String getValue(RejseDag object) 
+//			{
+//				return object.getRejseDagLand();
+//			}
+//		};
+//		table.addColumn(landColumn, "Land:");
+//
+//		Column<RejseDag, Boolean> morgenmadColumn = new Column<RejseDag, Boolean>(new CheckboxCell()) { 
+//			@Override 
+//			public Boolean getValue(RejseDag object) { 
+//				return object.getRejseDagMorgenmad(); 
+//			} 
+//		}; 
+//
+//		morgenmadColumn.setFieldUpdater(new FieldUpdater<RejseDag, Boolean>() { 
+//			@Override
+//			public void update(int index, RejseDag object, Boolean value) {
+//				object.setRejseDagMorgenmad(value); 
+//			} 
+//		}); 
+//
+//		table.addColumn(morgenmadColumn, "Morgenmad:");
+//
+//		Column<RejseDag, Boolean> frokostColumn = new Column<RejseDag, Boolean>(new CheckboxCell()) { 
+//			@Override 
+//			public Boolean getValue(RejseDag object) { 
+//				return object.getRejseDagFrokost(); 
+//			} 
+//		}; 
+//
+//		frokostColumn.setFieldUpdater(new FieldUpdater<RejseDag, Boolean>() { 
+//			@Override
+//			public void update(int index, RejseDag object, Boolean value) {
+//				object.setRejseDagFrokost(value); 
+//			} 
+//		}); 
+//
+//		table.addColumn(frokostColumn, "Frokost:");
+//
+//		vPanel.add(table);
+//		vPanel.add(btnAnnuller);
+//
+//		vPanel.setStyleName("margin");
 	
 
 	}
