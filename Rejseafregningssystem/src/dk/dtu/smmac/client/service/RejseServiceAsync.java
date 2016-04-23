@@ -1,11 +1,7 @@
 package dk.dtu.smmac.client.service;
 
 import java.util.List;
-
 import com.google.gwt.user.client.rpc.AsyncCallback;
-
-import brugerautorisation.data.Bruger;
-import dk.dtu.smmac.shared.AnsatDTO;
 import dk.dtu.smmac.shared.RejseDTO;
 
 public interface RejseServiceAsync 

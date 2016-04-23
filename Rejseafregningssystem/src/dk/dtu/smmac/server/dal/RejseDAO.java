@@ -29,20 +29,20 @@ public class RejseDAO extends RemoteServiceServlet implements RejseService
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(DAO.URL, DAO.USERNAME, DAO.PASSWORD);
 
-			//Laver query, der henter alle rejsedage
+			//Laver query, der henter alle rejser
 			getRejseStmt = connection.prepareStatement("SELECT * FROM Rejse;");
 
-			//Laver query, der opdaterer en rejsedag
+			//Laver query, der opdaterer en rejse
 			updateRejseStmt = connection.prepareStatement("UPDATE Rejse "
 					+ "SET Land = ?, Byen = ?, DatoFra = ?, DatoTil = ? "
 					+ "WHERE RejseID = ? AND Nummer = ?;");
 
-			//Laver query, der opretter en rejsedag
+			//Laver query, der opretter en rejse
 			createRejseStmt = connection.prepareStatement("INSERT INTO Rejse "
 					+ "( RejseID, Nummer, Land, Byen, DatoFra, DatoTil) "
 					+ "VALUES ( ?, ?, ?, ?, ?, ? );");
 
-			//Laver query, der sletter en rejsedag
+			//Laver query, der sletter en rejse
 			deleteRejseStmt = connection.prepareStatement("DELETE FROM Rejse WHERE RejseID = ? AND Nummer = ?;");
 
 			//Laver query, der finder størrelsen på tabellen
