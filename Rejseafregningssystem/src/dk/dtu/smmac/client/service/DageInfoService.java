@@ -9,8 +9,8 @@ import dk.dtu.smmac.shared.DageInfoDTO;
 public interface DageInfoService 
 {
 	public List<DageInfoDTO> getDageInfo() throws Exception;
-	public void updateAnsat(DageInfoDTO ansat) throws Exception;
-	public void createAnsat(DageInfoDTO ansat) throws Exception;
-	public void deleteAnsat(DageInfoDTO ansat) throws Exception;
+	public void updateDageInfo(DageInfoDTO ansat) throws Exception;
+	public void createDageInfo(DageInfoDTO ansat) throws Exception;
+	public void deleteDageInfo(DageInfoDTO ansat) throws Exception;
 	public int getSize() throws Exception;
 }
