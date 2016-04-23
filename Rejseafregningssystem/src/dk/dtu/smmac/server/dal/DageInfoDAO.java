@@ -1,5 +1,7 @@
 package dk.dtu.smmac.server.dal;
 
-public class DageInfoDAO {
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+public class DageInfoDAO extends RemoteServiceServlet {
 
 }
