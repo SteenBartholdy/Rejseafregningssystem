@@ -43,6 +43,10 @@ public class Rejseafregning extends Composite {
 		bilag.setText("Tilføj bilag");
 		bilag.setStyleName("anchorStyle");
 		
+		addTravel = new Anchor();
+		addTravel.setText("Tilføj rejse");
+		addTravel.setStyleName("anchorStyle");
+		
 		//Skal have en changeHandler
 		startTime = new ListBox();
 		endTime = new ListBox();
@@ -66,28 +70,11 @@ public class Rejseafregning extends Composite {
 		fTable.setWidget(1, 1, startTime);
 		fTable.setWidget(1, 2, endTimeLabel);
 		fTable.setWidget(1, 3, endTime);
-		fTable.setWidget(2, 0, bilag);
+		fTable.setWidget(2, 0, addTravel);
+		fTable.setWidget(2, 2, bilag);
 		
-		travelSummary = new Label();
-		edit = new Button("Rediger");
-		delete = new Button("Slet");
-		
-		hPanel.add(travelSummary);
-		hPanel.add(edit);
-		hPanel.add(delete);
-		
-	
-		
-		addTravel = new Anchor();
-		addTravel.setText("Tilføj rejse");
-		addTravel.setStyleName("anchorStyle");
-		
-		fTable.setStyleName("flextable");
 		vPanel.setStyleName("margin");
 		vPanel.add(fTable);
-		vPanel.add(hPanel);
-		
-		vPanel.add(addTravel);
 	}
 	
 	public Anchor getBilagButton()
