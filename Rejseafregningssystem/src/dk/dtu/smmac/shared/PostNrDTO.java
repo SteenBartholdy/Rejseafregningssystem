@@ -13,6 +13,7 @@ public class PostNrDTO implements Serializable {
 	}
 	
 	public PostNrDTO(String no, String name) {
+		super();
 		this.no = no;
 		this.name = name;
 	}

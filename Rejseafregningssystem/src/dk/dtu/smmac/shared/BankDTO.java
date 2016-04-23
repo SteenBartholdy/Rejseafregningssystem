@@ -12,6 +12,7 @@ public class BankDTO implements Serializable {
 	public BankDTO() {}
 	
 	public BankDTO(int id, int regNo, int kontoNo) {
+		super();
 		this.id = id;
 		this.kontoNo = kontoNo;
 		this.regNo = regNo;
