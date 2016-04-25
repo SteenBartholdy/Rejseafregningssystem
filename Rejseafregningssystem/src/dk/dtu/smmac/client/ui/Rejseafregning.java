@@ -19,7 +19,7 @@ public class Rejseafregning extends Composite {
 	private DateLabel startDateLabel, endDateLabel;
 	private ListBox startTime, endTime;
 	private Anchor bilag, addTravel;
-	private Button edit, delete;
+	private Button edit, delete, save;
 	
 	public Rejseafregning()
 	{
@@ -47,6 +47,10 @@ public class Rejseafregning extends Composite {
 		addTravel.setText("Tilføj rejse");
 		addTravel.setStyleName("anchorStyle");
 		
+		save = new Button();
+		save.setText("Fortsæt");
+		save.setStyleName("alignButtomRight");
+		
 		//Skal have en changeHandler
 		startTime = new ListBox();
 		endTime = new ListBox();
@@ -72,6 +76,7 @@ public class Rejseafregning extends Composite {
 		fTable.setWidget(1, 3, endTime);
 		fTable.setWidget(2, 0, addTravel);
 		fTable.setWidget(2, 2, bilag);
+		fTable.setWidget(3, 3, save);
 		
 		vPanel.setStyleName("margin");
 		vPanel.add(fTable);
@@ -111,4 +116,10 @@ public class Rejseafregning extends Composite {
 	{
 		return delete;
 	}
+	
+	public Button getSaveButton() 
+	{
+		return save;
+	}
+
 }

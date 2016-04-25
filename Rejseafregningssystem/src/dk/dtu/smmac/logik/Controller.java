@@ -33,6 +33,7 @@ import dk.dtu.smmac.client.service.RejseServiceAsync;
 import dk.dtu.smmac.client.service.RejseafregningService;
 import dk.dtu.smmac.client.service.RejseafregningServiceAsync;
 import dk.dtu.smmac.client.ui.Bilag;
+import dk.dtu.smmac.client.ui.DageInfo;
 import dk.dtu.smmac.client.ui.GlemtPassword;
 import dk.dtu.smmac.client.ui.LoginPage;
 import dk.dtu.smmac.client.ui.LoginTopView;
@@ -212,6 +213,7 @@ public class Controller {
 		bilagPage.getDelete().addClickHandler(new DeleteBilagHandler());
 		//dageInfoPage.getbtnAnnullerDageInfo().addClickHandler(new ShowLoginHandler());
 		rejsePage.getSaveButton().addClickHandler(new SaveRejseHandler());
+		rejseafregningPage.getSaveButton().addClickHandler(new SaveRejseafregningsHandler());
 
 		//BlurHandler
 		oplysningerPage.getName().addBlurHandler(new UpdateAnsatHandler());
@@ -275,12 +277,23 @@ public class Controller {
 		RootLayoutPanel.get().add(mainView);
 	}
 
+	private class SaveRejseafregningsHandler implements ClickHandler
+	{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			//mainView.showContentWidget(dageInfoPage);
+			
+		}
+		
+	}
+	
 	private class SaveRejseHandler implements ClickHandler
 	{
 		@Override
 		public void onClick(ClickEvent event) {
 			//rejseService.updateRejse(rejse, callback);
-			
+			mainView.showContentWidget(rejseafregningPage);
 		}
 	}
 	
