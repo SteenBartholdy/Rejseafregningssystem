@@ -208,7 +208,6 @@ public class Controller {
 		rejsePage.getDeleteProjectButton().addClickHandler(new DeleteProjectHandler());
 		glemtPasswordPage.getbtnSendPassword().addClickHandler(new SendPasswordHandler());
 		glemtPasswordPage.getbtnAnnullerPassword().addClickHandler(new ShowLoginHandler());
-		//glemtPasswordPage.getbtnDageInfoPassword().addClickHandler(new DageInfoHandler());
 		bilagPage.getAddBilag().addClickHandler(new AddBilagHandler());
 		bilagPage.getDelete().addClickHandler(new DeleteBilagHandler());
 		//dageInfoPage.getbtnAnnullerDageInfo().addClickHandler(new ShowLoginHandler());
@@ -239,6 +238,20 @@ public class Controller {
 				login.onClick(login.getEvent());
 			}
 		};
+		
+		EnterKeyHandler enterSendPasswordHandler = new EnterKeyHandler() {
+
+			@Override
+			public void enterKeyDown(KeyDownEvent event) {
+				
+				SendPasswordHandler sendPassword = new SendPasswordHandler();
+				
+				sendPassword.onClick(sendPassword.getEvent());
+				
+			}
+			
+		};
+		
 		loginPage.getPasswordTextField().addKeyDownHandler(enterLoginHandler);
 
 		//Afdeling load
@@ -321,6 +334,8 @@ public class Controller {
 	
 	private class SendPasswordHandler implements ClickHandler 
 	{
+		ClickEvent event;
+		
 		@Override
 		public void onClick(ClickEvent event) {
 			loginService.forgotPassword(glemtPasswordPage.getMailPassword(), new AsyncCallback<Boolean>() {
@@ -343,6 +358,11 @@ public class Controller {
 
 			});
 
+		}
+		
+		public ClickEvent getEvent()
+		{
+			return this.event;
 		}
 	}
 
