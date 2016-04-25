@@ -32,12 +32,23 @@ public class DageInfo extends Composite
 	{
 		table = new CellTable<DageInfoDTO>(KEY_PROVIDER);
 		table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
-		table.setPageSize(4);
+		table.setPageSize(8);
 		
 		initWidget(this.vPanel);
 		
 		btnAnnuller = new Button("Annuller");
 
+		// **** Add a checkbox input column that shows "DagID" ****
+		
+		Column<DageInfoDTO, String> dagidColumn = new Column<DageInfoDTO, String>(null) {
+			@Override
+			public String getValue(DageInfoDTO object) {
+				return Integer.toString(object.getDagID());
+			}
+		};
+		
+		table.addColumn(dagidColumn, "DagID:");
+		
 		// **** Add a checkbox input column that shows "Morgenmad" ****
 		
 	    Column<DageInfoDTO, Boolean> morgenmadColumn = new Column<DageInfoDTO, Boolean>(new CheckboxCell()) { 
