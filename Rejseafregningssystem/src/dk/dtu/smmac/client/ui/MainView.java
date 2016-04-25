@@ -42,6 +42,8 @@ public class MainView extends Composite {
 	private GlemtPassword glemtPasswordPage;
 	
 	//private DageInfo dageInfoPage;
+	
+	private Rejseafregninger rejseafregningerPage;
 
 	private HTML emptyView;
 	private HTML emptyTopView;
@@ -69,6 +71,7 @@ public class MainView extends Composite {
 		rejsePage = new Rejse();
 		glemtPasswordPage = new GlemtPassword();
 		//dageInfoPage = new DageInfo();
+		rejseafregningerPage = new Rejseafregninger();
 		
 		//Tilføjer til top bunken
 		topPanel.add(emptyTopView);
@@ -88,6 +91,7 @@ public class MainView extends Composite {
 		contentPanel.add(glemtPasswordPage);
 		contentPanel.add(bilagPage);
 		//contentPanel.add(dageInfoPage);
+		contentPanel.add(rejseafregningerPage);
 		
 		//Load
 		showContentWidget(loginPage);
@@ -176,4 +180,8 @@ public class MainView extends Composite {
 //	{
 //		return dageInfoPage;
 //	}
+	
+	public Rejseafregninger getRejseafregningerPage() {
+		return rejseafregningerPage;
+	}
 }

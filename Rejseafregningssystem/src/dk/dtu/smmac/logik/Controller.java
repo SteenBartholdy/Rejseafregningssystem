@@ -33,7 +33,6 @@ import dk.dtu.smmac.client.service.RejseServiceAsync;
 import dk.dtu.smmac.client.service.RejseafregningService;
 import dk.dtu.smmac.client.service.RejseafregningServiceAsync;
 import dk.dtu.smmac.client.ui.Bilag;
-import dk.dtu.smmac.client.ui.DageInfo;
 import dk.dtu.smmac.client.ui.GlemtPassword;
 import dk.dtu.smmac.client.ui.LoginPage;
 import dk.dtu.smmac.client.ui.LoginTopView;
@@ -43,6 +42,7 @@ import dk.dtu.smmac.client.ui.NavigationView;
 import dk.dtu.smmac.client.ui.Oplysninger;
 import dk.dtu.smmac.client.ui.Rejse;
 import dk.dtu.smmac.client.ui.Rejseafregning;
+import dk.dtu.smmac.client.ui.Rejseafregninger;
 import dk.dtu.smmac.shared.AfdelingDTO;
 import dk.dtu.smmac.shared.AnsatDTO;
 import dk.dtu.smmac.shared.BankDTO;
@@ -72,6 +72,8 @@ public class Controller {
 	private GlemtPassword glemtPasswordPage;
 	
 	//private DageInfo dageInfoPage;
+	
+	private Rejseafregninger rejseafregningerPage;
 
 	private HTML emptyView;
 	private HTML emptyTopView;
@@ -117,6 +119,8 @@ public class Controller {
 		
 		//dageInfoPage = mainView.getDageInfoPage();
 
+		rejseafregningerPage = mainView.getRejseafregningerPage();
+		
 		//Async
 		asyncEmpty = new AsyncCallback<Void>() {
 
@@ -203,6 +207,7 @@ public class Controller {
 		rejseafregningPage.getBilagButton().addClickHandler(new ShowBilagHandler());
 		navPage.getOpgaver().addClickHandler(new ShowOpgaveHandler());
 		navPage.getOplysninger().addClickHandler(new ShowOplysningHandler());
+		navPage.getArkiv().addClickHandler(new ShowRejseafregningerHandler());
 		rejseafregningPage.getAddTravelAnchor().addClickHandler(new ShowAddTravelHandler());
 		rejsePage.getAddProjectAnchor().addClickHandler(new AddProjectHandler());
 		rejsePage.getDeleteProjectButton().addClickHandler(new DeleteProjectHandler());
@@ -291,6 +296,16 @@ public class Controller {
 		RootLayoutPanel.get().add(mainView);
 	}
 
+	private class ShowRejseafregningerHandler implements ClickHandler 
+	{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			mainView.showContentWidget(rejseafregningerPage);
+		}
+		
+	}
+	
 	private class SaveRejseafregningsHandler implements ClickHandler
 	{
 
