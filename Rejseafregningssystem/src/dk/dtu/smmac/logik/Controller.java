@@ -33,6 +33,7 @@ import dk.dtu.smmac.client.service.RejseServiceAsync;
 import dk.dtu.smmac.client.service.RejseafregningService;
 import dk.dtu.smmac.client.service.RejseafregningServiceAsync;
 import dk.dtu.smmac.client.ui.Bilag;
+import dk.dtu.smmac.client.ui.DageInfo;
 import dk.dtu.smmac.client.ui.GlemtPassword;
 import dk.dtu.smmac.client.ui.LoginPage;
 import dk.dtu.smmac.client.ui.LoginTopView;
@@ -73,7 +74,7 @@ public class Controller {
 
 	private GlemtPassword glemtPasswordPage;
 	
-	//private DageInfo dageInfoPage;
+	private DageInfo dageInfoPage;
 	
 	private Rejseafregninger rejseafregningerPage;
 
@@ -119,7 +120,7 @@ public class Controller {
 
 		bilagPage = mainView.getBilagPage();
 		
-		//dageInfoPage = mainView.getDageInfoPage();
+		dageInfoPage = mainView.getDageInfoPage();
 
 		rejseafregningerPage = mainView.getRejseafregningerPage();
 		
@@ -218,7 +219,7 @@ public class Controller {
 		bilagPage.getAddBilag().addClickHandler(new AddBilagHandler());
 		bilagPage.getDelete().addClickHandler(new DeleteBilagHandler());
 		bilagPage.getCont().addClickHandler(new ShowRejseafregningHandler());
-		//dageInfoPage.getbtnAnnullerDageInfo().addClickHandler(new ShowLoginHandler());
+		dageInfoPage.getbtnAnnullerDageInfo().addClickHandler(new ShowLoginHandler());
 		rejsePage.getSaveButton().addClickHandler(new SaveRejseHandler());
 		rejseafregningPage.getSaveButton().addClickHandler(new SaveRejseafregningsHandler());
 
@@ -315,7 +316,7 @@ public class Controller {
 		public void onClick(ClickEvent event) {
 			//rejseafregningService.createRejse(new RejseafregningDTO(0, oplysningerPage.getAnsat().getID(), rejseafregningPage.getStartTime(), rejseafregningPage.getEndTime()), asyncEmpty);
 			//rejseService.createRejse(new RejseDTO(), asyncEmpty);
-			//mainView.showContentWidget(dageInfoPage);
+			mainView.showContentWidget(dageInfoPage);
 		}
 		
 	}
@@ -570,14 +571,14 @@ public class Controller {
 
 	}
 
-//	private class DageInfoHandler implements ClickHandler
-//	{
-//		@Override
-//		public void onClick(ClickEvent event)
-//		{
-//			mainView.showContentWidget(dageInfoPage);
-//		}
-//	}
+	private class DageInfoHandler implements ClickHandler
+	{
+		@Override
+		public void onClick(ClickEvent event)
+		{
+			mainView.showContentWidget(dageInfoPage);
+		}
+	}
 	
 	private class ShowRejseafregningHandler implements ClickHandler
 	{

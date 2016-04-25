@@ -41,7 +41,7 @@ public class MainView extends Composite {
 	
 	private GlemtPassword glemtPasswordPage;
 	
-	//private DageInfo dageInfoPage;
+	private DageInfo dageInfoPage;
 	
 	private Rejseafregninger rejseafregningerPage;
 
@@ -70,7 +70,7 @@ public class MainView extends Composite {
 		oplysningerPage = new Oplysninger();
 		rejsePage = new Rejse();
 		glemtPasswordPage = new GlemtPassword();
-		//dageInfoPage = new DageInfo();
+		dageInfoPage = new DageInfo();
 		rejseafregningerPage = new Rejseafregninger();
 		
 		//Tilføjer til top bunken
@@ -176,10 +176,10 @@ public class MainView extends Composite {
 		return glemtPasswordPage;
 	}
 
-//	public DageInfo getDageInfoPage()
-//	{
-//		return dageInfoPage;
-//	}
+	public DageInfo getDageInfoPage()
+	{
+		return dageInfoPage;
+	}
 	
 	public Rejseafregninger getRejseafregningerPage() {
 		return rejseafregningerPage;

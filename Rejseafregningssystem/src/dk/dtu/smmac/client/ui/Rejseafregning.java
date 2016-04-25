@@ -20,6 +20,7 @@ public class Rejseafregning extends Composite {
 	private ListBox startTime, endTime;
 	private Anchor bilag, addTravel;
 	private Button edit, delete, save;
+	private int id;
 	
 	public Rejseafregning()
 	{
@@ -80,6 +81,10 @@ public class Rejseafregning extends Composite {
 		
 		vPanel.setStyleName("margin");
 		vPanel.add(fTable);
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	public Anchor getBilagButton()
