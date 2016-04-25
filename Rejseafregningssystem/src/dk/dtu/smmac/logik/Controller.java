@@ -47,6 +47,8 @@ import dk.dtu.smmac.shared.AfdelingDTO;
 import dk.dtu.smmac.shared.AnsatDTO;
 import dk.dtu.smmac.shared.BankDTO;
 import dk.dtu.smmac.shared.PostNrDTO;
+import dk.dtu.smmac.shared.RejseDTO;
+import dk.dtu.smmac.shared.RejseafregningDTO;
 
 @SuppressWarnings("deprecation")
 public class Controller {
@@ -311,8 +313,9 @@ public class Controller {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			//rejseafregningService.createRejse(new RejseafregningDTO(0, oplysningerPage.getAnsat().getID(), rejseafregningPage.getStartTime(), rejseafregningPage.getEndTime()), asyncEmpty);
+			//rejseService.createRejse(new RejseDTO(), asyncEmpty);
 			//mainView.showContentWidget(dageInfoPage);
-			
 		}
 		
 	}
@@ -321,7 +324,8 @@ public class Controller {
 	{
 		@Override
 		public void onClick(ClickEvent event) {
-			//rejseService.updateRejse(rejse, callback);
+			//TODO projekt og opgave mangle indsat
+			rejseafregningPage.setTravelSummary(rejsePage.getCountry(), rejsePage.getDate(), "", "");
 			mainView.showContentWidget(rejseafregningPage);
 		}
 	}

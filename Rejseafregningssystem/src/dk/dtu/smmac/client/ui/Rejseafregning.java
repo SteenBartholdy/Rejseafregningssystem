@@ -92,6 +92,14 @@ public class Rejseafregning extends Composite {
 		startTime.setItemSelected(starttime, true);
 	}
 	
+	public int getStartTime() {
+		return Integer.parseInt(startTime.getValue(startTime.getSelectedIndex()));
+	}
+	
+	public int getEndTime() {
+		return Integer.parseInt(endTime.getValue(endTime.getSelectedIndex()));
+	}
+	
 	public void setEndTime(int endtime)
 	{
 		endTime.setItemSelected(endtime, true);

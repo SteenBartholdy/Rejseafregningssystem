@@ -216,5 +216,9 @@ public class Rejse extends Composite {
 	{
 		return save;
 	}
+	
+	public String getCountry() {
+		return country.getValue(country.getSelectedIndex());
+	}
 
 }

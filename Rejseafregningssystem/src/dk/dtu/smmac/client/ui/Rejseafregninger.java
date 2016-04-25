@@ -1,6 +1,5 @@
 package dk.dtu.smmac.client.ui;
 
-import java.util.Arrays;
 import java.util.List;
 
 import com.google.gwt.user.cellview.client.CellTable;
@@ -9,39 +8,68 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 
-import dk.dtu.smmac.shared.RejseafregningDTO;
+import dk.dtu.smmac.shared.RejseDTO;
 
 public class Rejseafregninger extends Composite {
 
 	private VerticalPanel vPanel = new VerticalPanel();
-	private static List<RejseafregningDTO> LIST = Arrays.asList(new RejseafregningDTO(1, 0, 8, 9), new RejseafregningDTO(2, 0, 8, 10));
+	private ListDataProvider<RejseDTO> dataProvider;
 	
 	public Rejseafregninger() {
 		initWidget(this.vPanel);
 		
-		CellTable<RejseafregningDTO> table = new CellTable<RejseafregningDTO>();
+		CellTable<RejseDTO> table = new CellTable<RejseDTO>();
 
-		TextColumn<RejseafregningDTO> idColumn = new TextColumn<RejseafregningDTO>() {
+		TextColumn<RejseDTO> idColumn = new TextColumn<RejseDTO>() {
 
 			@Override
-			public String getValue(RejseafregningDTO obj) {
-				return ""+obj.getId();
+			public String getValue(RejseDTO obj) {
+				return ""+obj.getNummer();
+			}
+		};
+		
+		TextColumn<RejseDTO> datoColumn = new TextColumn<RejseDTO>() {
+
+			@Override
+			public String getValue(RejseDTO obj) {
+				return ""+obj.getDatoFra();
+			}
+		};
+		
+		TextColumn<RejseDTO> landColumn = new TextColumn<RejseDTO>() {
+
+			@Override
+			public String getValue(RejseDTO obj) {
+				return ""+obj.getLand();
+			}
+		};
+		
+		TextColumn<RejseDTO> byColumn = new TextColumn<RejseDTO>() {
+
+			@Override
+			public String getValue(RejseDTO obj) {
+				return ""+obj.getBy();
 			}
 		};
 		
 		table.addColumn(idColumn, "Id");
+		table.addColumn(datoColumn, "Dato");
+		table.addColumn(landColumn, "Land");
+		table.addColumn(byColumn, "By");
 		
-		ListDataProvider<RejseafregningDTO> dataProvider = new ListDataProvider<RejseafregningDTO>();
+		dataProvider = new ListDataProvider<RejseDTO>();
 		
 		dataProvider.addDataDisplay(table);
-		
-		List<RejseafregningDTO> list = dataProvider.getList();
-	    for (RejseafregningDTO contact : LIST) {
-	      list.add(contact);
-	    }
 	    
 	    vPanel.setStyleName("margin");
 		vPanel.add(table);
+	}
+	
+	public void setData(List<RejseDTO> rejseList) {
+		List<RejseDTO> list = dataProvider.getList();
+	    for (RejseDTO rejse : rejseList) {
+	      list.add(rejse);
+	    }
 	}
 
 }

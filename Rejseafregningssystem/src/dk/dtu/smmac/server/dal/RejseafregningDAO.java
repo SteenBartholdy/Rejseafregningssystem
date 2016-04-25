@@ -3,6 +3,7 @@ package dk.dtu.smmac.server.dal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 	private PreparedStatement getRejserStmt = null;
 	private PreparedStatement updateRejsStmt = null;
 	private PreparedStatement createRejsStmt = null;
+	private PreparedStatement getSizeStmt = null;
 	
 	public RejseafregningDAO() throws Exception {
 		try {
@@ -41,6 +43,9 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 			createRejsStmt = connection.prepareStatement("INSERT INTO Rejseafregning "
 					+ "( Nummer, Id, Starttid, Sluttid ) "
 					+ "VALUES ( ?, ?, ?, ? );");
+			
+			//Laver query, der finder størrelsen på tabellen
+			getSizeStmt = connection.prepareStatement("SELECT COUNT(*) FROM Rejseafregning;");
 			
 		} catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
@@ -64,7 +69,7 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 	@Override
 	public void createRejse(RejseafregningDTO rejse) throws Exception {
 		try {
-			createRejsStmt.setInt(1, rejse.getId());
+			createRejsStmt.setInt(1, getSize()+1);
 			createRejsStmt.setInt(2, rejse.getAnsatId());
 			createRejsStmt.setInt(3, rejse.getStartTid());
 			createRejsStmt.setInt(4, rejse.getSlutTid());
@@ -85,6 +90,21 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 	public List<RejseafregningDTO> getRejser(int ansatId) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int getSize() throws Exception {
+		ResultSet resultSet = null;
+
+		try {
+			resultSet = getSizeStmt.executeQuery();
+			resultSet.next();
+			return resultSet.getInt(1);
+		} catch (SQLException sqlE) {
+			System.out.println(sqlE.getMessage());
+		}
+
+		return 0;
 	}
 	
 }
