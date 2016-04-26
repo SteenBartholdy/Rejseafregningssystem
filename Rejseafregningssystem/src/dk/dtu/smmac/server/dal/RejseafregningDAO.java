@@ -69,7 +69,7 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 	@Override
 	public void createRejse(RejseafregningDTO rejse) throws Exception {
 		try {
-			createRejsStmt.setInt(1, getSize()+1);
+			createRejsStmt.setInt(1, rejse.getId());
 			createRejsStmt.setInt(2, rejse.getAnsatId());
 			createRejsStmt.setInt(3, rejse.getStartTid());
 			createRejsStmt.setInt(4, rejse.getSlutTid());

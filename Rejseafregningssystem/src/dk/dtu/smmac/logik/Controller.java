@@ -314,8 +314,7 @@ public class Controller {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			//rejseafregningService.createRejse(new RejseafregningDTO(0, oplysningerPage.getAnsat().getID(), rejseafregningPage.getStartTime(), rejseafregningPage.getEndTime()), asyncEmpty);
-			//rejseService.createRejse(new RejseDTO(), asyncEmpty);
+			rejseafregningService.updateRejse(rejseafregningPage.getRejseafregning(), asyncEmpty);
 			mainView.showContentWidget(dageInfoPage);
 		}
 		
@@ -326,7 +325,7 @@ public class Controller {
 		@Override
 		public void onClick(ClickEvent event) {
 			//TODO projekt og opgave mangle indsat
-			rejseafregningPage.setTravelSummary(rejsePage.getCountry(), rejsePage.getDate(), "", "");
+			rejseafregningPage.setTravelSummary(rejsePage.getCountry(), /*rejsePage.getDate()*/ "", "", "");
 			mainView.showContentWidget(rejseafregningPage);
 		}
 	}
@@ -585,7 +584,23 @@ public class Controller {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			mainView.showContentWidget(rejseafregningPage);
+			rejseafregningService.getSize(new AsyncCallback<Integer>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					System.out.println("An error has occured");
+					
+				}
+
+				@Override
+				public void onSuccess(Integer result) {
+					RejseafregningDTO rejseafregning = new RejseafregningDTO(result+1, oplysningerPage.getAnsat().getID());
+					rejseafregningService.createRejse(rejseafregning, asyncEmpty);
+					rejseafregningPage.setRejseafregning(rejseafregning);
+					mainView.showContentWidget(rejseafregningPage);
+				}
+				
+			});
 		}
 
 	}

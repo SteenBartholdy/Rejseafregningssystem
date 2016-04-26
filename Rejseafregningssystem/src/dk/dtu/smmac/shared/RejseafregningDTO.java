@@ -21,6 +21,12 @@ public class RejseafregningDTO implements Serializable {
 		this.slutTid = slutTid;
 	}
 	
+	public RejseafregningDTO(int id, int ansatId) {
+		super();
+		this.nr = id;
+		this.ansatId = ansatId;
+	}
+	
 	public int getId() {
 		return this.nr;
 	}
@@ -35,6 +41,14 @@ public class RejseafregningDTO implements Serializable {
 	
 	public int getSlutTid() {
 		return this.slutTid;
+	}
+	
+	public void setStartTid(int tid) {
+		this.startTid = tid;
+	}
+	
+	public void setSlutTid(int tid) {
+		this.slutTid = tid;
 	}
 	
 }

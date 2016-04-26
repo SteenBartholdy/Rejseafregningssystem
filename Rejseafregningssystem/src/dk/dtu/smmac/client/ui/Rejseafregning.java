@@ -10,6 +10,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import dk.dtu.smmac.shared.RejseafregningDTO;
+
 public class Rejseafregning extends Composite {
 
 	private VerticalPanel vPanel = new VerticalPanel();
@@ -20,7 +22,7 @@ public class Rejseafregning extends Composite {
 	private ListBox startTime, endTime;
 	private Anchor bilag, addTravel;
 	private Button edit, delete, save;
-	private int id;
+	private RejseafregningDTO rejseafregning;
 	
 	public Rejseafregning()
 	{
@@ -83,8 +85,15 @@ public class Rejseafregning extends Composite {
 		vPanel.add(fTable);
 	}
 	
-	public void setId(int id) {
-		this.id = id;
+	public void setRejseafregning(RejseafregningDTO rejseafregning) {
+		this.rejseafregning = rejseafregning;
+	}
+	
+	public RejseafregningDTO getRejseafregning() {
+		this.rejseafregning.setStartTid(getStartTime());
+		this.rejseafregning.setSlutTid(getEndTime());
+		
+		return this.rejseafregning;
 	}
 	
 	public Anchor getBilagButton()
