@@ -1,18 +1,20 @@
 package dk.dtu.smmac.client.ui;
 
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.TextBox;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.AttachEvent.Handler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.FocusWidget;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 
@@ -23,7 +25,8 @@ public class Bilag extends Composite {
 	private Button delete, upload, cont;
 	private Anchor addBilag;
 	private int count = 0;
-	private static Button[] bList;
+	private static List<Button> bList;
+	private static List<HandlerRegistration> hList;
 	
 	public Bilag()
 	{
@@ -31,7 +34,8 @@ public class Bilag extends Composite {
 		
 		fTable = new FlexTable();
 		
-		bList = new Button[]{};
+		bList = new ArrayList<Button>();
+		hList = new ArrayList<HandlerRegistration>();
 		
 		delete = new Button();
 		delete.setText("Slet");
@@ -71,16 +75,12 @@ public class Bilag extends Composite {
 		flextable.removeRow(flextable.getRowCount());
 	}
 	
-	public static void deleteNewBilag(FlexTable flextable, Button[] b)
+	public static void deleteNewBilag(FlexTable flexTable, int i)
 	{
-		for (int i = 0; i < fTable.getRowCount(); i++){
-			final int x = i;
-				b[i].addClickHandler(new ClickHandler(){
-					public void onClick(ClickEvent event) {
-						deleteNewBilag(getFlexTable());
-					}
-				});
-		}
+		flexTable.removeRow(i);
+		bList.remove(i);
+		hList.remove(i);
+		clickHandler(bList, getFlexTable());
 	}
 	
 	public Anchor getAddBilag()
@@ -106,8 +106,9 @@ public class Bilag extends Composite {
 	public Button addSletButton(int row)
 	{
 		Button b = new Button();
-		bList[bList.length] = b;
-
+		bList.add(b);
+		hList.add(addClickHandler(b, row));
+		
 		b.setText("Slet");
 		return b;
 	}
@@ -133,9 +134,38 @@ public class Bilag extends Composite {
 		return t;
 	}
 	
-	public Button[] getBList()
+	public List<Button> getBList()
 	{
 		return bList;
 	}
+	
+	public static void clickHandler(List<Button> b, FlexTable fTable)
+	{
+		for (int i = 0; i < b.size(); i++){
+			hList.get(i).removeHandler();
+		}
+		for (int i = 0; i < b.size(); i++){
+			final int x = i;
+			b.get(i).addClickHandler(new ClickHandler(){
+				@Override
+				public void onClick(ClickEvent event) {
+					deleteNewBilag(getFlexTable(), x);
+			}
+			});
+		}
+	}
+	public static HandlerRegistration addClickHandler(Button b, int i)
+	{
+		HandlerRegistration handler;
+		final int x = i;
+		handler = b.addClickHandler(new ClickHandler(){
+					@Override
+					public void onClick(ClickEvent event) {
+						deleteNewBilag(getFlexTable(), x);
+				}
+		});
+		return handler;
+	}
 }
+
 	
