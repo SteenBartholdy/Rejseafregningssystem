@@ -2,18 +2,18 @@ package dk.dtu.smmac.client.ui;
 
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.FieldUpdater;
-import com.google.gwt.i18n.client.DateTimeFormat;
+//import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.TextColumn;
-import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
+//import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ProvidesKey;
 
 import dk.dtu.smmac.shared.DageInfoDTO;
-import dk.dtu.smmac.shared.RejseDTO;
+
 
 
 public class DageInfo extends Composite 
@@ -21,37 +21,36 @@ public class DageInfo extends Composite
 	private CellTable<DageInfoDTO> table;
 	private VerticalPanel vPanel = new VerticalPanel();
 	private Button btnAnnuller;
-	private DateTimeFormat dtFmt = DateTimeFormat.getFormat("dd/MM yyyy");
+	//private DateTimeFormat dtFmt = DateTimeFormat.getFormat("dd/MM yyyy");
 
 	 private static final ProvidesKey<DageInfoDTO> KEY_PROVIDER = new ProvidesKey<DageInfoDTO>() {
 		    @Override
 		    public Object getKey(DageInfoDTO dag) {
-		      return dag.getDagID();
+		      return dag.getDageInfoDato();
 		    }
 		  };
 	
 	public DageInfo()
 	{
 		table = new CellTable<DageInfoDTO>(KEY_PROVIDER);
-		table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+		//table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 		table.setPageSize(8);
 		
 		initWidget(this.vPanel);
 		
 		btnAnnuller = new Button("Annuller");
 
-		// **** Add column that shows "DagID" ****
+		// **** Add column that shows "Dato" ****
 		
-		TextColumn<DageInfoDTO> dagidColumn = new TextColumn<DageInfoDTO>() {
+		TextColumn<DageInfoDTO> datoColumn = new TextColumn<DageInfoDTO>() {
 
 			@Override
 			public String getValue(DageInfoDTO object) {
-				return ""+object.getDagID();
-			}
-		
+				return ""+object.getDageInfoDato();
+			}	
 		};
 		
-		table.addColumn(dagidColumn, "DagID:");
+		table.addColumn(datoColumn, "Dato:");
 		
 		// **** Add a checkbox input column that shows "Morgenmad" ****
 		

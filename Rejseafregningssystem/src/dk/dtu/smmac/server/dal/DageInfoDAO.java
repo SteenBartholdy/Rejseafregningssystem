@@ -40,7 +40,7 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 
 			//Laver query, der opretter en rejsedag
 			createDageInfoStmt = connection.prepareStatement("INSERT INTO DageInfo "
-					+ "( RejseID, Nummer, Morgenmad, Frokost, Aftensmad, Nattil, RejseAfbrudt, UdokNat, Refunderes) "
+					+ "( Dato, Nummer, Morgenmad, Frokost, Aftensmad, Nattil, RejseAfbrudt, UdokNat, Refunderes) "
 					+ "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? );");
 
 			//Laver query, der sletter en rejsedag
@@ -68,7 +68,7 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 			{
 				//Tilføjer rejsedag til listen
 				list.add(new DageInfoDTO(
-						resultSet.getInt("DagID"),
+						resultSet.getDate("Dato"),
 						resultSet.getInt("Nummer"),
 						resultSet.getBoolean("Morgenmad"),
 						resultSet.getBoolean("Frokost"),
@@ -99,7 +99,7 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 	public void updateDageInfo(DageInfoDTO dag) throws Exception 
 	{
 		try {
-			updateDageInfoStmt.setInt(1, dag.getDagID());
+			updateDageInfoStmt.setDate(1, dag.getDageInfoDato());
 			updateDageInfoStmt.setInt(2, dag.getNummer());
 			updateDageInfoStmt.setBoolean(3, dag.getMorgenmad());
 			updateDageInfoStmt.setBoolean(4, dag.getFrokost());
@@ -121,7 +121,7 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 	public void createDageInfo(DageInfoDTO dag) throws Exception 
 	{
 		try {
-			createDageInfoStmt.setInt(1, dag.getDagID());
+			createDageInfoStmt.setDate(1, dag.getDageInfoDato());
 			createDageInfoStmt.setInt(2, dag.getNummer());
 			createDageInfoStmt.setBoolean(3, dag.getMorgenmad());
 			createDageInfoStmt.setBoolean(4, dag.getFrokost());
@@ -143,7 +143,7 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 	public void deleteDageInfo(DageInfoDTO dag) throws Exception 
 	{
 		try {
-			deleteDageInfoStmt.setInt(1, dag.getDagID());
+			deleteDageInfoStmt.setDate(1, dag.getDageInfoDato());
 
 			deleteDageInfoStmt.executeUpdate();
 		} 
