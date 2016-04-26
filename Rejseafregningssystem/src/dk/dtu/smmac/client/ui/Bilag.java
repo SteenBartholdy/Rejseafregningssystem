@@ -11,6 +11,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.Label;
@@ -22,7 +23,8 @@ public class Bilag extends Composite {
 
 	private VerticalPanel vPanel = new VerticalPanel();
 	private static FlexTable fTable;
-	private Button delete, upload, cont;
+	private Button delete, cont;
+	private FileUpload upload;
 	private Anchor addBilag;
 	private int count = 0;
 	private static List<Button> bList;
@@ -40,8 +42,7 @@ public class Bilag extends Composite {
 		delete = new Button();
 		delete.setText("Slet");
 
-		upload = new Button();
-		upload.setText("Tilføj fil");
+		upload = new FileUpload();
 
 		addBilag = new Anchor();
 		addBilag.setText("Tilføj bilag");
@@ -66,7 +67,7 @@ public class Bilag extends Composite {
 
 		fTable.setWidget(numRows, 0, addLabel("Bilag: " + count));
 		fTable.setWidget(numRows, 1, addTextBox());
-		fTable.setWidget(numRows, 2, addFilButton());
+		fTable.setWidget(numRows, 2, addFileButton());
 		fTable.setWidget(numRows, 3, addSletButton(numRows));
 	}
 	
@@ -106,17 +107,18 @@ public class Bilag extends Composite {
 	{
 		Button b = new Button();
 		bList.add(b);
-		hList.add(addClickHandler(b, row));
+		hList.add(addClickHandlerDelete(b, row));
 		
 		b.setText("Slet");
 		return b;
 	}
 	
-	public Button addFilButton()
+	public FileUpload addFileButton()
 	{
-		Button c = new Button();
-		c.setText("Tilføj fil");
-		return c;
+		FileUpload file = new FileUpload();
+		
+		file.setName("Tilføj fil");
+		return file;
 	}
 	
 	public Label addLabel(String name)
@@ -139,10 +141,10 @@ public class Bilag extends Composite {
 			final int x = i;
 			hList.get(x).removeHandler();
 			hList.remove(x);
-			hList.add(x, addClickHandler(b.get(x), x));
+			hList.add(x, addClickHandlerDelete(b.get(x), x));
 		}
 	}
-	public static HandlerRegistration addClickHandler(Button b, int i)
+	public static HandlerRegistration addClickHandlerDelete(Button b, int i)
 	{
 		HandlerRegistration handler;
 		final int x = i;
