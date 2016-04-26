@@ -5,30 +5,30 @@ import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.logical.shared.AttachEvent.Handler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.Window;
+import com.google.gwt.thirdparty.javascript.rhino.head.ast.FunctionNode.Form;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.FocusWidget;
+import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 
 public class Bilag extends Composite {
-
+	
+	final FormPanel form = new FormPanel();
 	private VerticalPanel vPanel = new VerticalPanel();
 	private static FlexTable fTable;
 	private Button delete, cont;
-	private FileUpload upload;
 	private Anchor addBilag;
 	private int count = 0;
 	private static List<Button> bList;
 	private static List<HandlerRegistration> hList;
+	private static List<FileUpload> fList;
 	
 	public Bilag()
 	{
@@ -36,13 +36,18 @@ public class Bilag extends Composite {
 		
 		fTable = new FlexTable();
 		
+		form.setAction("/myFormHandler");
+		form.setEncoding(FormPanel.ENCODING_MULTIPART);
+	    form.setMethod(FormPanel.METHOD_POST);
+	    
+	    form.setWidget(fTable);
+		
 		bList = new ArrayList<Button>();
 		hList = new ArrayList<HandlerRegistration>();
+		fList = new ArrayList<FileUpload>();
 		
 		delete = new Button();
 		delete.setText("Slet");
-
-		upload = new FileUpload();
 
 		addBilag = new Anchor();
 		addBilag.setText("Tilføj bilag");
@@ -68,7 +73,7 @@ public class Bilag extends Composite {
 		fTable.setWidget(numRows, 0, addLabel("Bilag: " + count));
 		fTable.setWidget(numRows, 1, addTextBox());
 		fTable.setWidget(numRows, 2, addFileButton());
-		fTable.setWidget(numRows, 3, addSletButton(numRows));
+		fTable.setWidget(numRows, 4, addSletButton(numRows));
 	}
 	
 	public static void deleteNewBilag(FlexTable flextable)
@@ -88,7 +93,7 @@ public class Bilag extends Composite {
 		return addBilag;
 	}
 
-	public static FlexTable getFlexTable()
+	public FlexTable getFlexTable()
 	{
 		return fTable;
 	}
@@ -116,6 +121,7 @@ public class Bilag extends Composite {
 	public FileUpload addFileButton()
 	{
 		FileUpload file = new FileUpload();
+		fList.add(file);
 		
 		file.setName("Tilføj fil");
 		return file;
@@ -151,7 +157,7 @@ public class Bilag extends Composite {
 		handler = b.addClickHandler(new ClickHandler(){
 					@Override
 					public void onClick(ClickEvent event) {
-						deleteNewBilag(getFlexTable(), x);
+						deleteNewBilag(fTable, x);
 				}
 		});
 		return handler;
