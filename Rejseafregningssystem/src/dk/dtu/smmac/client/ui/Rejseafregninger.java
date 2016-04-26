@@ -44,19 +44,10 @@ public class Rejseafregninger extends Composite {
 			}
 		};
 		
-		TextColumn<RejseDTO> byColumn = new TextColumn<RejseDTO>() {
-
-			@Override
-			public String getValue(RejseDTO obj) {
-				return ""+obj.getBy();
-			}
-		};
-		
 		table.addColumn(idColumn, "Id");
 		table.addColumn(datoColumn, "Dato");
 		table.addColumn(landColumn, "Land");
-		table.addColumn(byColumn, "By");
-		
+
 		dataProvider = new ListDataProvider<RejseDTO>();
 		
 		dataProvider.addDataDisplay(table);

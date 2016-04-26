@@ -364,8 +364,10 @@ public class Controller {
 	{
 		@Override
 		public void onClick(ClickEvent event) {
-			//TODO mangler noget gem
 			rejseService.updateRejse(rejsePage.getRejse(), asyncEmpty);
+			//TODO virker ikke :'(
+//			rejseafregningPage.setStartDateLabel(rejsePage.getRejse().getDatoFra());
+//			rejseafregningPage.setEndDateLabel(dato);
 			rejseafregningPage.addTravelSummary(rejsePage.getRejse());
 			mainView.showContentWidget(rejseafregningPage);
 		}

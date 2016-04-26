@@ -83,7 +83,6 @@ CREATE TABLE Rejse
 	RejseID int NOT NULL AUTO_INCREMENT,
 	Nummer int(10) NOT NULL,
 	Land varchar(100),
-	Byen varchar(100),
 	DatoTil date,
 	DatoFra date,
 	Projekt varchar(50),

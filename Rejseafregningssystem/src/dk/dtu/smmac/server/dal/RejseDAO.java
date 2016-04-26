@@ -34,13 +34,13 @@ public class RejseDAO extends RemoteServiceServlet implements RejseService
 
 			//Laver query, der opdaterer en rejse
 			updateRejseStmt = connection.prepareStatement("UPDATE Rejse "
-					+ "SET Land = ?, Byen = ?, DatoFra = ?, DatoTil = ?, Projekt = ?, Opgave = ? "
+					+ "SET Land = ?, DatoFra = ?, DatoTil = ?, Projekt = ?, Opgave = ? "
 					+ "WHERE RejseID = ? AND Nummer = ?;");
 
 			//Laver query, der opretter en rejse
 			createRejseStmt = connection.prepareStatement("INSERT INTO Rejse "
-					+ "( RejseID, Nummer, Land, Byen, DatoFra, DatoTil, Projekt, Opgave) "
-					+ "VALUES ( ?, ?, ?, ?, ?, ?, ?, ? );");
+					+ "( RejseID, Nummer, Land, DatoFra, DatoTil, Projekt, Opgave) "
+					+ "VALUES ( ?, ?, ?, ?, ?, ?, ? );");
 
 			//Laver query, der sletter en rejse
 			deleteRejseStmt = connection.prepareStatement("DELETE FROM Rejse WHERE RejseID = ? AND Nummer = ?;");
@@ -69,7 +69,6 @@ public class RejseDAO extends RemoteServiceServlet implements RejseService
 						resultSet.getInt("RejseID"),
 						resultSet.getInt("Nummer"),
 						resultSet.getString("Land"),
-						resultSet.getString("Byen"),
 						resultSet.getDate("DatoFra"),
 						resultSet.getDate("DatoTil"), 
 						resultSet.getString("Projekt"),
@@ -97,13 +96,12 @@ public class RejseDAO extends RemoteServiceServlet implements RejseService
 	{
 		try {
 			updateRejseStmt.setString(1, rejse.getLand());
-			updateRejseStmt.setString(2, rejse.getBy());
-			updateRejseStmt.setDate(3, rejse.getDatoFra());
-			updateRejseStmt.setDate(4, rejse.getDatoTil());
-			updateRejseStmt.setString(5, rejse.getProjekt());
-			updateRejseStmt.setString(6, rejse.getOpgave());
-			updateRejseStmt.setInt(7, rejse.getRejseID());
-			updateRejseStmt.setInt(8, rejse.getNummer());
+			updateRejseStmt.setDate(2, rejse.getDatoFra());
+			updateRejseStmt.setDate(3, rejse.getDatoTil());
+			updateRejseStmt.setString(4, rejse.getProjekt());
+			updateRejseStmt.setString(5, rejse.getOpgave());
+			updateRejseStmt.setInt(6, rejse.getRejseID());
+			updateRejseStmt.setInt(7, rejse.getNummer());
 
 			updateRejseStmt.executeUpdate();
 		} 
@@ -120,11 +118,10 @@ public class RejseDAO extends RemoteServiceServlet implements RejseService
 			createRejseStmt.setInt(1, rejse.getRejseID());
 			createRejseStmt.setInt(2, rejse.getNummer());
 			createRejseStmt.setString(3, rejse.getLand());
-			createRejseStmt.setString(4, rejse.getBy());
-			createRejseStmt.setDate(5, rejse.getDatoFra());
-			createRejseStmt.setDate(6, rejse.getDatoTil());
-			createRejseStmt.setString(7, rejse.getProjekt());
-			createRejseStmt.setString(8, rejse.getOpgave());
+			createRejseStmt.setDate(4, rejse.getDatoFra());
+			createRejseStmt.setDate(5, rejse.getDatoTil());
+			createRejseStmt.setString(6, rejse.getProjekt());
+			createRejseStmt.setString(7, rejse.getOpgave());
 
 			createRejseStmt.executeUpdate();
 		} 

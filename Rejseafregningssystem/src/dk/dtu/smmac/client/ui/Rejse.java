@@ -89,7 +89,6 @@ public class Rejse extends Composite {
 	}
 	
 	public RejseDTO getRejse() {
-//		this.rejse.setBy(by);
 		this.rejse.setDatoFra(getDate());
 		this.rejse.setDatoTil(getDateTo());
 		this.rejse.setLand(country.getValue(country.getSelectedIndex()));
@@ -101,12 +100,12 @@ public class Rejse extends Composite {
 
 	public Date getDate()
 	{
-		return (Date) dateFormat.parse(date.getValue().toString());
+		return new java.sql.Date(date.getValue().getTime());
 	}
 
 	public Date getDateTo()
 	{
-		return (Date) dateFormat.parse(dateTo.getValue().toString());
+		return new java.sql.Date(dateTo.getValue().getTime());
 	}
 	
 	public void setProjekt(List<String> list) {

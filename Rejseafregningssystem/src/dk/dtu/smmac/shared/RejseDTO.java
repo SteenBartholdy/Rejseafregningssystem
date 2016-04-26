@@ -10,7 +10,6 @@ public class RejseDTO implements Serializable
 	private int RejseID;
 	private int Nummer;
 	private String Land;
-	private String By;
 	private Date DatoFra;
 	private Date DatoTil;
 	private String projekt;
@@ -18,12 +17,11 @@ public class RejseDTO implements Serializable
 	
 	public RejseDTO() {}
 	
-	public RejseDTO(int RejseID, int Nummer, String Land, String By, Date DatoFra, Date DatoTil, String Projekt, String Opgave)
+	public RejseDTO(int RejseID, int Nummer, String Land, Date DatoFra, Date DatoTil, String Projekt, String Opgave)
 	{
 		this.RejseID = RejseID;
 		this.Nummer = Nummer;
 		this.Land = Land;
-		this.By = By;
 		this.DatoFra = DatoFra;
 		this.DatoTil = DatoTil;
 		this.projekt = Projekt;
@@ -52,15 +50,6 @@ public class RejseDTO implements Serializable
 	
 	public void setLand(String land) {
 		this.Land = land;
-	}
-
-	public String getBy()
-	{
-		return this.By;
-	}
-	
-	public void setBy(String by) {
-		this.By = by;
 	}
 	
 	public Date getDatoFra()
