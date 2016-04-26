@@ -29,6 +29,11 @@ public class RejseDTO implements Serializable
 		this.projekt = Projekt;
 		this.opgave = Opgave;
 	}
+	
+	public RejseDTO(int id, int ansatId) {
+		this.RejseID = id;
+		this.Nummer = ansatId;
+	}
 
 	public int getRejseID()
 	{
@@ -44,15 +49,27 @@ public class RejseDTO implements Serializable
 	{
 		return this.Land;
 	}
+	
+	public void setLand(String land) {
+		this.Land = land;
+	}
 
 	public String getBy()
 	{
 		return this.By;
 	}
 	
+	public void setBy(String by) {
+		this.By = by;
+	}
+	
 	public Date getDatoFra()
 	{
 		return this.DatoFra;
+	}
+	
+	public void setDatoFra(Date dato) {
+		this.DatoFra = dato;
 	}
 
 	public Date getDatoTil()
@@ -60,11 +77,23 @@ public class RejseDTO implements Serializable
 		return this.DatoTil;
 	}
 	
+	public void setDatoTil(Date dato) {
+		this.DatoTil = dato;
+	}
+	
 	public String getProjekt() {
 		return this.projekt;
 	}
 	
+	public void setProjekt(String projekt) {
+		this.projekt = projekt;
+	}
+	
 	public String getOpgave() {
 		return this.opgave;
+	}
+	
+	public void setOpgave(String opgave) {
+		this.opgave = opgave;
 	}
 }

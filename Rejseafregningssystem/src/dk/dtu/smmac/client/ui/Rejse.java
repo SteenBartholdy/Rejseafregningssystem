@@ -1,5 +1,7 @@
 package dk.dtu.smmac.client.ui;
 
+import java.time.LocalDate;
+import java.sql.Date;
 import java.util.List;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -83,39 +85,28 @@ public class Rejse extends Composite {
 	}
 	
 	public void setRejse(RejseDTO rejse) {
-		
+		this.rejse = rejse;
 	}
 	
 	public RejseDTO getRejse() {
-		
-		
+//		this.rejse.setBy(by);
+		this.rejse.setDatoFra(getDate());
+		this.rejse.setDatoTil(getDateTo());
+		this.rejse.setLand(country.getValue(country.getSelectedIndex()));
+		this.rejse.setOpgave(assignment.getValue(assignment.getSelectedIndex()));
+		this.rejse.setProjekt(project.getValue(project.getSelectedIndex()));
 		
 		return this.rejse;
 	}
 
-	public void addCountry(String country)
+	public Date getDate()
 	{
-		this.country.addItem(country);
+		return (Date) dateFormat.parse(date.getValue().toString());
 	}
 
-	public void addProject (String project)
+	public Date getDateTo()
 	{
-		this.project.addItem(project);
-	}
-
-	public void addAssignment (String assignment)
-	{
-		this.assignment.addItem(assignment);
-	}
-
-	public String getDate()
-	{
-		return dateFormat.format(date.getValue());
-	}
-
-	public String getDateTo()
-	{
-		return dateFormat.format(dateTo.getValue());
+		return (Date) dateFormat.parse(dateTo.getValue().toString());
 	}
 	
 	public void setProjekt(List<String> list) {

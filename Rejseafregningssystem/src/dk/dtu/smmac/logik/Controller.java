@@ -50,6 +50,7 @@ import dk.dtu.smmac.shared.AfdelingDTO;
 import dk.dtu.smmac.shared.AnsatDTO;
 import dk.dtu.smmac.shared.BankDTO;
 import dk.dtu.smmac.shared.PostNrDTO;
+import dk.dtu.smmac.shared.RejseDTO;
 import dk.dtu.smmac.shared.RejseafregningDTO;
 
 @SuppressWarnings("deprecation")
@@ -364,8 +365,8 @@ public class Controller {
 		@Override
 		public void onClick(ClickEvent event) {
 			//TODO mangler noget gem
-			//rejseService.createRejse(new RejseDTO(), asyncEmpty);
-			rejseafregningPage.addTravelSummary(rejsePage.getCountry(), rejsePage.getDate().toString(), rejsePage.getDateTo(), "", "");
+			rejseService.updateRejse(rejsePage.getRejse(), asyncEmpty);
+			//rejseafregningPage.addTravelSummary();
 			mainView.showContentWidget(rejseafregningPage);
 		}
 	}
@@ -664,13 +665,24 @@ public class Controller {
 
 	private class ShowAddTravelHandler implements ClickHandler
 	{
-
 		@Override
 		public void onClick(ClickEvent event) {
-			mainView.showContentWidget(rejsePage);
+			rejseService.getSize(new AsyncCallback<Integer>() {
 
+				@Override
+				public void onFailure(Throwable caught) {
+					System.out.println("An error has occured");
+				}
+
+				@Override
+				public void onSuccess(Integer result) {
+					RejseDTO rejse = new RejseDTO(result+1, oplysningerPage.getAnsat().getID());
+					rejseService.createRejse(rejse, asyncEmpty);
+					rejsePage.setRejse(rejse);
+					mainView.showContentWidget(rejsePage);
+				}
+			});
 		}
-
 	}
 
 	private class AddBilagHandler implements ClickHandler
