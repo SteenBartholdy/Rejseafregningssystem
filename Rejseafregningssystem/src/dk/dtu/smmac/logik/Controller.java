@@ -328,8 +328,7 @@ public class Controller {
 
 				@Override
 				public void onSuccess(List<String> result) {
-					// TODO Auto-generated method stub
-					
+					rejsePage.setOpgave(result);
 				}
 			
 			});

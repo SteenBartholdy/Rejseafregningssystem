@@ -4,13 +4,13 @@ SET SESSION FOREIGN_KEY_CHECKS=0;
 
 DROP TABLE IF EXISTS Konto;
 DROP TABLE IF EXISTS Bilag;
-DROP TABLE IF EXISTS Opgave;
-DROP TABLE IF EXISTS Projekt;
 DROP TABLE IF EXISTS Rejse;
 DROP TABLE IF EXISTS RejseDag;
 DROP TABLE IF EXISTS Rejseafregning;
 DROP TABLE IF EXISTS Ansatte;
 DROP TABLE IF EXISTS Afdeling;
+DROP TABLE IF EXISTS Opgave;
+DROP TABLE IF EXISTS Projekt;
 
 
 
@@ -57,7 +57,6 @@ CREATE TABLE Konto
 	Id int NOT NULL,
 	RegNo int(4) NOT NULL,
 	KontoNo int(10) NOT NULL,
-	Bank varchar(50),
 	PRIMARY KEY (Id),
 	UNIQUE (Id)
 );
@@ -67,14 +66,13 @@ CREATE TABLE Opgave
 (
 	Opgave varchar(50) NOT NULL,
 	Projekt varchar(50) NOT NULL,
-	UNIQUE (Projekt)
+	PRIMARY KEY (Opgave)
 );
 
 
 CREATE TABLE Projekt
 (
 	Projekt varchar(50) NOT NULL,
-	RejseID int NOT NULL,
 	PRIMARY KEY (Projekt),
 	UNIQUE (Projekt)
 );
@@ -88,6 +86,8 @@ CREATE TABLE Rejse
 	Byen varchar(100),
 	DatoTil date NOT NULL,
 	DatoFra date NOT NULL,
+	Projekt varchar(50) NOT NULL,
+	Opgave varchar(50) NOT NULL,
 	PRIMARY KEY (RejseID)
 );
 
@@ -104,7 +104,7 @@ CREATE TABLE Rejseafregning
 
 CREATE TABLE RejseDag
 (
-	DagID int NOT NULL AUTO_INCREMENT,
+	Dato date NOT NULL,
 	Nummer int(10) NOT NULL,
 	Nattilaeg tinyint NOT NULL,
 	Morgenmad tinyint NOT NULL,
@@ -113,7 +113,7 @@ CREATE TABLE RejseDag
 	Refunderes tinyint NOT NULL,
 	RejseAfbrudt tinyint NOT NULL,
 	UdokNat tinyint NOT NULL,
-	PRIMARY KEY (DagID)
+	PRIMARY KEY (Dato, Nummer)
 );
 
 
@@ -144,6 +144,14 @@ ALTER TABLE Rejseafregning
 ;
 
 
+ALTER TABLE Rejse
+	ADD FOREIGN KEY (Opgave)
+	REFERENCES Opgave (Opgave)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
 ALTER TABLE Opgave
 	ADD FOREIGN KEY (Projekt)
 	REFERENCES Projekt (Projekt)
@@ -152,9 +160,9 @@ ALTER TABLE Opgave
 ;
 
 
-ALTER TABLE Projekt
-	ADD FOREIGN KEY (RejseID)
-	REFERENCES Rejse (RejseID)
+ALTER TABLE Rejse
+	ADD FOREIGN KEY (Projekt)
+	REFERENCES Projekt (Projekt)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;

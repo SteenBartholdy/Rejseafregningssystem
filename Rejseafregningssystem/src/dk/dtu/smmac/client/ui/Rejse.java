@@ -23,11 +23,10 @@ public class Rejse extends Composite {
 
 	private VerticalPanel vPanel = new VerticalPanel();
 	private FlexTable fTable;
-	private Label countryL, dateL, dateToL, projectL, assignmentL, shareL;
-	private ListBox country, project, assignment, shareList;
+	private Label countryL, dateL, dateToL, projectL, assignmentL;
+	private ListBox country, project, assignment;
 	private DateBox date, dateTo;
 	private DateTimeFormat dateFormat;
-	private TextBox shareT;
 	private Button save;
 	private List<String> projekt, opgave;
 	private RejseDTO rejse;
@@ -56,12 +55,6 @@ public class Rejse extends Composite {
 
 		project = new ListBox();
 		assignment = new ListBox();
-		shareL = new Label("Andel: ");
-		shareT = new TextBox();
-		shareT.setPixelSize(60, 15);
-		shareList = new ListBox();
-		shareList.addItem("%");
-		shareList.addItem("kr");
 		
 		save = new Button("Fortsæt");
 
@@ -80,11 +73,6 @@ public class Rejse extends Composite {
 		fTable.setWidget(2, 1, project);
 		fTable.setWidget(2, 2, assignmentL);
 		fTable.setWidget(2, 3, assignment);
-		fTable.setWidget(2, 4, shareL);
-		fTable.setWidget(2, 5, shareT);
-		fTable.setWidget(2, 6, shareList);
-
-		setShareForProject("100", "%");
 
 		fTable.setStyleName("flextable");
 
@@ -139,6 +127,17 @@ public class Rejse extends Composite {
 		}
 	}
 	
+	public void setOpgave(List<String> list) {
+		this.opgave = list;
+		
+		assignment.clear();
+		
+		for(int i = 0; i < this.opgave.size(); i++)
+		{
+			assignment.addItem(this.opgave.get(i));
+		}
+	}
+	
 	public ListBox getProject() {
 		return project;
 	}
@@ -153,20 +152,6 @@ public class Rejse extends Composite {
 			}
 		}
 		return 0;
-	}
-
-	public void setShareForProject(String share, String type)
-	{
-		shareT.setText(share);
-
-		if(type.equals("kr"))
-		{
-			shareList.setItemSelected(1, true);
-		}
-		else if(type.equals("%"))
-		{
-			shareList.setItemSelected(0, true);
-		}
 	}
 
 	public FlexTable getFlexTable()
