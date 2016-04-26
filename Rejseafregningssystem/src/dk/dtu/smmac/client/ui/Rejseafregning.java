@@ -1,17 +1,15 @@
 package dk.dtu.smmac.client.ui;
 
-import java.util.List;
-
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DateLabel;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import dk.dtu.smmac.shared.RejseDTO;
 import dk.dtu.smmac.shared.RejseafregningDTO;
 
 public class Rejseafregning extends Composite {
@@ -122,11 +120,11 @@ public class Rejseafregning extends Composite {
 		endTime.setItemSelected(endtime, true);
 	}
 	
-	public void addTravelSummary(String contry, String startdate, String enddate, String project, String assignment)
+	public void addTravelSummary(RejseDTO rejse)
 	{
 		int numRows = fTable.getRowCount();
 		
-		Label l = new Label(contry + ", " + startdate + " til " + enddate + ", " + project + ", " + assignment);
+		Label l = new Label(rejse.getLand() + ", " + rejse.getDatoFra() + " til " + rejse.getDatoTil() + ", " + rejse.getProjekt() + ", " + rejse.getOpgave());
 		
 		fTable.setWidget(numRows, 0, l);
 	}

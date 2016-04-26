@@ -1,9 +1,3 @@
-SELECT * FROM Ansatte;
-
-SELECT * FROM Rejseafregning;
-
-SELECT * FROM Opgave;
-
 INSERT INTO Afdeling ( Afdeling ) VALUES ( 'Aqua' );
 INSERT INTO Afdeling ( Afdeling ) VALUES ( 'Chemical Engineering' );
 INSERT INTO Afdeling ( Afdeling ) VALUES ( 'Chemistry' );
@@ -27,6 +21,12 @@ INSERT INTO Afdeling ( Afdeling ) VALUES ( 'Wind Energy' );
 INSERT INTO Projekt ( Projekt ) VALUES ( 'BASIS' );
 INSERT INTO Projekt ( Projekt ) VALUES ( 'PROTEUS' );
 
-INSERT INTO Opgave ( Opgave, Projekt ) VALUES ( 'Uddannelse', 'BASIS' )
-INSERT INTO Opgave ( Opgave, Projekt ) VALUES ( 'Nano Connect', 'BASIS' )
-INSERT INTO Opgave ( Opgave, Projekt ) VALUES ( 'Driftsudgifter', 'PROTEUS' )
+INSERT INTO Opgave ( Opgave, Projekt ) VALUES ( 'Uddannelse', 'BASIS' );
+INSERT INTO Opgave ( Opgave, Projekt ) VALUES ( 'Nano Connect', 'BASIS' );
+INSERT INTO Opgave ( Opgave, Projekt ) VALUES ( 'Driftsudgifter', 'PROTEUS' );
+
+SELECT * FROM Ansatte;
+
+SELECT * FROM Rejseafregning;
+
+SELECT * FROM Opgave;

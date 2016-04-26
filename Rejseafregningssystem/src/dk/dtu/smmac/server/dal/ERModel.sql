@@ -82,12 +82,12 @@ CREATE TABLE Rejse
 (
 	RejseID int NOT NULL AUTO_INCREMENT,
 	Nummer int(10) NOT NULL,
-	Land varchar(100) NOT NULL,
+	Land varchar(100),
 	Byen varchar(100),
-	DatoTil date NOT NULL,
-	DatoFra date NOT NULL,
-	Projekt varchar(50) NOT NULL,
-	Opgave varchar(50) NOT NULL,
+	DatoTil date,
+	DatoFra date,
+	Projekt varchar(50),
+	Opgave varchar(50),
 	PRIMARY KEY (RejseID)
 );
 
