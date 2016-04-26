@@ -1,13 +1,14 @@
 package dk.dtu.smmac.shared;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 
 public class DageInfoDTO implements Serializable {
 
 	private static final long serialVersionUID = 7L;
 	
-	private int dagID;
+	private Date dato;
 	private int nummer;
 	private boolean morgenmad;
 	private boolean frokost;
@@ -19,9 +20,9 @@ public class DageInfoDTO implements Serializable {
 	
 	public DageInfoDTO() {}
 	
-	public DageInfoDTO(int dagID, int nummer, boolean morgenmad, boolean frokost, boolean aftensmad, boolean nattill, boolean rejseAfbrudt, boolean udokNat, boolean refunderes)
+	public DageInfoDTO(Date dato, int nummer, boolean morgenmad, boolean frokost, boolean aftensmad, boolean nattill, boolean rejseAfbrudt, boolean udokNat, boolean refunderes)
 	{
-		this.dagID = dagID;
+		this.dato = dato;
 		this.nummer = nummer;
 		this.morgenmad = morgenmad;
 		this.frokost = frokost;
@@ -32,9 +33,9 @@ public class DageInfoDTO implements Serializable {
 		this.refunderes = refunderes;
 	}
 
-	public int getDagID()
+	public Date getDageInfoDato()
 	{
-		return this.dagID;
+		return this.dato;
 	}
 	
 	public int getNummer()

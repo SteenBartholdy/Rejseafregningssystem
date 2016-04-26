@@ -26,7 +26,7 @@ public class DageInfo extends Composite
 	 private static final ProvidesKey<DageInfoDTO> KEY_PROVIDER = new ProvidesKey<DageInfoDTO>() {
 		    @Override
 		    public Object getKey(DageInfoDTO dag) {
-		      return dag.getDagID();
+		      return dag.getDageInfoDato();
 		    }
 		  };
 	
@@ -46,7 +46,7 @@ public class DageInfo extends Composite
 
 			@Override
 			public String getValue(DageInfoDTO object) {
-				return ""+object.getDagID();
+				return ""+object.getDageInfoDato();
 			}
 		
 		};
