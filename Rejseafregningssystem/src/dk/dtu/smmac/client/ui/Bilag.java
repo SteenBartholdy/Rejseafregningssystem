@@ -79,8 +79,7 @@ public class Bilag extends Composite {
 	{
 		flexTable.removeRow(i);
 		bList.remove(i);
-		hList.remove(i);
-		clickHandler(bList, getFlexTable());
+		clickHandler(bList, hList);
 	}
 	
 	public Anchor getAddBilag()
@@ -134,24 +133,13 @@ public class Bilag extends Composite {
 		return t;
 	}
 	
-	public List<Button> getBList()
+	public static void clickHandler(List<Button> b, List<HandlerRegistration> h)
 	{
-		return bList;
-	}
-	
-	public static void clickHandler(List<Button> b, FlexTable fTable)
-	{
-		for (int i = 0; i < b.size(); i++){
-			hList.get(i).removeHandler();
-		}
-		for (int i = 0; i < b.size(); i++){
+		for (int i = 0; i <= hList.size(); i++){
 			final int x = i;
-			b.get(i).addClickHandler(new ClickHandler(){
-				@Override
-				public void onClick(ClickEvent event) {
-					deleteNewBilag(getFlexTable(), x);
-			}
-			});
+			hList.get(x).removeHandler();
+			hList.remove(x);
+			hList.add(x, addClickHandler(b.get(x), x));
 		}
 	}
 	public static HandlerRegistration addClickHandler(Button b, int i)
