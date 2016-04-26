@@ -324,7 +324,8 @@ public class Controller {
 	{
 		@Override
 		public void onClick(ClickEvent event) {
-			//TODO projekt og opgave mangle indsat
+			//TODO mangler noget gem
+			//rejseService.createRejse(new RejseDTO(), asyncEmpty);
 			rejseafregningPage.setTravelSummary(rejsePage.getCountry(), /*rejsePage.getDate()*/ "", "", "");
 			mainView.showContentWidget(rejseafregningPage);
 		}
