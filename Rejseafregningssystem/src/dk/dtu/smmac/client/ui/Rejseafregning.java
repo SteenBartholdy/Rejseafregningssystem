@@ -1,5 +1,7 @@
 package dk.dtu.smmac.client.ui;
 
+import java.util.List;
+
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -16,8 +18,7 @@ public class Rejseafregning extends Composite {
 
 	private VerticalPanel vPanel = new VerticalPanel();
 	private FlexTable fTable;
-	private HorizontalPanel hPanel;
-	private Label date, dateTo, startTimeLabel, endTimeLabel, travelSummary;
+	private Label date, dateTo, startTimeLabel, endTimeLabel;
 	private DateLabel startDateLabel, endDateLabel;
 	private ListBox startTime, endTime;
 	private Anchor bilag, addTravel;
@@ -29,8 +30,6 @@ public class Rejseafregning extends Composite {
 		initWidget(this.vPanel);
 		
 		fTable = new FlexTable();
-		
-		hPanel = new HorizontalPanel();
 		
 		date = new Label("Dato:");
 		
@@ -79,10 +78,10 @@ public class Rejseafregning extends Composite {
 		fTable.setWidget(1, 3, endTime);
 		fTable.setWidget(2, 0, addTravel);
 		fTable.setWidget(2, 2, bilag);
-		fTable.setWidget(3, 3, save);
 		
 		vPanel.setStyleName("margin");
 		vPanel.add(fTable);
+		vPanel.add(save);
 	}
 	
 	public void setRejseafregning(RejseafregningDTO rejseafregning) {
@@ -123,9 +122,13 @@ public class Rejseafregning extends Composite {
 		endTime.setItemSelected(endtime, true);
 	}
 	
-	public void setTravelSummary(String contry, String date, String project, String assignment)
+	public void addTravelSummary(String contry, String startdate, String enddate, String project, String assignment)
 	{
-		travelSummary.setText(contry + ", " + date + ", " + project + ", " + assignment);
+		int numRows = fTable.getRowCount();
+		
+		Label l = new Label(contry + ", " + startdate + " til " + enddate + ", " + project + ", " + assignment);
+		
+		fTable.setWidget(numRows, 0, l);
 	}
 	
 	public Anchor getAddTravelAnchor()

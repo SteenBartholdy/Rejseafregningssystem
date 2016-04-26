@@ -28,6 +28,8 @@ import dk.dtu.smmac.client.service.DAWAService;
 import dk.dtu.smmac.client.service.DAWAServiceAsync;
 import dk.dtu.smmac.client.service.LoginService;
 import dk.dtu.smmac.client.service.LoginServiceAsync;
+import dk.dtu.smmac.client.service.ProjektOpgaveService;
+import dk.dtu.smmac.client.service.ProjektOpgaveServiceAsync;
 import dk.dtu.smmac.client.service.RejseService;
 import dk.dtu.smmac.client.service.RejseServiceAsync;
 import dk.dtu.smmac.client.service.RejseafregningService;
@@ -48,7 +50,6 @@ import dk.dtu.smmac.shared.AfdelingDTO;
 import dk.dtu.smmac.shared.AnsatDTO;
 import dk.dtu.smmac.shared.BankDTO;
 import dk.dtu.smmac.shared.PostNrDTO;
-import dk.dtu.smmac.shared.RejseDTO;
 import dk.dtu.smmac.shared.RejseafregningDTO;
 
 @SuppressWarnings("deprecation")
@@ -89,7 +90,8 @@ public class Controller {
 	private BankServiceAsync bankService = GWT.create(BankService.class);
 	private RejseafregningServiceAsync rejseafregningService = GWT.create(RejseafregningService.class);
 	private RejseServiceAsync rejseService = GWT.create(RejseService.class);
-
+	private ProjektOpgaveServiceAsync projektopgaveService = GWT.create(ProjektOpgaveService.class);
+	
 	AsyncCallback<Void> asyncEmpty;
 	AsyncCallback<String> asyncCity;
 	AsyncCallback<List<String>> asyncRoad, asyncHouseNo, asyncFloor, asyncDoor;
@@ -212,8 +214,6 @@ public class Controller {
 		navPage.getOplysninger().addClickHandler(new ShowOplysningHandler());
 		navPage.getArkiv().addClickHandler(new ShowRejseafregningerHandler());
 		rejseafregningPage.getAddTravelAnchor().addClickHandler(new ShowAddTravelHandler());
-		rejsePage.getAddProjectAnchor().addClickHandler(new AddProjectHandler());
-		rejsePage.getDeleteProjectButton().addClickHandler(new DeleteProjectHandler());
 		glemtPasswordPage.getbtnSendPassword().addClickHandler(new SendPasswordHandler());
 		glemtPasswordPage.getbtnAnnullerPassword().addClickHandler(new ShowLoginHandler());
 		bilagPage.getAddBilag().addClickHandler(new AddBilagHandler());
@@ -230,6 +230,7 @@ public class Controller {
 		oplysningerPage.getTelephone().addBlurHandler(new UpdateAnsatHandler());
 		oplysningerPage.getRegNo().addBlurHandler(new BankHandler());
 		oplysningerPage.getKontoNo().addBlurHandler(new BankHandler());
+		rejsePage.getProject().addBlurHandler(new ProjectHandler());
 
 		//FocusListener
 		oplysningerPage.getZip().addFocusListener(new ZipCodeListener());
@@ -294,9 +295,47 @@ public class Controller {
 			}
 
 		});
+		
+		//Projekt load
+		projektopgaveService.getProjekt(new AsyncCallback<List<String>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("An error has occured");	
+			}
+
+			@Override
+			public void onSuccess(List<String> result) {
+				rejsePage.setProjekt(result);
+			}
+			
+		});
 
 		//Rootpanel
 		RootLayoutPanel.get().add(mainView);
+	}
+	
+	private class ProjectHandler implements BlurHandler {
+
+		@Override
+		public void onBlur(BlurEvent event) {
+			projektopgaveService.getOpgave(rejsePage.getProject().getValue(rejsePage.getProject().getSelectedIndex()), new AsyncCallback<List<String>>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					System.out.println("An error has occured");
+				}
+
+				@Override
+				public void onSuccess(List<String> result) {
+					// TODO Auto-generated method stub
+					
+				}
+			
+			});
+		
+		}
+		
 	}
 
 	private class ShowRejseafregningerHandler implements ClickHandler 
@@ -315,6 +354,7 @@ public class Controller {
 		@Override
 		public void onClick(ClickEvent event) {
 			rejseafregningService.updateRejse(rejseafregningPage.getRejseafregning(), asyncEmpty);
+			//TODO skal tilføje datoerne til DageInfo i DB
 			mainView.showContentWidget(dageInfoPage);
 		}
 		
@@ -326,7 +366,7 @@ public class Controller {
 		public void onClick(ClickEvent event) {
 			//TODO mangler noget gem
 			//rejseService.createRejse(new RejseDTO(), asyncEmpty);
-			rejseafregningPage.setTravelSummary(rejsePage.getCountry(), /*rejsePage.getDate()*/ "", "", "");
+			rejseafregningPage.addTravelSummary(rejsePage.getCountry(), rejsePage.getDate().toString(), rejsePage.getDateTo(), "", "");
 			mainView.showContentWidget(rejseafregningPage);
 		}
 	}
@@ -629,28 +669,6 @@ public class Controller {
 		@Override
 		public void onClick(ClickEvent event) {
 			mainView.showContentWidget(rejsePage);
-
-		}
-
-	}
-
-	private class AddProjectHandler implements ClickHandler
-	{
-
-		@Override
-		public void onClick(ClickEvent event) {
-			rejsePage.addNewProject(rejsePage.getFlexTable());
-
-		}
-
-	}
-
-	private class DeleteProjectHandler implements ClickHandler
-	{
-
-		@Override
-		public void onClick(ClickEvent event) {
-			rejsePage.deleteNewProject(rejsePage.getFlexTable());
 
 		}
 

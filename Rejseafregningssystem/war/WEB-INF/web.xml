@@ -68,6 +68,15 @@
 		<url-pattern>/rejseafregningssystem/rejseservice</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>projektopgaveservice</servlet-name>
+		<servlet-class>dk.dtu.smmac.server.dal.ProjektOpgaveDAO</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>projektopgaveservice</servlet-name>
+		<url-pattern>/rejseafregningssystem/projektopgaveservice</url-pattern>
+	</servlet-mapping>
+	
 	<!-- Default page to serve -->
 	<welcome-file-list>
 		<welcome-file>Rejseafregningssystem.html</welcome-file>
