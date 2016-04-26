@@ -7,6 +7,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.thirdparty.javascript.rhino.head.ast.FunctionNode.Form;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -14,21 +15,23 @@ import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 
 public class Bilag extends Composite {
 	
-	final FormPanel form = new FormPanel();
+	private final FormPanel form = new FormPanel();
 	private VerticalPanel vPanel = new VerticalPanel();
 	private static FlexTable fTable;
-	private Button delete, cont;
+	private Button delete, cont, cont2;
 	private Anchor addBilag;
 	private int count = 0;
 	private static List<Button> bList;
 	private static List<HandlerRegistration> hList;
 	private static List<FileUpload> fList;
+	private static List<TextBox> tList;
 	
 	public Bilag()
 	{
@@ -36,7 +39,7 @@ public class Bilag extends Composite {
 		
 		fTable = new FlexTable();
 		
-		form.setAction("/myFormHandler");
+		form.setAction("/Users/Christoffer");
 		form.setEncoding(FormPanel.ENCODING_MULTIPART);
 	    form.setMethod(FormPanel.METHOD_POST);
 	    
@@ -45,6 +48,7 @@ public class Bilag extends Composite {
 		bList = new ArrayList<Button>();
 		hList = new ArrayList<HandlerRegistration>();
 		fList = new ArrayList<FileUpload>();
+		tList = new ArrayList<TextBox>();
 		
 		delete = new Button();
 		delete.setText("Slet");
@@ -52,8 +56,20 @@ public class Bilag extends Composite {
 		addBilag = new Anchor();
 		addBilag.setText("Tilføj bilag");
 		
+		cont2 = new Button();
+		cont2.setText("Forstæt");
+		cont2.setStyleName("marginTop");
+		
+		cont2.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				form.submit();
+			}
+		});
+		
 		cont = new Button();
 		cont.setText("Forstæt");
+		cont.setStyleName("marginTop");
 		
 		fTable.setStyleName("flextable");
 		
@@ -61,19 +77,22 @@ public class Bilag extends Composite {
 		
 		vPanel.add(fTable);
 		vPanel.add(addBilag);
+		vPanel.add(cont2);
 		vPanel.add(cont);
 	}
 	
-	public void addNewBilag(FlexTable flextable)
+	public void addNewBilag(FlexTable flexTable)
 	{
-		int numRows = flextable.getRowCount();
-		
+		int numRows = flexTable.getRowCount();
 		count ++;
+		
+		Label l = new Label();
+		l.setText("Bilag: " + count);
 
-		fTable.setWidget(numRows, 0, addLabel("Bilag: " + count));
-		fTable.setWidget(numRows, 1, addTextBox());
-		fTable.setWidget(numRows, 2, addFileButton());
-		fTable.setWidget(numRows, 4, addSletButton(numRows));
+		flexTable.setWidget(numRows, 0, l);
+		flexTable.setWidget(numRows, 1, addTextBox());
+		flexTable.setWidget(numRows, 2, addFileButton());
+		flexTable.setWidget(numRows, 4, addSletButton(numRows));
 	}
 	
 	public static void deleteNewBilag(FlexTable flextable)
@@ -86,6 +105,11 @@ public class Bilag extends Composite {
 		flexTable.removeRow(i);
 		bList.remove(i);
 		clickHandler(bList, hList);
+	}
+	
+	public Button getCont2()
+	{
+		return cont2;
 	}
 	
 	public Anchor getAddBilag()
@@ -127,16 +151,11 @@ public class Bilag extends Composite {
 		return file;
 	}
 	
-	public Label addLabel(String name)
-	{
-		Label l = new Label();
-		l.setText(name);
-		return l;
-	}
-	
 	public TextBox addTextBox()
 	{
 		TextBox t = new TextBox();
+		tList.add(t);
+		
 		t.setSize("500px", "20px");
 		return t;
 	}
@@ -163,5 +182,3 @@ public class Bilag extends Composite {
 		return handler;
 	}
 }
-
-	
