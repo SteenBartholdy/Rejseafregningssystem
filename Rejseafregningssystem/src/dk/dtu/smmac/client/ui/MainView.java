@@ -90,7 +90,7 @@ public class MainView extends Composite {
 		contentPanel.add(rejsePage);
 		contentPanel.add(glemtPasswordPage);
 		contentPanel.add(bilagPage);
-		//contentPanel.add(dageInfoPage);
+		contentPanel.add(dageInfoPage);
 		contentPanel.add(rejseafregningerPage);
 		
 		//Load

@@ -5,6 +5,7 @@ import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
+import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -12,6 +13,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ProvidesKey;
 
 import dk.dtu.smmac.shared.DageInfoDTO;
+import dk.dtu.smmac.shared.RejseDTO;
 
 
 public class DageInfo extends Composite 
@@ -28,7 +30,7 @@ public class DageInfo extends Composite
 		    }
 		  };
 	
-	public DageInfo()//RejseDAO did)
+	public DageInfo()
 	{
 		table = new CellTable<DageInfoDTO>(KEY_PROVIDER);
 		table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
@@ -38,13 +40,15 @@ public class DageInfo extends Composite
 		
 		btnAnnuller = new Button("Annuller");
 
-		// **** Add a checkbox input column that shows "DagID" ****
+		// **** Add column that shows "DagID" ****
 		
-		Column<DageInfoDTO, String> dagidColumn = new Column<DageInfoDTO, String>(null) {
+		TextColumn<DageInfoDTO> dagidColumn = new TextColumn<DageInfoDTO>() {
+
 			@Override
 			public String getValue(DageInfoDTO object) {
-				return Integer.toString(object.getDagID());
+				return ""+object.getDagID();
 			}
+		
 		};
 		
 		table.addColumn(dagidColumn, "DagID:");
@@ -168,9 +172,9 @@ public class DageInfo extends Composite
 	    
 	    table.addColumn(refunderesColumn, "Refunderes:");
 	    
+		vPanel.setStyleName("margin");
 		vPanel.add(table);
 		vPanel.add(btnAnnuller);
-		vPanel.setStyleName("margin");
 	}
 
 	public Button getbtnAnnullerDageInfo()
