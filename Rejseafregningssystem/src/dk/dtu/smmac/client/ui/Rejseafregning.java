@@ -107,11 +107,15 @@ public class Rejseafregning extends Composite {
 	}
 	
 	public int getStartTime() {
-		return Integer.parseInt(startTime.getValue(startTime.getSelectedIndex()));
+		String str = startTime.getValue(startTime.getSelectedIndex());
+		str = str.substring(0, 2);
+		return Integer.parseInt(str);
 	}
 	
 	public int getEndTime() {
-		return Integer.parseInt(endTime.getValue(endTime.getSelectedIndex()));
+		String str = endTime.getValue(endTime.getSelectedIndex());
+		str = str.substring(0, 2);
+		return Integer.parseInt(str);
 	}
 	
 	public void setEndTime(int endtime)

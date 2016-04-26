@@ -1,5 +1,7 @@
 SELECT * FROM Ansatte;
 
+SELECT * FROM Rejseafregning;
+
 INSERT INTO Afdeling ( Afdeling ) VALUES ( 'Aqua' );
 INSERT INTO Afdeling ( Afdeling ) VALUES ( 'Chemical Engineering' );
 INSERT INTO Afdeling ( Afdeling ) VALUES ( 'Chemistry' );

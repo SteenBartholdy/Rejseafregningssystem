@@ -11,8 +11,8 @@
 	</page_setting>
 	<category_index>0</category_index>
 	<zoom>0.95</zoom>
-	<x>230</x>
-	<y>80</y>
+	<x>277</x>
+	<y>0</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -135,7 +135,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2016-02-22 16:30:53</creation_date>
-			<updated_date>2016-04-26 11:48:33</updated_date>
+			<updated_date>2016-04-26 13:31:19</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -248,9 +248,9 @@
 			<args></args>
 			<char_semantics>false</char_semantics>
 			<description></description>
-			<logical_name>DagID</logical_name>
-			<physical_name>DagID</physical_name>
-			<type>integer</type>
+			<logical_name>Dato</logical_name>
+			<physical_name>Dato</physical_name>
+			<type>date</type>
 		</word>
 		<word>
 			<id>5</id>
@@ -1012,10 +1012,10 @@
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
 					<physical_name></physical_name>
-					<type>integer</type>
+					<type>date</type>
 					<constraint></constraint>
 					<default_value></default_value>
-					<auto_increment>true</auto_increment>
+					<auto_increment>false</auto_increment>
 					<foreign_key>false</foreign_key>
 					<not_null>true</not_null>
 					<primary_key>true</primary_key>
@@ -1052,7 +1052,7 @@
 					<auto_increment>false</auto_increment>
 					<foreign_key>true</foreign_key>
 					<not_null>true</not_null>
-					<primary_key>false</primary_key>
+					<primary_key>true</primary_key>
 					<unique_key>false</unique_key>
 					<character_set></character_set>
 					<collation></collation>
@@ -1590,7 +1590,7 @@
 			<connections>
 				<relation>
 					<id>3</id>
-					<source>3</source>
+					<source>4</source>
 					<target>5</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -1612,7 +1612,7 @@
 				</relation>
 				<relation>
 					<id>4</id>
-					<source>4</source>
+					<source>3</source>
 					<target>5</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -1698,7 +1698,7 @@
 				<normal_column>
 					<id>19</id>
 					<referenced_column>13</referenced_column>
-					<relation>3</relation>
+					<relation>4</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -1864,7 +1864,7 @@
 				<normal_column>
 					<id>24</id>
 					<referenced_column>17</referenced_column>
-					<relation>4</relation>
+					<relation>3</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>

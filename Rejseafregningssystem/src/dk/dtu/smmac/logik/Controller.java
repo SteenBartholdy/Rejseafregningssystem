@@ -570,15 +570,6 @@ public class Controller {
 		}
 
 	}
-
-	private class DageInfoHandler implements ClickHandler
-	{
-		@Override
-		public void onClick(ClickEvent event)
-		{
-			mainView.showContentWidget(dageInfoPage);
-		}
-	}
 	
 	private class ShowRejseafregningHandler implements ClickHandler
 	{

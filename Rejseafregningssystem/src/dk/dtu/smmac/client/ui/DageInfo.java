@@ -21,7 +21,7 @@ public class DageInfo extends Composite
 	private CellTable<DageInfoDTO> table;
 	private VerticalPanel vPanel = new VerticalPanel();
 	private Button btnAnnuller;
-	DateTimeFormat dtFmt = DateTimeFormat.getFormat("dd/MM yyyy");
+	private DateTimeFormat dtFmt = DateTimeFormat.getFormat("dd/MM yyyy");
 
 	 private static final ProvidesKey<DageInfoDTO> KEY_PROVIDER = new ProvidesKey<DageInfoDTO>() {
 		    @Override
