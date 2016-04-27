@@ -3,6 +3,7 @@ package dk.dtu.smmac.client.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -14,6 +15,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FormPanel;
+import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -39,9 +41,10 @@ public class Bilag extends Composite {
 		
 		fTable = new FlexTable();
 		
-		form.setAction("/Users/Christoffer");
+		form.setAction("Indsæt servlet"); // TODO
 		form.setEncoding(FormPanel.ENCODING_MULTIPART);
 	    form.setMethod(FormPanel.METHOD_POST);
+	    form.setSize("100%", "100%");
 	    
 	    form.setWidget(fTable);
 		
