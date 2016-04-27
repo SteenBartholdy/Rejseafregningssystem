@@ -49,7 +49,6 @@ public class Rejseafregninger extends Composite {
 		table.addColumn(landColumn, "Land");
 
 		dataProvider = new ListDataProvider<RejseDTO>();
-		
 		dataProvider.addDataDisplay(table);
 	    
 	    vPanel.setStyleName("margin");

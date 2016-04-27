@@ -4,6 +4,9 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -13,6 +16,7 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.ListDataProvider;
 
 import dk.dtu.smmac.shared.RejseDTO;
 import dk.dtu.smmac.shared.RejseafregningDTO;
@@ -27,17 +31,72 @@ public class Rejseafregning extends Composite {
 	private Anchor bilag, addTravel;
 	private Button edit, delete, save;
 	private RejseafregningDTO rejseafregning;
+	private DateTimeFormat dateFormat;
+	private ListDataProvider<RejseDTO> dataProvider;
 
 	public Rejseafregning()
 	{
 		initWidget(this.vPanel);
 
 		fTable = new FlexTable();
+		
+		CellTable<RejseDTO> table = new CellTable<RejseDTO>();
 
+		TextColumn<RejseDTO> landColumn = new TextColumn<RejseDTO>() {
+
+			@Override
+			public String getValue(RejseDTO obj) {
+				return ""+obj.getLand();
+			}
+		};
+		
+		TextColumn<RejseDTO> datoFraColumn = new TextColumn<RejseDTO>() {
+
+			@Override
+			public String getValue(RejseDTO obj) {
+				return ""+dateFormat.format(obj.getDatoFra());
+			}
+		};
+		
+		TextColumn<RejseDTO> datoTilColumn = new TextColumn<RejseDTO>() {
+
+			@Override
+			public String getValue(RejseDTO obj) {
+				return ""+dateFormat.format(obj.getDatoTil());
+			}
+		};
+		
+		TextColumn<RejseDTO> projektColumn = new TextColumn<RejseDTO>() {
+
+			@Override
+			public String getValue(RejseDTO obj) {
+				return ""+obj.getProjekt();
+			}
+		};
+		
+		TextColumn<RejseDTO> assignmentColumn = new TextColumn<RejseDTO>() {
+
+			@Override
+			public String getValue(RejseDTO obj) {
+				return ""+obj.getOpgave();
+			}
+		};
+		
+		table.addColumn(landColumn, "Land");
+		table.addColumn(datoFraColumn, "Fra dato");
+		table.addColumn(datoTilColumn, "Til dato");
+		table.addColumn(projektColumn, "Projekt");
+		table.addColumn(assignmentColumn, "Opgave");
+		
+		dataProvider = new ListDataProvider<RejseDTO>();
+		dataProvider.addDataDisplay(table);
+		
 		date = new Label("Dato:");
+		
+		dateFormat = DateTimeFormat.getFormat("dd/MM-yyyy");
 
-		startDateLabel = new DateLabel();
-		endDateLabel = new DateLabel();
+		startDateLabel = new DateLabel(dateFormat);
+		endDateLabel = new DateLabel(dateFormat);
 
 		dateTo = new Label("Til");
 
@@ -56,7 +115,6 @@ public class Rejseafregning extends Composite {
 		save.setText("Fortsæt");
 		save.setStyleName("alignButtomRight");
 
-		//Skal have en changeHandler
 		startTime = new ListBox();
 		endTime = new ListBox();
 
@@ -84,6 +142,7 @@ public class Rejseafregning extends Composite {
 
 		vPanel.setStyleName("margin");
 		vPanel.add(fTable);
+		vPanel.add(table);
 		vPanel.add(save);
 	}
 
@@ -127,11 +186,14 @@ public class Rejseafregning extends Composite {
 
 	public void addTravelSummary(RejseDTO rejse)
 	{
-		int numRows = fTable.getRowCount();
-
-		Label l = new Label(rejse.getLand() + ", " + rejse.getDatoFra() + " til " + rejse.getDatoTil() + ", " + rejse.getProjekt() + ", " + rejse.getOpgave());
-
-		fTable.setWidget(numRows, 0, l);
+		List<RejseDTO> list = dataProvider.getList();
+		list.add(rejse);
+		
+//		int numRows = fTable.getRowCount();
+//
+//		Label l = new Label(rejse.getLand() + ", " + rejse.getDatoFra() + " til " + rejse.getDatoTil() + ", " + rejse.getProjekt() + ", " + rejse.getOpgave());
+//
+//		fTable.setWidget(numRows, 0, l);
 	}
 
 	public Anchor getAddTravelAnchor()
