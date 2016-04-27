@@ -145,6 +145,11 @@ public class Rejseafregning extends Composite {
 		vPanel.add(table);
 		vPanel.add(save);
 	}
+	
+	//TODO
+	public void reset() {
+		
+	}
 
 	public void setRejseafregning(RejseafregningDTO rejseafregning) {
 		this.rejseafregning = rejseafregning;

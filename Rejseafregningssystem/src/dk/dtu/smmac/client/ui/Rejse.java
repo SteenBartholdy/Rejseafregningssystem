@@ -84,6 +84,14 @@ public class Rejse extends Composite {
 		vPanel.add(save);
 	}
 	
+	public void reset() {
+		date.setValue(null);
+		dateTo.setValue(null);
+		country.setSelectedIndex(0);
+		project.setSelectedIndex(0);
+		assignment.clear();
+	}
+	
 	public void setRejse(RejseDTO rejse) {
 		this.rejse = rejse;
 	}

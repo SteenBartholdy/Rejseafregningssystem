@@ -630,6 +630,7 @@ public class Controller {
 					RejseafregningDTO rejseafregning = new RejseafregningDTO(result+1, oplysningerPage.getAnsat().getID());
 					rejseafregningService.createRejse(rejseafregning, asyncEmpty);
 					rejseafregningPage.setRejseafregning(rejseafregning);
+					rejseafregningPage.reset();
 					mainView.showContentWidget(rejseafregningPage);
 				}
 				
@@ -680,6 +681,7 @@ public class Controller {
 					RejseDTO rejse = new RejseDTO(result+1, oplysningerPage.getAnsat().getID());
 					rejseService.createRejse(rejse, asyncEmpty);
 					rejsePage.setRejse(rejse);
+					rejsePage.reset();
 					mainView.showContentWidget(rejsePage);
 				}
 			});
