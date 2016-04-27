@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -153,16 +154,28 @@ public class Rejseafregning extends Composite {
 		return save;
 	}
 
-	public void setStartDateLabel(Date dato) {
+	public void setStartDateLabel(Date sqlDate) {
 
-		if (dato.compareTo(new java.sql.Date(startDateLabel.getValue().getTime())) < 0) {
-			startDateLabel.setValue(new java.util.Date(dato.getTime()));
+		java.util.Date dateNew = new java.util.Date(sqlDate.getTime());
+		java.util.Date dateOld = startDateLabel.getValue();
+		
+		if (dateOld == null) {
+			startDateLabel.setValue(dateNew);
+		} else if (dateOld.compareTo(dateNew) > 0) {
+			startDateLabel.setValue(dateNew);
 		}
-
 	}
 
-	public void setEndDateLabel(Date dato) {
-
+	public void setEndDateLabel(Date sqlDate) {
+		
+		java.util.Date dateNew = new java.util.Date(sqlDate.getTime());
+		java.util.Date dateOld = endDateLabel.getValue();
+		
+		if (dateOld == null) {
+			endDateLabel.setValue(dateNew);
+		} else if (dateOld.compareTo(dateNew) < 0) {
+			endDateLabel.setValue(dateNew);
+		}
 	}
 
 }

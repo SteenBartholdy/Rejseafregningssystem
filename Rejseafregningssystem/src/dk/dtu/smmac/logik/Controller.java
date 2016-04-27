@@ -365,9 +365,8 @@ public class Controller {
 		@Override
 		public void onClick(ClickEvent event) {
 			rejseService.updateRejse(rejsePage.getRejse(), asyncEmpty);
-			//TODO virker ikke :'(
-//			rejseafregningPage.setStartDateLabel(rejsePage.getRejse().getDatoFra());
-//			rejseafregningPage.setEndDateLabel(dato);
+			rejseafregningPage.setStartDateLabel(rejsePage.getRejse().getDatoFra());
+			rejseafregningPage.setEndDateLabel(rejsePage.getRejse().getDatoTil());
 			rejseafregningPage.addTravelSummary(rejsePage.getRejse());
 			mainView.showContentWidget(rejseafregningPage);
 		}
