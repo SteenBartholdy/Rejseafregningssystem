@@ -41,7 +41,7 @@ public class Bilag extends Composite {
 		
 		fTable = new FlexTable();
 		
-		form.setAction("Indsæt servlet"); // TODO
+		form.setAction("filesystemservlet");
 		form.setEncoding(FormPanel.ENCODING_MULTIPART);
 	    form.setMethod(FormPanel.METHOD_POST);
 	    form.setSize("100%", "100%");
@@ -84,11 +84,11 @@ public class Bilag extends Composite {
 	{
 		int numRows = flexTable.getRowCount();
 		
+		updateLabels(lList);
+		
 		Label l = new Label();
 		lList.add(l);
 		l.setText("Bilag: " + bList.size());
-		
-		updateLabels(lList);
 
 		flexTable.setWidget(numRows, 0, l);
 		flexTable.setWidget(numRows, 1, addTextBox());
@@ -105,6 +105,7 @@ public class Bilag extends Composite {
 	{
 		flexTable.removeRow(i);
 		bList.remove(i);
+		lList.remove(i);
 		clickHandler(bList, hList);
 	}
 
