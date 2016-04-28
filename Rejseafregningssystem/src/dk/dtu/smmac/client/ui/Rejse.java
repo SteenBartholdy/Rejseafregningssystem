@@ -1,21 +1,14 @@
 package dk.dtu.smmac.client.ui;
 
-import java.time.LocalDate;
 import java.sql.Date;
 import java.util.List;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.Grid;
-import com.google.gwt.user.client.ui.HTMLTable;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
 

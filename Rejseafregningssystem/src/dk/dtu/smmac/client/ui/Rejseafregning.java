@@ -146,9 +146,14 @@ public class Rejseafregning extends Composite {
 		vPanel.add(save);
 	}
 	
-	//TODO
 	public void reset() {
+		this.startTime.setSelectedIndex(0);
+		this.endTime.setSelectedIndex(0);
+		this.startDateLabel.setValue(null);
+		this.endDateLabel.setValue(null);
 		
+		List<RejseDTO> list = dataProvider.getList();
+		list.clear();
 	}
 
 	public void setRejseafregning(RejseafregningDTO rejseafregning) {
@@ -193,12 +198,6 @@ public class Rejseafregning extends Composite {
 	{
 		List<RejseDTO> list = dataProvider.getList();
 		list.add(rejse);
-		
-//		int numRows = fTable.getRowCount();
-//
-//		Label l = new Label(rejse.getLand() + ", " + rejse.getDatoFra() + " til " + rejse.getDatoTil() + ", " + rejse.getProjekt() + ", " + rejse.getOpgave());
-//
-//		fTable.setWidget(numRows, 0, l);
 	}
 
 	public Anchor getAddTravelAnchor()
