@@ -13,7 +13,7 @@
 		<servlet-name>loginservice</servlet-name>
 		<url-pattern>/rejseafregningssystem/loginservice</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>ansatteservice</servlet-name>
 		<servlet-class>dk.dtu.smmac.server.dal.AnsatteDAO</servlet-class>
@@ -22,7 +22,7 @@
 		<servlet-name>ansatteservice</servlet-name>
 		<url-pattern>/rejseafregningssystem/ansatteservice</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>afdelingerservice</servlet-name>
 		<servlet-class>dk.dtu.smmac.server.dal.AfdelingerDAO</servlet-class>
@@ -31,7 +31,7 @@
 		<servlet-name>afdelingerservice</servlet-name>
 		<url-pattern>/rejseafregningssystem/afdelingerservice</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>dawaservice</servlet-name>
 		<servlet-class>dk.dtu.smmac.server.dal.DAWA</servlet-class>
@@ -49,16 +49,18 @@
 		<servlet-name>bankservice</servlet-name>
 		<url-pattern>/rejseafregningssystem/bankservice</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>rejseafregningservice</servlet-name>
-		<servlet-class>dk.dtu.smmac.server.dal.RejseafregningDAO</servlet-class>
+		<servlet-class>dk.dtu.smmac.server.dal.RejseafregningDAO
+		</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>rejseafregningservice</servlet-name>
-		<url-pattern>/rejseafregningssystem/rejseafregningservice</url-pattern>
+		<url-pattern>/rejseafregningssystem/rejseafregningservice
+		</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>rejseservice</servlet-name>
 		<servlet-class>dk.dtu.smmac.server.dal.RejseDAO</servlet-class>
@@ -67,19 +69,31 @@
 		<servlet-name>rejseservice</servlet-name>
 		<url-pattern>/rejseafregningssystem/rejseservice</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>projektopgaveservice</servlet-name>
-		<servlet-class>dk.dtu.smmac.server.dal.ProjektOpgaveDAO</servlet-class>
+		<servlet-class>dk.dtu.smmac.server.dal.ProjektOpgaveDAO
+		</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>projektopgaveservice</servlet-name>
 		<url-pattern>/rejseafregningssystem/projektopgaveservice</url-pattern>
 	</servlet-mapping>
-	
+
+
+	<servlet>
+		<servlet-name>filesystemservice</servlet-name>
+		<servlet-class>dk.dtu.smmac.server.dal.FileSystemDAO
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>filesystemservice</servlet-name>
+		<url-pattern>/rejseafregningssystem/filesystemservice</url-pattern>
+	</servlet-mapping>
+
 	<!-- Default page to serve -->
 	<welcome-file-list>
 		<welcome-file>Rejseafregningssystem.html</welcome-file>
 	</welcome-file-list>
-	
+
 </web-app>
