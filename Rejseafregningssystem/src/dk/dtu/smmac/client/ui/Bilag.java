@@ -27,13 +27,13 @@ public class Bilag extends Composite {
 	private final FormPanel form = new FormPanel();
 	private VerticalPanel vPanel = new VerticalPanel();
 	private static FlexTable fTable;
-	private Button delete, cont, cont2;
+	private Button delete, cont;
 	private Anchor addBilag;
-	private int count = 0;
 	private static List<Button> bList;
 	private static List<HandlerRegistration> hList;
 	private static List<FileUpload> fList;
 	private static List<TextBox> tList;
+	private static List<Label> lList;
 	
 	public Bilag()
 	{
@@ -52,6 +52,7 @@ public class Bilag extends Composite {
 		hList = new ArrayList<HandlerRegistration>();
 		fList = new ArrayList<FileUpload>();
 		tList = new ArrayList<TextBox>();
+		lList = new ArrayList<Label>();
 		
 		delete = new Button();
 		delete.setText("Slet");
@@ -59,20 +60,16 @@ public class Bilag extends Composite {
 		addBilag = new Anchor();
 		addBilag.setText("Tilføj bilag");
 		
-		cont2 = new Button();
-		cont2.setText("Forstæt");
-		cont2.setStyleName("marginTop");
+		cont = new Button();
+		cont.setText("Forstæt");
+		cont.setStyleName("marginTop");
 		
-		cont2.addClickHandler(new ClickHandler() {
+		cont.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				form.submit();
 			}
 		});
-		
-		cont = new Button();
-		cont.setText("Forstæt");
-		cont.setStyleName("marginTop");
 		
 		fTable.setStyleName("flextable");
 		
@@ -80,17 +77,18 @@ public class Bilag extends Composite {
 		
 		vPanel.add(fTable);
 		vPanel.add(addBilag);
-		vPanel.add(cont2);
 		vPanel.add(cont);
 	}
 	
 	public void addNewBilag(FlexTable flexTable)
 	{
 		int numRows = flexTable.getRowCount();
-		count ++;
 		
 		Label l = new Label();
-		l.setText("Bilag: " + count);
+		lList.add(l);
+		l.setText("Bilag: " + bList.size());
+		
+		updateLabels(lList);
 
 		flexTable.setWidget(numRows, 0, l);
 		flexTable.setWidget(numRows, 1, addTextBox());
@@ -109,12 +107,7 @@ public class Bilag extends Composite {
 		bList.remove(i);
 		clickHandler(bList, hList);
 	}
-	
-	public Button getCont2()
-	{
-		return cont2;
-	}
-	
+
 	public Anchor getAddBilag()
 	{
 		return addBilag;
@@ -172,6 +165,7 @@ public class Bilag extends Composite {
 			hList.add(x, addClickHandlerDelete(b.get(x), x));
 		}
 	}
+	
 	public static HandlerRegistration addClickHandlerDelete(Button b, int i)
 	{
 		HandlerRegistration handler;
@@ -183,5 +177,12 @@ public class Bilag extends Composite {
 				}
 		});
 		return handler;
+	}
+	
+	public static void updateLabels(List<Label> l)
+	{
+		for (int i = 0; l.size() < i; i++){
+			l.get(i).setText("Bilag: " + i);
+		}
 	}
 }
