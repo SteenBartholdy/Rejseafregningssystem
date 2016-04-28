@@ -87,6 +87,10 @@ public class Rejse extends Composite {
 	
 	public void setRejse(RejseDTO rejse) {
 		this.rejse = rejse;
+		
+		date.setValue(rejse.getDatoFra());
+		dateTo.setValue(rejse.getDatoTil());
+		//TODO Mangler de sidste attributter
 	}
 	
 	public RejseDTO getRejse() {

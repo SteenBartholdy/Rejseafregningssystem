@@ -25,6 +25,8 @@ INSERT INTO Opgave ( Opgave, Projekt ) VALUES ( 'Uddannelse', 'BASIS' );
 INSERT INTO Opgave ( Opgave, Projekt ) VALUES ( 'Nano Connect', 'BASIS' );
 INSERT INTO Opgave ( Opgave, Projekt ) VALUES ( 'Driftsudgifter', 'PROTEUS' );
 
+INSERT INTO Ansatte ( Id, Fornavn, Efternavn, Email, Anviser, Godkender ) VALUES ( 0, 'Peter', 'Larsen', 'peter@larsen.dk', -1, -1 );
+
 SELECT * FROM Ansatte;
 
 SELECT * FROM Rejseafregning;

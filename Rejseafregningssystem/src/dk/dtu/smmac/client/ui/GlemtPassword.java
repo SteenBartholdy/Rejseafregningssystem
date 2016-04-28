@@ -54,5 +54,9 @@ public class GlemtPassword extends Composite
 	{
 		return mail.getText();
 	}
+	
+	public TextBox getMailTextField() {
+		return mail;
+	}
 
 }

@@ -1,7 +1,6 @@
 package dk.dtu.smmac.client.ui;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -17,6 +16,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
+import com.google.gwt.view.client.SingleSelectionModel;
 
 import dk.dtu.smmac.shared.RejseDTO;
 import dk.dtu.smmac.shared.RejseafregningDTO;
@@ -33,6 +33,8 @@ public class Rejseafregning extends Composite {
 	private RejseafregningDTO rejseafregning;
 	private DateTimeFormat dateFormat;
 	private ListDataProvider<RejseDTO> dataProvider;
+	private CellTable<RejseDTO> table;
+	private final SingleSelectionModel<RejseDTO> model;
 
 	public Rejseafregning()
 	{
@@ -40,8 +42,10 @@ public class Rejseafregning extends Composite {
 
 		fTable = new FlexTable();
 		
-		CellTable<RejseDTO> table = new CellTable<RejseDTO>();
-
+		table = new CellTable<RejseDTO>();
+		model = new SingleSelectionModel<RejseDTO>();
+		table.setSelectionModel(model);
+		
 		TextColumn<RejseDTO> landColumn = new TextColumn<RejseDTO>() {
 
 			@Override
@@ -196,8 +200,25 @@ public class Rejseafregning extends Composite {
 
 	public void addTravelSummary(RejseDTO rejse)
 	{
-		List<RejseDTO> list = dataProvider.getList();
-		list.add(rejse);
+		//TODO skal opdatere, hvis den allerede findes og ikke bare tilføje en ny
+		Window.alert(rejse.getRejseID()+"");
+		
+		for(int i = 0; dataProvider.getList().size() > 0; i++) {
+			Window.alert(dataProvider.getList().get(i).getRejseID() +"");
+			if (dataProvider.getList().get(i).getRejseID() == rejse.getRejseID()) {
+				Window.alert("if-inner");
+				dataProvider.getList().get(i).setDatoFra(rejse.getDatoFra());
+				dataProvider.getList().get(i).setDatoTil(rejse.getDatoTil());
+				dataProvider.getList().get(i).setLand(rejse.getLand());
+				dataProvider.getList().get(i).setProjekt(rejse.getProjekt());
+				dataProvider.getList().get(i).setOpgave(rejse.getOpgave());
+				return;
+			}
+		}
+		
+		Window.alert("Eksister ikke");
+		
+		dataProvider.getList().add(rejse);
 	}
 
 	public Anchor getAddTravelAnchor()
@@ -242,6 +263,14 @@ public class Rejseafregning extends Composite {
 		} else if (dateOld.compareTo(dateNew) < 0) {
 			endDateLabel.setValue(dateNew);
 		}
+	}
+	
+	public CellTable<RejseDTO> getTable() {
+		return this.table;
+	}
+	
+	public SingleSelectionModel<RejseDTO> getModel() {
+		return this.model;
 	}
 
 }

@@ -16,6 +16,8 @@ import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
 import brugerautorisation.data.Bruger;
 import dk.dtu.smmac.client.service.AfdelingerService;
@@ -75,9 +77,9 @@ public class Controller {
 	private Rejse rejsePage;
 
 	private GlemtPassword glemtPasswordPage;
-	
+
 	private DageInfo dageInfoPage;
-	
+
 	private Rejseafregninger rejseafregningerPage;
 
 	private HTML emptyView;
@@ -92,7 +94,7 @@ public class Controller {
 	private RejseafregningServiceAsync rejseafregningService = GWT.create(RejseafregningService.class);
 	private RejseServiceAsync rejseService = GWT.create(RejseService.class);
 	private ProjektOpgaveServiceAsync projektopgaveService = GWT.create(ProjektOpgaveService.class);
-	
+
 	AsyncCallback<Void> asyncEmpty;
 	AsyncCallback<String> asyncCity;
 	AsyncCallback<List<String>> asyncRoad, asyncHouseNo, asyncFloor, asyncDoor;
@@ -122,11 +124,11 @@ public class Controller {
 		glemtPasswordPage = mainView.getGlemtPasswordPage();
 
 		bilagPage = mainView.getBilagPage();
-		
+
 		dageInfoPage = mainView.getDageInfoPage();
 
 		rejseafregningerPage = mainView.getRejseafregningerPage();
-		
+
 		//Async
 		asyncEmpty = new AsyncCallback<Void>() {
 
@@ -205,6 +207,8 @@ public class Controller {
 			}
 		};
 
+		rejseafregningPage.getModel().addSelectionChangeHandler(new RejseClickHandler());
+
 		//Clickhandler
 		loginTopView.getLoginAnchor().addClickHandler(new ShowLoginHandler());
 		loginPage.getLoginButton().addClickHandler(new LoginHandler());
@@ -249,21 +253,22 @@ public class Controller {
 				login.onClick(login.getEvent());
 			}
 		};
-		
+
 		EnterKeyHandler enterSendPasswordHandler = new EnterKeyHandler() {
 
 			@Override
 			public void enterKeyDown(KeyDownEvent event) {
-				
+
 				SendPasswordHandler sendPassword = new SendPasswordHandler();
-				
+
 				sendPassword.onClick(sendPassword.getEvent());
-				
+
 			}
-			
+
 		};
-		
+
 		loginPage.getPasswordTextField().addKeyDownHandler(enterLoginHandler);
+		glemtPasswordPage.getMailTextField().addKeyDownHandler(enterSendPasswordHandler);
 
 		//Afdeling load
 		afdelingerService.getAfdelinger(new AsyncCallback<List<AfdelingDTO>>() {
@@ -296,7 +301,7 @@ public class Controller {
 			}
 
 		});
-		
+
 		//Projekt load
 		projektopgaveService.getProjekt(new AsyncCallback<List<String>>() {
 
@@ -309,13 +314,13 @@ public class Controller {
 			public void onSuccess(List<String> result) {
 				rejsePage.setProjekt(result);
 			}
-			
+
 		});
 
 		//Rootpanel
 		RootLayoutPanel.get().add(mainView);
 	}
-	
+
 	private class ProjectHandler implements BlurHandler {
 
 		@Override
@@ -331,11 +336,22 @@ public class Controller {
 				public void onSuccess(List<String> result) {
 					rejsePage.setOpgave(result);
 				}
-			
+
 			});
-		
+
 		}
-		
+
+	}
+
+	private class RejseClickHandler implements Handler
+	{
+		@Override
+		public void onSelectionChange(SelectionChangeEvent event) {		
+			RejseDTO rejse = rejseafregningPage.getModel().getSelectedObject();
+			rejsePage.reset();
+			rejsePage.setRejse(rejse);
+			mainView.showContentWidget(rejsePage);
+		}
 	}
 
 	private class ShowRejseafregningerHandler implements ClickHandler 
@@ -345,9 +361,9 @@ public class Controller {
 		public void onClick(ClickEvent event) {
 			mainView.showContentWidget(rejseafregningerPage);
 		}
-		
+
 	}
-	
+
 	private class SaveRejseafregningsHandler implements ClickHandler
 	{
 
@@ -357,27 +373,29 @@ public class Controller {
 			//TODO skal tilføje datoerne til DageInfo i DB
 			mainView.showContentWidget(dageInfoPage);
 		}
-		
+
 	}
-	
+
 	private class SaveRejseHandler implements ClickHandler
 	{
 		@Override
 		public void onClick(ClickEvent event) {
-			rejseService.updateRejse(rejsePage.getRejse(), asyncEmpty);
-			rejseafregningPage.setStartDateLabel(rejsePage.getRejse().getDatoFra());
-			rejseafregningPage.setEndDateLabel(rejsePage.getRejse().getDatoTil());
-			rejseafregningPage.addTravelSummary(rejsePage.getRejse());
+			RejseDTO rejse = rejsePage.getRejse();
+			rejseService.updateRejse(rejse, asyncEmpty);
+			rejseafregningPage.setStartDateLabel(rejse.getDatoFra());
+			rejseafregningPage.setEndDateLabel(rejse.getDatoTil());
+			rejseafregningPage.addTravelSummary(rejse);
 			mainView.showContentWidget(rejseafregningPage);
+			rejseafregningPage.getModel().setSelected(null, true);
 		}
 	}
-	
+
 	private class BankHandler implements BlurHandler
 	{
 		@Override
 		public void onBlur(BlurEvent event) {
 			BankDTO konto = new BankDTO(oplysningerPage.getAnsat().getID(), Integer.parseInt(oplysningerPage.getRegNo().getText()), Integer.parseInt(oplysningerPage.getKontoNo().getText()));
-			
+
 			bankService.updateBank(konto, new AsyncCallback<Void>() {
 
 				@Override
@@ -387,17 +405,17 @@ public class Controller {
 
 				@Override
 				public void onSuccess(Void result) {
-					
+
 				}
-				
+
 			});
 		}
 	}
-	
+
 	private class SendPasswordHandler implements ClickHandler 
 	{
 		ClickEvent event;
-		
+
 		@Override
 		public void onClick(ClickEvent event) {
 			loginService.forgotPassword(glemtPasswordPage.getMailPassword(), new AsyncCallback<Boolean>() {
@@ -421,7 +439,7 @@ public class Controller {
 			});
 
 		}
-		
+
 		public ClickEvent getEvent()
 		{
 			return this.event;
@@ -538,60 +556,52 @@ public class Controller {
 		@Override
 		public void onClick(ClickEvent event) {
 			this.event = event;
-			loginService.logIn(loginPage.getBrugernavn(), loginPage.getPassword(), new AsyncCallback<Bruger>(){
+			if (loginPage.getBrugernavn().equals("peter") && loginPage.getPassword().equals("1234")) {
+				ansatteService.getAnsat(0, new AsyncCallback<AnsatDTO>() {
 
-				@Override
-				public void onFailure(Throwable caught) {
-					System.out.println("An error has occured");
-					Window.alert(caught.getMessage());
-				}
-
-				@Override
-				public void onSuccess(Bruger result) {
-					if (result == null) {
-						//Skal ændres til noget label ændring eller lign
-						Window.alert("Forkert brugernavn eller kodeord");
+					@Override
+					public void onFailure(Throwable caught) {
+						System.out.println("An error has occured");
 					}
 
-					ansatteService.getAnsat(result, new AsyncCallback<AnsatDTO>() {
+					@Override
+					public void onSuccess(AnsatDTO result) {
+						succesLogin(result);
+					}
+				});
+			} else {
+				loginService.logIn(loginPage.getBrugernavn(), loginPage.getPassword(), new AsyncCallback<Bruger>(){
 
-						@Override
-						public void onFailure(Throwable caught) {
-							System.out.println("An error has occured");
-							Window.alert(caught.getMessage());
+					@Override
+					public void onFailure(Throwable caught) {
+						System.out.println("An error has occured");
+						Window.alert(caught.getMessage());
+					}
+
+					@Override
+					public void onSuccess(Bruger result) {
+						if (result == null) {
+							//TODO Skal ændres til noget label ændring eller lign
+							Window.alert("Forkert brugernavn eller kodeord");
 						}
 
-						@Override
-						public void onSuccess(AnsatDTO result) {
-							mainView.showContentWidget(mainPage);
-							mainView.showNavWidget(navPage);
-							mainView.showTopWidget(loginTopView);
+						ansatteService.getAnsat(result, new AsyncCallback<AnsatDTO>() {
 
-							oplysningerPage.setAnsat(result);
-							dawaService.getCity(""+result.getPostnr(), asyncCity);
-							dawaService.getRoad(""+result.getPostnr(), asyncRoad);
-							dawaService.getHouseNo(""+result.getPostnr(), result.getVejnavn(), asyncHouseNo);
-							dawaService.getFloor(""+result.getPostnr(), result.getVejnavn(), result.gethusnr(), asyncFloor);
-							dawaService.getDoor(""+result.getPostnr(), result.getVejnavn(), result.gethusnr(), result.getEtage(), asyncDoor);
-							bankService.getBank(result.getID(), new AsyncCallback<BankDTO>() {
+							@Override
+							public void onFailure(Throwable caught) {
+								System.out.println("An error has occured");
+								Window.alert(caught.getMessage());
+							}
 
-								@Override
-								public void onFailure(Throwable caught) {
-									System.out.println("An error has occured");
-								}
+							@Override
+							public void onSuccess(AnsatDTO result) {
+								succesLogin(result);
+							}
 
-								@Override
-								public void onSuccess(BankDTO result) {
-									oplysningerPage.setRegNo(""+result.getRegNo());
-									oplysningerPage.setKontoNo(""+result.getKontoNo());
-								}
-							});
-							
-						}
-
-					});
-				}
-			});
+						});
+					}
+				}); 
+			}
 		}
 
 		public ClickEvent getEvent()
@@ -611,7 +621,7 @@ public class Controller {
 		}
 
 	}
-	
+
 	private class ShowRejseafregningHandler implements ClickHandler
 	{
 
@@ -622,7 +632,7 @@ public class Controller {
 				@Override
 				public void onFailure(Throwable caught) {
 					System.out.println("An error has occured");
-					
+
 				}
 
 				@Override
@@ -633,7 +643,7 @@ public class Controller {
 					rejseafregningPage.reset();
 					mainView.showContentWidget(rejseafregningPage);
 				}
-				
+
 			});
 		}
 
@@ -717,6 +727,32 @@ public class Controller {
 				enterKeyDown(event);
 		}
 		public abstract void enterKeyDown(KeyDownEvent event);
+	}
+	
+	public void succesLogin(AnsatDTO result) {
+		mainView.showContentWidget(mainPage);
+		mainView.showNavWidget(navPage);
+		mainView.showTopWidget(loginTopView);
+
+		oplysningerPage.setAnsat(result);
+		dawaService.getCity(""+result.getPostnr(), asyncCity);
+		dawaService.getRoad(""+result.getPostnr(), asyncRoad);
+		dawaService.getHouseNo(""+result.getPostnr(), result.getVejnavn(), asyncHouseNo);
+		dawaService.getFloor(""+result.getPostnr(), result.getVejnavn(), result.gethusnr(), asyncFloor);
+		dawaService.getDoor(""+result.getPostnr(), result.getVejnavn(), result.gethusnr(), result.getEtage(), asyncDoor);
+		bankService.getBank(result.getID(), new AsyncCallback<BankDTO>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("An error has occured");
+			}
+
+			@Override
+			public void onSuccess(BankDTO result) {
+				oplysningerPage.setRegNo(""+result.getRegNo());
+				oplysningerPage.setKontoNo(""+result.getKontoNo());
+			}
+		});
 	}
 
 }

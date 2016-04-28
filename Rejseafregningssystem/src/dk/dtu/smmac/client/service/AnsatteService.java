@@ -17,5 +17,6 @@ public interface AnsatteService extends RemoteService {
 	public void deleteAnsat(AnsatDTO ansat) throws Exception;
 	public int getSize() throws Exception;
 	public AnsatDTO getAnsat(Bruger b) throws Exception;
+	public AnsatDTO getAnsat(int id) throws Exception;
 	
 }

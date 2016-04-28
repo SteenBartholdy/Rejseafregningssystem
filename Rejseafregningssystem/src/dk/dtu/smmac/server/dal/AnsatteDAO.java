@@ -24,6 +24,7 @@ public class AnsatteDAO extends RemoteServiceServlet implements AnsatteService {
 	private PreparedStatement deleteAnsatStmt = null;
 	private PreparedStatement getSizeStmt = null;
 	private PreparedStatement getAnsatStmt = null;
+	private PreparedStatement getAnsatFromIdStmt = null;
 
 	public AnsatteDAO() throws Exception {
 		try {
@@ -51,6 +52,9 @@ public class AnsatteDAO extends RemoteServiceServlet implements AnsatteService {
 
 			//Laver query, der finder en ansat efter personens mail
 			getAnsatStmt = connection.prepareStatement("SELECT * FROM Ansatte WHERE Email LIKE ?;");
+
+			//Laver query, der finder en ansat efter personens id
+			getAnsatFromIdStmt = connection.prepareStatement("SELECT * FROM Ansatte WHERE Id = ?;");
 
 		} catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
@@ -188,7 +192,7 @@ public class AnsatteDAO extends RemoteServiceServlet implements AnsatteService {
 	public AnsatDTO getAnsat(Bruger b) throws Exception {
 		AnsatDTO ansat = null;
 		ResultSet resultSet = null;
-		
+
 		try {
 			getAnsatStmt.setString(1, b.email);
 			resultSet = getAnsatStmt.executeQuery();
@@ -222,10 +226,42 @@ public class AnsatteDAO extends RemoteServiceServlet implements AnsatteService {
 					false,
 					false
 					);
-			
+
 			createAnsat(ansat);
 		}
-		
+
+		return ansat;
+	}
+
+	@Override
+	public AnsatDTO getAnsat(int id) throws Exception {
+		AnsatDTO ansat = null;
+		ResultSet resultSet = null;
+
+		try {
+			getAnsatFromIdStmt.setInt(1, id);
+			resultSet = getAnsatFromIdStmt.executeQuery();
+			resultSet.next();
+			ansat = new AnsatDTO(
+					resultSet.getInt("Id"),
+					resultSet.getInt("Postnummer"),
+					resultSet.getInt("Telefon"),
+					resultSet.getString("Fornavn"),
+					resultSet.getString("Efternavn"),
+					resultSet.getString("Afdeling"),
+					resultSet.getString("Vejnavn"),
+					resultSet.getString("Husnr"),
+					resultSet.getString("Etage"),
+					resultSet.getString("Doer"),
+					resultSet.getString("Email"),
+					resultSet.getBoolean("Anviser"),
+					resultSet.getBoolean("Godkender")
+					);
+			
+		} catch (SQLException sqlE) {
+			System.out.println(sqlE.getMessage());
+		} 
+
 		return ansat;
 	}
 
