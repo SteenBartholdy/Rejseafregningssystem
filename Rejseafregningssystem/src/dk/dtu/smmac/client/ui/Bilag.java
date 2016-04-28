@@ -83,14 +83,8 @@ public class Bilag extends Composite {
 	public void addNewBilag(FlexTable flexTable)
 	{
 		int numRows = flexTable.getRowCount();
-		
-		updateLabels(lList);
-		
-		Label l = new Label();
-		lList.add(l);
-		l.setText("Bilag: " + bList.size());
 
-		flexTable.setWidget(numRows, 0, l);
+		flexTable.setWidget(numRows, 0, addLabel());
 		flexTable.setWidget(numRows, 1, addTextBox());
 		flexTable.setWidget(numRows, 2, addFileButton());
 		flexTable.setWidget(numRows, 4, addSletButton(numRows));
@@ -107,6 +101,7 @@ public class Bilag extends Composite {
 		bList.remove(i);
 		lList.remove(i);
 		clickHandler(bList, hList);
+		updateLabels(lList);
 	}
 
 	public Anchor getAddBilag()
@@ -127,6 +122,15 @@ public class Bilag extends Composite {
 	public Button getCont()
 	{
 		return cont;
+	}
+	
+	public Label addLabel()
+	{
+		Label l = new Label();
+		lList.add(l);
+		l.setText("Bilag: " + lList.size());
+		
+		return l;
 	}
 	
 	public Button addSletButton(int row)
@@ -182,7 +186,7 @@ public class Bilag extends Composite {
 	
 	public static void updateLabels(List<Label> l)
 	{
-		for (int i = 0; l.size() < i; i++){
+		for (int i = 0; i < l.size(); i++){
 			l.get(i).setText("Bilag: " + i);
 		}
 	}
