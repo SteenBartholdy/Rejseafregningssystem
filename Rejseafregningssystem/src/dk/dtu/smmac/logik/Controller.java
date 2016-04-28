@@ -379,9 +379,9 @@ public class Controller {
 		public void onClick(ClickEvent event) {
 			RejseDTO rejse = rejsePage.getRejse();
 			rejseService.updateRejse(rejse, asyncEmpty);
-			rejseafregningPage.setStartDateLabel(rejse.getDatoFra());
-			rejseafregningPage.setEndDateLabel(rejse.getDatoTil());
 			rejseafregningPage.addTravelSummary(rejse);
+			rejseafregningPage.setStartDateLabel();
+			rejseafregningPage.setEndDateLabel();
 			mainView.showContentWidget(rejseafregningPage);
 			rejseafregningPage.getModel().setSelected(rejse, false);
 		}

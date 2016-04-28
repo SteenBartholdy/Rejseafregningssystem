@@ -1,6 +1,8 @@
 package dk.dtu.smmac.client.ui;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -41,11 +43,11 @@ public class Rejseafregning extends Composite {
 		initWidget(this.vPanel);
 
 		fTable = new FlexTable();
-		
+
 		table = new CellTable<RejseDTO>();
 		model = new SingleSelectionModel<RejseDTO>();
 		table.setSelectionModel(model);
-		
+
 		TextColumn<RejseDTO> landColumn = new TextColumn<RejseDTO>() {
 
 			@Override
@@ -53,7 +55,7 @@ public class Rejseafregning extends Composite {
 				return ""+obj.getLand();
 			}
 		};
-		
+
 		TextColumn<RejseDTO> datoFraColumn = new TextColumn<RejseDTO>() {
 
 			@Override
@@ -61,7 +63,7 @@ public class Rejseafregning extends Composite {
 				return ""+dateFormat.format(obj.getDatoFra());
 			}
 		};
-		
+
 		TextColumn<RejseDTO> datoTilColumn = new TextColumn<RejseDTO>() {
 
 			@Override
@@ -69,7 +71,7 @@ public class Rejseafregning extends Composite {
 				return ""+dateFormat.format(obj.getDatoTil());
 			}
 		};
-		
+
 		TextColumn<RejseDTO> projektColumn = new TextColumn<RejseDTO>() {
 
 			@Override
@@ -77,7 +79,7 @@ public class Rejseafregning extends Composite {
 				return ""+obj.getProjekt();
 			}
 		};
-		
+
 		TextColumn<RejseDTO> assignmentColumn = new TextColumn<RejseDTO>() {
 
 			@Override
@@ -85,18 +87,18 @@ public class Rejseafregning extends Composite {
 				return ""+obj.getOpgave();
 			}
 		};
-		
+
 		table.addColumn(landColumn, "Land");
 		table.addColumn(datoFraColumn, "Fra dato");
 		table.addColumn(datoTilColumn, "Til dato");
 		table.addColumn(projektColumn, "Projekt");
 		table.addColumn(assignmentColumn, "Opgave");
-		
+
 		dataProvider = new ListDataProvider<RejseDTO>();
 		dataProvider.addDataDisplay(table);
-		
+
 		date = new Label("Dato:");
-		
+
 		dateFormat = DateTimeFormat.getFormat("dd/MM-yyyy");
 
 		startDateLabel = new DateLabel(dateFormat);
@@ -149,13 +151,13 @@ public class Rejseafregning extends Composite {
 		vPanel.add(table);
 		vPanel.add(save);
 	}
-	
+
 	public void reset() {
 		this.startTime.setSelectedIndex(0);
 		this.endTime.setSelectedIndex(0);
 		this.startDateLabel.setValue(null);
 		this.endDateLabel.setValue(null);
-		
+
 		List<RejseDTO> list = dataProvider.getList();
 		list.clear();
 	}
@@ -201,7 +203,7 @@ public class Rejseafregning extends Composite {
 	public void addTravelSummary(RejseDTO rejse)
 	{
 		if(dataProvider.getList().contains(rejse)) {
-			
+
 		} else {
 			dataProvider.getList().add(rejse);
 		}
@@ -227,34 +229,35 @@ public class Rejseafregning extends Composite {
 		return save;
 	}
 
-	public void setStartDateLabel(Date sqlDate) {
+	public void setStartDateLabel() {
+		List<Date> list = new ArrayList<Date>();
 
-		java.util.Date dateNew = new java.util.Date(sqlDate.getTime());
-		java.util.Date dateOld = startDateLabel.getValue();
-		
-		if (dateOld == null) {
-			startDateLabel.setValue(dateNew);
-		} else if (dateOld.compareTo(dateNew) > 0) {
-			startDateLabel.setValue(dateNew);
+		for (int i = 0; dataProvider.getList().size() > i; i++) {
+			list.add(dataProvider.getList().get(i).getDatoFra());
 		}
+
+		Collections.sort(list);
+		java.util.Date date = new java.util.Date(list.get(0).getTime());
+		startDateLabel.setValue(date);
 	}
 
-	public void setEndDateLabel(Date sqlDate) {
-		
-		java.util.Date dateNew = new java.util.Date(sqlDate.getTime());
-		java.util.Date dateOld = endDateLabel.getValue();
-		
-		if (dateOld == null) {
-			endDateLabel.setValue(dateNew);
-		} else if (dateOld.compareTo(dateNew) < 0) {
-			endDateLabel.setValue(dateNew);
-		}
+	public void setEndDateLabel() {
+			int i;
+			List<Date> list = new ArrayList<Date>();
+
+			for (i = 0; dataProvider.getList().size() > i; i++) {
+				list.add(dataProvider.getList().get(i).getDatoTil());
+			}
+
+			Collections.sort(list);
+			java.util.Date date = new java.util.Date(list.get(i-1).getTime());
+			endDateLabel.setValue(date);
 	}
-	
+
 	public CellTable<RejseDTO> getTable() {
 		return this.table;
 	}
-	
+
 	public SingleSelectionModel<RejseDTO> getModel() {
 		return this.model;
 	}
