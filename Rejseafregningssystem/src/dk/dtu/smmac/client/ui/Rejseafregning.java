@@ -200,25 +200,11 @@ public class Rejseafregning extends Composite {
 
 	public void addTravelSummary(RejseDTO rejse)
 	{
-		//TODO skal opdatere, hvis den allerede findes og ikke bare tilføje en ny
-		Window.alert(rejse.getRejseID()+"");
-		
-		for(int i = 0; dataProvider.getList().size() > 0; i++) {
-			Window.alert(dataProvider.getList().get(i).getRejseID() +"");
-			if (dataProvider.getList().get(i).getRejseID() == rejse.getRejseID()) {
-				Window.alert("if-inner");
-				dataProvider.getList().get(i).setDatoFra(rejse.getDatoFra());
-				dataProvider.getList().get(i).setDatoTil(rejse.getDatoTil());
-				dataProvider.getList().get(i).setLand(rejse.getLand());
-				dataProvider.getList().get(i).setProjekt(rejse.getProjekt());
-				dataProvider.getList().get(i).setOpgave(rejse.getOpgave());
-				return;
-			}
+		if(dataProvider.getList().contains(rejse)) {
+			
+		} else {
+			dataProvider.getList().add(rejse);
 		}
-		
-		Window.alert("Eksister ikke");
-		
-		dataProvider.getList().add(rejse);
 	}
 
 	public Anchor getAddTravelAnchor()

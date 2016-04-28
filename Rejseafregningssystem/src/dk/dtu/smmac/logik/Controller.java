@@ -348,7 +348,6 @@ public class Controller {
 		@Override
 		public void onSelectionChange(SelectionChangeEvent event) {		
 			RejseDTO rejse = rejseafregningPage.getModel().getSelectedObject();
-			rejsePage.reset();
 			rejsePage.setRejse(rejse);
 			mainView.showContentWidget(rejsePage);
 		}
@@ -356,12 +355,10 @@ public class Controller {
 
 	private class ShowRejseafregningerHandler implements ClickHandler 
 	{
-
 		@Override
 		public void onClick(ClickEvent event) {
 			mainView.showContentWidget(rejseafregningerPage);
 		}
-
 	}
 
 	private class SaveRejseafregningsHandler implements ClickHandler
@@ -386,7 +383,7 @@ public class Controller {
 			rejseafregningPage.setEndDateLabel(rejse.getDatoTil());
 			rejseafregningPage.addTravelSummary(rejse);
 			mainView.showContentWidget(rejseafregningPage);
-			rejseafregningPage.getModel().setSelected(null, true);
+			rejseafregningPage.getModel().setSelected(rejse, false);
 		}
 	}
 
@@ -688,10 +685,9 @@ public class Controller {
 
 				@Override
 				public void onSuccess(Integer result) {
-					RejseDTO rejse = new RejseDTO(result+1, oplysningerPage.getAnsat().getID());
+					RejseDTO rejse = new RejseDTO(result+1, rejseafregningPage.getRejseafregning().getId());
 					rejseService.createRejse(rejse, asyncEmpty);
 					rejsePage.setRejse(rejse);
-					rejsePage.reset();
 					mainView.showContentWidget(rejsePage);
 				}
 			});

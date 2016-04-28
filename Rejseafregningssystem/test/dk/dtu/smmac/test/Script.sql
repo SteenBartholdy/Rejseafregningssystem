@@ -32,3 +32,7 @@ SELECT * FROM Ansatte;
 SELECT * FROM Rejseafregning;
 
 SELECT * FROM Opgave;
+
+SELECT * FROM Rejse;
+
+SELECT * FROM Rejseafregning;

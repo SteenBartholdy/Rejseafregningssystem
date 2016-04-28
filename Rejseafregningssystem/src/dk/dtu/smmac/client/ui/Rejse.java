@@ -77,20 +77,15 @@ public class Rejse extends Composite {
 		vPanel.add(save);
 	}
 	
-	public void reset() {
-		date.setValue(null);
-		dateTo.setValue(null);
-		country.setSelectedIndex(0);
-		project.setSelectedIndex(0);
-		assignment.clear();
-	}
-	
 	public void setRejse(RejseDTO rejse) {
 		this.rejse = rejse;
 		
 		date.setValue(rejse.getDatoFra());
 		dateTo.setValue(rejse.getDatoTil());
 		//TODO Mangler de sidste attributter
+//		country.setSelectedIndex(0);
+//		project.setSelectedIndex(0);
+//		assignment.clear();
 	}
 	
 	public RejseDTO getRejse() {
