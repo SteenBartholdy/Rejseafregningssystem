@@ -1,6 +1,7 @@
 package dk.dtu.smmac.client.ui;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -23,7 +24,7 @@ public class Rejse extends Composite {
 	private DateBox date, dateTo;
 	private DateTimeFormat dateFormat;
 	private Button save;
-	private List<String> projekt, opgave;
+	private List<String> projekt, opgave, land;
 	private RejseDTO rejse;
 
 	public Rejse()
@@ -46,7 +47,9 @@ public class Rejse extends Composite {
 		dateTo.setPixelSize(80, 15);
 
 		country = new ListBox();
-		country.addItem("Danmark");
+		List<String> list = new ArrayList<String>();
+		list.add("Danmark");
+		setLand(list);
 
 		project = new ListBox();
 		assignment = new ListBox();
@@ -82,10 +85,9 @@ public class Rejse extends Composite {
 		
 		date.setValue(rejse.getDatoFra());
 		dateTo.setValue(rejse.getDatoTil());
-		//TODO Mangler de sidste attributter
-//		country.setSelectedIndex(0);
-//		project.setSelectedIndex(0);
-//		assignment.clear();
+		country.setItemSelected(getCountryIndex(rejse.getLand()), true);
+		project.setItemSelected(getProjectIndex(rejse.getProjekt()), true);
+		//assignment.setItemSelected(getAssignmentIndex(rejse.getOpgave()), true);
 	}
 	
 	public RejseDTO getRejse() {
@@ -98,6 +100,42 @@ public class Rejse extends Composite {
 		return this.rejse;
 	}
 
+	public int getCountryIndex(String land)
+	{
+		for(int i = 0; i < this.land.size(); i++)
+		{
+			if(this.land.get(i).equals(land))
+			{
+				return i;
+			}
+		}
+		return 0;
+	}
+	
+	public int getProjectIndex(String projekt)
+	{
+		for(int i = 0; i < this.projekt.size(); i++)
+		{
+			if(this.projekt.get(i).equals(projekt))
+			{
+				return i;
+			}
+		}
+		return 0;
+	}
+	
+	public int getAssignmentIndex(String opgave)
+	{
+		for(int i = 0; i < this.opgave.size(); i++)
+		{
+			if(this.opgave.get(i).equals(opgave))
+			{
+				return i;
+			}
+		}
+		return 0;
+	}
+	
 	public Date getDate()
 	{
 		return new java.sql.Date(date.getValue().getTime());
@@ -128,20 +166,19 @@ public class Rejse extends Composite {
 		}
 	}
 	
-	public ListBox getProject() {
-		return project;
+	public void setLand(List<String> list) {
+		this.land = list;
+		
+		country.clear();
+		
+		for(int i = 0; i < this.land.size(); i++)
+		{
+			country.addItem(this.land.get(i));
+		}
 	}
 	
-	public int getProjectIndex(String pk)
-	{
-		for(int i = 0; i < projekt.size(); i++)
-		{
-			if(projekt.get(i).equals(pk))
-			{
-				return i;
-			}
-		}
-		return 0;
+	public ListBox getProject() {
+		return project;
 	}
 
 	public FlexTable getFlexTable()

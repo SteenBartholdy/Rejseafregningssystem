@@ -97,7 +97,7 @@ public class Controller {
 
 	AsyncCallback<Void> asyncEmpty;
 	AsyncCallback<String> asyncCity;
-	AsyncCallback<List<String>> asyncRoad, asyncHouseNo, asyncFloor, asyncDoor;
+	AsyncCallback<List<String>> asyncRoad, asyncHouseNo, asyncFloor, asyncDoor, asyncOpgave;
 
 	public Controller()
 	{
@@ -207,6 +207,20 @@ public class Controller {
 			}
 		};
 
+		asyncOpgave = new AsyncCallback<List<String>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("An error has occured");
+			}
+
+			@Override
+			public void onSuccess(List<String> result) {
+				rejsePage.setOpgave(result);
+			}
+
+		};
+		
 		rejseafregningPage.getModel().addSelectionChangeHandler(new RejseClickHandler());
 
 		//Clickhandler
@@ -325,20 +339,7 @@ public class Controller {
 
 		@Override
 		public void onBlur(BlurEvent event) {
-			projektopgaveService.getOpgave(rejsePage.getProject().getValue(rejsePage.getProject().getSelectedIndex()), new AsyncCallback<List<String>>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					System.out.println("An error has occured");
-				}
-
-				@Override
-				public void onSuccess(List<String> result) {
-					rejsePage.setOpgave(result);
-				}
-
-			});
-
+			projektopgaveService.getOpgave(rejsePage.getProject().getValue(rejsePage.getProject().getSelectedIndex()), asyncOpgave); 
 		}
 
 	}
@@ -349,6 +350,7 @@ public class Controller {
 		public void onSelectionChange(SelectionChangeEvent event) {		
 			RejseDTO rejse = rejseafregningPage.getModel().getSelectedObject();
 			rejsePage.setRejse(rejse);
+			projektopgaveService.getOpgave(rejse.getProjekt(), asyncOpgave);
 			mainView.showContentWidget(rejsePage);
 		}
 	}
@@ -687,6 +689,7 @@ public class Controller {
 				public void onSuccess(Integer result) {
 					RejseDTO rejse = new RejseDTO(result+1, rejseafregningPage.getRejseafregning().getId());
 					rejseService.createRejse(rejse, asyncEmpty);
+					projektopgaveService.getOpgave(rejsePage.getProject().getValue(rejsePage.getProject().getSelectedIndex()), asyncOpgave);
 					rejsePage.setRejse(rejse);
 					mainView.showContentWidget(rejsePage);
 				}
