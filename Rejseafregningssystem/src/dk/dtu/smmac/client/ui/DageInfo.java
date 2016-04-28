@@ -52,6 +52,18 @@ public class DageInfo extends Composite
 		
 		table.addColumn(datoColumn, "Dato:");
 		
+//		// **** Add a column that shows "Land" ****
+//		
+//		TextColumn<??> landColumn = new TextColumn<??>() {
+//			
+//			@Ovwerride
+//			public String getValue(?? object) {
+//				return object.??;
+//		  }
+//		};
+//		
+//		table.addColumn(??, "Land:");
+		
 		// **** Add a checkbox input column that shows "Morgenmad" ****
 		
 	    Column<DageInfoDTO, Boolean> morgenmadColumn = new Column<DageInfoDTO, Boolean>(new CheckboxCell()) { 
