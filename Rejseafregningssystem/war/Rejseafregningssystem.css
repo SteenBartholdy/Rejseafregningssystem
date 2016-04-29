@@ -65,6 +65,9 @@ h1 {
 
 .anchorStyle {
 	color: black;
+	margin-top: 10px;
+	font-size: 125%; 
+	font-weight: bold;
 }
 
 .center {
@@ -84,6 +87,14 @@ table.flextable td:nth-child(3) {
 }
 
 table.flextable td:nth-child(4) {
+	height: 40px;
+}
+
+table.flextable td:nth-child(5) {
+	height: 40px;
+}
+
+table.flextable td:nth-child(6) {
 	height: 40px;
 }
 
