@@ -732,22 +732,20 @@ public class Controller {
 	{
 		@Override
 		public void onClick(ClickEvent event) {
-			bilagService.getBilag(rejseafregningPage.getRejseafregning().getId(), new AsyncCallback<BilagDTO>(){
+			bilagService.getBilag(rejseafregningPage.getRejseafregning().getId(), new AsyncCallback<List<BilagDTO>>(){
 
 				@Override
 				public void onFailure(Throwable caught) {
-					// TODO Auto-generated method stub
-					
+					System.out.println("An error has occured");
 				}
 
 				@Override
-				public void onSuccess(BilagDTO result) {
+				public void onSuccess(List<BilagDTO> result) {
 					// TODO Auto-generated method stub
-					
+					mainView.showContentWidget(bilagPage);
 				}
 			});
 			
-			mainView.showContentWidget(bilagPage);
 		}
 	}
 
