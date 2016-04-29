@@ -81,9 +81,9 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(fra);
 				
-				try {
-					dag = getDageInfo(fra, nummer);
-				} catch (Exception e) {
+				dag = getDageInfo(fra, nummer);
+				
+				if (dag == null) {
 					dag = new DageInfoDTO(
 							fra,
 							nummer,
@@ -105,9 +105,9 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 				while (cal.getTime().before(til)) {
 				    cal.add(Calendar.DATE, 1);
 				    
-				    try {
-						dag = getDageInfo(new java.sql.Date(cal.getTime().getTime()), nummer);
-					} catch (Exception e) {
+					dag = getDageInfo(new java.sql.Date(cal.getTime().getTime()), nummer);
+					
+					if (dag == null) {
 						dag = new DageInfoDTO(
 					    		new java.sql.Date(cal.getTime().getTime()),
 								nummer,
@@ -130,14 +130,6 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 
 		} catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
-		} finally {
-			try {
-				resultSet.close();
-			} 
-			catch (SQLException sqlE) {
-				System.out.println(sqlE.getMessage());
-				connection.close();
-			}
 		} 
 
 		return list;
@@ -231,6 +223,7 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 
 			while(resultSet.next())
 			{
+				System.out.println(resultSet.toString());
 				dag = new DageInfoDTO(
 						resultSet.getDate("Dato"),
 						resultSet.getInt("Nummer"),
