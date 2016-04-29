@@ -17,10 +17,11 @@ public class DageInfoDTO implements Serializable {
 	private boolean rejseAfbrudt;
 	private boolean udokNat;
 	private boolean refunderes;
+	private String country;
 	
 	public DageInfoDTO() {}
 	
-	public DageInfoDTO(Date dato, int nummer, boolean morgenmad, boolean frokost, boolean aftensmad, boolean nattill, boolean rejseAfbrudt, boolean udokNat, boolean refunderes)
+	public DageInfoDTO(Date dato, int nummer, boolean morgenmad, boolean frokost, boolean aftensmad, boolean nattill, boolean rejseAfbrudt, boolean udokNat, boolean refunderes, String country)
 	{
 		this.dato = dato;
 		this.nummer = nummer;
@@ -31,8 +32,17 @@ public class DageInfoDTO implements Serializable {
 		this.rejseAfbrudt = rejseAfbrudt;
 		this.udokNat = udokNat;
 		this.refunderes = refunderes;
+		this.country = country;
+	}
+	
+	public String getCountry() {
+		return this.country;
 	}
 
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	
 	public Date getDageInfoDato()
 	{
 		return this.dato;

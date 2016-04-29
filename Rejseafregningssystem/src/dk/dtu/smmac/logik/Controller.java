@@ -30,6 +30,8 @@ import dk.dtu.smmac.client.service.BilagService;
 import dk.dtu.smmac.client.service.BilagServiceAsync;
 import dk.dtu.smmac.client.service.DAWAService;
 import dk.dtu.smmac.client.service.DAWAServiceAsync;
+import dk.dtu.smmac.client.service.DageInfoService;
+import dk.dtu.smmac.client.service.DageInfoServiceAsync;
 import dk.dtu.smmac.client.service.LoginService;
 import dk.dtu.smmac.client.service.LoginServiceAsync;
 import dk.dtu.smmac.client.service.ProjektOpgaveService;
@@ -53,7 +55,7 @@ import dk.dtu.smmac.client.ui.Rejseafregninger;
 import dk.dtu.smmac.shared.AfdelingDTO;
 import dk.dtu.smmac.shared.AnsatDTO;
 import dk.dtu.smmac.shared.BankDTO;
-import dk.dtu.smmac.shared.BilagDTO;
+import dk.dtu.smmac.shared.DageInfoDTO;
 import dk.dtu.smmac.shared.PostNrDTO;
 import dk.dtu.smmac.shared.RejseDTO;
 import dk.dtu.smmac.shared.RejseafregningDTO;
@@ -99,6 +101,7 @@ public class Controller {
 	private RejseServiceAsync rejseService = GWT.create(RejseService.class);
 	private ProjektOpgaveServiceAsync projektopgaveService = GWT.create(ProjektOpgaveService.class);
 	private BilagServiceAsync bilagService = GWT.create(BilagService.class);
+	private DageInfoServiceAsync dageInfoService = GWT.create(DageInfoService.class);
 
 	AsyncCallback<Void> asyncEmpty;
 	AsyncCallback<String> asyncCity;
@@ -432,8 +435,21 @@ public class Controller {
 		@Override
 		public void onClick(ClickEvent event) {
 			rejseafregningService.updateRejse(rejseafregningPage.getRejseafregning(), asyncEmpty);
-			//TODO skal tilføje datoerne til DageInfo i DB
-			mainView.showContentWidget(dageInfoPage);
+			dageInfoService.getDageInfo(rejseafregningPage.getRejseafregning().getId(), new AsyncCallback<List<DageInfoDTO>>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					System.out.println("An error has occured");	
+				}
+
+				@Override
+				public void onSuccess(List<DageInfoDTO> result) {
+					for(DageInfoDTO dag : result) {
+						dageInfoPage.addData(dag);
+					}
+					mainView.showContentWidget(dageInfoPage);
+				}
+			});
 		}
 
 	}

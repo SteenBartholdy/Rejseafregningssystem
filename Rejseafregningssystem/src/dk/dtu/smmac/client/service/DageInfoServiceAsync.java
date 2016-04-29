@@ -6,7 +6,7 @@ import dk.dtu.smmac.shared.DageInfoDTO;
 
 public interface DageInfoServiceAsync 
 {
-	void getDageInfo(AsyncCallback<List<DageInfoDTO>> callback);
+	void getDageInfo(int nummer, AsyncCallback<List<DageInfoDTO>> callback);
 	void updateDageInfo(DageInfoDTO dag, AsyncCallback<Void> callback);
 	void createDageInfo(DageInfoDTO dag, AsyncCallback<Void> callback);
 	void deleteDageInfo(DageInfoDTO dag, AsyncCallback<Void> callback);

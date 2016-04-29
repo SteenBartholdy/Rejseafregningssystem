@@ -10,7 +10,7 @@ import dk.dtu.smmac.shared.DageInfoDTO;
 
 public interface DageInfoService extends RemoteService
 {
-	public List<DageInfoDTO> getDageInfo() throws Exception;
+	public List<DageInfoDTO> getDageInfo(int nummer) throws Exception;
 	public void updateDageInfo(DageInfoDTO dag) throws Exception;
 	public void createDageInfo(DageInfoDTO dag) throws Exception;
 	public void deleteDageInfo(DageInfoDTO dag) throws Exception;

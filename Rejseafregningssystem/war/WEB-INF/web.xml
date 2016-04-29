@@ -13,6 +13,15 @@
 		<servlet-name>loginservice</servlet-name>
 		<url-pattern>/rejseafregningssystem/loginservice</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>dageinfoservice</servlet-name>
+		<servlet-class>dk.dtu.smmac.server.dal.DageInfoDAO</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dageinfoservice</servlet-name>
+		<url-pattern>/rejseafregningssystem/dageinfoservice</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>ansatteservice</servlet-name>

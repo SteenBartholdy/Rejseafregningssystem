@@ -1,6 +1,7 @@
 package dk.dtu.smmac.server.dal;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.ibm.icu.util.Calendar;
 
 import dk.dtu.smmac.client.service.DageInfoService;
 import dk.dtu.smmac.shared.DageInfoDTO;
-import dk.dtu.smmac.shared.RejseDTO;
 
 public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService 
 {
@@ -23,6 +24,7 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 	private PreparedStatement createDageInfoStmt = null;
 	private PreparedStatement deleteDageInfoStmt = null;
 	private PreparedStatement getSizeStmt = null;
+	private PreparedStatement getRejseStmt = null;
 	
 	public DageInfoDAO() throws Exception 
 	{
@@ -31,54 +33,109 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 			connection = DriverManager.getConnection(DAO.URL, DAO.USERNAME, DAO.PASSWORD);
 
 			//Laver query, der henter alle rejsedage
-			getDageInfoStmt = connection.prepareStatement("SELECT * FROM DageInfo;");
+			getDageInfoStmt = connection.prepareStatement("SELECT * FROM RejseDag;");
 
 			//Laver query, der opdaterer en rejsedag
-			updateDageInfoStmt = connection.prepareStatement("UPDATE DageInfo "
+			updateDageInfoStmt = connection.prepareStatement("UPDATE RejseDag "
 					+ "SET Morgenmad = ?, Frokost = ?, Aftensmad = ?, Nattil = ?, RejseAfbrudt = ?, UdokNat = ?, Refunderes = ? "
 					+ "WHERE DagID = ? AND Nummer = ?;");
 
 			//Laver query, der opretter en rejsedag
-			createDageInfoStmt = connection.prepareStatement("INSERT INTO DageInfo "
+			createDageInfoStmt = connection.prepareStatement("INSERT INTO RejseDag "
 					+ "( Dato, Nummer, Morgenmad, Frokost, Aftensmad, Nattil, RejseAfbrudt, UdokNat, Refunderes) "
 					+ "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? );");
 
 			//Laver query, der sletter en rejsedag
-			deleteDageInfoStmt = connection.prepareStatement("DELETE FROM DageInfo WHERE DagID = ? AND Nummer = ?;");
+			deleteDageInfoStmt = connection.prepareStatement("DELETE FROM RejseDag WHERE DagID = ? AND Nummer = ?;");
 
 			//Laver query, der finder størrelsen på tabellen
-			getSizeStmt = connection.prepareStatement("SELECT COUNT(*) FROM DageInfo;");
+			getSizeStmt = connection.prepareStatement("SELECT COUNT(*) FROM RejseDag;");
 
+			//Laver query, der finder alle rejserne
+			getRejseStmt = connection.prepareStatement("SELECT * FROM Rejse WHERE Nummer = ?");
+			
 		} catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
 		}
 	}
 		
 	@Override
-	public List<DageInfoDTO> getDageInfo() throws Exception 
+	public List<DageInfoDTO> getDageInfo(int nummer) throws Exception 
 	{
+		//TODO skal kunne hente og ikke kun create, hvis det eksisterer
 		List<DageInfoDTO> list = null;
 		ResultSet resultSet = null;
+		DageInfoDTO dag = null;
+		Date fra = null;
+		Date til = null;
 		
 		try {
-			resultSet = getDageInfoStmt.executeQuery(); 
+			getRejseStmt.setInt(1, nummer);
+			resultSet = getRejseStmt.executeQuery();
 			list = new ArrayList<DageInfoDTO>();
-
-			while(resultSet.next())
-			{
-				//Tilføjer rejsedag til listen
-				list.add(new DageInfoDTO(
-						resultSet.getDate("Dato"),
-						resultSet.getInt("Nummer"),
-						resultSet.getBoolean("Morgenmad"),
-						resultSet.getBoolean("Frokost"),
-						resultSet.getBoolean("Aftensmad"),
-						resultSet.getBoolean("Nattill"),
-						resultSet.getBoolean("RejseAfbrudt"),
-						resultSet.getBoolean("UdokNat"),
-						resultSet.getBoolean("Refunderes")
-						));
+			
+			while(resultSet.next()) {
+				fra = resultSet.getDate("DatoFra");
+				til = resultSet.getDate("DatoTil");
+				
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(fra);
+				
+				dag = new DageInfoDTO(
+						fra,
+						nummer,
+						false,
+						false,
+						false,
+						false,
+						false,
+						false,
+						false,
+						resultSet.getString("Land")
+						);
+				
+				createDageInfo(dag);
+				list.add(dag);
+				
+				while (cal.getTime().before(til)) {
+				    cal.add(Calendar.DATE, 1);
+				    dag = new DageInfoDTO(
+				    		new java.sql.Date(cal.getTime().getTime()),
+							nummer,
+							false,
+							false,
+							false,
+							false,
+							false,
+							false,
+							false,
+							resultSet.getString("Land")
+							);
+				    
+				    createDageInfo(dag);
+				    list.add(dag);
+				}
 			}
+			
+//			resultSet = getDageInfoStmt.executeQuery(); 
+//			list = new ArrayList<DageInfoDTO>();
+//
+//			while(resultSet.next())
+//			{
+//				//Tilføjer rejsedag til listen
+//				list.add(new DageInfoDTO(
+//						resultSet.getDate("Dato"),
+//						resultSet.getInt("Nummer"),
+//						resultSet.getBoolean("Morgenmad"),
+//						resultSet.getBoolean("Frokost"),
+//						resultSet.getBoolean("Aftensmad"),
+//						resultSet.getBoolean("Nattill"),
+//						resultSet.getBoolean("RejseAfbrudt"),
+//						resultSet.getBoolean("UdokNat"),
+//						resultSet.getBoolean("Refunderes"),
+//						resultSet.getString("")
+//						));
+//			}
 
 		} catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
