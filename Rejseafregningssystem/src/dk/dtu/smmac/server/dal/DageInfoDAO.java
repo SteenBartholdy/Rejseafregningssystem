@@ -37,13 +37,13 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 
 			//Laver query, der opdaterer en rejsedag
 			updateDageInfoStmt = connection.prepareStatement("UPDATE RejseDag "
-					+ "SET Morgenmad = ?, Frokost = ?, Aftensmad = ?, Nattil = ?, RejseAfbrudt = ?, UdokNat = ?, Refunderes = ? "
+					+ "SET Morgenmad = ?, Frokost = ?, Aftensmad = ?, Nattil = ?, RejseAfbrudt = ?, UdokNat = ?, Refunderes = ? Land = ? "
 					+ "WHERE Dato = ? AND Nummer = ?;");
 
 			//Laver query, der opretter en rejsedag
 			createDageInfoStmt = connection.prepareStatement("INSERT INTO RejseDag "
-					+ "( Dato, Nummer, Morgenmad, Frokost, Aftensmad, Nattil, RejseAfbrudt, UdokNat, Refunderes) "
-					+ "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? );");
+					+ "( Dato, Nummer, Morgenmad, Frokost, Aftensmad, Nattil, RejseAfbrudt, UdokNat, Refunderes, Land) "
+					+ "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );");
 
 			//Laver query, der sletter en rejsedag
 			deleteDageInfoStmt = connection.prepareStatement("DELETE FROM RejseDag WHERE Dato = ? AND Nummer = ?;");
@@ -127,26 +127,6 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 				    list.add(dag);
 				}
 			}
-			
-//			resultSet = getDageInfoStmt.executeQuery(); 
-//			list = new ArrayList<DageInfoDTO>();
-//
-//			while(resultSet.next())
-//			{
-//				//Tilføjer rejsedag til listen
-//				list.add(new DageInfoDTO(
-//						resultSet.getDate("Dato"),
-//						resultSet.getInt("Nummer"),
-//						resultSet.getBoolean("Morgenmad"),
-//						resultSet.getBoolean("Frokost"),
-//						resultSet.getBoolean("Aftensmad"),
-//						resultSet.getBoolean("Nattill"),
-//						resultSet.getBoolean("RejseAfbrudt"),
-//						resultSet.getBoolean("UdokNat"),
-//						resultSet.getBoolean("Refunderes"),
-//						resultSet.getString("")
-//						));
-//			}
 
 		} catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
@@ -167,15 +147,16 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 	public void updateDageInfo(DageInfoDTO dag) throws Exception 
 	{
 		try {
-			updateDageInfoStmt.setDate(1, dag.getDageInfoDato());
-			updateDageInfoStmt.setInt(2, dag.getNummer());
-			updateDageInfoStmt.setBoolean(3, dag.getMorgenmad());
-			updateDageInfoStmt.setBoolean(4, dag.getFrokost());
-			updateDageInfoStmt.setBoolean(5, dag.getAftensmad());
-			updateDageInfoStmt.setBoolean(6, dag.getNattill());
-			updateDageInfoStmt.setBoolean(7, dag.getRejseAfbrudt());
-			updateDageInfoStmt.setBoolean(8, dag.getUdokNat());
-			updateDageInfoStmt.setBoolean(9, dag.getRefunderes());
+			updateDageInfoStmt.setBoolean(1, dag.getMorgenmad());
+			updateDageInfoStmt.setBoolean(2, dag.getFrokost());
+			updateDageInfoStmt.setBoolean(3, dag.getAftensmad());
+			updateDageInfoStmt.setBoolean(4, dag.getNattill());
+			updateDageInfoStmt.setBoolean(5, dag.getRejseAfbrudt());
+			updateDageInfoStmt.setBoolean(6, dag.getUdokNat());
+			updateDageInfoStmt.setBoolean(7, dag.getRefunderes());
+			updateDageInfoStmt.setString(8, dag.getCountry());
+			updateDageInfoStmt.setDate(9, dag.getDageInfoDato());
+			updateDageInfoStmt.setInt(10, dag.getNummer());
 
 			updateDageInfoStmt.executeUpdate();
 		} 
@@ -198,6 +179,7 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 			createDageInfoStmt.setBoolean(7, dag.getRejseAfbrudt());
 			createDageInfoStmt.setBoolean(8, dag.getUdokNat());
 			createDageInfoStmt.setBoolean(9, dag.getRefunderes());
+			createDageInfoStmt.setString(10, dag.getCountry());
 			
 			createDageInfoStmt.executeUpdate();
 		} 
@@ -243,7 +225,8 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 		ResultSet resultSet = null;
 		
 		try {
-			getDageInfoStmt.setInt(1, x);
+			getDageInfoStmt.setDate(1, dato);
+			getDageInfoStmt.setInt(2, nummer);
 			resultSet = getDageInfoStmt.executeQuery(); 
 
 			while(resultSet.next())
@@ -258,7 +241,7 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 						resultSet.getBoolean("RejseAfbrudt"),
 						resultSet.getBoolean("UdokNat"),
 						resultSet.getBoolean("Refunderes"),
-						""
+						resultSet.getString("Land")
 						);
 			}
 

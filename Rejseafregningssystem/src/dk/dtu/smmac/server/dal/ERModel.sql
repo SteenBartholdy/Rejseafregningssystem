@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS Konto;
 DROP TABLE IF EXISTS Bilag;
 DROP TABLE IF EXISTS Rejse;
 DROP TABLE IF EXISTS RejseDag;
+DROP TABLE IF EXISTS Udgifter;
 DROP TABLE IF EXISTS Rejseafregning;
 DROP TABLE IF EXISTS Ansatte;
 DROP TABLE IF EXISTS Afdeling;
@@ -112,7 +113,19 @@ CREATE TABLE RejseDag
 	Refunderes tinyint NOT NULL,
 	RejseAfbrudt tinyint NOT NULL,
 	UdokNat tinyint NOT NULL,
+	Land varchar(50),
 	PRIMARY KEY (Dato, Nummer)
+);
+
+
+CREATE TABLE Udgifter
+(
+	BilagsNummer int NOT NULL,
+	Nummer int(10) NOT NULL,
+	Udgiftstype varchar(40),
+	Dato varchar(10),
+	Beloeb int,
+	PRIMARY KEY (BilagsNummer, Nummer)
 );
 
 
@@ -184,6 +197,14 @@ ALTER TABLE Rejse
 
 
 ALTER TABLE RejseDag
+	ADD FOREIGN KEY (Nummer)
+	REFERENCES Rejseafregning (Nummer)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE Udgifter
 	ADD FOREIGN KEY (Nummer)
 	REFERENCES Rejseafregning (Nummer)
 	ON UPDATE RESTRICT
