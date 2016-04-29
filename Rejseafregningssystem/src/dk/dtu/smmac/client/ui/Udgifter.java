@@ -197,6 +197,5 @@ public class Udgifter extends Composite
 	    hPanel.add(btnAnnuller);
 	    hPanel.add(btnGem);
 	    
-	    
 	}
 }

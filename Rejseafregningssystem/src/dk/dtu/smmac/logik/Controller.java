@@ -52,6 +52,7 @@ import dk.dtu.smmac.client.ui.Oplysninger;
 import dk.dtu.smmac.client.ui.Rejse;
 import dk.dtu.smmac.client.ui.Rejseafregning;
 import dk.dtu.smmac.client.ui.Rejseafregninger;
+import dk.dtu.smmac.client.ui.Udgifter;
 import dk.dtu.smmac.server.dal.RejseafregningDAO;
 import dk.dtu.smmac.shared.AfdelingDTO;
 import dk.dtu.smmac.shared.AnsatDTO;
@@ -89,6 +90,8 @@ public class Controller {
 	private DageInfo dageInfoPage;
 
 	private Rejseafregninger rejseafregningerPage;
+	
+	private Udgifter udgifterPage;
 
 	private HTML emptyView;
 	private HTML emptyTopView;
@@ -138,6 +141,8 @@ public class Controller {
 		dageInfoPage = mainView.getDageInfoPage();
 
 		rejseafregningerPage = mainView.getRejseafregningerPage();
+		
+		udgifterPage = mainView.getUdgifterPage();
 
 		//Async
 		asyncEmpty = new AsyncCallback<Void>() {
@@ -253,6 +258,7 @@ public class Controller {
 		dageInfoPage.getBtn().addClickHandler(new ShowLoginHandler());
 		rejsePage.getSaveButton().addClickHandler(new SaveRejseHandler());
 		rejseafregningPage.getSaveButton().addClickHandler(new SaveRejseafregningsHandler());
+		rejseafregningPage.getAddUdgiftAnchor().addClickHandler(new UdgifterHandler());
 
 		//BlurHandler
 		oplysningerPage.getName().addBlurHandler(new UpdateAnsatHandler());
@@ -470,6 +476,17 @@ public class Controller {
 		}
 	}
 
+	private class ShowUdgifterPageHandler implements ClickHandler
+	{
+
+		@Override
+		public void onClick(ClickEvent event) 
+		{
+			mainView.showContentWidget(udgifterPage);	
+		}
+		
+	}
+	
 	private class BankHandler implements BlurHandler
 	{
 		@Override
