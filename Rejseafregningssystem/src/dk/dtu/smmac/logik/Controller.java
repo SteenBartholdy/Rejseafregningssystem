@@ -250,7 +250,7 @@ public class Controller {
 		bilagPage.getAddBilag().addClickHandler(new AddBilagHandler());
 		bilagPage.getDelete().addClickHandler(new DeleteBilagHandler());
 		bilagPage.getCont().addClickHandler(new ShowRejseafregningHandler());
-		dageInfoPage.getbtnAnnullerDageInfo().addClickHandler(new ShowLoginHandler());
+		dageInfoPage.getBtn().addClickHandler(new ShowLoginHandler());
 		rejsePage.getSaveButton().addClickHandler(new SaveRejseHandler());
 		rejseafregningPage.getSaveButton().addClickHandler(new SaveRejseafregningsHandler());
 
@@ -623,9 +623,8 @@ public class Controller {
 	{
 		@Override
 		public void onClick(ClickEvent event) {
-			mainView.showLoginPage();
-			mainView.showNavWidget(emptyNavView);
-			mainView.showTopWidget(emptyTopView);
+			//TODO
+			
 		}
 	}
 

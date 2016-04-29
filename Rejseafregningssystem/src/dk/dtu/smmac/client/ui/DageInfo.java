@@ -23,7 +23,7 @@ public class DageInfo extends Composite
 {
 	private CellTable<DageInfoDTO> table;
 	private VerticalPanel vPanel = new VerticalPanel();
-	private Button btnAnnuller;
+	private Button btn;
 	private DateTimeFormat dtFmt = DateTimeFormat.getFormat("dd/MM yyyy");
 	private SimplePager pager;
 	private ListDataProvider<DageInfoDTO> dataProvider;
@@ -45,7 +45,7 @@ public class DageInfo extends Composite
 
 		initWidget(this.vPanel);
 
-		btnAnnuller = new Button("Annuller");
+		btn = new Button("Fortsæt");
 
 		// **** Add column that shows "Dato" ****
 
@@ -195,12 +195,12 @@ public class DageInfo extends Composite
 		vPanel.setStyleName("margin");
 		vPanel.add(table);
 		vPanel.add(pager);
-		vPanel.add(btnAnnuller);
+		vPanel.add(btn);
 	}
 
-	public Button getbtnAnnullerDageInfo()
+	public Button getBtn()
 	{
-		return btnAnnuller;
+		return btn;
 	}
 
 	public void addData(DageInfoDTO dag)
