@@ -3,6 +3,8 @@ package dk.dtu.smmac.server.dal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import java.sql.PreparedStatement;
@@ -53,23 +55,33 @@ public class BilagDAO extends RemoteServiceServlet implements BilagService
 	}
 
 	@Override
-	public BilagDTO getBilag(int id) throws Exception {
-		BilagDTO bilag = null;
+	public List<BilagDTO> getBilag(int id) throws Exception {
+		List<BilagDTO> list = null;
 		ResultSet resultSet = null;
 		
 		try {
-			getBilagStmt.setInt(1, id);
 			resultSet = getBilagStmt.executeQuery();
-			resultSet.next();
+			list = new ArrayList<BilagDTO>();
 			
-			bilag = new BilagDTO(
-					resultSet.getInt("Id"),
-					resultSet.getString("Forklaring")
-					);
+			while(resultSet.next())
+			{
+				list.add(new BilagDTO(
+						resultSet.getInt("Id"),
+						resultSet.getString("Forklaring")
+						));
+			}
 		} catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
-		} 
-		return bilag;
+		} finally {
+			try {
+				resultSet.close();
+			} 
+			
+		catch (SQLException sqlE) {
+			System.out.println(sqlE.getMessage());
+			} 
+		}
+		return list;
 	}
 
 	@Override
