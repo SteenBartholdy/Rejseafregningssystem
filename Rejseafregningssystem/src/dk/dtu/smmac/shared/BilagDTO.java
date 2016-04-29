@@ -25,7 +25,7 @@ public class BilagDTO implements Serializable {
 		this.forklaring = forklaring;
 	}
 	
-	public int getId()
+	public int getID()
 	{
 		return id;
 	}

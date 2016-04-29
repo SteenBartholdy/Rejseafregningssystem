@@ -6,9 +6,8 @@ import dk.dtu.smmac.shared.BilagDTO;
 
 public interface BilagServiceAsync {
 	
-	void createBilag(BilagDTO bilag, AsyncCallback<BilagDTO> callback);
-	void getBilag(AsyncCallback<BilagDTO> callback);
-	void getId(AsyncCallback<Integer> callback);
-	void getForklaring(AsyncCallback<String> callback);
+	void createBilag(BilagDTO bilag, AsyncCallback<Void> callback);
+	void deleteBilag(BilagDTO bilag, AsyncCallback<Void> callback);
+	void getBilag(int id, AsyncCallback<BilagDTO> callback);
 
 }
