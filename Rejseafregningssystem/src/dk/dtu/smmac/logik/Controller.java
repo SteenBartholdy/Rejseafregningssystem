@@ -26,6 +26,8 @@ import dk.dtu.smmac.client.service.AnsatteService;
 import dk.dtu.smmac.client.service.AnsatteServiceAsync;
 import dk.dtu.smmac.client.service.BankService;
 import dk.dtu.smmac.client.service.BankServiceAsync;
+import dk.dtu.smmac.client.service.BilagService;
+import dk.dtu.smmac.client.service.BilagServiceAsync;
 import dk.dtu.smmac.client.service.DAWAService;
 import dk.dtu.smmac.client.service.DAWAServiceAsync;
 import dk.dtu.smmac.client.service.LoginService;
@@ -51,6 +53,7 @@ import dk.dtu.smmac.client.ui.Rejseafregninger;
 import dk.dtu.smmac.shared.AfdelingDTO;
 import dk.dtu.smmac.shared.AnsatDTO;
 import dk.dtu.smmac.shared.BankDTO;
+import dk.dtu.smmac.shared.BilagDTO;
 import dk.dtu.smmac.shared.PostNrDTO;
 import dk.dtu.smmac.shared.RejseDTO;
 import dk.dtu.smmac.shared.RejseafregningDTO;
@@ -95,6 +98,7 @@ public class Controller {
 	private RejseafregningServiceAsync rejseafregningService = GWT.create(RejseafregningService.class);
 	private RejseServiceAsync rejseService = GWT.create(RejseService.class);
 	private ProjektOpgaveServiceAsync projektopgaveService = GWT.create(ProjektOpgaveService.class);
+	private BilagServiceAsync bilagService = GWT.create(BilagService.class);
 
 	AsyncCallback<Void> asyncEmpty;
 	AsyncCallback<String> asyncCity;
