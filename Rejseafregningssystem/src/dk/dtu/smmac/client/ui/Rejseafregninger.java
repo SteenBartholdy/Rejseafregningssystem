@@ -2,6 +2,7 @@ package dk.dtu.smmac.client.ui;
 
 import java.util.List;
 
+import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
@@ -10,7 +11,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SingleSelectionModel;
 
-import dk.dtu.smmac.shared.RejseDTO;
 import dk.dtu.smmac.shared.RejseafregningerDTO;
 
 public class Rejseafregninger extends Composite {
@@ -65,7 +65,7 @@ public class Rejseafregninger extends Composite {
 
 			@Override
 			public String getValue(RejseafregningerDTO obj) {
-				return ""+obj.getStartTid();
+				return NumberFormat.getFormat("00").format(obj.getStartTid()) + ":00";
 			}
 		};
 		
@@ -73,7 +73,7 @@ public class Rejseafregninger extends Composite {
 
 			@Override
 			public String getValue(RejseafregningerDTO obj) {
-				return ""+obj.getSlutTid();
+				return NumberFormat.getFormat("00").format(obj.getSlutTid()) + ":00";
 			}
 		};
 		
