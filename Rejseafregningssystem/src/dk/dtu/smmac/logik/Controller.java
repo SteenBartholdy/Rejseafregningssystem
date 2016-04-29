@@ -393,6 +393,7 @@ public class Controller {
 							rejseafregningPage.setStartDateLabel();
 							rejseafregningPage.setEndDateLabel();
 							mainView.showContentWidget(rejseafregningPage);
+							rejseafregningPage.getModel().setSelected(null, true);
 						}
 					});
 					
