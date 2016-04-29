@@ -100,8 +100,8 @@ public class Bilag extends Composite {
 		flexTable.removeRow(i);
 		bList.remove(i);
 		lList.remove(i);
-		clickHandler(bList, hList);
 		updateLabels(lList);
+		clickHandler(bList, hList);
 	}
 
 	public Anchor getAddBilag()
@@ -187,7 +187,8 @@ public class Bilag extends Composite {
 	public static void updateLabels(List<Label> l)
 	{
 		for (int i = 0; i < l.size(); i++){
-			l.get(i).setText("Bilag: " + i);
+			int x = i+1;
+			l.get(i).setText("Bilag: " + x);
 		}
 	}
 }
