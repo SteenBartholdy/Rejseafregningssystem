@@ -40,7 +40,7 @@ public class FieldVerifier {
 		return name.length() > 3;
 	}
 
-	public static boolean isValidZipzode(String zipcode)
+	public static boolean isValidZipcode(String zipcode)
 	{
 		if(zipcode == null)
 		{
@@ -55,5 +55,18 @@ public class FieldVerifier {
 			return false;
 		}
 		return true;
+	}
+
+	public static boolean isValidTal(String tal)
+	{
+		if (tal == null)
+		{
+			return false;
+		}
+		for (int n=0 ; n < tal.length() ;n++) {
+			if (!Character.isDigit(tal.charAt(n))) 
+				return false;
+		}
+		return true;	
 	}
 }

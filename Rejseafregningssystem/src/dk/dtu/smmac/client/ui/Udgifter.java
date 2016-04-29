@@ -1,15 +1,106 @@
 package dk.dtu.smmac.client.ui;
 
+import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.cell.client.TextInputCell;
 import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.Column;
+import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.ProvidesKey;
 
+import celltable.client.dal.PersonDTO;
+import celltable.shared.FieldVerifier;
+import dk.dtu.smmac.shared.DageInfoDTO;
 import dk.dtu.smmac.shared.UdgifterDTO;
 
 public class Udgifter extends Composite
 {
 	private VerticalPanel vPanel = new VerticalPanel();
+	private HorizontalPanel hPanel = new HorizontalPanel();
 	private Button btnGem, btnAnnuller;
 	private CellTable<UdgifterDTO> table;
+
+	 private static final ProvidesKey<UdgifterDTO> KEY_PROVIDER = new ProvidesKey<UdgifterDTO>() {
+		    @Override
+		    public Object getKey(UdgifterDTO udgift) {
+		      return udgift.getBilagsNummer();
+		    }
+		  };
+
+	public Udgifter()
+	{
+		table = new CellTable<UdgifterDTO>(KEY_PROVIDER);
+		table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+		
+		initWidget(this.vPanel);
+		
+		btnAnnuller = new Button("Annuller");
+
+		// **** Add column that shows "Udgiftstype" ****
+
+		TextColumn<UdgifterDTO> udgifttypeColumn = new TextColumn<UdgifterDTO>() {
+
+			@Override
+			public String getValue(UdgifterDTO object) {
+				return object.getUdgiftType();
+			}	
+		};
+
+		table.addColumn(udgifttypeColumn, "Udgiftstype:");
+		
+		// **** Add a text input column to set "Bilagsnummer" ****
+		
+	    final TextInputCell nameCell = new TextInputCell();
+	    Column<UdgifterDTO, String> bilagsnummerColumn = new Column<UdgifterDTO, String>(bilagsnummerCell) {
+	      @Override
+	      public String getValue(UdgifterDTO object) {
+	        return ""+object.getBilagsNummer();
+	      }
+	    };
+	    table.addColumn(bilagsnummerColumn, "Bilagsnummer:");
+
+	    // **** Add a field updater to be notified when the user enters a "Bilagsnummer" ****
+	    
+	    bilagsnummerColumn.setFieldUpdater(new FieldUpdater<UdgifterDTO, String>() {
+	      @Override
+	      public void update(int index, UdgifterDTO object, String value) {
+	       
+	    	// **** Validate the data ****
+
+	    	if(!dk.dtu.smmac.shared.FieldVerifier.isValidTal(value)){
+	    		Window.alert("Indtast venligst et nummer.");
+	    		
+
+	          /*
+	           * Clear the view data. The view data contains the pending change and
+	           * allows the table to render with the pending value until the data is
+	           * committed. If the data is committed into the object, the view data
+	           * is automatically cleared out. If the data is not committed because
+	           * it is invalid, you must delete.
+	           */
+	          bilagsnummerCell.clearViewData(KEY_PROVIDER.getKey(object));
+
+	          // Redraw the table.
+	          table.redraw();
+	          return;
+	        }
+
+	        // Push the changes into the Contact. At this point, you could send an
+	        // asynchronous request to the server to update the database.
+	        object.setName(value);
+
+	        // Redraw the table with the new data.
+	        table.redraw();
+	      }
+	    });
+		
+		
+		
+		
+	}
 }
