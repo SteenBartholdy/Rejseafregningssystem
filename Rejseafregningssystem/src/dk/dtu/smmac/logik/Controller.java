@@ -258,7 +258,7 @@ public class Controller {
 		dageInfoPage.getBtn().addClickHandler(new ShowLoginHandler());
 		rejsePage.getSaveButton().addClickHandler(new SaveRejseHandler());
 		rejseafregningPage.getSaveButton().addClickHandler(new SaveRejseafregningsHandler());
-		rejseafregningPage.getAddUdgiftAnchor().addClickHandler(new UdgifterHandler());
+		rejseafregningPage.getAddUdgiftAnchor().addClickHandler(new ShowUdgifterPageHandler());
 
 		//BlurHandler
 		oplysningerPage.getName().addBlurHandler(new UpdateAnsatHandler());
