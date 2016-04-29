@@ -6,6 +6,7 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import dk.dtu.smmac.shared.RejseafregningDTO;
+import dk.dtu.smmac.shared.RejseafregningerDTO;
 
 @RemoteServiceRelativePath("rejseafregningservice")
 public interface RejseafregningService extends RemoteService {
@@ -13,7 +14,7 @@ public interface RejseafregningService extends RemoteService {
 	public void updateRejse(RejseafregningDTO rejse) throws Exception;
 	public void createRejse(RejseafregningDTO rejse) throws Exception;
 	public RejseafregningDTO getRejse(int id, int ansatId) throws Exception;
-	public List<RejseafregningDTO> getRejser(int ansatId) throws Exception;
+	public List<RejseafregningerDTO> getRejser(int ansatId) throws Exception;
 	public int getSize() throws Exception;
 	
 }

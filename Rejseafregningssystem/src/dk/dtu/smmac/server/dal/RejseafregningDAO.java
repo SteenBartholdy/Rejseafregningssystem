@@ -1,17 +1,19 @@
 package dk.dtu.smmac.server.dal;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import dk.dtu.smmac.client.service.DAWAService;
 import dk.dtu.smmac.client.service.RejseafregningService;
 import dk.dtu.smmac.shared.RejseafregningDTO;
+import dk.dtu.smmac.shared.RejseafregningerDTO;
 
 public class RejseafregningDAO extends RemoteServiceServlet implements RejseafregningService {
 
@@ -32,7 +34,7 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 			getRejsStmt = connection.prepareStatement("SELECT * FROM Rejseafregning WHERE Nummer = ? AND Id = ?;");
 			
 			//Laver query, der henter alle den ansattes rejseafregninger
-			getRejserStmt = connection.prepareStatement("SELECT * FROM Rejseafregning WHERE Id = ?;");
+			getRejserStmt = connection.prepareStatement("SELECT * FROM Rejseafregning INNER JOIN Rejse ON Rejseafregning.Nummer=Rejse.Nummer WHERE Rejseafregning.Id = ?;");
 			
 			//Laver query, der opdaterer en rejse
 			updateRejsStmt = connection.prepareStatement("UPDATE Rejseafregning "
@@ -87,9 +89,48 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 	}
 
 	@Override
-	public List<RejseafregningDTO> getRejser(int ansatId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<RejseafregningerDTO> getRejser(int ansatId) throws Exception {
+		List<RejseafregningerDTO> list = null;
+		List<String> lande = new ArrayList<String>();
+		List<Date> datoFra = new ArrayList<Date>();
+		List<Date> datoTil = new ArrayList<Date>();
+		RejseafregningerDTO rejse;
+		ResultSet resultSet = null;
+		
+		try {
+			getRejserStmt.setInt(1, ansatId);
+			resultSet = getRejserStmt.executeQuery();
+			list = new ArrayList<RejseafregningerDTO>();
+			
+			while(resultSet.next())
+			{
+				rejse = new RejseafregningerDTO(
+						resultSet.getInt("Rejseafregning.Nummer"),
+						resultSet.getInt("Rejseafregning.Starttid"),
+						resultSet.getInt("Rejseafregning.Sluttid"),
+						resultSet.getString("Rejse.Land"),
+						resultSet.getDate("Rejse.DatoFra"),
+						resultSet.getDate("Rejse.DatoTil")
+						);
+				
+				if(list.contains(rejse)) {
+					//TODO mangler at opdatere osv.
+				} else {
+					list.add(rejse);
+					lande.clear();
+					lande.add(resultSet.getString("Rejse.Land"));
+					datoFra.clear();
+					datoFra.add(resultSet.getDate("Rejse.DatoFra"));
+					datoTil.clear();
+					datoTil.add(resultSet.getDate("Rejse.DatoTil"));
+				}
+			}
+			
+		} catch (SQLException sqlE) {
+			System.out.println(sqlE.getMessage());
+		}
+		
+		return list;
 	}
 
 	@Override

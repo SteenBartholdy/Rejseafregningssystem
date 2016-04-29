@@ -54,6 +54,7 @@ import dk.dtu.smmac.shared.BankDTO;
 import dk.dtu.smmac.shared.PostNrDTO;
 import dk.dtu.smmac.shared.RejseDTO;
 import dk.dtu.smmac.shared.RejseafregningDTO;
+import dk.dtu.smmac.shared.RejseafregningerDTO;
 
 @SuppressWarnings("deprecation")
 public class Controller {
@@ -359,7 +360,20 @@ public class Controller {
 	{
 		@Override
 		public void onClick(ClickEvent event) {
-			mainView.showContentWidget(rejseafregningerPage);
+			rejseafregningService.getRejser(oplysningerPage.getAnsat().getID(), new AsyncCallback<List<RejseafregningerDTO>>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					System.out.println("An error has occured");	
+				}
+
+				@Override
+				public void onSuccess(List<RejseafregningerDTO> result) {
+					rejseafregningerPage.setData(result);
+					mainView.showContentWidget(rejseafregningerPage);
+				}
+				
+			});
 		}
 	}
 
