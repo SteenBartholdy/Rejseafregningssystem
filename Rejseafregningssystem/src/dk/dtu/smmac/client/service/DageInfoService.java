@@ -1,5 +1,6 @@
 package dk.dtu.smmac.client.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -14,5 +15,6 @@ public interface DageInfoService extends RemoteService
 	public void updateDageInfo(DageInfoDTO dag) throws Exception;
 	public void createDageInfo(DageInfoDTO dag) throws Exception;
 	public void deleteDageInfo(DageInfoDTO dag) throws Exception;
-	public int getSize() throws Exception;	
+	public int getSize() throws Exception;
+	public DageInfoDTO getDageInfo(Date dato, int nummer) throws Exception;
 }

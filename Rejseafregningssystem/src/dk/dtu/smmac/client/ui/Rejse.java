@@ -49,6 +49,7 @@ public class Rejse extends Composite {
 		country = new ListBox();
 		List<String> list = new ArrayList<String>();
 		list.add("Danmark");
+		list.add("Sverige");
 		setLand(list);
 
 		project = new ListBox();

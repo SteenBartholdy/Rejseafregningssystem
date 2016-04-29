@@ -33,12 +33,12 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 			connection = DriverManager.getConnection(DAO.URL, DAO.USERNAME, DAO.PASSWORD);
 
 			//Laver query, der henter alle rejsedage
-			getDageInfoStmt = connection.prepareStatement("SELECT * FROM RejseDag;");
+			getDageInfoStmt = connection.prepareStatement("SELECT * FROM RejseDag WHERE Dato = ? AND Nummer = ?;");
 
 			//Laver query, der opdaterer en rejsedag
 			updateDageInfoStmt = connection.prepareStatement("UPDATE RejseDag "
 					+ "SET Morgenmad = ?, Frokost = ?, Aftensmad = ?, Nattil = ?, RejseAfbrudt = ?, UdokNat = ?, Refunderes = ? "
-					+ "WHERE DagID = ? AND Nummer = ?;");
+					+ "WHERE Dato = ? AND Nummer = ?;");
 
 			//Laver query, der opretter en rejsedag
 			createDageInfoStmt = connection.prepareStatement("INSERT INTO RejseDag "
@@ -46,7 +46,7 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 					+ "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? );");
 
 			//Laver query, der sletter en rejsedag
-			deleteDageInfoStmt = connection.prepareStatement("DELETE FROM RejseDag WHERE DagID = ? AND Nummer = ?;");
+			deleteDageInfoStmt = connection.prepareStatement("DELETE FROM RejseDag WHERE Dato = ? AND Nummer = ?;");
 
 			//Laver query, der finder størrelsen på tabellen
 			getSizeStmt = connection.prepareStatement("SELECT COUNT(*) FROM RejseDag;");
@@ -81,26 +81,11 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(fra);
 				
-				dag = new DageInfoDTO(
-						fra,
-						nummer,
-						false,
-						false,
-						false,
-						false,
-						false,
-						false,
-						false,
-						resultSet.getString("Land")
-						);
-				
-				createDageInfo(dag);
-				list.add(dag);
-				
-				while (cal.getTime().before(til)) {
-				    cal.add(Calendar.DATE, 1);
-				    dag = new DageInfoDTO(
-				    		new java.sql.Date(cal.getTime().getTime()),
+				try {
+					getDageInfo(fra, nummer);
+				} catch (Exception e) {
+					dag = new DageInfoDTO(
+							fra,
 							nummer,
 							false,
 							false,
@@ -111,8 +96,34 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 							false,
 							resultSet.getString("Land")
 							);
+					
+					createDageInfo(dag);
+				}
+				
+				list.add(dag);
+				
+				while (cal.getTime().before(til)) {
+				    cal.add(Calendar.DATE, 1);
 				    
-				    createDageInfo(dag);
+				    try {
+						dag = getDageInfo(new java.sql.Date(cal.getTime().getTime()), nummer);
+					} catch (Exception e) {
+						dag = new DageInfoDTO(
+					    		new java.sql.Date(cal.getTime().getTime()),
+								nummer,
+								false,
+								false,
+								false,
+								false,
+								false,
+								false,
+								false,
+								resultSet.getString("Land")
+								);
+						
+						createDageInfo(dag);
+					}
+				    
 				    list.add(dag);
 				}
 			}
@@ -224,6 +235,38 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 		}
 
 		return 0;
+	}
+
+	@Override
+	public DageInfoDTO getDageInfo(Date dato, int nummer) throws Exception {
+		DageInfoDTO dag = null;
+		ResultSet resultSet = null;
+		
+		try {
+			getDageInfoStmt.setInt(1, x);
+			resultSet = getDageInfoStmt.executeQuery(); 
+
+			while(resultSet.next())
+			{
+				dag = new DageInfoDTO(
+						resultSet.getDate("Dato"),
+						resultSet.getInt("Nummer"),
+						resultSet.getBoolean("Morgenmad"),
+						resultSet.getBoolean("Frokost"),
+						resultSet.getBoolean("Aftensmad"),
+						resultSet.getBoolean("Nattill"),
+						resultSet.getBoolean("RejseAfbrudt"),
+						resultSet.getBoolean("UdokNat"),
+						resultSet.getBoolean("Refunderes"),
+						""
+						);
+			}
+
+		} catch (SQLException sqlE) {
+			System.out.println(sqlE.getMessage());
+		}
+		
+		return dag;
 	}
 
 }
