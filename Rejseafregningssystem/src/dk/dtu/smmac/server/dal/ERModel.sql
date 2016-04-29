@@ -114,6 +114,7 @@ CREATE TABLE RejseDag
 	RejseAfbrudt tinyint NOT NULL,
 	UdokNat tinyint NOT NULL,
 	Land varchar(50),
+	Aftensmad tinyint NOT NULL,
 	PRIMARY KEY (Dato, Nummer)
 );
 
