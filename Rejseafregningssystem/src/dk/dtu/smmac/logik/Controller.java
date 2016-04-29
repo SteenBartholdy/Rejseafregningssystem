@@ -52,9 +52,11 @@ import dk.dtu.smmac.client.ui.Oplysninger;
 import dk.dtu.smmac.client.ui.Rejse;
 import dk.dtu.smmac.client.ui.Rejseafregning;
 import dk.dtu.smmac.client.ui.Rejseafregninger;
+import dk.dtu.smmac.server.dal.RejseafregningDAO;
 import dk.dtu.smmac.shared.AfdelingDTO;
 import dk.dtu.smmac.shared.AnsatDTO;
 import dk.dtu.smmac.shared.BankDTO;
+import dk.dtu.smmac.shared.BilagDTO;
 import dk.dtu.smmac.shared.DageInfoDTO;
 import dk.dtu.smmac.shared.PostNrDTO;
 import dk.dtu.smmac.shared.RejseDTO;
@@ -731,6 +733,21 @@ public class Controller {
 	{
 		@Override
 		public void onClick(ClickEvent event) {
+			bilagService.getBilag(rejseafregningPage.getRejseafregning().getId(), new AsyncCallback<BilagDTO>(){
+
+				@Override
+				public void onFailure(Throwable caught) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void onSuccess(BilagDTO result) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			
 			mainView.showContentWidget(bilagPage);
 		}
 	}

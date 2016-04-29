@@ -41,7 +41,7 @@ public class Bilag extends Composite {
 		
 		fTable = new FlexTable();
 		
-		form.setAction("filesystemservlet");
+		form.setAction("servlet");
 		form.setEncoding(FormPanel.ENCODING_MULTIPART);
 	    form.setMethod(FormPanel.METHOD_POST);
 	    form.setSize("100%", "100%");
@@ -186,8 +186,9 @@ public class Bilag extends Composite {
 	
 	public static void updateLabels(List<Label> l)
 	{
+		int x;
 		for (int i = 0; i < l.size(); i++){
-			int x = i+1;
+			x = i+1;
 			l.get(i).setText("Bilag: " + x);
 		}
 	}
