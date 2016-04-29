@@ -211,4 +211,8 @@ public class DageInfo extends Composite
 			dataProvider.getList().add(dag);
 		}
 	}
+	
+	public void reset() {
+		dataProvider.getList().clear();
+	}
 }

@@ -255,7 +255,7 @@ public class Controller {
 		bilagPage.getAddBilag().addClickHandler(new AddBilagHandler());
 		bilagPage.getDelete().addClickHandler(new DeleteBilagHandler());
 		bilagPage.getCont().addClickHandler(new ShowRejseafregningHandler());
-		dageInfoPage.getBtn().addClickHandler(new ShowLoginHandler());
+		dageInfoPage.getBtn().addClickHandler(new SaveDageInfoHandler());
 		rejsePage.getSaveButton().addClickHandler(new SaveRejseHandler());
 		rejseafregningPage.getSaveButton().addClickHandler(new SaveRejseafregningsHandler());
 		rejseafregningPage.getAddUdgiftAnchor().addClickHandler(new ShowUdgifterPageHandler());
@@ -436,6 +436,16 @@ public class Controller {
 			});
 		}
 	}
+	
+	private class SaveDageInfoHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
 
 	private class SaveRejseafregningsHandler implements ClickHandler
 	{
@@ -452,6 +462,7 @@ public class Controller {
 
 				@Override
 				public void onSuccess(List<DageInfoDTO> result) {
+					dageInfoPage.reset();
 					for(DageInfoDTO dag : result) {
 						dageInfoPage.addData(dag);
 					}
@@ -640,8 +651,9 @@ public class Controller {
 	{
 		@Override
 		public void onClick(ClickEvent event) {
-			//TODO
-			
+			mainView.showContentWidget(loginPage);
+			mainView.showNavWidget(emptyNavView);
+			mainView.showTopWidget(emptyTopView);
 		}
 	}
 
