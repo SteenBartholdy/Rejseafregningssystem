@@ -67,11 +67,11 @@ public class UdgifterDAO extends RemoteServiceServlet implements UdgifterService
 			{
 				//Tilføjer udgiften til listen
 				list.add(new UdgifterDTO(
-						resultSet.getInt("BilagsNummer"),
+						resultSet.getString("BilagsNummer"),
 						resultSet.getInt("Nummer"),
 						resultSet.getString("UdgiftType"),
 						resultSet.getString("UdgiftDato"),
-						resultSet.getInt("UdgiftBeleob")						
+						resultSet.getString("UdgiftBeleob")						
 						));
 			}
 
@@ -93,11 +93,11 @@ public class UdgifterDAO extends RemoteServiceServlet implements UdgifterService
 	public void updateUdgifter(UdgifterDTO udgift) throws Exception 
 	{
 		try {
-			updateUdgifterStmt.setInt(1, udgift.getBilagsNummer());
+			updateUdgifterStmt.setString(1, udgift.getBilagsNummer());
 			updateUdgifterStmt.setInt(2, udgift.getNummer());
 			updateUdgifterStmt.setString(3, udgift.getUdgiftType());
 			updateUdgifterStmt.setString(4, udgift.getUdgiftDato());
-			updateUdgifterStmt.setInt(5, udgift.getUdgiftBeloeb());
+			updateUdgifterStmt.setString(5, udgift.getUdgiftBeloeb());
 
 			updateUdgifterStmt.executeUpdate();
 		} 
@@ -110,11 +110,11 @@ public class UdgifterDAO extends RemoteServiceServlet implements UdgifterService
 	public void createUdgifter(UdgifterDTO udgift) throws Exception 
 	{
 		try {
-			createUdgifterStmt.setInt(1, udgift.getBilagsNummer());
+			createUdgifterStmt.setString(1, udgift.getBilagsNummer());
 			createUdgifterStmt.setInt(2, udgift.getNummer());
 			createUdgifterStmt.setString(3, udgift.getUdgiftType());
 			createUdgifterStmt.setString(4, udgift.getUdgiftDato());
-			createUdgifterStmt.setInt(5, udgift.getUdgiftBeloeb());
+			createUdgifterStmt.setString(5, udgift.getUdgiftBeloeb());
 			
 			createUdgifterStmt.executeUpdate();
 		} 
@@ -127,7 +127,7 @@ public class UdgifterDAO extends RemoteServiceServlet implements UdgifterService
 	public void deleteUdgifter(UdgifterDTO udgift) throws Exception 
 	{
 		try {
-			deleteUdgifterStmt.setInt(1, udgift.getBilagsNummer());
+			deleteUdgifterStmt.setString(1, udgift.getBilagsNummer());
 
 			deleteUdgifterStmt.executeUpdate();
 		} 

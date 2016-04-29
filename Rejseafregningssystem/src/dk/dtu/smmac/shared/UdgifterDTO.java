@@ -6,15 +6,15 @@ public class UdgifterDTO implements Serializable {
 
 	private static final long serialVersionUID = 9L;
 
-	private int bilagsNummer;
+	private String bilagsNummer;
 	private int nummer;
 	private String udgiftType;
 	private String udgiftDato;
-	private int udgiftBeloeb;
+	private String udgiftBeloeb;
 	
 	public UdgifterDTO() {}
 	
-	public UdgifterDTO(int bilagsNummer, int nummer, String udgiftType, String udgiftDato, int udgiftBeloeb)
+	public UdgifterDTO(String bilagsNummer, int nummer, String udgiftType, String udgiftDato, String udgiftBeloeb)
 	{
 		this.bilagsNummer = bilagsNummer;
 		this.nummer = nummer;
@@ -23,7 +23,7 @@ public class UdgifterDTO implements Serializable {
 		this.udgiftBeloeb = udgiftBeloeb;
 	}
 
-	public int getBilagsNummer() 
+	public String getBilagsNummer() 
 	{
 		return bilagsNummer;
 	}
@@ -43,12 +43,12 @@ public class UdgifterDTO implements Serializable {
 		return udgiftDato;
 	}
 
-	public int getUdgiftBeloeb() 
+	public String getUdgiftBeloeb() 
 	{
 		return udgiftBeloeb;
 	}
 
-	public void setBilagsNummer(int bilagsNummer) 
+	public void setBilagsNummer(String bilagsNummer) 
 	{
 		this.bilagsNummer = bilagsNummer;
 	}
@@ -68,7 +68,7 @@ public class UdgifterDTO implements Serializable {
 		this.udgiftDato = udgiftDato;
 	}
 
-	public void setUdgiftBeloeb(int udgiftBeloeb) 
+	public void setUdgiftBeloeb(String udgiftBeloeb) 
 	{
 		this.udgiftBeloeb = udgiftBeloeb;
 	}
