@@ -5,6 +5,7 @@ import com.google.gwt.cell.client.FieldUpdater;
 //import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
+import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 //import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.ui.Button;
@@ -22,6 +23,7 @@ public class DageInfo extends Composite
 	private VerticalPanel vPanel = new VerticalPanel();
 	private Button btnAnnuller;
 	//private DateTimeFormat dtFmt = DateTimeFormat.getFormat("dd/MM yyyy");
+	private SimplePager pager;
 
 	 private static final ProvidesKey<DageInfoDTO> KEY_PROVIDER = new ProvidesKey<DageInfoDTO>() {
 		    @Override
@@ -181,10 +183,14 @@ public class DageInfo extends Composite
 	      } 
 	    }); 
 	    
+	    pager = new SimplePager();
+	    pager.setDisplay(table);
+	    
 	    table.addColumn(refunderesColumn, "Refunderes:");
 	    
 		vPanel.setStyleName("margin");
 		vPanel.add(table);
+		vPanel.add(pager);
 		vPanel.add(btnAnnuller);
 	}
 
