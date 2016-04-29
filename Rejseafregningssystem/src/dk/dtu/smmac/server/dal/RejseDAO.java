@@ -12,6 +12,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import dk.dtu.smmac.client.service.RejseService;
 import dk.dtu.smmac.shared.RejseDTO;
+import dk.dtu.smmac.shared.RejseafregningerDTO;
 
 public class RejseDAO extends RemoteServiceServlet implements RejseService
 {
@@ -19,6 +20,7 @@ public class RejseDAO extends RemoteServiceServlet implements RejseService
 	private Connection connection = null;
 
 	private PreparedStatement getRejseStmt = null;
+	private PreparedStatement getRejserStmt = null;
 	private PreparedStatement updateRejseStmt = null;
 	private PreparedStatement createRejseStmt = null;
 	private PreparedStatement deleteRejseStmt = null;
@@ -31,6 +33,9 @@ public class RejseDAO extends RemoteServiceServlet implements RejseService
 
 			//Laver query, der henter alle rejser
 			getRejseStmt = connection.prepareStatement("SELECT * FROM Rejse;");
+			
+			//Laver query, der henter alle rejserne fra en rejseafregning
+			getRejserStmt = connection.prepareStatement("SELECT * FROM Rejse WHERE Nummer = ?;");
 
 			//Laver query, der opdaterer en rejse
 			updateRejseStmt = connection.prepareStatement("UPDATE Rejse "
@@ -159,6 +164,35 @@ public class RejseDAO extends RemoteServiceServlet implements RejseService
 		}
 
 		return 0;
+	}
+
+	@Override
+	public List<RejseDTO> getRejser(int nr) throws Exception {
+		List<RejseDTO> list = null;
+		ResultSet resultSet = null;
+		
+		try {
+			getRejserStmt.setInt(1, nr);
+			resultSet = getRejserStmt.executeQuery();
+			list = new ArrayList<RejseDTO>();
+			
+			while(resultSet.next()) {
+				list.add(new RejseDTO(
+						resultSet.getInt("RejseID"),
+						resultSet.getInt("Nummer"),
+						resultSet.getString("Land"),
+						resultSet.getDate("DatoFra"),
+						resultSet.getDate("DatoTil"),
+						resultSet.getString("Projekt"),
+						resultSet.getString("Opgave")
+						));
+			}
+			
+		} catch (SQLException sqlE) {
+			System.out.println(sqlE.getMessage());
+		}
+		
+		return list;
 	}
 	
 }

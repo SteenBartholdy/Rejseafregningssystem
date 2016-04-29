@@ -8,13 +8,16 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
+import com.google.gwt.view.client.SingleSelectionModel;
 
+import dk.dtu.smmac.shared.RejseDTO;
 import dk.dtu.smmac.shared.RejseafregningerDTO;
 
 public class Rejseafregninger extends Composite {
 
 	private VerticalPanel vPanel = new VerticalPanel();
 	private ListDataProvider<RejseafregningerDTO> dataProvider;
+	private final SingleSelectionModel<RejseafregningerDTO> model;
 	
 	public Rejseafregninger() {
 		initWidget(this.vPanel);
@@ -23,6 +26,8 @@ public class Rejseafregninger extends Composite {
 		table.setPageSize(14);
 		SimplePager pager = new SimplePager();
 		pager.setDisplay(table);
+		model = new SingleSelectionModel<RejseafregningerDTO>();
+		table.setSelectionModel(model);
 		
 		TextColumn<RejseafregningerDTO> nummerColumn = new TextColumn<RejseafregningerDTO>() {
 
@@ -64,7 +69,7 @@ public class Rejseafregninger extends Composite {
 			}
 		};
 		
-		TextColumn<RejseafregningerDTO> SlutTidColumn = new TextColumn<RejseafregningerDTO>() {
+		TextColumn<RejseafregningerDTO> slutTidColumn = new TextColumn<RejseafregningerDTO>() {
 
 			@Override
 			public String getValue(RejseafregningerDTO obj) {
@@ -77,7 +82,7 @@ public class Rejseafregninger extends Composite {
 		table.addColumn(datoFraColumn, "Fra dato");
 		table.addColumn(datoTilColumn, "Til dato");
 		table.addColumn(startTidColumn, "Starttid");
-		table.addColumn(SlutTidColumn, "Sluttid");
+		table.addColumn(slutTidColumn, "Sluttid");
 
 		dataProvider = new ListDataProvider<RejseafregningerDTO>();
 		dataProvider.addDataDisplay(table);
@@ -93,6 +98,10 @@ public class Rejseafregninger extends Composite {
 		for (RejseafregningerDTO rejse : rejseList) {
 	    	dataProvider.getList().add(rejse);
 	    }
+	}
+	
+	public SingleSelectionModel<RejseafregningerDTO> getModel() {
+		return this.model;
 	}
 
 }

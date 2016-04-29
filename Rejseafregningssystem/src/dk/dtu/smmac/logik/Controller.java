@@ -222,7 +222,9 @@ public class Controller {
 
 		};
 		
+		//SelectionChangehandler
 		rejseafregningPage.getModel().addSelectionChangeHandler(new RejseClickHandler());
+		rejseafregningerPage.getModel().addSelectionChangeHandler(new RejseafregningerClickHandler());
 
 		//Clickhandler
 		loginTopView.getLoginAnchor().addClickHandler(new ShowLoginHandler());
@@ -353,6 +355,48 @@ public class Controller {
 			rejsePage.setRejse(rejse);
 			projektopgaveService.getOpgave(rejse.getProjekt(), asyncOpgave);
 			mainView.showContentWidget(rejsePage);
+		}
+	}
+	
+	private class RejseafregningerClickHandler implements Handler
+	{
+		@Override
+		public void onSelectionChange(SelectionChangeEvent event) {
+			RejseafregningerDTO rejse = rejseafregningerPage.getModel().getSelectedObject();
+			rejseafregningPage.reset();
+			rejseafregningService.getRejse(rejse.getNr(), oplysningerPage.getAnsat().getID(), new AsyncCallback<RejseafregningDTO>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					System.out.println("An error has occured");
+				}
+
+				@Override
+				public void onSuccess(RejseafregningDTO result) {
+					rejseafregningPage.setRejseafregning(result);
+					rejseService.getRejser(result.getId(), new AsyncCallback<List<RejseDTO>>() {
+
+						@Override
+						public void onFailure(Throwable caught) {
+							System.out.println("An error has occured");
+						}
+
+						@Override
+						public void onSuccess(List<RejseDTO> result) {
+							for(RejseDTO rejse : result) {
+								rejseafregningPage.addTravelSummary(rejse);
+							}
+							rejseafregningPage.setStartDateLabel();
+							rejseafregningPage.setEndDateLabel();
+							mainView.showContentWidget(rejseafregningPage);
+						}
+					});
+					
+					
+				}
+				
+			});
+			
 		}
 	}
 

@@ -14,4 +14,5 @@ public interface RejseService extends RemoteService
 	public void createRejse(RejseDTO rejse) throws Exception;
 	public void deleteRejse(RejseDTO rejse) throws Exception;
 	public int getSize() throws Exception;
+	public List<RejseDTO> getRejser(int nr) throws Exception;
 }

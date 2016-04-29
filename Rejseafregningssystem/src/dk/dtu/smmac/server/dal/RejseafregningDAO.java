@@ -9,9 +9,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import dk.dtu.smmac.client.service.RejseafregningService;
+import dk.dtu.smmac.shared.AnsatDTO;
 import dk.dtu.smmac.shared.RejseafregningDTO;
 import dk.dtu.smmac.shared.RejseafregningerDTO;
 
@@ -24,31 +26,31 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 	private PreparedStatement updateRejsStmt = null;
 	private PreparedStatement createRejsStmt = null;
 	private PreparedStatement getSizeStmt = null;
-	
+
 	public RejseafregningDAO() throws Exception {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(DAO.URL, DAO.USERNAME, DAO.PASSWORD);
-			
+
 			//Laver query, der henter en rejseafregning
 			getRejsStmt = connection.prepareStatement("SELECT * FROM Rejseafregning WHERE Nummer = ? AND Id = ?;");
-			
+
 			//Laver query, der henter alle den ansattes rejseafregninger
 			getRejserStmt = connection.prepareStatement("SELECT * FROM Rejseafregning INNER JOIN Rejse ON Rejseafregning.Nummer=Rejse.Nummer WHERE Rejseafregning.Id = ?;");
-			
+
 			//Laver query, der opdaterer en rejse
 			updateRejsStmt = connection.prepareStatement("UPDATE Rejseafregning "
 					+ "SET Starttid = ?, Sluttid = ? "
 					+ "WHERE Nummer = ? AND Id = ?;");
-			
+
 			//Laver query, der opretter en rejse
 			createRejsStmt = connection.prepareStatement("INSERT INTO Rejseafregning "
 					+ "( Nummer, Id, Starttid, Sluttid ) "
 					+ "VALUES ( ?, ?, ?, ? );");
-			
+
 			//Laver query, der finder størrelsen på tabellen
 			getSizeStmt = connection.prepareStatement("SELECT COUNT(*) FROM Rejseafregning;");
-			
+
 		} catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
 		}
@@ -84,8 +86,27 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 
 	@Override
 	public RejseafregningDTO getRejse(int id, int ansatId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		RejseafregningDTO rejse = null;
+		ResultSet resultSet = null;
+		
+		try {
+			getRejsStmt.setInt(1, id);
+			getRejsStmt.setInt(2, ansatId);
+			resultSet = getRejsStmt.executeQuery();
+			resultSet.next();
+			
+			rejse = new RejseafregningDTO(
+					resultSet.getInt("Nummer"),
+					resultSet.getInt("Id"),
+					resultSet.getInt("Sluttid"),
+					resultSet.getInt("Starttid")
+					);
+			
+		} catch (SQLException sqlE) {
+			System.out.println(sqlE.getMessage());
+		} 
+		
+		return rejse;
 	}
 
 	@Override
@@ -96,12 +117,12 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 		List<Date> datoTil = new ArrayList<Date>();
 		RejseafregningerDTO rejse;
 		ResultSet resultSet = null;
-		
+
 		try {
 			getRejserStmt.setInt(1, ansatId);
 			resultSet = getRejserStmt.executeQuery();
 			list = new ArrayList<RejseafregningerDTO>();
-			
+
 			while(resultSet.next())
 			{
 				rejse = new RejseafregningerDTO(
@@ -113,23 +134,15 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 						resultSet.getDate("Rejse.DatoTil")
 						);
 				
-				if(list.contains(rejse)) {
-					//TODO mangler at opdatere osv.
-				} else {
-					list.add(rejse);
-					lande.clear();
-					lande.add(resultSet.getString("Rejse.Land"));
-					datoFra.clear();
-					datoFra.add(resultSet.getDate("Rejse.DatoFra"));
-					datoTil.clear();
-					datoTil.add(resultSet.getDate("Rejse.DatoTil"));
-				}
+				//TODO skal kun have én rejse pr. rejseafregning
+				//med datoFra og datoTil (rettet fra alle rejserne)
+				//og alle landene i en string
+				list.add(rejse);
 			}
-			
 		} catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
 		}
-		
+
 		return list;
 	}
 
@@ -147,5 +160,5 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 
 		return 0;
 	}
-	
+
 }

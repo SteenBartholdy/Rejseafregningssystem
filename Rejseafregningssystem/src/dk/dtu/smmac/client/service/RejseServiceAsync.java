@@ -11,4 +11,5 @@ public interface RejseServiceAsync
 	void createRejse(RejseDTO rejse, AsyncCallback<Void> callback);
 	void deleteRejse(RejseDTO rejse, AsyncCallback<Void> callback);
 	void getSize(AsyncCallback<Integer> callback);
+	void getRejser(int nr, AsyncCallback<List<RejseDTO>> callback);
 }

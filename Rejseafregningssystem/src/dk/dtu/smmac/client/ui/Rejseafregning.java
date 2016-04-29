@@ -158,11 +158,13 @@ public class Rejseafregning extends Composite {
 		this.startDateLabel.setValue(null);
 		this.endDateLabel.setValue(null);
 
-		List<RejseDTO> list = dataProvider.getList();
-		list.clear();
+		dataProvider.getList().clear();
 	}
 
 	public void setRejseafregning(RejseafregningDTO rejseafregning) {
+		this.startTime.setSelectedIndex(rejseafregning.getSlutTid());
+		this.endTime.setSelectedIndex(rejseafregning.getStartTid());
+		
 		this.rejseafregning = rejseafregning;
 	}
 
