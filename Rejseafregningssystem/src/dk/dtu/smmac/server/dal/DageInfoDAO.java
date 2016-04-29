@@ -37,12 +37,12 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 
 			//Laver query, der opdaterer en rejsedag
 			updateDageInfoStmt = connection.prepareStatement("UPDATE RejseDag "
-					+ "SET Morgenmad = ?, Frokost = ?, Aftensmad = ?, Nattil = ?, RejseAfbrudt = ?, UdokNat = ?, Refunderes = ? Land = ? "
+					+ "SET Morgenmad = ?, Frokost = ?, Aftensmad = ?, Nattilaeg = ?, RejseAfbrudt = ?, UdokNat = ?, Refunderes = ? Land = ? "
 					+ "WHERE Dato = ? AND Nummer = ?;");
 
 			//Laver query, der opretter en rejsedag
 			createDageInfoStmt = connection.prepareStatement("INSERT INTO RejseDag "
-					+ "( Dato, Nummer, Morgenmad, Frokost, Aftensmad, Nattil, RejseAfbrudt, UdokNat, Refunderes, Land) "
+					+ "( Dato, Nummer, Morgenmad, Frokost, Aftensmad, Nattilaeg, RejseAfbrudt, UdokNat, Refunderes, Land) "
 					+ "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );");
 
 			//Laver query, der sletter en rejsedag
@@ -81,9 +81,9 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(fra);
 				
-//				try {
-//					getDageInfo(fra, nummer);
-//				} catch (Exception e) {
+				//try {
+				//	getDageInfo(fra, nummer);
+				//} catch (Exception e) {
 					dag = new DageInfoDTO(
 							fra,
 							nummer,
@@ -98,16 +98,16 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 							);
 					
 					createDageInfo(dag);
-//				}
+				//}
 				
 				list.add(dag);
 				
 				while (cal.getTime().before(til)) {
 				    cal.add(Calendar.DATE, 1);
 				    
-//				    try {
-//						dag = getDageInfo(new java.sql.Date(cal.getTime().getTime()), nummer);
-//					} catch (Exception e) {
+				    //try {
+					//	dag = getDageInfo(new java.sql.Date(cal.getTime().getTime()), nummer);
+					//} catch (Exception e) {
 						dag = new DageInfoDTO(
 					    		new java.sql.Date(cal.getTime().getTime()),
 								nummer,
@@ -122,7 +122,7 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 								);
 						
 						createDageInfo(dag);
-//					}
+					//}
 				    
 				    list.add(dag);
 				}
@@ -237,7 +237,7 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 						resultSet.getBoolean("Morgenmad"),
 						resultSet.getBoolean("Frokost"),
 						resultSet.getBoolean("Aftensmad"),
-						resultSet.getBoolean("Nattill"),
+						resultSet.getBoolean("Nattillaeg"),
 						resultSet.getBoolean("RejseAfbrudt"),
 						resultSet.getBoolean("UdokNat"),
 						resultSet.getBoolean("Refunderes"),
