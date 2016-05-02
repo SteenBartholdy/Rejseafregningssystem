@@ -16,8 +16,6 @@ public class MainPage extends Composite {
 
 	@UiField
 	Button opret;
-	@UiField 
-	Button ikkeAfsluttet;
 	@UiField
 	Button godkendelser;
 	@UiField
@@ -35,14 +33,6 @@ public class MainPage extends Composite {
 
 	public void setOpret(Button opret) {
 		this.opret = opret;
-	}
-
-	public Button getIkkeAfsluttet() {
-		return ikkeAfsluttet;
-	}
-
-	public void setIkkeAfsluttet(Button ikkeAfsluttet) {
-		this.ikkeAfsluttet = ikkeAfsluttet;
 	}
 
 	public Button getGodkendelser() {
