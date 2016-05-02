@@ -779,7 +779,7 @@ public class Controller {
 					
 					for(int i = 0; i < result.size(); i++)
 					{
-						bilagPage.addNewBilag(bilagPage.getFlexTable());
+						bilagPage.addBilagRow(bilagPage.getFlexTable(), result.get(i).getForklaring());
 					}
 				}
 			});
@@ -850,17 +850,15 @@ public class Controller {
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("" + caught);
 				System.out.println("An error has occured");	
 			}
 			
 			@Override
 			public void onSuccess(Integer result) {
-				for(int i = 0; i < bilagPage.getFlexTable().getRowCount(); i++)
+				for(int i = 1; i < bilagPage.getFlexTable().getRowCount(); i++)
 				{
-					BilagDTO bilag = new BilagDTO(result, rejseafregningPage.getRejseafregning().getId() ,bilagPage.getTList().get(i).getText());
+					BilagDTO bilag = new BilagDTO(result+i, rejseafregningPage.getRejseafregning().getId() ,bilagPage.getTList().get(i).getText());
 					bilagService.createBilag(bilag, asyncEmpty);
-					result++;
 				}
 				mainView.showContentWidget(rejsePage);
 			}
