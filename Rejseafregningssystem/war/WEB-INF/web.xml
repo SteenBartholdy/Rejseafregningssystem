@@ -13,7 +13,7 @@
 		<servlet-name>loginservice</servlet-name>
 		<url-pattern>/rejseafregningssystem/loginservice</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>dageinfoservice</servlet-name>
 		<servlet-class>dk.dtu.smmac.server.dal.DageInfoDAO</servlet-class>
@@ -99,7 +99,7 @@
 		<servlet-name>filesystemservice</servlet-name>
 		<url-pattern>/rejseafregningssystem/filesystemservice</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>bilagservice</servlet-name>
 		<servlet-class>dk.dtu.smmac.server.dal.BilagDAO
@@ -109,7 +109,7 @@
 		<servlet-name>bilagservice</servlet-name>
 		<url-pattern>/rejseafregningssystem/bilagservice</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>udgifterservice</servlet-name>
 		<servlet-class>dk.dtu.smmac.server.dal.UdgifterDAO
@@ -119,6 +119,16 @@
 		<servlet-name>udgifterservice</servlet-name>
 		<url-pattern>/rejseafregningssystem/udgifterservice</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>landeservice</servlet-name>
+		<servlet-class>dk.dtu.smmac.server.dal.LandDAO</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>landeservice</servlet-name>
+		<url-pattern>/rejseafregningssystem/landeservice</url-pattern>
+	</servlet-mapping>
+
 
 	<!-- Default page to serve -->
 	<welcome-file-list>
