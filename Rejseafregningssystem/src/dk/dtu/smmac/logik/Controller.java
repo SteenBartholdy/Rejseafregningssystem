@@ -447,7 +447,8 @@ public class Controller {
 		@Override
 		public void onClick(ClickEvent event) {
 			for (DageInfoDTO dag : dageInfoPage.getData()) {
-				//Window.alert(dag.getDageInfoDato().toString() + " - Morgenmad: " + dag.getMorgenmad() + " - Frokost: " + dag.getFrokost());
+				//TODO
+				Window.alert(dag.getDageInfoDato().toString() + " - Morgenmad: " + dag.getMorgenmad() + " - Frokost: " + dag.getFrokost() + " - Aftensmad: " + dag.getAftensmad());
 				dageInfoService.updateDageInfo(dag, asyncEmpty);
 			}
 			mainView.showContentWidget(afslutningPage);
