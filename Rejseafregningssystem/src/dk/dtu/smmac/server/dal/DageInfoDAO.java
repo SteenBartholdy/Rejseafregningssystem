@@ -62,7 +62,7 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 				
 				dag = getDageInfo(fra, nummer);
 				
-				if (dag == null) {
+				if (dag == null || dag.getCountry().equals(resultSet.getString("Land")) == false) {
 					dag = new DageInfoDTO(
 							fra,
 							nummer,
@@ -86,7 +86,7 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 				    
 					dag = getDageInfo(new java.sql.Date(cal.getTime().getTime()), nummer);
 					
-					if (dag == null) {
+					if (dag == null || dag.getCountry().equals(resultSet.getString("Land")) == false) {
 						dag = new DageInfoDTO(
 					    		new java.sql.Date(cal.getTime().getTime()),
 								nummer,

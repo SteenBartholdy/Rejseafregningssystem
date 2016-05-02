@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
 
 import dk.dtu.smmac.shared.UdgifterDTO;
@@ -24,6 +25,7 @@ public class Udgifter extends Composite
 	private VerticalPanel vPanel = new VerticalPanel();
 	private Button btnTilbage, btnNyUdgift;
 	private CellTable<UdgifterDTO> table;
+	private ListDataProvider<UdgifterDTO> dataProvider;
 
 
 	private static final ProvidesKey<UdgifterDTO> KEY_PROVIDER = new ProvidesKey<UdgifterDTO>() {
@@ -44,6 +46,9 @@ public class Udgifter extends Composite
 		table = new CellTable<UdgifterDTO>(KEY_PROVIDER);
 		table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 
+		dataProvider = new ListDataProvider<UdgifterDTO>();
+		dataProvider.addDataDisplay(table);
+		
 		initWidget(this.vPanel);
 
 		btnTilbage = new Button("Tilbage");
@@ -179,4 +184,18 @@ public class Udgifter extends Composite
 		return btnTilbage;
 	}
 
+	public void addUdgiftPost(UdgifterDTO udgift)
+	{
+		dataProvider.getList().add(udgift);
+	}
+	
+	public void reset()
+	{
+		dataProvider.getList().clear();
+	}
+
+	public List<UdgifterDTO> getData()
+	{
+		return dataProvider.getList();
+	}
 }

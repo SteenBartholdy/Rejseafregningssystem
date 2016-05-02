@@ -40,6 +40,8 @@ import dk.dtu.smmac.client.service.RejseService;
 import dk.dtu.smmac.client.service.RejseServiceAsync;
 import dk.dtu.smmac.client.service.RejseafregningService;
 import dk.dtu.smmac.client.service.RejseafregningServiceAsync;
+import dk.dtu.smmac.client.service.UdgifterService;
+import dk.dtu.smmac.client.service.UdgifterServiceAsync;
 import dk.dtu.smmac.client.ui.AfslutningsInfo;
 import dk.dtu.smmac.client.ui.Bilag;
 import dk.dtu.smmac.client.ui.DageInfo;
@@ -109,6 +111,7 @@ public class Controller {
 	private ProjektOpgaveServiceAsync projektopgaveService = GWT.create(ProjektOpgaveService.class);
 	private BilagServiceAsync bilagService = GWT.create(BilagService.class);
 	private DageInfoServiceAsync dageInfoService = GWT.create(DageInfoService.class);
+	private UdgifterServiceAsync udgifterService = GWT.create(UdgifterService.class);
 
 	AsyncCallback<Void> asyncEmpty;
 	AsyncCallback<String> asyncCity;
@@ -500,6 +503,8 @@ public class Controller {
 		@Override
 		public void onClick(ClickEvent event) 
 		{
+			//TODO
+			//udgifterService.getUdgifter(callback);
 			mainView.showContentWidget(udgifterPage);	
 		}
 		
