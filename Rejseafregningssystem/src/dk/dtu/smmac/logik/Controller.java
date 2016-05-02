@@ -860,8 +860,12 @@ public class Controller {
 				for(int i = 1; i < bilagPage.getFlexTable().getRowCount(); i++)
 				{
 					BilagDTO bilag = new BilagDTO(result+i, rejseafregningPage.getRejseafregning().getId() ,bilagPage.getTList().get(i).getText());
+					if (bilag.getID() <= result)
+					{
+						bilagService.updateBilag(bilag, asyncEmpty);
+					}
+					else if (bilag.getID() > result)
 					bilagService.createBilag(bilag, asyncEmpty);
-					bilagService.updateBilag(bilag, asyncEmpty);
 				}
 				mainView.showContentWidget(rejsePage);
 			}

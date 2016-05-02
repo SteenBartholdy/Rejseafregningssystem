@@ -102,7 +102,7 @@ public class BilagDAO extends RemoteServiceServlet implements BilagService
 	@Override
 	public int getSize() throws Exception {
 		
-		getSizeStmt = connection.prepareStatement("SELECT COUNT(*) FROM Rejse;");
+		getSizeStmt = connection.prepareStatement("SELECT COUNT(*) FROM Bilag;");
 		ResultSet resultSet = null;
 
 		try {
