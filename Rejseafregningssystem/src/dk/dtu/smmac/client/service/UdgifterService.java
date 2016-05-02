@@ -10,7 +10,7 @@ import dk.dtu.smmac.shared.UdgifterDTO;
 
 public interface UdgifterService extends RemoteService
 {
-	public List<UdgifterDTO> getUdgifter() throws Exception;
+	public List<UdgifterDTO> getUdgifter(int nr) throws Exception;
 	public void updateUdgifter(UdgifterDTO udgift) throws Exception;
 	public void createUdgifter(UdgifterDTO udgift) throws Exception;
 	public void deleteUdgifter(UdgifterDTO udgift) throws Exception;

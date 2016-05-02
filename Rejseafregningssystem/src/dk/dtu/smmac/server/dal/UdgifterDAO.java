@@ -28,9 +28,6 @@ public class UdgifterDAO extends RemoteServiceServlet implements UdgifterService
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(DAO.URL, DAO.USERNAME, DAO.PASSWORD);
 
-			//Laver query, der henter alle udgifter
-			getUdgifterStmt = connection.prepareStatement("SELECT * FROM Udgifter;");
-
 			//Laver query, der opdaterer en udgift
 			updateUdgifterStmt = connection.prepareStatement("UPDATE Udgifter "
 					+ "SET BilagsNummer = ?, UdgiftType = ?, UdgiftDato = ?, UdgiftBeleob = ? "
@@ -54,12 +51,16 @@ public class UdgifterDAO extends RemoteServiceServlet implements UdgifterService
 	
 	
 	@Override
-	public List<UdgifterDTO> getUdgifter() throws Exception 
+	public List<UdgifterDTO> getUdgifter(int nr) throws Exception 
 	{
+		//Laver query, der henter alle udgifter
+		getUdgifterStmt = connection.prepareStatement("SELECT * FROM Udgifter WHERE Nummer = ?;");
+		
 		List<UdgifterDTO> list = null;
 		ResultSet resultSet = null;
 		
 		try {
+			getUdgifterStmt.setInt(1, nr);
 			resultSet = getUdgifterStmt.executeQuery(); 
 			list = new ArrayList<UdgifterDTO>();
 
