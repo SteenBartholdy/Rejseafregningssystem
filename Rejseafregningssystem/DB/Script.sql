@@ -40,4 +40,4 @@ SELECT * FROM Rejseafregning INNER JOIN Rejse ON Rejseafregning.Nummer=Rejse.Num
 SELECT * FROM RejseDag;
 
 SELECT * FROM Bilag;
-DROP TABLE IF EXISTS Bilag;
+

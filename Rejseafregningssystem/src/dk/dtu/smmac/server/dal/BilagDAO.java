@@ -54,7 +54,7 @@ public class BilagDAO extends RemoteServiceServlet implements BilagService
 	@Override
 	public List<BilagDTO> getBilag(int id) throws Exception {
 		
-		getBilagStmt = connection.prepareStatement("SELECT * FROM Bilag Where Id = ?");
+		getBilagStmt = connection.prepareStatement("SELECT * FROM Bilag Where BilagsNo = ?");
 		List<BilagDTO> list = null;
 		ResultSet resultSet = null;
 		
@@ -87,7 +87,7 @@ public class BilagDAO extends RemoteServiceServlet implements BilagService
 	@Override
 	public void deleteBilag(BilagDTO bilag) throws Exception {
 		
-		deleteBilagStmt = connection.prepareStatement("DELETE FROM Bilag WHERE Id = ?;");
+		deleteBilagStmt = connection.prepareStatement("DELETE FROM Bilag WHERE BilagsNo = ?;");
 		
 		try {
 			deleteBilagStmt.setInt(1, bilag.getID());
@@ -119,7 +119,7 @@ public class BilagDAO extends RemoteServiceServlet implements BilagService
 	@Override
 	public void updateBilag(BilagDTO bilag) throws Exception {
 		
-		updateBilagStmt = connection.prepareStatement("UPDATE Bilag SET Id = ?, Nummer = ?, SET Forklaring = ? WHERE Id = ?;");
+		updateBilagStmt = connection.prepareStatement("UPDATE Bilag SET BilagsNo = ?, Nummer = ?, SET Forklaring = ? WHERE Id = ?;");
 		
 		try{
 			updateBilagStmt.setInt(1, bilag.getID());
