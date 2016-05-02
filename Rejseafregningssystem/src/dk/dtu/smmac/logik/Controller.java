@@ -442,7 +442,7 @@ public class Controller {
 		@Override
 		public void onClick(ClickEvent event) {
 			for (DageInfoDTO dag : dageInfoPage.getData()) {
-				System.out.println(dag.getDageInfoDato().toString() + " - Morgenmad: " + dag.getMorgenmad());
+				//Window.alert(dag.getDageInfoDato().toString() + " - Morgenmad: " + dag.getMorgenmad() + " - Frokost: " + dag.getFrokost());
 				dageInfoService.updateDageInfo(dag, asyncEmpty);
 			}
 			// TODO skal ændres til en anden page

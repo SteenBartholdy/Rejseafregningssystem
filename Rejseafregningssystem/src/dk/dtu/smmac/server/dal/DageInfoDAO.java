@@ -7,10 +7,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.ibm.icu.util.Calendar;
 
 import dk.dtu.smmac.client.service.DageInfoService;
 import dk.dtu.smmac.shared.DageInfoDTO;
@@ -62,7 +62,6 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 	@Override
 	public List<DageInfoDTO> getDageInfo(int nummer) throws Exception 
 	{
-		//TODO skal kunne hente og ikke kun create, hvis det eksisterer
 		List<DageInfoDTO> list = null;
 		ResultSet resultSet = null;
 		DageInfoDTO dag = null;
