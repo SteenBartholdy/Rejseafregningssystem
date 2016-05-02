@@ -40,6 +40,7 @@ import dk.dtu.smmac.client.service.RejseService;
 import dk.dtu.smmac.client.service.RejseServiceAsync;
 import dk.dtu.smmac.client.service.RejseafregningService;
 import dk.dtu.smmac.client.service.RejseafregningServiceAsync;
+import dk.dtu.smmac.client.ui.AfslutningsInfo;
 import dk.dtu.smmac.client.ui.Bilag;
 import dk.dtu.smmac.client.ui.DageInfo;
 import dk.dtu.smmac.client.ui.GlemtPassword;
@@ -53,7 +54,6 @@ import dk.dtu.smmac.client.ui.Rejse;
 import dk.dtu.smmac.client.ui.Rejseafregning;
 import dk.dtu.smmac.client.ui.Rejseafregninger;
 import dk.dtu.smmac.client.ui.Udgifter;
-import dk.dtu.smmac.server.dal.RejseafregningDAO;
 import dk.dtu.smmac.shared.AfdelingDTO;
 import dk.dtu.smmac.shared.AnsatDTO;
 import dk.dtu.smmac.shared.BankDTO;
@@ -92,6 +92,8 @@ public class Controller {
 	private Rejseafregninger rejseafregningerPage;
 	
 	private Udgifter udgifterPage;
+	
+	private AfslutningsInfo afslutningPage;
 
 	private HTML emptyView;
 	private HTML emptyTopView;
@@ -143,6 +145,8 @@ public class Controller {
 		rejseafregningerPage = mainView.getRejseafregningerPage();
 		
 		udgifterPage = mainView.getUdgifterPage();
+		
+		afslutningPage = mainView.getAfslutningsInfoPage();
 
 		//Async
 		asyncEmpty = new AsyncCallback<Void>() {
@@ -259,6 +263,7 @@ public class Controller {
 		rejsePage.getSaveButton().addClickHandler(new SaveRejseHandler());
 		rejseafregningPage.getSaveButton().addClickHandler(new SaveRejseafregningsHandler());
 		rejseafregningPage.getAddUdgiftAnchor().addClickHandler(new ShowUdgifterPageHandler());
+		
 
 		//BlurHandler
 		oplysningerPage.getName().addBlurHandler(new UpdateAnsatHandler());
@@ -445,8 +450,7 @@ public class Controller {
 				//Window.alert(dag.getDageInfoDato().toString() + " - Morgenmad: " + dag.getMorgenmad() + " - Frokost: " + dag.getFrokost());
 				dageInfoService.updateDageInfo(dag, asyncEmpty);
 			}
-			// TODO skal ændres til en anden page
-			mainView.showContentWidget(mainPage);
+			mainView.showContentWidget(afslutningPage);
 		}
 		
 	}

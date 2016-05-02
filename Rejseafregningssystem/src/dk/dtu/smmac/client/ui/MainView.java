@@ -46,6 +46,8 @@ public class MainView extends Composite {
 	private Rejseafregninger rejseafregningerPage;
 	
 	private Udgifter udgifterPage;
+	
+	private AfslutningsInfo afslutningPage;
 
 	private HTML emptyView;
 	private HTML emptyTopView;
@@ -75,6 +77,7 @@ public class MainView extends Composite {
 		dageInfoPage = new DageInfo();
 		rejseafregningerPage = new Rejseafregninger();
 		udgifterPage = new Udgifter();
+		afslutningPage = new AfslutningsInfo();
 		
 		//Tilføjer til top bunken
 		topPanel.add(emptyTopView);
@@ -96,6 +99,7 @@ public class MainView extends Composite {
 		contentPanel.add(dageInfoPage);
 		contentPanel.add(rejseafregningerPage);
 		contentPanel.add(udgifterPage);
+		contentPanel.add(afslutningPage);
 		
 		//Load
 		showContentWidget(loginPage);
@@ -192,5 +196,10 @@ public class MainView extends Composite {
 	
 	public Rejseafregninger getRejseafregningerPage() {
 		return rejseafregningerPage;
+	}
+	
+	public AfslutningsInfo getAfslutningsInfoPage()
+	{
+		return afslutningPage;
 	}
 }
