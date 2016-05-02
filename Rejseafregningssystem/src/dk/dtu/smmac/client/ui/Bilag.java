@@ -27,7 +27,7 @@ public class Bilag extends Composite {
 	private final FormPanel form = new FormPanel();
 	private VerticalPanel vPanel = new VerticalPanel();
 	private static FlexTable fTable;
-	private Button delete, cont;
+	private Button cont;
 	private Anchor addBilag;
 	private static List<Button> bList;
 	private static List<HandlerRegistration> hList;
@@ -52,9 +52,6 @@ public class Bilag extends Composite {
 		fList = new ArrayList<FileUpload>();
 		tList = new ArrayList<TextBox>();
 		lList = new ArrayList<Label>();
-		
-		delete = new Button();
-		delete.setText("Slet");
 
 		addBilag = new Anchor();
 		addBilag.setText("Tilføj bilag");
@@ -122,11 +119,6 @@ public class Bilag extends Composite {
 	public static List<TextBox> getTList()
 	{
 		return tList;
-	}
-	
-	public Button getDelete()
-	{
-		return delete;
 	}
 	
 	public Button getCont()

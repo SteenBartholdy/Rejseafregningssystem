@@ -29,18 +29,6 @@ public class BilagDAO extends RemoteServiceServlet implements BilagService
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(DAO.URL, DAO.USERNAME, DAO.PASSWORD);
 
-			//Laver query, der opretter et bilag
-			createBilagStmt = connection.prepareStatement("INSERT INTO Bilag " + "( BilagsNO, Nummer, Forklaring ) " + "VALUES ( ?, ?, ? );");
-
-			//Laver query, der finder et bilag
-			getBilagStmt = connection.prepareStatement("SELECT * FROM Bilag Where Id = ?");
-
-			//Laver query, der sletter et bilag
-			deleteBilagStmt = connection.prepareStatement("DELETE FROM Bilag WHERE Id = ?;");
-			
-			// Får size
-			getSizeStmt = connection.prepareStatement("SELECT COUNT(*) FROM Rejse;");
-
 		} catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
 		}
@@ -48,6 +36,9 @@ public class BilagDAO extends RemoteServiceServlet implements BilagService
 
 	@Override
 	public void createBilag(BilagDTO bilag) throws Exception {
+		
+		createBilagStmt = connection.prepareStatement("INSERT INTO Bilag " + "( BilagsNO, Nummer, Forklaring ) " + "VALUES ( ?, ?, ? );");
+		
 		try {
 			createBilagStmt.setInt(1, bilag.getID());
 			createBilagStmt.setInt(2, bilag.getNr());
@@ -61,6 +52,8 @@ public class BilagDAO extends RemoteServiceServlet implements BilagService
 
 	@Override
 	public List<BilagDTO> getBilag(int id) throws Exception {
+		
+		getBilagStmt = connection.prepareStatement("SELECT * FROM Bilag Where Id = ?");
 		List<BilagDTO> list = null;
 		ResultSet resultSet = null;
 		
@@ -92,6 +85,9 @@ public class BilagDAO extends RemoteServiceServlet implements BilagService
 
 	@Override
 	public void deleteBilag(BilagDTO bilag) throws Exception {
+		
+		deleteBilagStmt = connection.prepareStatement("DELETE FROM Bilag WHERE Id = ?;");
+		
 		try {
 			deleteBilagStmt.setInt(1, bilag.getID());
 
@@ -104,6 +100,8 @@ public class BilagDAO extends RemoteServiceServlet implements BilagService
 
 	@Override
 	public int getSize() throws Exception {
+		
+		getSizeStmt = connection.prepareStatement("SELECT COUNT(*) FROM Rejse;");
 		ResultSet resultSet = null;
 
 		try {

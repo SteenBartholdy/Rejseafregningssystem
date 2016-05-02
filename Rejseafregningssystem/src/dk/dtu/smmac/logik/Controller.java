@@ -257,7 +257,6 @@ public class Controller {
 		glemtPasswordPage.getbtnSendPassword().addClickHandler(new SendPasswordHandler());
 		glemtPasswordPage.getbtnAnnullerPassword().addClickHandler(new ShowLoginHandler());
 		bilagPage.getAddBilag().addClickHandler(new AddBilagHandler());
-		bilagPage.getDelete().addClickHandler(new DeleteBilagHandler());
 		bilagPage.getCont().addClickHandler(new SaveBilagHandler());
 		dageInfoPage.getBtn().addClickHandler(new SaveDageInfoHandler());
 		rejsePage.getSaveButton().addClickHandler(new SaveRejseHandler());
@@ -841,16 +840,6 @@ public class Controller {
 
 	}
 
-	private class DeleteBilagHandler implements ClickHandler
-	{
-
-		@Override
-		public void onClick(ClickEvent event) {
-			bilagPage.deleteNewBilag(bilagPage.getFlexTable());
-			
-		}
-
-	}
 	
 	private class SaveBilagHandler implements ClickHandler
 	{
