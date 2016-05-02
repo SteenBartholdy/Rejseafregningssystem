@@ -42,7 +42,7 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 
 			//Laver query, der opretter en rejsedag
 			createDageInfoStmt = connection.prepareStatement("INSERT INTO RejseDag "
-					+ "( Dato, Nummer, Morgenmad, Frokost, Aftensmad, Nattiaeg, RejseAfbrudt, UdokNat, Refunderes, Land) "
+					+ "( Dato, Nummer, Morgenmad, Frokost, Aftensmad, Nattilaeg, RejseAfbrudt, UdokNat, Refunderes, Land) "
 					+ "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );");
 
 			//Laver query, der sletter en rejsedag
@@ -223,7 +223,6 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 
 			while(resultSet.next())
 			{
-				System.out.println(resultSet.toString());
 				dag = new DageInfoDTO(
 						resultSet.getDate("Dato"),
 						resultSet.getInt("Nummer"),

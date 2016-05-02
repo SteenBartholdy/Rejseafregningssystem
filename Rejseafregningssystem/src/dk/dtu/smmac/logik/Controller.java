@@ -441,8 +441,11 @@ public class Controller {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
-			
+			for (DageInfoDTO dag : dageInfoPage.getData()) {
+				dageInfoService.updateDageInfo(dag, asyncEmpty);
+			}
+			// TODO skal ændres til en anden page
+			mainView.showContentWidget(rejseafregningerPage);
 		}
 		
 	}

@@ -1,5 +1,7 @@
 package dk.dtu.smmac.client.ui;
 
+import java.util.List;
+
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -214,5 +216,9 @@ public class DageInfo extends Composite
 	
 	public void reset() {
 		dataProvider.getList().clear();
+	}
+	
+	public List<DageInfoDTO> getData() {
+		return this.dataProvider.getList();
 	}
 }
