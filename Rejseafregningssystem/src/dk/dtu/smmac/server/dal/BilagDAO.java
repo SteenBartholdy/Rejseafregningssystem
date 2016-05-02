@@ -87,10 +87,10 @@ public class BilagDAO extends RemoteServiceServlet implements BilagService
 	@Override
 	public void deleteBilag(BilagDTO bilag) throws Exception {
 		
-		deleteBilagStmt = connection.prepareStatement("DELETE FROM Bilag WHERE BilagsNo = ?;");
+		deleteBilagStmt = connection.prepareStatement("DELETE FROM Bilag WHERE Nummer = ?;");
 		
 		try {
-			deleteBilagStmt.setInt(1, bilag.getID());
+			deleteBilagStmt.setInt(1, bilag.getNr());
 
 			deleteBilagStmt.executeUpdate();
 		} 
