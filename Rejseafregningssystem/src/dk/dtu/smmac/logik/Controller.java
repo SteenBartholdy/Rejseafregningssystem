@@ -385,7 +385,6 @@ public class Controller {
 		public void onBlur(BlurEvent event) {
 			projektopgaveService.getOpgave(rejsePage.getProject().getValue(rejsePage.getProject().getSelectedIndex()), asyncOpgave); 
 		}
-
 	}
 
 	private class RejseClickHandler implements Handler
@@ -450,7 +449,8 @@ public class Controller {
 
 				@Override
 				public void onFailure(Throwable caught) {
-					System.out.println("An error has occured");	
+					System.out.println("An error has occured");
+					Window.alert(caught.getMessage());
 				}
 
 				@Override
