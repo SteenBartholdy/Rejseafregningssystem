@@ -66,6 +66,7 @@ public class Udgifter extends Composite
 			}
 
 		};
+		
 		table.addColumn(udgiftstyperColumn, "Udgiftstype:");
 
 		udgiftstyperColumn.setFieldUpdater(new FieldUpdater<UdgifterDTO, String>() 

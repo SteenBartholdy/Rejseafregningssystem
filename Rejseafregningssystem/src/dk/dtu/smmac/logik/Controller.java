@@ -269,8 +269,8 @@ public class Controller {
 		rejsePage.getSaveButton().addClickHandler(new SaveRejseHandler());
 		rejseafregningPage.getSaveButton().addClickHandler(new SaveRejseafregningsHandler());
 		rejseafregningPage.getAddUdgiftAnchor().addClickHandler(new ShowUdgifterPageHandler());
-		udgifterPage.getBtnTilbage().addClickHandler(new ShowRejseafregningHandler());
-		
+		udgifterPage.getBtnTilbage().addClickHandler(new saveUdgifterHandler());
+		udgifterPage.getBtnNyUdgift().addClickHandler(new addUdgiftHandler());
 
 		//BlurHandler
 		oplysningerPage.getName().addBlurHandler(new UpdateAnsatHandler());
@@ -398,6 +398,17 @@ public class Controller {
 		}
 	}
 	
+	private class saveUdgifterHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			for (UdgifterDTO udgift : udgifterPage.getData()) {
+				udgifterService.updateUdgifter(udgift, asyncEmpty);
+			}
+			mainView.showContentWidget(rejseafregningPage);
+		}
+	}
+	
 	private class RejseafregningerClickHandler implements Handler
 	{
 		@Override
@@ -514,6 +525,14 @@ public class Controller {
 			rejseafregningPage.getModel().setSelected(rejse, false);
 		}
 	}
+	
+	private class addUdgiftHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			addUdgift();
+		}
+	}
 
 	private class ShowUdgifterPageHandler implements ClickHandler
 	{
@@ -521,7 +540,6 @@ public class Controller {
 		@Override
 		public void onClick(ClickEvent event) 
 		{
-			//TODO
 			udgifterService.getUdgifter(rejseafregningPage.getRejseafregning().getId(), new AsyncCallback<List<UdgifterDTO>>() {
 
 				@Override
@@ -532,21 +550,8 @@ public class Controller {
 				@Override
 				public void onSuccess(List<UdgifterDTO> result) {
 					udgifterPage.reset();
-					if (result == null) {
-						udgifterService.getSize(new AsyncCallback<Integer>() {
-
-							@Override
-							public void onFailure(Throwable caught) {
-								System.out.println("An error has occured");
-							}
-
-							@Override
-							public void onSuccess(Integer result) {
-								UdgifterDTO udgift = new UdgifterDTO(result+1, rejseafregningPage.getRejseafregning().getId());
-								udgifterService.createUdgifter(udgift, asyncEmpty);
-								udgifterPage.addUdgiftPost(udgift);
-							}
-						});
+					if (result.isEmpty()) {
+						addUdgift();
 					} else {
 						for (UdgifterDTO udgift : result) {
 							udgifterPage.addUdgiftPost(udgift);
@@ -961,6 +966,23 @@ public class Controller {
 			public void onSuccess(BankDTO result) {
 				oplysningerPage.setRegNo(""+result.getRegNo());
 				oplysningerPage.setKontoNo(""+result.getKontoNo());
+			}
+		});
+	}
+	
+	public void addUdgift() {
+		udgifterService.getSize(new AsyncCallback<Integer>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("An error has occured");
+			}
+
+			@Override
+			public void onSuccess(Integer result) {
+				UdgifterDTO udgift = new UdgifterDTO(result+1, rejseafregningPage.getRejseafregning().getId());
+				udgifterService.createUdgifter(udgift, asyncEmpty);
+				udgifterPage.addUdgiftPost(udgift);
 			}
 		});
 	}

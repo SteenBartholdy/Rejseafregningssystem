@@ -31,9 +31,6 @@ public class AnsatteDAO extends RemoteServiceServlet implements AnsatteService {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(DAO.URL, DAO.USERNAME, DAO.PASSWORD);
 
-			//Laver query, der henter all ansatte
-			getAnsatteStmt = connection.prepareStatement("SELECT * FROM Ansatte;");
-
 			//Laver query, der opdaterer en ansat
 			updateAnsatStmt = connection.prepareStatement("UPDATE Ansatte "
 					+ "SET Postnummer = ?, Telefon = ?, Fornavn = ?, Efternavn = ?, Afdeling = ?, Vejnavn = ?, Husnr = ?, Etage = ?, Doer = ?, Email = ?, Anviser = ?, Godkender = ? "
@@ -63,6 +60,9 @@ public class AnsatteDAO extends RemoteServiceServlet implements AnsatteService {
 
 	@Override
 	public List<AnsatDTO> getAnsatte() throws Exception {
+		//Laver query, der henter all ansatte
+		getAnsatteStmt = connection.prepareStatement("SELECT * FROM Ansatte;");
+		
 		List<AnsatDTO> list = null;
 		ResultSet resultSet = null;
 

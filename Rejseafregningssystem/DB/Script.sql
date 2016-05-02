@@ -48,3 +48,4 @@ SELECT * FROM Bilag;
 
 SELECT * FROM Lande;
 
+SELECT * FROM Udgifter;

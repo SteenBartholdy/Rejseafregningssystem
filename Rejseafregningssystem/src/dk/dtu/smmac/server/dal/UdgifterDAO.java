@@ -27,23 +27,6 @@ public class UdgifterDAO extends RemoteServiceServlet implements UdgifterService
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(DAO.URL, DAO.USERNAME, DAO.PASSWORD);
-
-			//Laver query, der opdaterer en udgift
-			updateUdgifterStmt = connection.prepareStatement("UPDATE Udgifter "
-					+ "SET BilagsNummer = ?, UdgiftType = ?, UdgiftDato = ?, UdgiftBeleob = ? "
-					+ "WHERE Id = ? AND Nummer = ?;");
-
-			//Laver query, der opretter en udgift
-			createUdgifterStmt = connection.prepareStatement("INSERT INTO Udgift "
-					+ "( Id, BilagsNummer, Nummer, UdgiftType, UdgiftDato, UdgiftBeleob ) "
-					+ "VALUES ( ?, ?, ?, ?, ?, ? );");
-
-			//Laver query, der sletter en udgift
-			deleteUdgifterStmt = connection.prepareStatement("DELETE FROM Udgifter WHERE Nummer = ? AND Id = ? ");
-
-			//Laver query, der finder størrelsen på tabellen
-			getSizeStmt = connection.prepareStatement("SELECT COUNT(*) FROM Udgifter;" );
-
 		} catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
 		}
@@ -71,9 +54,9 @@ public class UdgifterDAO extends RemoteServiceServlet implements UdgifterService
 						resultSet.getInt("Id"),
 						resultSet.getString("BilagsNummer"),
 						resultSet.getInt("Nummer"),
-						resultSet.getString("UdgiftType"),
-						resultSet.getString("UdgiftDato"),
-						resultSet.getString("UdgiftBeleob")						
+						resultSet.getString("UdgiftsType"),
+						resultSet.getString("Dato"),
+						resultSet.getString("Beloeb")						
 						));
 			}
 
@@ -94,13 +77,18 @@ public class UdgifterDAO extends RemoteServiceServlet implements UdgifterService
 	@Override
 	public void updateUdgifter(UdgifterDTO udgift) throws Exception 
 	{
+		//Laver query, der opdaterer en udgift
+		updateUdgifterStmt = connection.prepareStatement("UPDATE Udgifter "
+				+ "SET BilagsNummer = ?, UdgiftsType = ?, Dato = ?, Beloeb = ? "
+				+ "WHERE Id = ? AND Nummer = ?;");
+		
 		try {
 			updateUdgifterStmt.setString(1, udgift.getBilagsNummer());
-			updateUdgifterStmt.setInt(2, udgift.getNummer());
-			updateUdgifterStmt.setString(3, udgift.getUdgiftType());
-			updateUdgifterStmt.setString(4, udgift.getUdgiftDato());
+			updateUdgifterStmt.setString(2, udgift.getUdgiftType());
+			updateUdgifterStmt.setString(3, udgift.getUdgiftDato());
+			updateUdgifterStmt.setString(4, udgift.getUdgiftBeloeb());
 			updateUdgifterStmt.setInt(5, udgift.getId());
-			updateUdgifterStmt.setString(6, udgift.getUdgiftBeloeb());
+			updateUdgifterStmt.setInt(6, udgift.getNummer());
 
 			updateUdgifterStmt.executeUpdate();
 		} 
@@ -112,6 +100,11 @@ public class UdgifterDAO extends RemoteServiceServlet implements UdgifterService
 	@Override
 	public void createUdgifter(UdgifterDTO udgift) throws Exception 
 	{
+		//Laver query, der opretter en udgift
+		createUdgifterStmt = connection.prepareStatement("INSERT INTO Udgifter "
+				+ "( Id, BilagsNummer, Nummer, UdgiftsType, Dato, Beloeb ) "
+				+ "VALUES ( ?, ?, ?, ?, ?, ? );");
+		
 		try {
 			createUdgifterStmt.setInt(1, udgift.getId());
 			createUdgifterStmt.setString(2, udgift.getBilagsNummer());
@@ -130,6 +123,9 @@ public class UdgifterDAO extends RemoteServiceServlet implements UdgifterService
 	@Override
 	public void deleteUdgifter(UdgifterDTO udgift) throws Exception 
 	{
+		//Laver query, der sletter en udgift
+		deleteUdgifterStmt = connection.prepareStatement("DELETE FROM Udgifter WHERE Nummer = ? AND Id = ? ");
+		
 		try {
 			deleteUdgifterStmt.setInt(1, udgift.getNummer());
 			deleteUdgifterStmt.setInt(2, udgift.getId());
@@ -144,6 +140,9 @@ public class UdgifterDAO extends RemoteServiceServlet implements UdgifterService
 	@Override
 	public int getSize() throws Exception 
 	{
+		//Laver query, der finder størrelsen på tabellen
+		getSizeStmt = connection.prepareStatement("SELECT COUNT(*) FROM Udgifter;" );
+		
 		ResultSet resultSet = null;
 
 		try {
