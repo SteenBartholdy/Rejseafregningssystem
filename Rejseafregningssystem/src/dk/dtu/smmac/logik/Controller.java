@@ -262,6 +262,7 @@ public class Controller {
 		rejsePage.getSaveButton().addClickHandler(new SaveRejseHandler());
 		rejseafregningPage.getSaveButton().addClickHandler(new SaveRejseafregningsHandler());
 		rejseafregningPage.getAddUdgiftAnchor().addClickHandler(new ShowUdgifterPageHandler());
+		udgifterPage.getBtnTilbage().addClickHandler(new ShowRejseafregningHandler());
 		
 
 		//BlurHandler
