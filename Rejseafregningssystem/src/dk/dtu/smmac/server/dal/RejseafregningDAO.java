@@ -31,26 +31,6 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(DAO.URL, DAO.USERNAME, DAO.PASSWORD);
-
-			//Laver query, der henter en rejseafregning
-			getRejsStmt = connection.prepareStatement("SELECT * FROM Rejseafregning WHERE Nummer = ? AND Id = ?;");
-
-			//Laver query, der henter alle den ansattes rejseafregninger
-			getRejserStmt = connection.prepareStatement("SELECT * FROM Rejseafregning INNER JOIN Rejse ON Rejseafregning.Nummer=Rejse.Nummer WHERE Rejseafregning.Id = ?;");
-
-			//Laver query, der opdaterer en rejse
-			updateRejsStmt = connection.prepareStatement("UPDATE Rejseafregning "
-					+ "SET Starttid = ?, Sluttid = ? "
-					+ "WHERE Nummer = ? AND Id = ?;");
-
-			//Laver query, der opretter en rejse
-			createRejsStmt = connection.prepareStatement("INSERT INTO Rejseafregning "
-					+ "( Nummer, Id, Starttid, Sluttid ) "
-					+ "VALUES ( ?, ?, ?, ? );");
-
-			//Laver query, der finder størrelsen på tabellen
-			getSizeStmt = connection.prepareStatement("SELECT COUNT(*) FROM Rejseafregning;");
-
 		} catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
 		}
@@ -58,6 +38,11 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 
 	@Override
 	public void updateRejse(RejseafregningDTO rejse) throws Exception {
+		//Laver query, der opdaterer en rejse
+		updateRejsStmt = connection.prepareStatement("UPDATE Rejseafregning "
+				+ "SET Starttid = ?, Sluttid = ? "
+				+ "WHERE Nummer = ? AND Id = ?;");
+		
 		try {
 			updateRejsStmt.setInt(1, rejse.getStartTid());
 			updateRejsStmt.setInt(2, rejse.getSlutTid());
@@ -72,6 +57,11 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 
 	@Override
 	public void createRejse(RejseafregningDTO rejse) throws Exception {
+		//Laver query, der opretter en rejse
+		createRejsStmt = connection.prepareStatement("INSERT INTO Rejseafregning "
+				+ "( Nummer, Id, Starttid, Sluttid ) "
+				+ "VALUES ( ?, ?, ?, ? );");
+		
 		try {
 			createRejsStmt.setInt(1, rejse.getId());
 			createRejsStmt.setInt(2, rejse.getAnsatId());
@@ -86,6 +76,9 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 
 	@Override
 	public RejseafregningDTO getRejse(int id, int ansatId) throws Exception {
+		//Laver query, der henter en rejseafregning
+		getRejsStmt = connection.prepareStatement("SELECT * FROM Rejseafregning WHERE Nummer = ? AND Id = ?;");
+		
 		RejseafregningDTO rejse = null;
 		ResultSet resultSet = null;
 		
@@ -111,17 +104,23 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 
 	@Override
 	public List<RejseafregningerDTO> getRejser(int ansatId) throws Exception {
+		//Laver query, der henter alle den ansattes rejseafregninger
+		getRejserStmt = connection.prepareStatement("SELECT * FROM Rejseafregning INNER JOIN Rejse ON Rejseafregning.Nummer=Rejse.Nummer WHERE Rejseafregning.Id = ?;");
+		
 		List<RejseafregningerDTO> list = null;
 		List<String> lande = new ArrayList<String>();
 		List<Date> datoFra = new ArrayList<Date>();
 		List<Date> datoTil = new ArrayList<Date>();
 		RejseafregningerDTO rejse;
 		ResultSet resultSet = null;
+		List<RejseafregningerDTO> listen = null;
+		int nr = 0;
 
 		try {
 			getRejserStmt.setInt(1, ansatId);
 			resultSet = getRejserStmt.executeQuery();
 			list = new ArrayList<RejseafregningerDTO>();
+			listen = new ArrayList<RejseafregningerDTO>();
 
 			while(resultSet.next())
 			{
@@ -134,20 +133,41 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 						resultSet.getDate("Rejse.DatoTil")
 						);
 				
-				//TODO skal kun have én rejse pr. rejseafregning
-				//med datoFra og datoTil (rettet fra alle rejserne)
-				//og alle landene i en string
 				list.add(rejse);
 			}
+			
+			for (RejseafregningerDTO rejsen : list) {
+				if (rejsen.getNr() == nr) {
+					for (RejseafregningerDTO rejs : listen) {
+						if (rejs.getNr() == nr) {
+							rejs.setLand(rejs.getLand() + ", " + rejsen.getLand());
+							if (rejs.getDatoFra().compareTo(rejsen.getDatoFra()) > 0) {
+								rejs.setDatoFra(rejsen.getDatoFra());
+							}
+							if (rejs.getDatoTil().compareTo(rejsen.getDatoTil()) < 0) {
+								rejs.setDatoTil(rejsen.getDatoTil());
+							}
+						}
+					}
+				} else {
+					listen.add(rejsen);
+				}
+				
+				nr = rejsen.getNr();
+			}
+			
 		} catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
 		}
 
-		return list;
+		return listen;
 	}
 
 	@Override
 	public int getSize() throws Exception {
+		//Laver query, der finder størrelsen på tabellen
+		getSizeStmt = connection.prepareStatement("SELECT COUNT(*) FROM Rejseafregning;");
+		
 		ResultSet resultSet = null;
 
 		try {

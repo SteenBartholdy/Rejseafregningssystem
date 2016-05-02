@@ -2,6 +2,7 @@ package dk.dtu.smmac.client.ui;
 
 import java.util.List;
 
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.SimplePager;
@@ -18,6 +19,7 @@ public class Rejseafregninger extends Composite {
 	private VerticalPanel vPanel = new VerticalPanel();
 	private ListDataProvider<RejseafregningerDTO> dataProvider;
 	private final SingleSelectionModel<RejseafregningerDTO> model;
+	private DateTimeFormat dtFmt = DateTimeFormat.getFormat("dd/MM yyyy");
 	
 	public Rejseafregninger() {
 		initWidget(this.vPanel);
@@ -49,7 +51,7 @@ public class Rejseafregninger extends Composite {
 
 			@Override
 			public String getValue(RejseafregningerDTO obj) {
-				return ""+obj.getDatoFra();
+				return dtFmt.format(obj.getDatoFra());
 			}
 		};
 		
@@ -57,7 +59,7 @@ public class Rejseafregninger extends Composite {
 
 			@Override
 			public String getValue(RejseafregningerDTO obj) {
-				return ""+obj.getDatoTil();
+				return dtFmt.format(obj.getDatoTil());
 			}
 		};
 		
