@@ -31,29 +31,6 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(DAO.URL, DAO.USERNAME, DAO.PASSWORD);
-
-			//Laver query, der henter alle rejsedage
-			getDageInfoStmt = connection.prepareStatement("SELECT * FROM RejseDag WHERE Dato = ? AND Nummer = ?;");
-
-			//Laver query, der opdaterer en rejsedag
-			updateDageInfoStmt = connection.prepareStatement("UPDATE RejseDag "
-					+ "SET Morgenmad = ?, Frokost = ?, Aftensmad = ?, Nattilaeg = ?, RejseAfbrudt = ?, UdokNat = ?, Refunderes = ?, Land = ? "
-					+ "WHERE Dato = ? AND Nummer = ?;");
-
-			//Laver query, der opretter en rejsedag
-			createDageInfoStmt = connection.prepareStatement("INSERT INTO RejseDag "
-					+ "( Dato, Nummer, Morgenmad, Frokost, Aftensmad, Nattilaeg, RejseAfbrudt, UdokNat, Refunderes, Land) "
-					+ "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );");
-
-			//Laver query, der sletter en rejsedag
-			deleteDageInfoStmt = connection.prepareStatement("DELETE FROM RejseDag WHERE Dato = ? AND Nummer = ?;");
-
-			//Laver query, der finder størrelsen på tabellen
-			getSizeStmt = connection.prepareStatement("SELECT COUNT(*) FROM RejseDag;");
-
-			//Laver query, der finder alle rejserne
-			getRejseStmt = connection.prepareStatement("SELECT * FROM Rejse WHERE Nummer = ?");
-			
 		} catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
 		}
@@ -62,6 +39,9 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 	@Override
 	public List<DageInfoDTO> getDageInfo(int nummer) throws Exception 
 	{
+		//Laver query, der finder alle rejserne
+		getRejseStmt = connection.prepareStatement("SELECT * FROM Rejse WHERE Nummer = ?");
+		
 		List<DageInfoDTO> list = null;
 		ResultSet resultSet = null;
 		DageInfoDTO dag = null;
@@ -137,6 +117,11 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 	@Override
 	public void updateDageInfo(DageInfoDTO dag) throws Exception 
 	{
+		//Laver query, der opdaterer en rejsedag
+		updateDageInfoStmt = connection.prepareStatement("UPDATE RejseDag "
+				+ "SET Morgenmad = ?, Frokost = ?, Aftensmad = ?, Nattilaeg = ?, RejseAfbrudt = ?, UdokNat = ?, Refunderes = ?, Land = ? "
+				+ "WHERE Dato = ? AND Nummer = ?;");
+		
 		try {
 			updateDageInfoStmt.setBoolean(1, dag.getMorgenmad());
 			updateDageInfoStmt.setBoolean(2, dag.getFrokost());
@@ -160,6 +145,11 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 	@Override
 	public void createDageInfo(DageInfoDTO dag) throws Exception 
 	{
+		//Laver query, der opretter en rejsedag
+		createDageInfoStmt = connection.prepareStatement("INSERT INTO RejseDag "
+				+ "( Dato, Nummer, Morgenmad, Frokost, Aftensmad, Nattilaeg, RejseAfbrudt, UdokNat, Refunderes, Land) "
+				+ "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );");
+		
 		try {
 			createDageInfoStmt.setDate(1, dag.getDageInfoDato());
 			createDageInfoStmt.setInt(2, dag.getNummer());
@@ -183,6 +173,9 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 	@Override
 	public void deleteDageInfo(DageInfoDTO dag) throws Exception 
 	{
+		//Laver query, der sletter en rejsedag
+		deleteDageInfoStmt = connection.prepareStatement("DELETE FROM RejseDag WHERE Dato = ? AND Nummer = ?;");
+		
 		try {
 			deleteDageInfoStmt.setDate(1, dag.getDageInfoDato());
 
@@ -197,6 +190,9 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 	@Override
 	public int getSize() throws Exception 
 	{
+		//Laver query, der finder størrelsen på tabellen
+		getSizeStmt = connection.prepareStatement("SELECT COUNT(*) FROM RejseDag;");
+		
 		ResultSet resultSet = null;
 
 		try {
@@ -212,6 +208,9 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 
 	@Override
 	public DageInfoDTO getDageInfo(Date dato, int nummer) throws Exception {
+		//Laver query, der henter alle rejsedage
+		getDageInfoStmt = connection.prepareStatement("SELECT * FROM RejseDag WHERE Dato = ? AND Nummer = ?;");
+		
 		DageInfoDTO dag = null;
 		ResultSet resultSet = null;
 		
