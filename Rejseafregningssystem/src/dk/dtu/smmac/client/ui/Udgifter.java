@@ -22,17 +22,16 @@ import dk.dtu.smmac.shared.UdgifterDTO;
 public class Udgifter extends Composite
 {
 	private VerticalPanel vPanel = new VerticalPanel();
-	private HorizontalPanel hPanel = new HorizontalPanel();
-	private Button btnTilbage;
+	private Button btnTilbage, btnNyUdgift;
 	private CellTable<UdgifterDTO> table;
-	//List<String> udgiftstyper = new ArrayList<String>();
 
-	 private static final ProvidesKey<UdgifterDTO> KEY_PROVIDER = new ProvidesKey<UdgifterDTO>() {
-		    @Override
-		    public Object getKey(UdgifterDTO udgift) {
-		      return udgift.getBilagsNummer();
-		    }
-		  };
+
+	private static final ProvidesKey<UdgifterDTO> KEY_PROVIDER = new ProvidesKey<UdgifterDTO>() {
+		@Override
+		public Object getKey(UdgifterDTO udgift) {
+			return udgift.getBilagsNummer();
+		}
+	};
 
 	public Udgifter()
 	{
@@ -41,14 +40,15 @@ public class Udgifter extends Composite
 		udgiftstyper.add("Forplejning");
 		udgiftstyper.add("Beklædning");
 		udgiftstyper.add("Andet");
-		
+
 		table = new CellTable<UdgifterDTO>(KEY_PROVIDER);
 		table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
-		
+
 		initWidget(this.vPanel);
-		
+
 		btnTilbage = new Button("Tilbage");
-		
+		btnNyUdgift = new Button("Tilføj ny udgift");
+
 		// **** Add column that shows "Udgiftstype" ****
 
 		final SelectionCell udgiftstyperCell = new SelectionCell(udgiftstyper);
@@ -59,165 +59,124 @@ public class Udgifter extends Composite
 			{
 				return object.getUdgiftType();
 			}
-			
+
 		};
 		table.addColumn(udgiftstyperColumn, "Udgiftstype:");
-		
+
 		udgiftstyperColumn.setFieldUpdater(new FieldUpdater<UdgifterDTO, String>() 
 		{
 			@Override
 			public void update(int index, UdgifterDTO object, String value) 
 			{		       
-		        object.setUdgiftType(value);
-		        table.redraw();
+				object.setUdgiftType(value);
+				table.redraw();
 			}
-			
+
 		});
-			
+
 		// **** Add a text input column to set "Bilagsnummer" (kilde: "celltable-eksemplet") ****
-		
-	    final TextInputCell bilagsnummerCell = new TextInputCell();
-	    Column<UdgifterDTO, String> bilagsnummerColumn = new Column<UdgifterDTO, String>(bilagsnummerCell) {
-	      @Override
-	      public String getValue(UdgifterDTO object) {
-	        return object.getBilagsNummer();
-	      }
-	    };
-	    table.addColumn(bilagsnummerColumn, "Bilagsnummer:");
 
-	    // **** Add a field updater to be notified when the user enters a "Bilagsnummer" ****
-	    
-	    bilagsnummerColumn.setFieldUpdater(new FieldUpdater<UdgifterDTO, String>() {
-	      @Override
-	      public void update(int index, UdgifterDTO object, String value) {
-	       
-	    	// **** Validate the data ****
+		final TextInputCell bilagsnummerCell = new TextInputCell();
+		Column<UdgifterDTO, String> bilagsnummerColumn = new Column<UdgifterDTO, String>(bilagsnummerCell) {
+			@Override
+			public String getValue(UdgifterDTO object) {
+				return object.getBilagsNummer();
+			}
+		};
+		table.addColumn(bilagsnummerColumn, "Bilagsnummer:");
 
-	    	if(!dk.dtu.smmac.shared.FieldVerifier.isValidTal(value)){
-	    		Window.alert("Indtast venligst et nummer.");
-	    		
+		// **** Add a field updater to be notified when the user enters a "Bilagsnummer" ****
 
-	          /*
-	           * Clear the view data. The view data contains the pending change and
-	           * allows the table to render with the pending value until the data is
-	           * committed. If the data is committed into the object, the view data
-	           * is automatically cleared out. If the data is not committed because
-	           * it is invalid, you must delete.
-	           */
-	          bilagsnummerCell.clearViewData(KEY_PROVIDER.getKey(object));
+		bilagsnummerColumn.setFieldUpdater(new FieldUpdater<UdgifterDTO, String>() {
+			@Override
+			public void update(int index, UdgifterDTO object, String value) {
 
-	          // **** Redraw the table. ****
-	          table.redraw();
-	          return;
-	        }
-	 
-	        // **** Push the changes into the Contact. At this point, you could send an ****
-	        // **** asynchronous request to the server to update the database. ****
-	        object.setBilagsNummer(value);
+				// **** Validate the data ****
 
-	        // **** Redraw the table with the new data. ****
-	        table.redraw();
-	      }
-	    });
-		
-	    	// **** Add a text input column to set "Dato" (kilde: "celltable-eksemplet") ****
-		
-	    final TextInputCell datoCell = new TextInputCell();
-	    Column<UdgifterDTO, String> datoColumn = new Column<UdgifterDTO, String>(datoCell) {
-	      @Override
-	      public String getValue(UdgifterDTO object) {
-	        return object.getUdgiftDato();
-	      }
-	    };
-	    table.addColumn(datoColumn, "Dato:");
+				if(!dk.dtu.smmac.shared.FieldVerifier.isValidTal(value))
+				{
+					Window.alert("Indtast venligst et nummer.");
+					bilagsnummerCell.clearViewData(KEY_PROVIDER.getKey(object));
 
-	    // **** Add a field updater to be notified when the user enters a "Dato" ****
-	    
-	    datoColumn.setFieldUpdater(new FieldUpdater<UdgifterDTO, String>() {
-	      @Override
-	      public void update(int index, UdgifterDTO object, String value) {
-	       
-	    	// **** Validate the data ****
+					table.redraw();
+					return;
+				}
 
-//	    	if(!dk.dtu.smmac.shared.FieldVerifier.isValidTal(value)){
-//	    		Window.alert("Indtast venligst et nummer.");
-//	    		
-//
-//	          /*
-//	           * Clear the view data. The view data contains the pending change and
-//	           * allows the table to render with the pending value until the data is
-//	           * committed. If the data is committed into the object, the view data
-//	           * is automatically cleared out. If the data is not committed because
-//	           * it is invalid, you must delete.
-//	           */
-//	          datoCell.clearViewData(KEY_PROVIDER.getKey(object));
-//
-//	          // Redraw the table.
-//	          table.redraw();
-//	          return;
-//	        }
+				object.setBilagsNummer(value);
+				table.redraw();
+			}
+		});
 
-	        // **** Push the changes into the Contact. At this point, you could send an ****
-	        // **** asynchronous request to the server to update the database. ****
-	    	  
-	        object.setUdgiftDato(value);
+		// **** Add a text input column to set "Dato" (kilde: "celltable-eksemplet") ****
 
-	        // **** Redraw the table with the new data. ****
-	        table.redraw();
-	      }
-	    });
-		
-	    	// **** Add a text input column to set "Beløb" (kilde: "celltable-eksemplet") ****
-		
-	    final TextInputCell beloebCell = new TextInputCell();
-	    Column<UdgifterDTO, String> beloebColumn = new Column<UdgifterDTO, String>(beloebCell) {
-	      @Override
-	      public String getValue(UdgifterDTO object) {
-	        return "" + object.getUdgiftBeloeb();
-	      }
-	    };
-	    table.addColumn(beloebColumn, "Beløb:");
+		final TextInputCell datoCell = new TextInputCell();
+		Column<UdgifterDTO, String> datoColumn = new Column<UdgifterDTO, String>(datoCell) {
+			@Override
+			public String getValue(UdgifterDTO object) {
+				return object.getUdgiftDato();
+			}
+		};
+		table.addColumn(datoColumn, "Dato:");
 
-	    // **** Add a field updater to be notified when the user enters a "Beløb" ****
-	    
-	    beloebColumn.setFieldUpdater(new FieldUpdater<UdgifterDTO, String>() {
-	      @Override
-	      public void update(int index, UdgifterDTO object, String value) {
-	       
-	    	// **** Validate the data ****
+		// **** Add a field updater to be notified when the user enters a "Dato" ****
 
-	    	if(!dk.dtu.smmac.shared.FieldVerifier.isValidTal(value)){
-	    		Window.alert("Indtast venligst et korrekt beløb.");
-	    		
+		datoColumn.setFieldUpdater(new FieldUpdater<UdgifterDTO, String>() {
+			@Override
+			public void update(int index, UdgifterDTO object, String value) {
 
-	          /*
-	           * Clear the view data. The view data contains the pending change and
-	           * allows the table to render with the pending value until the data is
-	           * committed. If the data is committed into the object, the view data
-	           * is automatically cleared out. If the data is not committed because
-	           * it is invalid, you must delete.
-	           */
-	          beloebCell.clearViewData(KEY_PROVIDER.getKey(object));
+				object.setUdgiftDato(value);
+				table.redraw();
+			}
+		});
 
-	          // **** Redraw the table. ****
-	          table.redraw();
-	          return;
-	        }
+		// **** Add a text input column to set "Beløb" (kilde: "celltable-eksemplet") ****
 
-	        // **** Push the changes into the Contact. At this point, you could send an ****
-	        // **** asynchronous request to the server to update the database. ****
-	        object.setUdgiftBeloeb(value);
+		final TextInputCell beloebCell = new TextInputCell();
+		Column<UdgifterDTO, String> beloebColumn = new Column<UdgifterDTO, String>(beloebCell) {
+			@Override
+			public String getValue(UdgifterDTO object) {
+				return "" + object.getUdgiftBeloeb();
+			}
+		};
+		table.addColumn(beloebColumn, "Beløb:");
 
-	        // **** Redraw the table with the new data. ****
-	        table.redraw();
-	      }
-	    });
-	
-	    vPanel.setStyleName("margin");
-	    hPanel.setStyleName("margin");
-	    vPanel.add(table);
-	    vPanel.add(hPanel);
-	    hPanel.add(btnTilbage);
-	    
+		// **** Add a field updater to be notified when the user enters a "Beløb" ****
+
+		beloebColumn.setFieldUpdater(new FieldUpdater<UdgifterDTO, String>() {
+			@Override
+			public void update(int index, UdgifterDTO object, String value) {
+
+				// **** Validate the data ****
+
+				if(!dk.dtu.smmac.shared.FieldVerifier.isValidTal(value))
+				{
+					Window.alert("Indtast venligst et korrekt beløb.");
+					beloebCell.clearViewData(KEY_PROVIDER.getKey(object));
+					table.redraw();
+					return;
+				}
+
+				object.setUdgiftBeloeb(value);
+				table.redraw();
+			}
+		});
+
+		vPanel.setStyleName("margin");
+		vPanel.add(table);
+		vPanel.add(btnNyUdgift);
+		btnNyUdgift.setStyleName("marginTop");
+		vPanel.add(btnTilbage);
+		btnTilbage.setStyleName("marginTop");
 	}
+
+	public Button getBtnNyUdgift()
+	{
+		return btnNyUdgift;
+	}
+
+	public Button getBtnTilbage()
+	{
+		return btnTilbage;
+	}
+
 }
