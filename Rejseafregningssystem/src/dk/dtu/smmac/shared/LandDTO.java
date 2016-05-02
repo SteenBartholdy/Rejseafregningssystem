@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class LandDTO implements Serializable {
 	
-	private static final long serialVersionUID = 21L;
+	private static final long serialVersionUID = 30L;
 	private String land;
 	private int takst;
 	

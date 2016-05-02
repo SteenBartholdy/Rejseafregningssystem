@@ -27,6 +27,11 @@ INSERT INTO Opgave ( Opgave, Projekt ) VALUES ( 'Driftsudgifter', 'PROTEUS' );
 
 INSERT INTO Ansatte ( Id, Fornavn, Efternavn, Email, Anviser, Godkender ) VALUES ( 0, 'Peter', 'Larsen', 'peter@larsen.dk', -1, -1 );
 
+INSERT INTO Lande ( Land, Takst ) VALUES ( 'Danmark', 404 );
+INSERT INTO Lande ( Land, Takst ) VALUES ( 'Sverige', 404 );
+INSERT INTO Lande ( Land, Takst ) VALUES ( 'Sydafrika', 259 );
+INSERT INTO Lande ( Land, Takst ) VALUES ( 'Bhutan', 196 );
+
 SELECT * FROM Ansatte;
 
 SELECT * FROM Rejseafregning;
@@ -40,4 +45,6 @@ SELECT * FROM Rejseafregning INNER JOIN Rejse ON Rejseafregning.Nummer=Rejse.Num
 SELECT * FROM RejseDag;
 
 SELECT * FROM Bilag;
+
+SELECT * FROM Lande;
 

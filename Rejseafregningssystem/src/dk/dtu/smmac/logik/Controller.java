@@ -32,6 +32,8 @@ import dk.dtu.smmac.client.service.DAWAService;
 import dk.dtu.smmac.client.service.DAWAServiceAsync;
 import dk.dtu.smmac.client.service.DageInfoService;
 import dk.dtu.smmac.client.service.DageInfoServiceAsync;
+import dk.dtu.smmac.client.service.LandeService;
+import dk.dtu.smmac.client.service.LandeServiceAsync;
 import dk.dtu.smmac.client.service.LoginService;
 import dk.dtu.smmac.client.service.LoginServiceAsync;
 import dk.dtu.smmac.client.service.ProjektOpgaveService;
@@ -113,6 +115,7 @@ public class Controller {
 	private BilagServiceAsync bilagService = GWT.create(BilagService.class);
 	private DageInfoServiceAsync dageInfoService = GWT.create(DageInfoService.class);
 	private UdgifterServiceAsync udgifterService = GWT.create(UdgifterService.class);
+	private LandeServiceAsync landeService = GWT.create(LandeService.class);
 
 	AsyncCallback<Void> asyncEmpty;
 	AsyncCallback<String> asyncCity;
@@ -356,6 +359,20 @@ public class Controller {
 				rejsePage.setProjekt(result);
 			}
 
+		});
+		
+		//Land load
+		landeService.getAllLande(new AsyncCallback<List<String>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("An error has occured");
+			}
+
+			@Override
+			public void onSuccess(List<String> result) {
+				rejsePage.setLand(result);
+			}
 		});
 
 		//Rootpanel

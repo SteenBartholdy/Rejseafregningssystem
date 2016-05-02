@@ -47,11 +47,6 @@ public class Rejse extends Composite {
 		dateTo.setPixelSize(80, 15);
 
 		country = new ListBox();
-		List<String> list = new ArrayList<String>();
-		list.add("Danmark");
-		list.add("Sverige");
-		setLand(list);
-
 		project = new ListBox();
 		assignment = new ListBox();
 		

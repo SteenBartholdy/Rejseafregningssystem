@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import dk.dtu.smmac.client.service.LandeService;
@@ -63,7 +64,7 @@ public class LandDAO extends RemoteServiceServlet implements LandeService {
 
 	@Override
 	public List<String> getAllLande() throws Exception {
-		getLandStmt = connection.prepareStatement("SELECT * From Lande;");
+		getAllLandeStmt = connection.prepareStatement("SELECT * FROM Lande;");
 		
 		List<String> land = null;
 		ResultSet resultSet = null;
