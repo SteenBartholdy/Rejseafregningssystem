@@ -516,7 +516,20 @@ public class Controller {
 				public void onSuccess(List<UdgifterDTO> result) {
 					udgifterPage.reset();
 					if (result == null) {
-						udgifterPage.addUdgiftPost(new UdgifterDTO());
+						udgifterService.getSize(new AsyncCallback<Integer>() {
+
+							@Override
+							public void onFailure(Throwable caught) {
+								System.out.println("An error has occured");
+							}
+
+							@Override
+							public void onSuccess(Integer result) {
+								UdgifterDTO udgift = new UdgifterDTO(result+1, rejseafregningPage.getRejseafregning().getId());
+								udgifterService.createUdgifter(udgift, asyncEmpty);
+								udgifterPage.addUdgiftPost(udgift);
+							}
+						});
 					} else {
 						for (UdgifterDTO udgift : result) {
 							udgifterPage.addUdgiftPost(udgift);

@@ -31,15 +31,15 @@ public class UdgifterDAO extends RemoteServiceServlet implements UdgifterService
 			//Laver query, der opdaterer en udgift
 			updateUdgifterStmt = connection.prepareStatement("UPDATE Udgifter "
 					+ "SET BilagsNummer = ?, UdgiftType = ?, UdgiftDato = ?, UdgiftBeleob = ? "
-					+ "WHERE Nummer = ?;");
+					+ "WHERE Id = ? AND Nummer = ?;");
 
 			//Laver query, der opretter en udgift
 			createUdgifterStmt = connection.prepareStatement("INSERT INTO Udgift "
-					+ "( BilagsNummer, Nummer, UdgiftType, UdgiftDato, UdgiftBeleob ) "
-					+ "VALUES ( ?, ?, ?, ?, ? );");
+					+ "( Id, BilagsNummer, Nummer, UdgiftType, UdgiftDato, UdgiftBeleob ) "
+					+ "VALUES ( ?, ?, ?, ?, ?, ? );");
 
 			//Laver query, der sletter en udgift
-			deleteUdgifterStmt = connection.prepareStatement("DELETE FROM Udgifter WHERE Nummer = ? ");
+			deleteUdgifterStmt = connection.prepareStatement("DELETE FROM Udgifter WHERE Nummer = ? AND Id = ? ");
 
 			//Laver query, der finder størrelsen på tabellen
 			getSizeStmt = connection.prepareStatement("SELECT COUNT(*) FROM Udgifter;" );
@@ -68,6 +68,7 @@ public class UdgifterDAO extends RemoteServiceServlet implements UdgifterService
 			{
 				//Tilføjer udgiften til listen
 				list.add(new UdgifterDTO(
+						resultSet.getInt("Id"),
 						resultSet.getString("BilagsNummer"),
 						resultSet.getInt("Nummer"),
 						resultSet.getString("UdgiftType"),
@@ -98,7 +99,8 @@ public class UdgifterDAO extends RemoteServiceServlet implements UdgifterService
 			updateUdgifterStmt.setInt(2, udgift.getNummer());
 			updateUdgifterStmt.setString(3, udgift.getUdgiftType());
 			updateUdgifterStmt.setString(4, udgift.getUdgiftDato());
-			updateUdgifterStmt.setString(5, udgift.getUdgiftBeloeb());
+			updateUdgifterStmt.setInt(5, udgift.getId());
+			updateUdgifterStmt.setString(6, udgift.getUdgiftBeloeb());
 
 			updateUdgifterStmt.executeUpdate();
 		} 
@@ -111,11 +113,12 @@ public class UdgifterDAO extends RemoteServiceServlet implements UdgifterService
 	public void createUdgifter(UdgifterDTO udgift) throws Exception 
 	{
 		try {
-			createUdgifterStmt.setString(1, udgift.getBilagsNummer());
-			createUdgifterStmt.setInt(2, udgift.getNummer());
-			createUdgifterStmt.setString(3, udgift.getUdgiftType());
-			createUdgifterStmt.setString(4, udgift.getUdgiftDato());
-			createUdgifterStmt.setString(5, udgift.getUdgiftBeloeb());
+			createUdgifterStmt.setInt(1, udgift.getId());
+			createUdgifterStmt.setString(2, udgift.getBilagsNummer());
+			createUdgifterStmt.setInt(3, udgift.getNummer());
+			createUdgifterStmt.setString(4, udgift.getUdgiftType());
+			createUdgifterStmt.setString(5, udgift.getUdgiftDato());
+			createUdgifterStmt.setString(6, udgift.getUdgiftBeloeb());
 			
 			createUdgifterStmt.executeUpdate();
 		} 
@@ -128,7 +131,8 @@ public class UdgifterDAO extends RemoteServiceServlet implements UdgifterService
 	public void deleteUdgifter(UdgifterDTO udgift) throws Exception 
 	{
 		try {
-			deleteUdgifterStmt.setString(1, udgift.getBilagsNummer());
+			deleteUdgifterStmt.setInt(1, udgift.getNummer());
+			deleteUdgifterStmt.setInt(2, udgift.getId());
 
 			deleteUdgifterStmt.executeUpdate();
 		} 
