@@ -109,6 +109,16 @@
 		<servlet-name>bilagservice</servlet-name>
 		<url-pattern>/rejseafregningssystem/bilagservice</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>udgifterservice</servlet-name>
+		<servlet-class>dk.dtu.smmac.server.dal.UdgifterDAO
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>udgifterservice</servlet-name>
+		<url-pattern>/rejseafregningssystem/udgifterservice</url-pattern>
+	</servlet-mapping>
 
 	<!-- Default page to serve -->
 	<welcome-file-list>
