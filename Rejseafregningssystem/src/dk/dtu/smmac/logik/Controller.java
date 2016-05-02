@@ -850,6 +850,7 @@ public class Controller {
 			
 			@Override
 			public void onFailure(Throwable caught) {
+				Window.alert("" + caught);
 				System.out.println("An error has occured");	
 			}
 			

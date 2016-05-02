@@ -99,6 +99,16 @@
 		<servlet-name>filesystemservice</servlet-name>
 		<url-pattern>/rejseafregningssystem/filesystemservice</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>bilagservice</servlet-name>
+		<servlet-class>dk.dtu.smmac.server.dal.BilagDAO
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>bilagservice</servlet-name>
+		<url-pattern>/rejseafregningssystem/bilagservice</url-pattern>
+	</servlet-mapping>
 
 	<!-- Default page to serve -->
 	<welcome-file-list>
