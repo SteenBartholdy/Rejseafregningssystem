@@ -5,12 +5,10 @@ import java.util.List;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.i18n.client.DateTimeFormat;
-//import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
-//import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -18,8 +16,6 @@ import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
 
 import dk.dtu.smmac.shared.DageInfoDTO;
-
-
 
 public class DageInfo extends Composite 
 {
@@ -39,7 +35,7 @@ public class DageInfo extends Composite
 
 	public DageInfo()
 	{
-		table = new CellTable<DageInfoDTO>();
+		table = new CellTable<DageInfoDTO>(KEY_PROVIDER);
 		table.setPageSize(8);
 
 		dataProvider = new ListDataProvider<DageInfoDTO>();

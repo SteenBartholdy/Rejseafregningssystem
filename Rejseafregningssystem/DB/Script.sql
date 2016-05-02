@@ -37,3 +37,5 @@ SELECT * FROM Rejse;
 
 SELECT * FROM Rejseafregning INNER JOIN Rejse ON Rejseafregning.Nummer=Rejse.Nummer WHERE Rejseafregning.Id = 3;
 
+SELECT * FROM RejseDag;
+

@@ -37,7 +37,7 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 
 			//Laver query, der opdaterer en rejsedag
 			updateDageInfoStmt = connection.prepareStatement("UPDATE RejseDag "
-					+ "SET Morgenmad = ?, Frokost = ?, Aftensmad = ?, Nattilaeg = ?, RejseAfbrudt = ?, UdokNat = ?, Refunderes = ? Land = ? "
+					+ "SET Morgenmad = ?, Frokost = ?, Aftensmad = ?, Nattilaeg = ?, RejseAfbrudt = ?, UdokNat = ?, Refunderes = ?, Land = ? "
 					+ "WHERE Dato = ? AND Nummer = ?;");
 
 			//Laver query, der opretter en rejsedag
