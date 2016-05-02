@@ -1,4 +1,3 @@
-
 SET SESSION FOREIGN_KEY_CHECKS=0;
 
 /* Drop Tables */
@@ -11,6 +10,7 @@ DROP TABLE IF EXISTS Udgifter;
 DROP TABLE IF EXISTS Rejseafregning;
 DROP TABLE IF EXISTS Ansatte;
 DROP TABLE IF EXISTS Afdeling;
+DROP TABLE IF EXISTS Lande;
 DROP TABLE IF EXISTS Opgave;
 DROP TABLE IF EXISTS Projekt;
 
@@ -64,6 +64,14 @@ CREATE TABLE Konto
 );
 
 
+CREATE TABLE Lande
+(
+	Land varchar(50) NOT NULL,
+	Takst int,
+	PRIMARY KEY (Land)
+);
+
+
 CREATE TABLE Opgave
 (
 	Opgave varchar(50) NOT NULL,
@@ -84,11 +92,11 @@ CREATE TABLE Rejse
 (
 	RejseID int NOT NULL AUTO_INCREMENT,
 	Nummer int(10) NOT NULL,
-	Land varchar(100),
 	DatoTil date,
 	DatoFra date,
 	Projekt varchar(50),
 	Opgave varchar(50),
+	Land varchar(50),
 	PRIMARY KEY (RejseID)
 );
 
@@ -113,20 +121,21 @@ CREATE TABLE RejseDag
 	Refunderes tinyint NOT NULL,
 	RejseAfbrudt tinyint NOT NULL,
 	UdokNat tinyint NOT NULL,
-	Land varchar(50),
 	Aftensmad tinyint NOT NULL,
+	Land varchar(50) NOT NULL,
 	PRIMARY KEY (Dato, Nummer)
 );
 
 
 CREATE TABLE Udgifter
 (
-	BilagsNummer int NOT NULL,
+	Id int NOT NULL AUTO_INCREMENT,
 	Nummer int(10) NOT NULL,
+	BilagsNummer varchar(10),
 	Udgiftstype varchar(40),
 	Dato varchar(10),
-	Beloeb int,
-	PRIMARY KEY (BilagsNummer, Nummer)
+	Beloeb varchar(10),
+	PRIMARY KEY (Id, Nummer)
 );
 
 
@@ -152,6 +161,22 @@ ALTER TABLE Konto
 ALTER TABLE Rejseafregning
 	ADD FOREIGN KEY (Id)
 	REFERENCES Ansatte (Id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE Rejse
+	ADD FOREIGN KEY (Land)
+	REFERENCES Lande (Land)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE RejseDag
+	ADD FOREIGN KEY (Land)
+	REFERENCES Lande (Land)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
