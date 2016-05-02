@@ -14,5 +14,6 @@ public interface BilagService extends RemoteService{
 	public List<BilagDTO> getBilag(int id) throws Exception;
 	public void deleteBilag(BilagDTO bilag) throws Exception;
 	public int getSize() throws Exception;
+	public void updateBilag(BilagDTO bilag) throws Exception;
 	
 }

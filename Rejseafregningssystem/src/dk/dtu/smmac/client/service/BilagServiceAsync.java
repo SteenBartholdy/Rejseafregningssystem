@@ -12,5 +12,6 @@ public interface BilagServiceAsync {
 	void deleteBilag(BilagDTO bilag, AsyncCallback<Void> callback);
 	void getBilag(int id, AsyncCallback<List<BilagDTO>> callback);
 	void getSize(AsyncCallback<Integer> callback);
+	void updateBilag(BilagDTO bilag, AsyncCallback<Void> callback);
 
 }

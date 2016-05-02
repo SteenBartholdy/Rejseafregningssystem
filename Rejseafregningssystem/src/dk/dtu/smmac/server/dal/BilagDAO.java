@@ -22,6 +22,7 @@ public class BilagDAO extends RemoteServiceServlet implements BilagService
 	private PreparedStatement getBilagStmt = null;
 	private PreparedStatement deleteBilagStmt = null;
 	private PreparedStatement getSizeStmt = null;
+	private PreparedStatement updateBilagStmt = null;
 	
 	public BilagDAO() throws Exception
 	{
@@ -113,5 +114,20 @@ public class BilagDAO extends RemoteServiceServlet implements BilagService
 		}
 
 		return 0;
+	}
+
+	@Override
+	public void updateBilag(BilagDTO bilag) throws Exception {
+		
+		updateBilagStmt = connection.prepareStatement("UPDATE Bilag SET Id = ?, Nummer = ?, SET Forklaring = ? WHERE Id = ?;");
+		
+		try{
+			updateBilagStmt.setInt(1, bilag.getID());
+			updateBilagStmt.setInt(2, bilag.getNr());
+			updateBilagStmt.setString(3, bilag.getForklaring());
+		}
+		catch (SQLException sqlE) {
+			System.out.println(sqlE.getMessage());
+		} 	
 	}
 }
