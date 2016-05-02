@@ -19,7 +19,7 @@ public class Udgifter extends Composite
 {
 	private VerticalPanel vPanel = new VerticalPanel();
 	private HorizontalPanel hPanel = new HorizontalPanel();
-	private Button btnGem, btnAnnuller;
+	private Button btnTilbage;
 	private CellTable<UdgifterDTO> table;
 
 	 private static final ProvidesKey<UdgifterDTO> KEY_PROVIDER = new ProvidesKey<UdgifterDTO>() {
@@ -36,8 +36,7 @@ public class Udgifter extends Composite
 		
 		initWidget(this.vPanel);
 		
-		btnAnnuller = new Button("Annuller");
-		btnGem = new Button("Gem");
+		btnTilbage = new Button("Tilbage");
 
 		// **** Add column that shows "Udgiftstype" ****
 
@@ -194,8 +193,7 @@ public class Udgifter extends Composite
 	    hPanel.setStyleName("margin");
 	    vPanel.add(table);
 	    vPanel.add(hPanel);
-	    hPanel.add(btnAnnuller);
-	    hPanel.add(btnGem);
+	    hPanel.add(btnTilbage);
 	    
 	}
 }
