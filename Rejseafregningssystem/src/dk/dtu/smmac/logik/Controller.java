@@ -863,14 +863,15 @@ public class Controller {
 			
 			@Override
 			public void onSuccess(Integer result) {
-				for(int i = 1; i <= bilagPage.getFlexTable().getRowCount(); i++)
+				for(int i = 0; i < bilagPage.getFlexTable().getRowCount(); i++)
 				{
-					bilagService.createBilag(new BilagDTO(result), asyncEmpty);
+					BilagDTO bilag = new BilagDTO(result, rejseafregningPage.getRejseafregning().getId() ,bilagPage.getTList().get(i).getText());
+					bilagService.createBilag(bilag, asyncEmpty);
 					result++;
 				}
+				mainView.showContentWidget(rejsePage);
 			}
 		});
-		mainView.showContentWidget(rejsePage);
 		}
 	}
 

@@ -30,7 +30,7 @@ public class BilagDAO extends RemoteServiceServlet implements BilagService
 			connection = DriverManager.getConnection(DAO.URL, DAO.USERNAME, DAO.PASSWORD);
 
 			//Laver query, der opretter et bilag
-			createBilagStmt = connection.prepareStatement("INSERT INTO Bilag " + "( Bilag ) " + "VALUES ( ? );");
+			createBilagStmt = connection.prepareStatement("INSERT INTO Bilag " + "( BilagsNO, Nummer, Forklaring ) " + "VALUES ( ?, ?, ? );");
 
 			//Laver query, der finder et bilag
 			getBilagStmt = connection.prepareStatement("SELECT * FROM Bilag Where Id = ?");
@@ -50,7 +50,8 @@ public class BilagDAO extends RemoteServiceServlet implements BilagService
 	public void createBilag(BilagDTO bilag) throws Exception {
 		try {
 			createBilagStmt.setInt(1, bilag.getID());
-			createBilagStmt.setString(2, bilag.getForklaring());
+			createBilagStmt.setInt(2, bilag.getNr());
+			createBilagStmt.setString(3, bilag.getForklaring());
 			createBilagStmt.executeUpdate();
 		} 
 		catch (SQLException sqlE) {
@@ -71,6 +72,7 @@ public class BilagDAO extends RemoteServiceServlet implements BilagService
 			{
 				list.add(new BilagDTO(
 						resultSet.getInt("Id"),
+						resultSet.getInt("Nummer"),
 						resultSet.getString("Forklaring")
 						));
 			}

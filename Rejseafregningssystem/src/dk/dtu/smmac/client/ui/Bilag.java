@@ -40,8 +40,7 @@ public class Bilag extends Composite {
 		initWidget(vPanel);
 		
 		fTable = new FlexTable();
-		
-		// form.setAction("servlet");
+
 		form.setEncoding(FormPanel.ENCODING_MULTIPART);
 	    form.setMethod(FormPanel.METHOD_POST);
 	    form.setSize("100%", "100%");
@@ -63,15 +62,6 @@ public class Bilag extends Composite {
 		cont = new Button();
 		cont.setText("Forstæt");
 		cont.setStyleName("marginTop");
-		
-		/*
-		cont.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				form.submit();
-			}
-		});
-		*/
 		
 		fTable.setStyleName("flextable");
 		
@@ -114,6 +104,11 @@ public class Bilag extends Composite {
 	public FlexTable getFlexTable()
 	{
 		return fTable;
+	}
+	
+	public static List<TextBox> getTList()
+	{
+		return tList;
 	}
 	
 	public Button getDelete()
