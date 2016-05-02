@@ -82,6 +82,19 @@ public class Bilag extends Composite {
 		flexTable.setWidget(numRows, 4, addSletButton(numRows));
 	}
 	
+	public void addBilagRow(FlexTable flexTable, String s)
+	{
+		int numRows = flexTable.getRowCount();
+		
+		TextBox tx = new TextBox();
+		tx.setText(s);
+
+		flexTable.setWidget(numRows, 0, addLabel());
+		flexTable.setWidget(numRows, 1, addTextBox());
+		flexTable.setWidget(numRows, 2, addFileButton());
+		flexTable.setWidget(numRows, 4, addSletButton(numRows));
+	}
+	
 	public static void deleteNewBilag(FlexTable flextable)
 	{
 		flextable.removeRow(flextable.getRowCount());
