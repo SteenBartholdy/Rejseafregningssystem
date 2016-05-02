@@ -1,6 +1,10 @@
 package dk.dtu.smmac.client.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.cell.client.SelectionCell;
 import com.google.gwt.cell.client.TextInputCell;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
@@ -21,6 +25,7 @@ public class Udgifter extends Composite
 	private HorizontalPanel hPanel = new HorizontalPanel();
 	private Button btnTilbage;
 	private CellTable<UdgifterDTO> table;
+	//List<String> udgiftstyper = new ArrayList<String>();
 
 	 private static final ProvidesKey<UdgifterDTO> KEY_PROVIDER = new ProvidesKey<UdgifterDTO>() {
 		    @Override
@@ -31,25 +36,44 @@ public class Udgifter extends Composite
 
 	public Udgifter()
 	{
+		ArrayList<String> udgiftstyper = new ArrayList<String>();
+		udgiftstyper.add("Transport");
+		udgiftstyper.add("Forplejning");
+		udgiftstyper.add("Beklædning");
+		udgiftstyper.add("Andet");
+		
 		table = new CellTable<UdgifterDTO>(KEY_PROVIDER);
 		table.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 		
 		initWidget(this.vPanel);
 		
 		btnTilbage = new Button("Tilbage");
-
+		
 		// **** Add column that shows "Udgiftstype" ****
 
-		TextColumn<UdgifterDTO> udgifttypeColumn = new TextColumn<UdgifterDTO>() {
+		final SelectionCell udgiftstyperCell = new SelectionCell(udgiftstyper);
+		Column<UdgifterDTO, String> udgiftstyperColumn = new Column<UdgifterDTO, String>(udgiftstyperCell) {
 
 			@Override
-			public String getValue(UdgifterDTO object) {
+			public String getValue(UdgifterDTO object) 
+			{
 				return object.getUdgiftType();
-			}	
+			}
+			
 		};
-
-		table.addColumn(udgifttypeColumn, "Udgiftstype:");
+		table.addColumn(udgiftstyperColumn, "Udgiftstype:");
 		
+		udgiftstyperColumn.setFieldUpdater(new FieldUpdater<UdgifterDTO, String>() 
+		{
+			@Override
+			public void update(int index, UdgifterDTO object, String value) 
+			{		       
+		        object.setUdgiftType(value);
+		        table.redraw();
+			}
+			
+		});
+			
 		// **** Add a text input column to set "Bilagsnummer" (kilde: "celltable-eksemplet") ****
 		
 	    final TextInputCell bilagsnummerCell = new TextInputCell();
@@ -86,7 +110,7 @@ public class Udgifter extends Composite
 	          table.redraw();
 	          return;
 	        }
-
+	 
 	        // **** Push the changes into the Contact. At this point, you could send an ****
 	        // **** asynchronous request to the server to update the database. ****
 	        object.setBilagsNummer(value);
