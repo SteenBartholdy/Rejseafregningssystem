@@ -911,7 +911,10 @@ public class Controller {
 			@Override
 			public void onSuccess(Integer result) {
 				
-				for(int i = 0; i < bilagPage.getFlexTable().getRowCount(); i++)
+				BilagDTO bilag2 = new BilagDTO(result, rejseafregningPage.getRejseafregning().getId());
+				bilagService.deleteBilag(bilag2, asyncEmpty);
+				
+				for(int i = 1; i <= bilagPage.getFlexTable().getRowCount(); i++)
 				{
 					BilagDTO bilag = new BilagDTO(result+i, rejseafregningPage.getRejseafregning().getId() ,bilagPage.getTList().get(i).getText());
 					if (bilag.getID() <= result)
