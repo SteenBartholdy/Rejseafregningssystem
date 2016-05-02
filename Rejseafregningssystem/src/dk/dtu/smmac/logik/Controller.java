@@ -65,6 +65,7 @@ import dk.dtu.smmac.shared.PostNrDTO;
 import dk.dtu.smmac.shared.RejseDTO;
 import dk.dtu.smmac.shared.RejseafregningDTO;
 import dk.dtu.smmac.shared.RejseafregningerDTO;
+import dk.dtu.smmac.shared.UdgifterDTO;
 
 @SuppressWarnings("deprecation")
 public class Controller {
@@ -504,8 +505,26 @@ public class Controller {
 		public void onClick(ClickEvent event) 
 		{
 			//TODO
-			//udgifterService.getUdgifter(callback);
-			mainView.showContentWidget(udgifterPage);	
+			udgifterService.getUdgifter(rejseafregningPage.getRejseafregning().getId(), new AsyncCallback<List<UdgifterDTO>>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					System.out.println("An error has occured");	
+				}
+
+				@Override
+				public void onSuccess(List<UdgifterDTO> result) {
+					udgifterPage.reset();
+					if (result == null) {
+						udgifterPage.addUdgiftPost(new UdgifterDTO());
+					} else {
+						for (UdgifterDTO udgift : result) {
+							udgifterPage.addUdgiftPost(udgift);
+						}
+					}
+					mainView.showContentWidget(udgifterPage);
+				}
+			});	
 		}
 		
 	}
