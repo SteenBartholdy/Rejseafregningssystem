@@ -6,7 +6,7 @@ import dk.dtu.smmac.shared.UdgifterDTO;
 
 public interface UdgifterServiceAsync 
 {
-	void getUdgifter(AsyncCallback<List<UdgifterDTO>> callback);
+	void getUdgifter(int nr, AsyncCallback<List<UdgifterDTO>> callback);
 	void updateUdgifter(UdgifterDTO udgift, AsyncCallback<Void> callback);
 	void createUdgifter(UdgifterDTO udgift, AsyncCallback<Void> callback);
 	void deleteUdgifter(UdgifterDTO udgift, AsyncCallback<Void> callback);
