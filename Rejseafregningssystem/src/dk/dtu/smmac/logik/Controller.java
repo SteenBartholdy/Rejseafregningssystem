@@ -254,7 +254,7 @@ public class Controller {
 		glemtPasswordPage.getbtnAnnullerPassword().addClickHandler(new ShowLoginHandler());
 		bilagPage.getAddBilag().addClickHandler(new AddBilagHandler());
 		bilagPage.getDelete().addClickHandler(new DeleteBilagHandler());
-		bilagPage.getCont().addClickHandler(new ShowRejseafregningHandler());
+		bilagPage.getCont().addClickHandler(new SaveBilagHandler());
 		dageInfoPage.getBtn().addClickHandler(new SaveDageInfoHandler());
 		rejsePage.getSaveButton().addClickHandler(new SaveRejseHandler());
 		rejseafregningPage.getSaveButton().addClickHandler(new SaveRejseafregningsHandler());
@@ -445,7 +445,7 @@ public class Controller {
 				dageInfoService.updateDageInfo(dag, asyncEmpty);
 			}
 			// TODO skal ændres til en anden page
-			mainView.showContentWidget(rejseafregningerPage);
+			mainView.showContentWidget(mainPage);
 		}
 		
 	}
@@ -773,10 +773,14 @@ public class Controller {
 
 				@Override
 				public void onSuccess(List<BilagDTO> result) {
-					// TODO Auto-generated method stub
-					mainView.showContentWidget(bilagPage);
+					
+					for(int i = 0; i < result.size(); i++)
+					{
+						bilagPage.addNewBilag(bilagPage.getFlexTable());
+					}
 				}
 			});
+			mainView.showContentWidget(bilagPage);
 			
 		}
 	}
@@ -839,9 +843,34 @@ public class Controller {
 		@Override
 		public void onClick(ClickEvent event) {
 			bilagPage.deleteNewBilag(bilagPage.getFlexTable());
-
+			
 		}
 
+	}
+	
+	private class SaveBilagHandler implements ClickHandler
+	{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			bilagService.getSize(new AsyncCallback<Integer>() {
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("An error has occured");	
+			}
+			
+			@Override
+			public void onSuccess(Integer result) {
+				for(int i = 1; i <= bilagPage.getFlexTable().getRowCount(); i++)
+				{
+					bilagService.createBilag(new BilagDTO(result), asyncEmpty);
+					result++;
+				}
+			}
+		});
+		mainView.showContentWidget(rejsePage);
+		}
 	}
 
 	private abstract class EnterKeyHandler implements KeyDownHandler {

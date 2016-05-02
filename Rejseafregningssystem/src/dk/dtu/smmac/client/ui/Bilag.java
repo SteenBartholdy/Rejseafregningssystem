@@ -41,7 +41,7 @@ public class Bilag extends Composite {
 		
 		fTable = new FlexTable();
 		
-		form.setAction("servlet");
+		// form.setAction("servlet");
 		form.setEncoding(FormPanel.ENCODING_MULTIPART);
 	    form.setMethod(FormPanel.METHOD_POST);
 	    form.setSize("100%", "100%");
@@ -64,12 +64,14 @@ public class Bilag extends Composite {
 		cont.setText("Forstæt");
 		cont.setStyleName("marginTop");
 		
+		/*
 		cont.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				form.submit();
 			}
 		});
+		*/
 		
 		fTable.setStyleName("flextable");
 		

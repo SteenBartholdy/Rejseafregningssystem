@@ -21,6 +21,7 @@ public class BilagDAO extends RemoteServiceServlet implements BilagService
 	private PreparedStatement createBilagStmt = null; 
 	private PreparedStatement getBilagStmt = null;
 	private PreparedStatement deleteBilagStmt = null;
+	private PreparedStatement getSizeStmt = null;
 	
 	public BilagDAO() throws Exception
 	{
@@ -36,6 +37,9 @@ public class BilagDAO extends RemoteServiceServlet implements BilagService
 
 			//Laver query, der sletter et bilag
 			deleteBilagStmt = connection.prepareStatement("DELETE FROM Bilag WHERE Id = ?;");
+			
+			// Får size
+			getSizeStmt = connection.prepareStatement("SELECT COUNT(*) FROM Rejse;");
 
 		} catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
@@ -94,5 +98,20 @@ public class BilagDAO extends RemoteServiceServlet implements BilagService
 		catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
 		} 
+	}
+
+	@Override
+	public int getSize() throws Exception {
+		ResultSet resultSet = null;
+
+		try {
+			resultSet = getSizeStmt.executeQuery();
+			resultSet.next();
+			return resultSet.getInt(1);
+		} catch (SQLException sqlE) {
+			System.out.println(sqlE.getMessage());
+		}
+
+		return 0;
 	}
 }
