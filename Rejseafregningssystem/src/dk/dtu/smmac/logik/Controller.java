@@ -46,6 +46,7 @@ import dk.dtu.smmac.client.service.UdgifterService;
 import dk.dtu.smmac.client.service.UdgifterServiceAsync;
 import dk.dtu.smmac.client.ui.AfslutningsInfo;
 import dk.dtu.smmac.client.ui.Bilag;
+import dk.dtu.smmac.client.ui.BilagPage;
 import dk.dtu.smmac.client.ui.DageInfo;
 import dk.dtu.smmac.client.ui.GlemtPassword;
 import dk.dtu.smmac.client.ui.LoginPage;
@@ -82,7 +83,7 @@ public class Controller {
 
 	private MainPage mainPage;
 
-	private Bilag bilagPage;
+	private BilagPage bilagPage;
 
 	private Oplysninger oplysningerPage;
 
@@ -258,8 +259,8 @@ public class Controller {
 		rejseafregningPage.getAddTravelAnchor().addClickHandler(new ShowAddTravelHandler());
 		glemtPasswordPage.getbtnSendPassword().addClickHandler(new SendPasswordHandler());
 		glemtPasswordPage.getbtnAnnullerPassword().addClickHandler(new ShowLoginHandler());
-		bilagPage.getAddBilag().addClickHandler(new AddBilagHandler());
-		bilagPage.getCont().addClickHandler(new SaveBilagHandler());
+		// bilagPage.getAddBilag().addClickHandler(new AddBilagHandler());
+		// bilagPage.getCont().addClickHandler(new SaveBilagHandler());
 		dageInfoPage.getBtn().addClickHandler(new SaveDageInfoHandler());
 		rejsePage.getSaveButton().addClickHandler(new SaveRejseHandler());
 		rejseafregningPage.getSaveButton().addClickHandler(new SaveRejseafregningsHandler());
@@ -821,30 +822,32 @@ public class Controller {
 	{
 		@Override
 		public void onClick(ClickEvent event) {
-			bilagService.getBilag(rejseafregningPage.getRejseafregning().getId(), new AsyncCallback<List<BilagDTO>>(){
-
-				@Override
-				public void onFailure(Throwable caught) {
-					Window.alert(caught.getMessage());
-				}
-
-				@Override
-				public void onSuccess(List<BilagDTO> result) {
-					
-					if (!result.isEmpty())
-					{
-						for(BilagDTO bilag : result)
-						{
-							bilagPage.addBilagRow(bilag.getForklaring());
-						}
-					}
+//			bilagService.getBilag(rejseafregningPage.getRejseafregning().getId(), new AsyncCallback<List<BilagDTO>>(){
+//
+//				@Override
+//				public void onFailure(Throwable caught) {
+//					Window.alert(caught.getMessage());
+//				}
+//
+//				@Override
+//				public void onSuccess(List<BilagDTO> result) {
+//					
+//					if (!result.isEmpty())
+//					{
+//						for(BilagDTO bilag : result)
+//						{
+//							bilagPage.addBilagRow(bilag.getForklaring());
+//						}
+//					}
 						mainView.showContentWidget(bilagPage);
-				}
-			});
+//				}
+//			});
 			
 		}
 	}
 	
+	
+	/*
 	private class SaveBilagHandler implements ClickHandler
 	{
 		//TODO
@@ -881,6 +884,7 @@ public class Controller {
 			});
 		}
 	}
+	*/
 
 
 	private class ShowOpgaveHandler implements ClickHandler
@@ -924,6 +928,7 @@ public class Controller {
 		}
 	}
 
+	/*
 	private class AddBilagHandler implements ClickHandler
 	{
 		//TODO
@@ -934,6 +939,7 @@ public class Controller {
 		}
 
 	}
+	*/
 
 	private abstract class EnterKeyHandler implements KeyDownHandler {
 		@Override

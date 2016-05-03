@@ -13,7 +13,6 @@ import dk.dtu.smmac.shared.BilagDTO;
 public class BilagPage extends Composite{
 	
 	private VerticalPanel vPanel = new VerticalPanel();
-	private FlexTable fTable = new FlexTable();
 	private ListDataProvider<BilagDTO> dataProvider;
 	private CellTable<BilagDTO> table;
 	private Anchor addBilag;

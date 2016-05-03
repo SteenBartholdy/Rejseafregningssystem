@@ -33,7 +33,7 @@ public class MainView extends Composite {
 	
 	private MainPage mainPage;
 	
-	private Bilag bilagPage;
+	private BilagPage bilagPage;
 	
 	private Oplysninger oplysningerPage;
 	
@@ -70,7 +70,7 @@ public class MainView extends Composite {
 		loginPage = new LoginPage();
 		rejseafregningPage = new Rejseafregning();
 		mainPage = new MainPage();
-		bilagPage = new Bilag();
+		bilagPage = new BilagPage();
 		oplysningerPage = new Oplysninger();
 		rejsePage = new Rejse();
 		glemtPasswordPage = new GlemtPassword();
@@ -144,7 +144,7 @@ public class MainView extends Composite {
 		return mainPage;
 	}
 	
-	public Bilag getBilagPage()
+	public BilagPage getBilagPage()
 	{
 		return bilagPage;
 	}
