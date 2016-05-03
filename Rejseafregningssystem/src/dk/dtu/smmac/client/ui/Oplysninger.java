@@ -2,6 +2,7 @@ package dk.dtu.smmac.client.ui;
 
 import java.util.List;
 
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
@@ -24,6 +25,7 @@ public class Oplysninger extends Composite {
 	private ListBox department;
 	private SuggestBox zip, road, houseNo, floor, door;
 	private AnsatDTO ansat;
+	private Button btnNyKode;
 	private List<AfdelingDTO> afdelinger;
 	private String width = "200px";
 	private String lwidth = "65px";
@@ -131,6 +133,8 @@ public class Oplysninger extends Composite {
 		kontoNo.setWidth(width);
 		kontoNo.setHeight(height);
 		
+		btnNyKode = new Button("Ændre adgangskode");
+		
 		//Table
 		fTable.setWidget(0, 1, h1);
 		fTable.setWidget(1, 0, lName);
@@ -143,6 +147,7 @@ public class Oplysninger extends Composite {
 		fTable.setWidget(4, 1, telephone);
 		fTable.setWidget(5, 0, lEmail);
 		fTable.setWidget(5, 1, email);
+		fTable.setWidget(6, 1, btnNyKode);
 		
 		fTable.setWidget(0, 4, h2);
 		fTable.setWidget(1, 3, lZipcode);
@@ -419,5 +424,9 @@ public class Oplysninger extends Composite {
 	public void setRegNo(String no) {
 		regNo.setText(no);
 	}
-	
+
+	public Button getBtnNyKode()
+	{
+		return btnNyKode;
+	}
 }
