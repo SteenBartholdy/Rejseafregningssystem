@@ -30,20 +30,27 @@ public class NyKode extends Composite
 		
 		btnTilbage = new Button("Tilbage");
 		btnUdfoer = new Button("Udfør");
+		btnUdfoer.setStyleName("marginButtom");
 		
 		tbBrugernavn = new TextBox();
 		tbBrugernavn.setWidth(lwidth);
 		tbBrugernavn.setHeight(height);
+		tbBrugernavn.setStyleName("marginButtom");
 		tbNyKode = new TextBox();
 		tbNyKode.setWidth(lwidth);
 		tbNyKode.setHeight(height);
+		tbNyKode.setStyleName("marginButtom");
 		tbNyKodeVeri = new TextBox();
 		tbNyKodeVeri.setWidth(lwidth);
 		tbNyKodeVeri.setHeight(height);
+		tbNyKodeVeri.setStyleName("marginButtom");
 		tbGammelKode = new TextBox();
 		tbGammelKode.setWidth(lwidth);
 		tbGammelKode.setHeight(height);
+		tbGammelKode.setStyleName("marginButtom");
 		
+		vPanel.add(lBrugernavn);
+		vPanel.add(tbBrugernavn);
 		vPanel.add(lGammelKode);
 		vPanel.add(tbGammelKode);
 		vPanel.add(lNyKode);
