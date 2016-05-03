@@ -107,6 +107,11 @@ table.flextable td:nth-child(6) {
 	font-weight: bold;
 }
 
+.boldTextPlusMargin {
+	font-weight: bold;
+	margin-bottom: 10px;	
+}
+
 .alignButtomRight {
 	margin-left: 90%;
 	

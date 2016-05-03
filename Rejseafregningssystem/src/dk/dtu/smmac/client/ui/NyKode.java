@@ -9,11 +9,10 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class NyKode extends Composite 
 {
 	private VerticalPanel vPanel = new VerticalPanel();
-	private Label lNyKode, lNyKodeVeri, lGammelKode;
+	private Label lNyKode, lNyKodeVeri, lGammelKode, lBrugernavn;
 	private Button btnTilbage, btnUdfoer;
-	private TextBox tbNyKode, tbNyKodeVeri, tbGammelKode;
-	private String width = "200px";
-	private String lwidth = "65px";
+	private TextBox tbNyKode, tbNyKodeVeri, tbGammelKode, tbBrugernavn;	
+	private String lwidth = "100px";
 	private String height = "20px";
 	
 	public NyKode()
@@ -21,15 +20,20 @@ public class NyKode extends Composite
 		initWidget(this.vPanel);
 		
 		lGammelKode = new Label("Indtast nuværende adgangskode:");
-		lGammelKode.setStyleName("boldText");
+		lGammelKode.setStyleName("boldTextPlusMargin");
 		lNyKode = new Label("Indtats en ny adgangskode:");
-		lNyKode.setStyleName("boldText");
+		lNyKode.setStyleName("boldTextPlusMargin");
 		lNyKodeVeri = new Label("Bekræft den nye adgangskode:");
-		lNyKodeVeri.setStyleName("boldText");
+		lNyKodeVeri.setStyleName("boldTextPlusMargin");
+		lBrugernavn = new Label("Indtast brugernavn:");
+		lBrugernavn.setStyleName("boldTextPlusMargin");
 		
 		btnTilbage = new Button("Tilbage");
 		btnUdfoer = new Button("Udfør");
 		
+		tbBrugernavn = new TextBox();
+		tbBrugernavn.setWidth(lwidth);
+		tbBrugernavn.setHeight(height);
 		tbNyKode = new TextBox();
 		tbNyKode.setWidth(lwidth);
 		tbNyKode.setHeight(height);
@@ -75,6 +79,11 @@ public class NyKode extends Composite
 	public String getGammelKodeTB()
 	{
 		return tbGammelKode.getText();
+	}
+
+	public String getBrugernavnTB()
+	{
+		return tbBrugernavn.getText();
 	}
 }
 
