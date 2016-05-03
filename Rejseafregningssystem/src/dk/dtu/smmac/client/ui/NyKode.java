@@ -47,7 +47,9 @@ public class NyKode extends Composite
 		vPanel.add(lNyKodeVeri);
 		vPanel.add(tbNyKodeVeri);
 		vPanel.add(btnUdfoer);
-		vPanel.add(btnTilbage);		
+		vPanel.add(btnTilbage);	
+		
+		vPanel.setStyleName("margin");
 	}
 	
 	public Button getBtnNyKodeTilbage()

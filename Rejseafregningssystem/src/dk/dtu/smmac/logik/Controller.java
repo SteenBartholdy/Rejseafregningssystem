@@ -54,6 +54,7 @@ import dk.dtu.smmac.client.ui.LoginTopView;
 import dk.dtu.smmac.client.ui.MainPage;
 import dk.dtu.smmac.client.ui.MainView;
 import dk.dtu.smmac.client.ui.NavigationView;
+import dk.dtu.smmac.client.ui.NyKode;
 import dk.dtu.smmac.client.ui.Oplysninger;
 import dk.dtu.smmac.client.ui.Rejse;
 import dk.dtu.smmac.client.ui.Rejseafregning;
@@ -100,6 +101,8 @@ public class Controller {
 	private Udgifter udgifterPage;
 	
 	private AfslutningsInfo afslutningPage;
+	
+	private NyKode nyKodePage;
 
 	private HTML emptyView;
 	private HTML emptyTopView;
@@ -155,6 +158,8 @@ public class Controller {
 		udgifterPage = mainView.getUdgifterPage();
 		
 		afslutningPage = mainView.getAfslutningsInfoPage();
+		
+		nyKodePage = mainView.getNykodePage();
 
 		//Async
 		asyncEmpty = new AsyncCallback<Void>() {
@@ -267,6 +272,8 @@ public class Controller {
 		rejseafregningPage.getAddUdgiftAnchor().addClickHandler(new ShowUdgifterPageHandler());
 		udgifterPage.getBtnTilbage().addClickHandler(new saveUdgifterHandler());
 		udgifterPage.getBtnNyUdgift().addClickHandler(new addUdgiftHandler());
+		oplysningerPage.getBtnNyKode().addClickHandler(new ShowNyKodeHandler());
+		nyKodePage.getBtnNyKodeTilbage().addClickHandler(new ShowOplysningHandler());
 
 		//BlurHandler
 		oplysningerPage.getName().addBlurHandler(new UpdateAnsatHandler());
@@ -720,6 +727,15 @@ public class Controller {
 		}
 	}
 
+	private class ShowNyKodeHandler implements ClickHandler
+	{
+		@Override
+		public void onClick(ClickEvent event)
+		{
+			mainView.showContentWidget(nyKodePage);
+		}
+	}
+	
 	private class LoginHandler implements ClickHandler
 	{
 
