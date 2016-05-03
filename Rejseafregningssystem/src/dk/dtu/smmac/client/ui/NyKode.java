@@ -44,7 +44,7 @@ public class NyKode extends Composite
 		tbNyKodeVeri = new PasswordTextBox();
 		tbNyKodeVeri.setWidth(lwidth);
 		tbNyKodeVeri.setHeight(height);
-		tbNyKodeVeri.setStyleName("marginButtom");
+		tbNyKodeVeri.setStyleName("marginBottom30px");
 		tbGammelKode = new PasswordTextBox();
 		tbGammelKode.setWidth(lwidth);
 		tbGammelKode.setHeight(height);
