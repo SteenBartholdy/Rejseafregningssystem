@@ -860,19 +860,19 @@ public class Controller {
 			@Override
 			public void onSuccess(List<BilagDTO> result) {
 				
-				if (!result.isEmpty())
+				if (result.size() <= bilagPage.getFlexTable().getRowCount())
 				{
-					for(int i = 1; i <= bilagPage.getFlexTable().getRowCount(); i++)
+					for(int i = 1; i <= result.size(); i++)
 					{
 						BilagDTO bilag = new BilagDTO(i, rejseafregningPage.getRejseafregning().getId(), bilagPage.getTList().get(i).getText());
-						bilagService.deleteBilag(bilag, asyncEmpty);
-						bilagService.createBilag(bilag, asyncEmpty);
+						bilagService.updateBilag(bilag, asyncEmpty);
 					}
 				}
-				else {
+				else if (result.size() > bilagPage.getFlexTable().getRowCount()){
 					for(int i = 1; i <= bilagPage.getFlexTable().getRowCount(); i++)
 					{
 						BilagDTO bilag2 = new BilagDTO(i, rejseafregningPage.getRejseafregning().getId(), bilagPage.getTList().get(i).getText());
+						bilagService.deleteBilag(bilag2, asyncEmpty);
 						bilagService.createBilag(bilag2, asyncEmpty);
 					}
 				}
