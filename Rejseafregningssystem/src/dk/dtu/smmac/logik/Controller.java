@@ -798,7 +798,6 @@ public class Controller {
 					@Override
 					public void onSuccess(Bruger result) {
 						if (result == null) {
-							//TODO Skal ændres til noget label ændring eller lign
 							Window.alert("Forkert brugernavn eller kodeord.");
 						}
 
