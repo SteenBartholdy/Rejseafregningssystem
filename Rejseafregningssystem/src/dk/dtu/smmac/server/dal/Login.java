@@ -53,12 +53,9 @@ public class Login extends RemoteServiceServlet implements LoginService {
 			server.start();
 			LoginLogikI login = (LoginLogikI) Naming.lookup("rmi://localhost/Login");
 			
-			login.changePassword(brugernavn, kode, nyKode);
-
-            System.out.println("Koden er ændret til " + nyKode + " hos bruger = " + brugernavn);
-            return true;
+			return login.changePassword(brugernavn, kode, nyKode);
 		} catch (Exception e) {
-            e.printStackTrace(System.out);
+			e.printStackTrace(System.out);
         } finally {
 			try {
 				server.close();
