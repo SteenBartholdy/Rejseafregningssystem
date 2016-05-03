@@ -46,7 +46,7 @@ public class BilagPage extends Composite{
 		};
 		
 		table.addColumn(bilagsNoColumn);
-		//table.addColumn(forklaringsCell, "Bilagsnummer:");
+		table.addColumn(forklaringsColumn);
 		
 		dataProvider = new ListDataProvider<BilagDTO>();
 		dataProvider.addDataDisplay(table);
