@@ -54,11 +54,12 @@ public class BilagDAO extends RemoteServiceServlet implements BilagService
 	@Override
 	public List<BilagDTO> getBilag(int id) throws Exception {
 		
-		getBilagStmt = connection.prepareStatement("SELECT * FROM Bilag Where BilagsNo = ?");
+		getBilagStmt = connection.prepareStatement("SELECT * FROM Bilag WHERE Nummer = ?;");
 		List<BilagDTO> list = null;
 		ResultSet resultSet = null;
 		
 		try {
+			getBilagStmt.setInt(1, id);
 			resultSet = getBilagStmt.executeQuery();
 			list = new ArrayList<BilagDTO>();
 			
@@ -119,12 +120,14 @@ public class BilagDAO extends RemoteServiceServlet implements BilagService
 	@Override
 	public void updateBilag(BilagDTO bilag) throws Exception {
 		
-		updateBilagStmt = connection.prepareStatement("UPDATE Bilag SET BilagsNo = ?, Nummer = ?, SET Forklaring = ? WHERE Id = ?;");
+		updateBilagStmt = connection.prepareStatement("UPDATE Bilag SET Nummer = ?, Forklaring = ? WHERE BilagsNo = ?;");
 		
 		try{
-			updateBilagStmt.setInt(1, bilag.getID());
-			updateBilagStmt.setInt(2, bilag.getNr());
-			updateBilagStmt.setString(3, bilag.getForklaring());
+			updateBilagStmt.setInt(1, bilag.getNr());
+			updateBilagStmt.setString(2, bilag.getForklaring());
+			updateBilagStmt.setInt(3, bilag.getID());
+			
+			updateBilagStmt.executeUpdate();
 		}
 		catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());

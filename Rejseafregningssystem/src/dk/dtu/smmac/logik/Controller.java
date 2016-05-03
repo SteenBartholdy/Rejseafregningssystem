@@ -831,18 +831,14 @@ public class Controller {
 				@Override
 				public void onSuccess(List<BilagDTO> result) {
 					
-					if (result.size() > 0)
+					if (!result.isEmpty())
 					{
-						for(int i = 0; i < result.size(); i++)
+						for(BilagDTO bilag : result)
 						{
-							bilagPage.addBilagRow(bilagPage.getFlexTable(), result.get(i).getForklaring());
+							bilagPage.addBilagRow(bilag.getForklaring());
 						}
-						mainView.showContentWidget(bilagPage);
 					}
-					else
-					{
 						mainView.showContentWidget(bilagPage);
-					}
 				}
 			});
 			
@@ -895,7 +891,7 @@ public class Controller {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			bilagPage.addNewBilag(bilagPage.getFlexTable());
+			bilagPage.addNewBilag();
 
 		}
 
@@ -920,10 +916,9 @@ public class Controller {
 				for(int i = 1; i <= bilagPage.getFlexTable().getRowCount(); i++)
 				{
 					BilagDTO bilag = new BilagDTO(result+i, rejseafregningPage.getRejseafregning().getId() ,bilagPage.getTList().get(i).getText());
-					bilagService.deleteBilag(bilag, asyncEmpty);
 					bilagService.createBilag(bilag, asyncEmpty);
 				}
-				mainView.showContentWidget(rejsePage);
+				mainView.showContentWidget(rejseafregningPage);
 			}
 		});
 		}

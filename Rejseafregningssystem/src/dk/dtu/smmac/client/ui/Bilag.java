@@ -26,14 +26,14 @@ public class Bilag extends Composite {
 	
 	private final FormPanel form = new FormPanel();
 	private VerticalPanel vPanel = new VerticalPanel();
-	private static FlexTable fTable;
+	private FlexTable fTable;
 	private Button cont;
 	private Anchor addBilag;
-	private static List<Button> bList;
-	private static List<HandlerRegistration> hList;
-	private static List<FileUpload> fList;
-	private static List<TextBox> tList;
-	private static List<Label> lList;
+	private List<Button> bList;
+	private List<HandlerRegistration> hList;
+	private List<FileUpload> fList;
+	private List<TextBox> tList;
+	private List<Label> lList;
 	
 	public Bilag()
 	{
@@ -69,27 +69,27 @@ public class Bilag extends Composite {
 		vPanel.add(cont);
 	}
 	
-	public void addNewBilag(FlexTable flexTable)
+	public void addNewBilag()
 	{
-		int numRows = flexTable.getRowCount();
+		int numRows = fTable.getRowCount();
 
-		flexTable.setWidget(numRows, 0, addLabel());
-		flexTable.setWidget(numRows, 1, addTextBox());
-		flexTable.setWidget(numRows, 2, addFileButton());
-		flexTable.setWidget(numRows, 4, addSletButton(numRows));
+		fTable.setWidget(numRows, 0, addLabel());
+		fTable.setWidget(numRows, 1, addTextBox());
+		fTable.setWidget(numRows, 2, addFileButton());
+		fTable.setWidget(numRows, 4, addSletButton(numRows));
 	}
 	
-	public void addBilagRow(FlexTable flexTable, String s)
+	public void addBilagRow(String s)
 	{
-		int numRows = flexTable.getRowCount();
+		int numRows = fTable.getRowCount();
 		
 		TextBox tx = new TextBox();
 		tx.setText(s);
 
-		flexTable.setWidget(numRows, 0, addLabel());
-		flexTable.setWidget(numRows, 1, tx);
-		flexTable.setWidget(numRows, 2, addFileButton());
-		flexTable.setWidget(numRows, 4, addSletButton(numRows));
+		fTable.setWidget(numRows, 0, addLabel());
+		fTable.setWidget(numRows, 1, tx);
+		fTable.setWidget(numRows, 2, addFileButton());
+		fTable.setWidget(numRows, 4, addSletButton(numRows));
 	}
 	
 	public static void deleteNewBilag(FlexTable flextable)
@@ -97,7 +97,7 @@ public class Bilag extends Composite {
 		flextable.removeRow(flextable.getRowCount());
 	}
 	
-	public static void deleteNewBilag(FlexTable flexTable, int i)
+	public void deleteNewBilag(FlexTable flexTable, int i)
 	{
 		flexTable.removeRow(i);
 		bList.remove(i);
@@ -116,7 +116,7 @@ public class Bilag extends Composite {
 		return fTable;
 	}
 	
-	public static List<TextBox> getTList()
+	public List<TextBox> getTList()
 	{
 		return tList;
 	}
@@ -163,7 +163,7 @@ public class Bilag extends Composite {
 		return t;
 	}
 	
-	public static void clickHandler(List<Button> b, List<HandlerRegistration> h)
+	public void clickHandler(List<Button> b, List<HandlerRegistration> h)
 	{
 		for (int i = 0; i <= hList.size(); i++){
 			final int x = i;
@@ -173,7 +173,7 @@ public class Bilag extends Composite {
 		}
 	}
 	
-	public static HandlerRegistration addClickHandlerDelete(Button b, int i)
+	public HandlerRegistration addClickHandlerDelete(Button b, int i)
 	{
 		HandlerRegistration handler;
 		final int x = i;
@@ -186,7 +186,7 @@ public class Bilag extends Composite {
 		return handler;
 	}
 	
-	public static void updateLabels(List<Label> l)
+	public void updateLabels(List<Label> l)
 	{
 		int x;
 		for (int i = 0; i < l.size(); i++){
