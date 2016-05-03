@@ -844,6 +844,33 @@ public class Controller {
 			
 		}
 	}
+	
+	private class SaveBilagHandler implements ClickHandler
+	{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			bilagService.getSize(new AsyncCallback<Integer>() {
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert(caught.getMessage());	
+			}
+			
+			@Override
+			public void onSuccess(Integer result) {
+
+				for(int i = 1; i <= bilagPage.getFlexTable().getRowCount(); i++)
+				{
+					BilagDTO bilag = new BilagDTO(result+i, rejseafregningPage.getRejseafregning().getId() ,bilagPage.getTList().get(i).getText());
+					bilagService.createBilag(bilag, asyncEmpty);
+				}
+				mainView.showContentWidget(rejseafregningPage);
+			}
+		});
+		}
+	}
+
 
 	private class ShowOpgaveHandler implements ClickHandler
 	{
@@ -895,33 +922,6 @@ public class Controller {
 
 		}
 
-	}
-
-	
-	private class SaveBilagHandler implements ClickHandler
-	{
-
-		@Override
-		public void onClick(ClickEvent event) {
-			bilagService.getSize(new AsyncCallback<Integer>() {
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert(caught.getMessage());	
-			}
-			
-			@Override
-			public void onSuccess(Integer result) {
-
-				for(int i = 1; i <= bilagPage.getFlexTable().getRowCount(); i++)
-				{
-					BilagDTO bilag = new BilagDTO(result+i, rejseafregningPage.getRejseafregning().getId() ,bilagPage.getTList().get(i).getText());
-					bilagService.createBilag(bilag, asyncEmpty);
-				}
-				mainView.showContentWidget(rejseafregningPage);
-			}
-		});
-		}
 	}
 
 	private abstract class EnterKeyHandler implements KeyDownHandler {
