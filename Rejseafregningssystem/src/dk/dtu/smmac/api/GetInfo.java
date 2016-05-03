@@ -42,7 +42,7 @@ public class GetInfo {
 			email = ansat.getEmail();
 			
 		} catch (Exception e) {
-			return "Der skete en fejl. Tjek brugernavn og kodeord.";
+			return "Der skete en fejl. Tjek brugernavn og kodeord. " + e.getMessage();
 		}
 		
 		

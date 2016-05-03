@@ -12,7 +12,6 @@ import dk.dtu.smmac.server.dal.Login;
 import dk.dtu.smmac.shared.AnsatDTO;
 
 @Path("telefon")
-@Produces(MediaType.TEXT_PLAIN)
 public class PutTelefonNr {
 	
 	private Login login;
@@ -22,7 +21,7 @@ public class PutTelefonNr {
 	private String gammeltTlfNr;
 	
 	@PUT
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces("text/plain")
 	public String updateTlfNR(@QueryParam("user") String username, @QueryParam("pass") String password, @QueryParam("telefon") int telefon)
 	{
 		login = null;
@@ -41,7 +40,7 @@ public class PutTelefonNr {
 			ansat.setTlf(telefon);
 			
 		} catch (Exception e) {
-			return "Der skete en fejl. Tjek brugernavn og kodeord.";
+			return "Der skete en fejl. Tjek brugernavn og kodeord. " + e.getMessage();
 		}
 		return bruger.fornavn + " " + bruger.efternavn +  "'s telefonnummer er blevet ændret fra " + gammeltTlfNr + " til " + telefon + ".";
 	}

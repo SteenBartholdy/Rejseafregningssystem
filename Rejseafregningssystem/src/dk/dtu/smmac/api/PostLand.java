@@ -19,7 +19,7 @@ public class PostLand {
 	private LandDAO lande;
 	
 	@POST
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces("text/plain")
 	public String addLand(@QueryParam("user") String username, @QueryParam("pass") String password, @QueryParam("land") String land, @QueryParam("takst") int takst)
 	{
 		login = null;
@@ -33,7 +33,7 @@ public class PostLand {
 			lande.createLand(new LandDTO(land, takst));
 			
 		} catch (Exception e) {
-			return "Der skete en fejl. Tjek brugernavn og kodeord.";
+			return "Der skete en fejl. Tjek brugernavn og kodeord. " + e.getMessage();
 		}
 		
 		return bruger.fornavn + " " + bruger.efternavn + " har oprettet " + land + " med en takst på " + takst + " kr.";
