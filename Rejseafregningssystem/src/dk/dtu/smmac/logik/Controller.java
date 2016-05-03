@@ -813,8 +813,8 @@ public class Controller {
 							public void onSuccess(AnsatDTO result) {
 								succesLogin(result);
 							}
-
 						});
+						nyKodePage.setBrugernavnL(result.brugernavn);
 					}
 				}); 
 			}
