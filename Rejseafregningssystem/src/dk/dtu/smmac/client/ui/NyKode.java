@@ -30,7 +30,7 @@ public class NyKode extends Composite
 		lBrugernavn = new Label("Brugernavn:  ");
 		lBrugernavn.setStyleName("boldTextPlusMargin");
 		lBrugernavnHentet = new Label(" ");
-		lBrugernavnHentet.setStyleName("boldTextPlusMargin");
+		lBrugernavnHentet.setStyleName("marginButtom");
 		
 		btnTilbage = new Button("Tilbage");
 		btnTilbage.setStyleName("buttonNyKode");
@@ -49,8 +49,7 @@ public class NyKode extends Composite
 		tbGammelKode.setWidth(lwidth);
 		tbGammelKode.setHeight(height);
 		tbGammelKode.setStyleName("marginButtom");
-		
-		
+				
 		vPanel.add(lBrugernavn);
 		vPanel.add(lBrugernavnHentet);
 		vPanel.add(lGammelKode);
@@ -61,7 +60,6 @@ public class NyKode extends Composite
 		vPanel.add(tbNyKodeVeri);
 		vPanel.add(btnUdfoer);
 		vPanel.add(btnTilbage);	
-	
 		
 		vPanel.setStyleName("margin");
 	}
