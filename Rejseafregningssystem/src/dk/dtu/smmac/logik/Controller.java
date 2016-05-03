@@ -274,7 +274,8 @@ public class Controller {
 		udgifterPage.getBtnNyUdgift().addClickHandler(new addUdgiftHandler());
 		oplysningerPage.getBtnNyKode().addClickHandler(new ShowNyKodeHandler());
 		nyKodePage.getBtnNyKodeTilbage().addClickHandler(new ShowOplysningHandler());
-
+		nyKodePage.getBtnNyKodeUdfoer().addClickHandler(new ChangePasswordHandler());
+		
 		//BlurHandler
 		oplysningerPage.getName().addBlurHandler(new UpdateAnsatHandler());
 		oplysningerPage.getSurname().addBlurHandler(new UpdateAnsatHandler());
@@ -381,6 +382,34 @@ public class Controller {
 		RootLayoutPanel.get().add(mainView);
 	}
 
+	private class ChangePasswordHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+				if (nyKodePage.getNyKodeTB() == nyKodePage.getNyKodeVeriTB()) {
+					loginService.changePassword(nyKodePage.getBrugernavnTB(), nyKodePage.getGammelKodeTB(), nyKodePage.getNyKodeTB(), new AsyncCallback<Boolean>() {
+
+						@Override
+						public void onFailure(Throwable caught) {
+							Window.alert(caught.getMessage());
+						}
+
+						@Override
+						public void onSuccess(Boolean result) {
+							if (result == true) {
+								Window.alert("Dit kodeord er blevet ændret.");
+							} else if (result == false) {
+								Window.alert("Forkert brugernavn eller kodeord.");
+							}
+						}
+						
+					});
+				} else {
+					Window.alert("De to kodeord er ikke ens!");
+				}
+		}
+	}
+	
 	private class ProjectHandler implements BlurHandler {
 
 		@Override
@@ -768,7 +797,7 @@ public class Controller {
 					public void onSuccess(Bruger result) {
 						if (result == null) {
 							//TODO Skal ændres til noget label ændring eller lign
-							Window.alert("Forkert brugernavn eller kodeord");
+							Window.alert("Forkert brugernavn eller kodeord.");
 						}
 
 						ansatteService.getAnsat(result, new AsyncCallback<AnsatDTO>() {
