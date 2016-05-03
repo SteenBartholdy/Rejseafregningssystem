@@ -171,8 +171,7 @@ public class Controller {
 		asyncCity = new AsyncCallback<String>() {
 
 			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert(caught.getMessage());		
+			public void onFailure(Throwable caught) {	
 			}
 
 			@Override
@@ -185,7 +184,6 @@ public class Controller {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert(caught.getMessage());
 			}
 
 			@Override
@@ -198,7 +196,6 @@ public class Controller {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert(caught.getMessage());
 			}
 
 			@Override
@@ -211,7 +208,6 @@ public class Controller {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert(caught.getMessage());
 			}
 
 			@Override
@@ -224,7 +220,6 @@ public class Controller {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert(caught.getMessage());
 			}
 
 			@Override
@@ -910,13 +905,11 @@ public class Controller {
 			
 			@Override
 			public void onSuccess(Integer result) {
-				
-				BilagDTO bilag2 = new BilagDTO(result, rejseafregningPage.getRejseafregning().getId());
-				bilagService.deleteBilag(bilag2, asyncEmpty);
-				
+
 				for(int i = 1; i <= bilagPage.getFlexTable().getRowCount(); i++)
 				{
 					BilagDTO bilag = new BilagDTO(result+i, rejseafregningPage.getRejseafregning().getId() ,bilagPage.getTList().get(i).getText());
+					bilagService.deleteBilag(bilag, asyncEmpty);
 					if (bilag.getID() <= result)
 					{
 						bilagService.updateBilag(bilag, asyncEmpty);
