@@ -806,7 +806,6 @@ public class Controller {
 
 							@Override
 							public void onFailure(Throwable caught) {
-								Window.alert(caught.getMessage());
 							}
 
 							@Override
