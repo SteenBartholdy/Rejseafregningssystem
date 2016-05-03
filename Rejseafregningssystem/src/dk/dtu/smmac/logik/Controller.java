@@ -847,27 +847,38 @@ public class Controller {
 	
 	private class SaveBilagHandler implements ClickHandler
 	{
-
+		//TODO
 		@Override
 		public void onClick(ClickEvent event) {
-			bilagService.getSize(new AsyncCallback<Integer>() {
+			bilagService.getBilag(rejseafregningPage.getRejseafregning().getId(), new AsyncCallback<List<BilagDTO>>() {
 			
 			@Override
 			public void onFailure(Throwable caught) {
 				Window.alert(caught.getMessage());	
 			}
-			
-			@Override
-			public void onSuccess(Integer result) {
 
-				for(int i = 1; i <= bilagPage.getFlexTable().getRowCount(); i++)
+			@Override
+			public void onSuccess(List<BilagDTO> result) {
+				
+				if (!result.isEmpty())
 				{
-					BilagDTO bilag = new BilagDTO(result+i, rejseafregningPage.getRejseafregning().getId() ,bilagPage.getTList().get(i).getText());
-					bilagService.createBilag(bilag, asyncEmpty);
+					for(int i = 1; i <= bilagPage.getFlexTable().getRowCount(); i++)
+					{
+						BilagDTO bilag = new BilagDTO(i, rejseafregningPage.getRejseafregning().getId(), bilagPage.getTList().get(i).getText());
+						bilagService.deleteBilag(bilag, asyncEmpty);
+						bilagService.createBilag(bilag, asyncEmpty);
+					}
+				}
+				else {
+					for(int i = 1; i <= bilagPage.getFlexTable().getRowCount(); i++)
+					{
+						BilagDTO bilag2 = new BilagDTO(i, rejseafregningPage.getRejseafregning().getId(), bilagPage.getTList().get(i).getText());
+						bilagService.createBilag(bilag2, asyncEmpty);
+					}
 				}
 				mainView.showContentWidget(rejseafregningPage);
 			}
-		});
+			});
 		}
 	}
 
@@ -915,7 +926,7 @@ public class Controller {
 
 	private class AddBilagHandler implements ClickHandler
 	{
-
+		//TODO
 		@Override
 		public void onClick(ClickEvent event) {
 			bilagPage.addNewBilag();
