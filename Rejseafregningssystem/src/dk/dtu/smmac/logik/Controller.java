@@ -1037,5 +1037,22 @@ public class Controller {
 			}
 		});
 	}
+	
+	public void addBilag() {
+		bilagService.getSize(new AsyncCallback<Integer>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert(caught.getMessage());
+			}
+
+			@Override
+			public void onSuccess(Integer result) {
+				BilagDTO bilag = new BilagDTO(result+1, rejseafregningPage.getRejseafregning().getId());
+				bilagService.createBilag(bilag, asyncEmpty);
+				bilagPage.addBilag(bilag);
+			}
+		});
+	}
 
 }
