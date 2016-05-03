@@ -35,9 +35,11 @@ public class NyKode extends Composite
 		
 		btnTilbage = new Button("Tilbage");
 		btnTilbage.setWidth(bwidth);
+		btnTilbage.setHeight(height);
+		btnTilbage.setStyleName("marginRight");
 		btnUdfoer = new Button("Udfør");
 		btnUdfoer.setWidth(bwidth);
-		btnUdfoer.setStyleName("marginRight");
+		btnUdfoer.setHeight(height);
 		
 		tbBrugernavn = new TextBox();
 		tbBrugernavn.setWidth(lwidth);
@@ -99,6 +101,14 @@ public class NyKode extends Composite
 	public String getBrugernavnTB()
 	{
 		return tbBrugernavn.getText();
+	}
+
+	public void reset()
+	{
+		tbNyKode.setValue("");
+		tbNyKodeVeri.setValue("");
+		tbGammelKode.setValue("");
+		tbBrugernavn.setValue("");
 	}
 }
 
