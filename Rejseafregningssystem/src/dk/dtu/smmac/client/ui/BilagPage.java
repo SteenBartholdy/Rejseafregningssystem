@@ -2,10 +2,12 @@ package dk.dtu.smmac.client.ui;
 
 import java.util.List;
 
+import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.TextInputCell;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -46,6 +48,14 @@ public class BilagPage extends Composite{
 				return object.getForklaring();
 			}
 		};
+		
+		forklaringsColumn.setFieldUpdater(new FieldUpdater<BilagDTO, String>() {
+			@Override
+			public void update(int index, BilagDTO object, String value) {
+				object.setForklaring(value);
+				table.redraw();
+			}
+		});
 		
 		table.addColumn(bilagsNoColumn);
 		table.addColumn(forklaringsColumn);

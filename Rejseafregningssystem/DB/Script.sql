@@ -49,3 +49,14 @@ SELECT * FROM Bilag;
 SELECT * FROM Lande;
 
 SELECT * FROM Udgifter;
+
+SELECT COUNT(*) FROM Bilag;
+DELETE FROM Bilag WHERE BilagsNo = 1;
+DELETE FROM Bilag WHERE BilagsNo = 2;
+DELETE FROM Bilag WHERE BilagsNo = 3;
+DELETE FROM Bilag WHERE BilagsNo = 4;
+DELETE FROM Bilag WHERE BilagsNo = 5;
+DELETE FROM Bilag WHERE BilagsNo = 6;
+DELETE FROM Bilag WHERE BilagsNo = 7;
+DELETE FROM Bilag WHERE BilagsNo = 9;
+DELETE FROM Bilag WHERE BilagsNo = 10;

@@ -41,5 +41,10 @@ public class BilagDTO implements Serializable {
 	{
 		return forklaring;
 	}
+	
+	public void setForklaring(String forklaring)
+	{
+		this.forklaring = forklaring;
+	}
 
 }
