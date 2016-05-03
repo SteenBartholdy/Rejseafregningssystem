@@ -101,7 +101,7 @@ public class Udgifter extends Composite
 
 				if(!dk.dtu.smmac.shared.FieldVerifier.isValidTal(value))
 				{
-					Window.alert("Indtast venligst et nummer.");
+					Window.alert("Indtast venligst et korrekt Bilagsnummer.");
 					bilagsnummerCell.clearViewData(KEY_PROVIDER.getKey(object));
 
 					table.redraw();
