@@ -11,14 +11,13 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class NyKode extends Composite 
 {
 	private VerticalPanel vPanel = new VerticalPanel();
-	private HorizontalPanel hPanel = new HorizontalPanel();
-	private Label lNyKode, lNyKodeVeri, lGammelKode, lBrugernavn;
+	private HorizontalPanel hPanel1 = new HorizontalPanel();
+	private HorizontalPanel hPanel2 = new HorizontalPanel();
+	private Label lNyKode, lNyKodeVeri, lGammelKode, lBrugernavn, lBrugernavnHentet;
 	private Button btnTilbage, btnUdfoer, btnUsynlig;
-	private Label tbBrugernavn;
 	private PasswordTextBox tbNyKode, tbNyKodeVeri, tbGammelKode;
 	private String lwidth = "150px";
 	private String height = "20px";
-	private String bwidth = "50px";
 	
 	public NyKode()
 	{
@@ -30,24 +29,19 @@ public class NyKode extends Composite
 		lNyKode.setStyleName("boldTextPlusMargin");
 		lNyKodeVeri = new Label("Bekræft den nye adgangskode:");
 		lNyKodeVeri.setStyleName("boldTextPlusMargin");
-		lBrugernavn = new Label("Indtast brugernavn:");
+		lBrugernavn = new Label("Brugernavn:  ");
 		lBrugernavn.setStyleName("boldTextPlusMargin");
+		lBrugernavnHentet = new Label();
+		lBrugernavnHentet.setStyleName("marginButtom");
 		
 		btnTilbage = new Button("Tilbage");
-		//btnTilbage.setWidth(bwidth);
-		//btnTilbage.setHeight(height);
+		btnTilbage.setStyleName("buttonNyKode");
 		btnUdfoer = new Button("Udfør");
-		//btnUdfoer.setWidth(bwidth);
-		btnUdfoer.setStyleName("marginButtom");
-		btnUdfoer.setHeight(height);
-//		btnUsynlig = new Button();
-//		btnUsynlig.setVisible(false);
-		
-		
-		tbBrugernavn = new Label();
-		tbBrugernavn.setWidth(lwidth);
-		tbBrugernavn.setHeight(height);
-		tbBrugernavn.setStyleName("marginButtom");
+		btnUdfoer.setStyleName("buttonNyKode");
+		btnUsynlig = new Button();
+		btnUsynlig.setStyleName("buttonNyKode");
+		btnUsynlig.setVisible(false);
+				
 		tbNyKode = new PasswordTextBox();
 		tbNyKode.setWidth(lwidth);
 		tbNyKode.setHeight(height);
@@ -61,17 +55,19 @@ public class NyKode extends Composite
 		tbGammelKode.setHeight(height);
 		tbGammelKode.setStyleName("marginButtom");
 		
-		vPanel.add(lBrugernavn);
-		vPanel.add(tbBrugernavn);
+		vPanel.add(hPanel1);
+		hPanel1.add(lBrugernavn);
+		hPanel1.add(lBrugernavnHentet);
 		vPanel.add(lGammelKode);
 		vPanel.add(tbGammelKode);
 		vPanel.add(lNyKode);
 		vPanel.add(tbNyKode);
 		vPanel.add(lNyKodeVeri);
 		vPanel.add(tbNyKodeVeri);
-		//vPanel.add(hPanel);
-		vPanel.add(btnUdfoer);
-		vPanel.add(btnTilbage);	
+		vPanel.add(hPanel2);
+		hPanel2.add(btnTilbage);	
+		hPanel2.add(btnUdfoer);
+		hPanel2.add(btnUsynlig);
 		
 		vPanel.setStyleName("margin");
 	}
@@ -103,12 +99,12 @@ public class NyKode extends Composite
 
 	public String getBrugernavnTB()
 	{
-		return tbBrugernavn.getText();
+		return lBrugernavnHentet.getText();
 	}
 	
 	public void setBrugernavnL(String brugernavn) 
 	{
-		tbBrugernavn.setText(brugernavn);
+		lBrugernavnHentet.setText(brugernavn);
 	}
 
 	public void reset()
