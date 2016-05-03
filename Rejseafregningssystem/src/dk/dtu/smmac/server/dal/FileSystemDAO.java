@@ -17,17 +17,10 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import dk.dtu.smmac.client.service.FileSystemService;
 
-public class FileSystemDAO extends RemoteServiceServlet implements FileSystemService{
-
-	private String existingBucketName;
-    private String keyName;
-    private String filePath;
+public class FileSystemDAO extends RemoteServiceServlet implements FileSystemService {
 	
 	@Override
 	public void uploadFile(String bucketName, String keyName, String filePath) throws Exception {
-		this.existingBucketName = bucketName;
-		this.keyName = keyName;
-		this.filePath = filePath;
         
         AmazonS3 s3Client = new AmazonS3Client(new ProfileCredentialsProvider());        
 
@@ -37,7 +30,7 @@ public class FileSystemDAO extends RemoteServiceServlet implements FileSystemSer
 
         // Step 1: Initialize.
         InitiateMultipartUploadRequest initRequest = new 
-             InitiateMultipartUploadRequest(existingBucketName, keyName);
+             InitiateMultipartUploadRequest(bucketName, keyName);
         InitiateMultipartUploadResult initResponse = 
         	         				s3Client.initiateMultipartUpload(initRequest);
 
@@ -54,7 +47,7 @@ public class FileSystemDAO extends RemoteServiceServlet implements FileSystemSer
             	
                 // Create request to upload a part.
                 UploadPartRequest uploadRequest = new UploadPartRequest()
-                    .withBucketName(existingBucketName).withKey(keyName)
+                    .withBucketName(bucketName).withKey(keyName)
                     .withUploadId(initResponse.getUploadId()).withPartNumber(i)
                     .withFileOffset(filePosition)
                     .withFile(file)
@@ -70,7 +63,7 @@ public class FileSystemDAO extends RemoteServiceServlet implements FileSystemSer
             // Step 3: Complete.
             CompleteMultipartUploadRequest compRequest = new 
                          CompleteMultipartUploadRequest(
-                                    existingBucketName, 
+                                    bucketName, 
                                     keyName, 
                                     initResponse.getUploadId(), 
                                     partETags);
@@ -78,7 +71,7 @@ public class FileSystemDAO extends RemoteServiceServlet implements FileSystemSer
             s3Client.completeMultipartUpload(compRequest);
         } catch (Exception e) {
             s3Client.abortMultipartUpload(new AbortMultipartUploadRequest(
-                    existingBucketName, keyName, initResponse.getUploadId()));
+                    bucketName, keyName, initResponse.getUploadId()));
      }
 		
 	}
