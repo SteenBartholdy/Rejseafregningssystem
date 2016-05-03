@@ -87,7 +87,7 @@ public class Bilag extends Composite {
 		tx.setText(s);
 
 		flexTable.setWidget(numRows, 0, addLabel());
-		flexTable.setWidget(numRows, 1, addTextBox());
+		flexTable.setWidget(numRows, 1, tx);
 		flexTable.setWidget(numRows, 2, addFileButton());
 		flexTable.setWidget(numRows, 4, addSletButton(numRows));
 	}

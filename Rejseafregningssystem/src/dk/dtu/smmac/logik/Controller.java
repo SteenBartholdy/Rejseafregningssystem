@@ -831,13 +831,20 @@ public class Controller {
 				@Override
 				public void onSuccess(List<BilagDTO> result) {
 					
-					for(int i = 0; i < result.size(); i++)
+					if (result.size() > 0)
 					{
-						bilagPage.addBilagRow(bilagPage.getFlexTable(), result.get(i).getForklaring());
+						for(int i = 0; i < result.size(); i++)
+						{
+							bilagPage.addBilagRow(bilagPage.getFlexTable(), result.get(i).getForklaring());
+						}
+						mainView.showContentWidget(bilagPage);
+					}
+					else
+					{
+						mainView.showContentWidget(bilagPage);
 					}
 				}
 			});
-			mainView.showContentWidget(bilagPage);
 			
 		}
 	}
@@ -914,11 +921,6 @@ public class Controller {
 				{
 					BilagDTO bilag = new BilagDTO(result+i, rejseafregningPage.getRejseafregning().getId() ,bilagPage.getTList().get(i).getText());
 					bilagService.deleteBilag(bilag, asyncEmpty);
-					if (bilag.getID() <= result)
-					{
-						bilagService.updateBilag(bilag, asyncEmpty);
-					}
-					else if (bilag.getID() > result)
 					bilagService.createBilag(bilag, asyncEmpty);
 				}
 				mainView.showContentWidget(rejsePage);
