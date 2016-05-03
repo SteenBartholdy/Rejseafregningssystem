@@ -97,11 +97,11 @@ public class Controller {
 	private DageInfo dageInfoPage;
 
 	private Rejseafregninger rejseafregningerPage;
-	
+
 	private Udgifter udgifterPage;
-	
+
 	private AfslutningsInfo afslutningPage;
-	
+
 	private NyKode nyKodePage;
 
 	private HTML emptyView;
@@ -154,11 +154,11 @@ public class Controller {
 		dageInfoPage = mainView.getDageInfoPage();
 
 		rejseafregningerPage = mainView.getRejseafregningerPage();
-		
+
 		udgifterPage = mainView.getUdgifterPage();
-		
+
 		afslutningPage = mainView.getAfslutningsInfoPage();
-		
+
 		nyKodePage = mainView.getNykodePage();
 
 		//Async
@@ -247,7 +247,7 @@ public class Controller {
 			}
 
 		};
-		
+
 		//SelectionChangehandler
 		rejseafregningPage.getModel().addSelectionChangeHandler(new RejseClickHandler());
 		rejseafregningerPage.getModel().addSelectionChangeHandler(new RejseafregningerClickHandler());
@@ -264,7 +264,7 @@ public class Controller {
 		rejseafregningPage.getAddTravelAnchor().addClickHandler(new ShowAddTravelHandler());
 		glemtPasswordPage.getbtnSendPassword().addClickHandler(new SendPasswordHandler());
 		glemtPasswordPage.getbtnAnnullerPassword().addClickHandler(new ShowLoginHandler());
-		// bilagPage.getAddBilag().addClickHandler(new AddBilagHandler());
+		bilagPage.getAddBilag().addClickHandler(new AddBilagHandler());
 		// bilagPage.getCont().addClickHandler(new SaveBilagHandler());
 		dageInfoPage.getBtn().addClickHandler(new SaveDageInfoHandler());
 		rejsePage.getSaveButton().addClickHandler(new SaveRejseHandler());
@@ -275,7 +275,7 @@ public class Controller {
 		oplysningerPage.getBtnNyKode().addClickHandler(new ShowNyKodeHandler());
 		nyKodePage.getBtnNyKodeTilbage().addClickHandler(new ShowOplysningHandler());
 		nyKodePage.getBtnNyKodeUdfoer().addClickHandler(new ChangePasswordHandler());
-		
+
 		//BlurHandler
 		oplysningerPage.getName().addBlurHandler(new UpdateAnsatHandler());
 		oplysningerPage.getSurname().addBlurHandler(new UpdateAnsatHandler());
@@ -363,7 +363,7 @@ public class Controller {
 			}
 
 		});
-		
+
 		//Land load
 		landeService.getAllLande(new AsyncCallback<List<String>>() {
 
@@ -386,30 +386,31 @@ public class Controller {
 
 		@Override
 		public void onClick(ClickEvent event) {
-				if (nyKodePage.getNyKodeTB() == nyKodePage.getNyKodeVeriTB()) {
-					loginService.changePassword(nyKodePage.getBrugernavnTB(), nyKodePage.getGammelKodeTB(), nyKodePage.getNyKodeTB(), new AsyncCallback<Boolean>() {
+			if (nyKodePage.getNyKodeTB() == nyKodePage.getNyKodeVeriTB()) {
+				loginService.changePassword(nyKodePage.getBrugernavnTB(), nyKodePage.getGammelKodeTB(), nyKodePage.getNyKodeTB(), new AsyncCallback<Boolean>() {
 
-						@Override
-						public void onFailure(Throwable caught) {
-							Window.alert(caught.getMessage());
-						}
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert(caught.getMessage());
+					}
 
-						@Override
-						public void onSuccess(Boolean result) {
-							if (result == true) {
-								Window.alert("Dit kodeord er blevet ændret.");
-							} else if (result == false) {
-								Window.alert("Forkert brugernavn eller kodeord.");
-							}
+					@Override
+					public void onSuccess(Boolean result) {
+						if (result == true) {
+							Window.alert("Dit kodeord er blevet ændret.");
+						} else if (result == false) {
+							Window.alert("Forkert brugernavn eller kodeord.");
 						}
-						
-					});
-				} else {
-					Window.alert("De to kodeord er ikke ens!");
-				}
+					}
+
+				});
+			} else {
+				Window.alert("De to kodeord er ikke ens!");
+			}
+			nyKodePage.reset();
 		}
 	}
-	
+
 	private class ProjectHandler implements BlurHandler {
 
 		@Override
@@ -428,7 +429,7 @@ public class Controller {
 			mainView.showContentWidget(rejsePage);
 		}
 	}
-	
+
 	private class saveUdgifterHandler implements ClickHandler {
 
 		@Override
@@ -443,7 +444,7 @@ public class Controller {
 			mainView.showContentWidget(rejseafregningPage);
 		}
 	}
-	
+
 	private class RejseafregningerClickHandler implements Handler
 	{
 		@Override
@@ -478,12 +479,12 @@ public class Controller {
 							rejseafregningPage.getModel().setSelected(null, true);
 						}
 					});
-					
-					
+
+
 				}
-				
+
 			});
-			
+
 		}
 	}
 
@@ -503,11 +504,11 @@ public class Controller {
 					rejseafregningerPage.setData(result);
 					mainView.showContentWidget(rejseafregningerPage);
 				}
-				
+
 			});
 		}
 	}
-	
+
 	private class SaveDageInfoHandler implements ClickHandler {
 
 		@Override
@@ -517,7 +518,7 @@ public class Controller {
 			}
 			mainView.showContentWidget(afslutningPage);
 		}
-		
+
 	}
 
 	private class SaveRejseafregningsHandler implements ClickHandler
@@ -559,7 +560,7 @@ public class Controller {
 			rejseafregningPage.getModel().setSelected(rejse, false);
 		}
 	}
-	
+
 	private class addUdgiftHandler implements ClickHandler {
 
 		@Override
@@ -595,9 +596,9 @@ public class Controller {
 				}
 			});	
 		}
-		
+
 	}
-	
+
 	private class BankHandler implements BlurHandler
 	{
 		@Override
@@ -761,10 +762,11 @@ public class Controller {
 		@Override
 		public void onClick(ClickEvent event)
 		{
+			nyKodePage.reset();
 			mainView.showContentWidget(nyKodePage);
 		}
 	}
-	
+
 	private class LoginHandler implements ClickHandler
 	{
 
@@ -867,31 +869,31 @@ public class Controller {
 	{
 		@Override
 		public void onClick(ClickEvent event) {
-//			bilagService.getBilag(rejseafregningPage.getRejseafregning().getId(), new AsyncCallback<List<BilagDTO>>(){
-//
-//				@Override
-//				public void onFailure(Throwable caught) {
-//					Window.alert(caught.getMessage());
-//				}
-//
-//				@Override
-//				public void onSuccess(List<BilagDTO> result) {
-//					
-//					if (!result.isEmpty())
-//					{
-//						for(BilagDTO bilag : result)
-//						{
-//							bilagPage.addBilagRow(bilag.getForklaring());
-//						}
-//					}
-						mainView.showContentWidget(bilagPage);
-//				}
-//			});
-			
+			//			bilagService.getBilag(rejseafregningPage.getRejseafregning().getId(), new AsyncCallback<List<BilagDTO>>(){
+			//
+			//				@Override
+			//				public void onFailure(Throwable caught) {
+			//					Window.alert(caught.getMessage());
+			//				}
+			//
+			//				@Override
+			//				public void onSuccess(List<BilagDTO> result) {
+			//					
+			//					if (!result.isEmpty())
+			//					{
+			//						for(BilagDTO bilag : result)
+			//						{
+			//							bilagPage.addBilagRow(bilag.getForklaring());
+			//						}
+			//					}
+			mainView.showContentWidget(bilagPage);
+			//				}
+			//			});
+
 		}
 	}
-	
-	
+
+
 	/*
 	private class SaveBilagHandler implements ClickHandler
 	{
@@ -899,7 +901,7 @@ public class Controller {
 		@Override
 		public void onClick(ClickEvent event) {
 			bilagService.getBilag(rejseafregningPage.getRejseafregning().getId(), new AsyncCallback<List<BilagDTO>>() {
-			
+
 			@Override
 			public void onFailure(Throwable caught) {
 				Window.alert(caught.getMessage());	
@@ -907,7 +909,7 @@ public class Controller {
 
 			@Override
 			public void onSuccess(List<BilagDTO> result) {
-				
+
 				if (result.size() <= bilagPage.getFlexTable().getRowCount())
 				{
 					for(int i = 1; i <= result.size(); i++)
@@ -929,7 +931,7 @@ public class Controller {
 			});
 		}
 	}
-	*/
+	 */
 
 
 	private class ShowOpgaveHandler implements ClickHandler
@@ -973,18 +975,15 @@ public class Controller {
 		}
 	}
 
-	/*
 	private class AddBilagHandler implements ClickHandler
 	{
 		//TODO
 		@Override
 		public void onClick(ClickEvent event) {
-			bilagPage.addNewBilag();
-
+			addBilag();
 		}
 
 	}
-	*/
 
 	private abstract class EnterKeyHandler implements KeyDownHandler {
 		@Override
@@ -994,7 +993,7 @@ public class Controller {
 		}
 		public abstract void enterKeyDown(KeyDownEvent event);
 	}
-	
+
 	public void succesLogin(AnsatDTO result) {
 		mainView.showContentWidget(mainPage);
 		mainView.showNavWidget(navPage);
@@ -1020,7 +1019,7 @@ public class Controller {
 			}
 		});
 	}
-	
+
 	public void addUdgift() {
 		udgifterService.getSize(new AsyncCallback<Integer>() {
 
@@ -1037,7 +1036,7 @@ public class Controller {
 			}
 		});
 	}
-	
+
 	public void addBilag() {
 		bilagService.getSize(new AsyncCallback<Integer>() {
 
