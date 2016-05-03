@@ -25,6 +25,7 @@ public class LandDAO extends RemoteServiceServlet implements LandeService {
 	private PreparedStatement setLandStmt = null;
 	private PreparedStatement setTakstStmt = null;
 	private PreparedStatement getAllLandeStmt = null;
+	private PreparedStatement createLandStmt = null;
 	
 	public LandDAO() throws Exception
 	{
@@ -124,6 +125,22 @@ public class LandDAO extends RemoteServiceServlet implements LandeService {
 
 		return land;
 		
+	}
+
+	@Override
+	public void createLand(LandDTO land) throws Exception {
+		//Laver query, der opretter et land
+		createLandStmt = connection.prepareStatement("INSERT INTO Lande "
+				+ "( Land, Takst ) "
+				+ "VALUES ( ?, ? );");
+		try {
+			createLandStmt.setString(1, land.getLand());
+			createLandStmt.setInt(2, land.getTakst());
+			createLandStmt.executeUpdate();
+		} 
+		catch (SQLException sqlE) {
+			System.out.println(sqlE.getMessage());
+		} 
 	}
 
 	
