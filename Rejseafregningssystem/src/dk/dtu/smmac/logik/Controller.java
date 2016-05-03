@@ -397,7 +397,11 @@ public class Controller {
 		@Override
 		public void onClick(ClickEvent event) {
 			for (UdgifterDTO udgift : udgifterPage.getData()) {
-				udgifterService.updateUdgifter(udgift, asyncEmpty);
+				if (udgift.getUdgiftBeloeb() == null) {
+					udgifterService.deleteUdgifter(udgift, asyncEmpty);
+				} else {
+					udgifterService.updateUdgifter(udgift, asyncEmpty);
+				}
 			}
 			mainView.showContentWidget(rejseafregningPage);
 		}
