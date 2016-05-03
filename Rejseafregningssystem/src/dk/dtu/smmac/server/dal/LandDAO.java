@@ -15,13 +15,13 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import dk.dtu.smmac.client.service.LandeService;
 import dk.dtu.smmac.shared.AnsatDTO;
 import dk.dtu.smmac.shared.DageInfoDTO;
+import dk.dtu.smmac.shared.LandDTO;
 
 public class LandDAO extends RemoteServiceServlet implements LandeService {
 
 	private Connection connection = null;
 	
 	private PreparedStatement getLandStmt = null;
-	private PreparedStatement getTakstStmt = null;
 	private PreparedStatement setLandStmt = null;
 	private PreparedStatement setTakstStmt = null;
 	private PreparedStatement getAllLandeStmt = null;
@@ -39,26 +39,64 @@ public class LandDAO extends RemoteServiceServlet implements LandeService {
 	}
 	
 	@Override
-	public String getLand() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int getTakst() throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setLand(String land) throws Exception {
-		// TODO Auto-generated method stub
+	public List<LandDTO> getLandDTO(int nummer) throws Exception {
 		
+		List<LandDTO> list = null;
+		ResultSet resultSet = null;
+		
+		getLandStmt = connection.prepareStatement("SELECT * FROM Rejse INNER JOIN Lande ON Rejse.Land=Lande.Land WHERE Rejse.Nummer=?;");
+		
+		try {
+			
+			getLandStmt.setInt(1, nummer);
+			resultSet = getLandStmt.executeQuery();
+			list = new ArrayList<LandDTO>();
+			
+			while(resultSet.next())
+			{
+				list.add(new LandDTO(resultSet.getString("Lande.Land"),resultSet.getInt("Lande.Takst")));
+			}
+			
+		}catch (SQLException sqlE) {
+			System.out.println(sqlE.getMessage());
+		} 
+		
+		return list;
+	}
+
+
+	@Override
+	public void setLand(String land, String newLand) throws Exception {
+		
+		setLandStmt = connection.prepareStatement("UPDATE Lande SET Land=? WHERE Land=?");
+		
+		try {
+			
+			setLandStmt.setString(1, newLand);
+			setLandStmt.setString(2, land);
+			
+			setLandStmt.executeUpdate();
+			
+		} catch(SQLException sqlE) {
+			System.out.println(sqlE.getMessage());
+		} 
 	}
 
 	@Override
-	public void setTakst(int takst) throws Exception {
-		// TODO Auto-generated method stub
+	public void setTakst(int takst, String land) throws Exception {
+		
+		setTakstStmt = connection.prepareStatement("UPDATE Lande SET Takst=? Where Land=?");
+		
+		try {
+			
+			setTakstStmt.setInt(1, takst);
+			setTakstStmt.setString(2, land);
+			
+			setTakstStmt.executeUpdate();
+			
+		} catch(SQLException sqlE) {
+			System.out.println(sqlE.getMessage());
+		}  
 		
 	}
 

@@ -5,13 +5,14 @@ import java.util.List;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
+import dk.dtu.smmac.shared.LandDTO;
+
 @RemoteServiceRelativePath("landeservice")
 public interface LandeService extends RemoteService {
 	
-	public String getLand() throws Exception;
-	public int getTakst() throws Exception;
-	public void setLand(String land) throws Exception;
-	public void setTakst(int takst) throws Exception;
+	public List<LandDTO> getLandDTO(int nummer) throws Exception;
+	public void setLand(String land, String newLand) throws Exception;
+	public void setTakst(int takst, String land) throws Exception;
 	public List<String> getAllLande() throws Exception;
 
 }
