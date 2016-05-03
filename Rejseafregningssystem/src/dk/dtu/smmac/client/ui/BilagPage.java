@@ -1,5 +1,7 @@
 package dk.dtu.smmac.client.ui;
 
+import java.util.List;
+
 import com.google.gwt.cell.client.TextInputCell;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
@@ -83,6 +85,11 @@ public class BilagPage extends Composite{
 	public void addBilag(BilagDTO bilag)
 	{
 		dataProvider.getList().add(bilag);
+	}
+	
+	public List<BilagDTO> getData()
+	{
+		return dataProvider.getList();
 	}
 	
 }

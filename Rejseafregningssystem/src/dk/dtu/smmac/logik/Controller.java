@@ -265,7 +265,7 @@ public class Controller {
 		glemtPasswordPage.getbtnSendPassword().addClickHandler(new SendPasswordHandler());
 		glemtPasswordPage.getbtnAnnullerPassword().addClickHandler(new ShowLoginHandler());
 		bilagPage.getAddBilag().addClickHandler(new AddBilagHandler());
-		// bilagPage.getCont().addClickHandler(new SaveBilagHandler());
+		bilagPage.getSaveButton().addClickHandler(new SaveBilagHandler());
 		dageInfoPage.getBtn().addClickHandler(new SaveDageInfoHandler());
 		rejsePage.getSaveButton().addClickHandler(new SaveRejseHandler());
 		rejseafregningPage.getSaveButton().addClickHandler(new SaveRejseafregningsHandler());
@@ -894,45 +894,13 @@ public class Controller {
 	}
 
 
-	/*
 	private class SaveBilagHandler implements ClickHandler
 	{
-		//TODO
-		@Override
-		public void onClick(ClickEvent event) {
-			bilagService.getBilag(rejseafregningPage.getRejseafregning().getId(), new AsyncCallback<List<BilagDTO>>() {
 
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert(caught.getMessage());	
-			}
-
-			@Override
-			public void onSuccess(List<BilagDTO> result) {
-
-				if (result.size() <= bilagPage.getFlexTable().getRowCount())
-				{
-					for(int i = 1; i <= result.size(); i++)
-					{
-						BilagDTO bilag = new BilagDTO(i, rejseafregningPage.getRejseafregning().getId(), bilagPage.getTList().get(i).getText());
-						bilagService.updateBilag(bilag, asyncEmpty);
-					}
-				}
-				else if (result.size() > bilagPage.getFlexTable().getRowCount()){
-					for(int i = 1; i <= bilagPage.getFlexTable().getRowCount(); i++)
-					{
-						BilagDTO bilag2 = new BilagDTO(i, rejseafregningPage.getRejseafregning().getId(), bilagPage.getTList().get(i).getText());
-						bilagService.deleteBilag(bilag2, asyncEmpty);
-						bilagService.createBilag(bilag2, asyncEmpty);
-					}
-				}
-				mainView.showContentWidget(rejseafregningPage);
-			}
-			});
+			public void onClick(ClickEvent event) {
+			mainView.showContentWidget(rejseafregningPage);
 		}
 	}
-	 */
-
 
 	private class ShowOpgaveHandler implements ClickHandler
 	{
