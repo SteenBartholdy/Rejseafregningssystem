@@ -264,7 +264,7 @@ public class Controller {
 		rejseafregningPage.getAddTravelAnchor().addClickHandler(new ShowAddTravelHandler());
 		glemtPasswordPage.getbtnSendPassword().addClickHandler(new SendPasswordHandler());
 		glemtPasswordPage.getbtnAnnullerPassword().addClickHandler(new ShowLoginHandler());
-		// bilagPage.getAddBilag().addClickHandler(new AddBilagHandler());
+		bilagPage.getAddBilag().addClickHandler(new AddBilagHandler());
 		// bilagPage.getCont().addClickHandler(new SaveBilagHandler());
 		dageInfoPage.getBtn().addClickHandler(new SaveDageInfoHandler());
 		rejsePage.getSaveButton().addClickHandler(new SaveRejseHandler());
@@ -973,18 +973,15 @@ public class Controller {
 		}
 	}
 
-	/*
 	private class AddBilagHandler implements ClickHandler
 	{
 		//TODO
 		@Override
 		public void onClick(ClickEvent event) {
-			bilagPage.addNewBilag();
-
+			addBilag();
 		}
 
 	}
-	*/
 
 	private abstract class EnterKeyHandler implements KeyDownHandler {
 		@Override

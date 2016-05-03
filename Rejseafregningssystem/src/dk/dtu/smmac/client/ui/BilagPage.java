@@ -1,6 +1,8 @@
 package dk.dtu.smmac.client.ui;
 
+import com.google.gwt.cell.client.TextInputCell;
 import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -35,16 +37,16 @@ public class BilagPage extends Composite{
 			}
 		};
 		
-		TextColumn<BilagDTO> forklaringColumn = new TextColumn<BilagDTO>() {
-
+		final TextInputCell forklaringsCell = new TextInputCell();
+		Column<BilagDTO, String> forklaringsColumn = new Column<BilagDTO, String>(forklaringsCell) {
 			@Override
-			public String getValue(BilagDTO obj) {
-				return obj.getForklaring();
+			public String getValue(BilagDTO object) {
+				return object.getForklaring();
 			}
 		};
 		
 		table.addColumn(bilagsNoColumn);
-		table.addColumn(forklaringColumn);
+		//table.addColumn(forklaringsCell, "Bilagsnummer:");
 		
 		dataProvider = new ListDataProvider<BilagDTO>();
 		dataProvider.addDataDisplay(table);
