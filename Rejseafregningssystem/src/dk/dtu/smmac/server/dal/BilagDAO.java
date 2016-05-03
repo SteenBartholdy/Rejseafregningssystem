@@ -38,7 +38,7 @@ public class BilagDAO extends RemoteServiceServlet implements BilagService
 	@Override
 	public void createBilag(BilagDTO bilag) throws Exception {
 		
-		createBilagStmt = connection.prepareStatement("INSERT INTO Bilag " + "( BilagsNO, Nummer, Forklaring ) " + "VALUES ( ?, ?, ? );");
+		createBilagStmt = connection.prepareStatement("INSERT INTO Bilag ( BilagsNo, Nummer, Forklaring ) VALUES ( ?, ?, ? );");
 		
 		try {
 			createBilagStmt.setInt(1, bilag.getID());
@@ -66,7 +66,7 @@ public class BilagDAO extends RemoteServiceServlet implements BilagService
 			while(resultSet.next())
 			{
 				list.add(new BilagDTO(
-						resultSet.getInt("Id"),
+						resultSet.getInt("BilagsNo"),
 						resultSet.getInt("Nummer"),
 						resultSet.getString("Forklaring")
 						));

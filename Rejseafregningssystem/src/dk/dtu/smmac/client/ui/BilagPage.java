@@ -92,4 +92,9 @@ public class BilagPage extends Composite{
 		return dataProvider.getList();
 	}
 	
+	public void reset()
+	{
+		dataProvider.getList().clear();
+	}
+	
 }

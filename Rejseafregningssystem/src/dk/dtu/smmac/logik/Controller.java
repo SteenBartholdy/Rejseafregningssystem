@@ -435,11 +435,7 @@ public class Controller {
 		@Override
 		public void onClick(ClickEvent event) {
 			for (UdgifterDTO udgift : udgifterPage.getData()) {
-				if (udgift.getUdgiftBeloeb() == null) {
-					udgifterService.deleteUdgifter(udgift, asyncEmpty);
-				} else {
-					udgifterService.updateUdgifter(udgift, asyncEmpty);
-				}
+				udgifterService.updateUdgifter(udgift, asyncEmpty);
 			}
 			mainView.showContentWidget(rejseafregningPage);
 		}
@@ -867,35 +863,36 @@ public class Controller {
 	{
 		@Override
 		public void onClick(ClickEvent event) {
-			//			bilagService.getBilag(rejseafregningPage.getRejseafregning().getId(), new AsyncCallback<List<BilagDTO>>(){
-			//
-			//				@Override
-			//				public void onFailure(Throwable caught) {
-			//					Window.alert(caught.getMessage());
-			//				}
-			//
-			//				@Override
-			//				public void onSuccess(List<BilagDTO> result) {
-			//					
-			//					if (!result.isEmpty())
-			//					{
-			//						for(BilagDTO bilag : result)
-			//						{
-			//							bilagPage.addBilagRow(bilag.getForklaring());
-			//						}
-			//					}
-			mainView.showContentWidget(bilagPage);
-			//				}
-			//			});
+			bilagService.getBilag(rejseafregningPage.getRejseafregning().getId(), new AsyncCallback<List<BilagDTO>>() {
 
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert(caught.getMessage());
+				}
+
+				@Override
+				public void onSuccess(List<BilagDTO> result) {
+					bilagPage.reset();
+					if (result.isEmpty()) {
+						addBilag();
+					} else {
+						for (BilagDTO bilag : result) {
+							bilagPage.addBilag(bilag);
+						} 
+					}
+					mainView.showContentWidget(bilagPage);
+				}
+			});
 		}
 	}
 
 
 	private class SaveBilagHandler implements ClickHandler
 	{
-
-			public void onClick(ClickEvent event) {
+		public void onClick(ClickEvent event) {
+			for (BilagDTO bilag : bilagPage.getData()) {
+				bilagService.updateBilag(bilag, asyncEmpty);
+			}
 			mainView.showContentWidget(rejseafregningPage);
 		}
 	}
@@ -943,7 +940,6 @@ public class Controller {
 
 	private class AddBilagHandler implements ClickHandler
 	{
-		//TODO
 		@Override
 		public void onClick(ClickEvent event) {
 			addBilag();
