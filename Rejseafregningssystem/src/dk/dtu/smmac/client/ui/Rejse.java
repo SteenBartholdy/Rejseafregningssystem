@@ -23,7 +23,7 @@ public class Rejse extends Composite {
 	private ListBox country, project, assignment;
 	private DateBox date, dateTo;
 	private DateTimeFormat dateFormat;
-	private Button save;
+	private Button save, back;
 	private List<String> projekt, opgave, land;
 	private RejseDTO rejse;
 
@@ -51,6 +51,7 @@ public class Rejse extends Composite {
 		assignment = new ListBox();
 		
 		save = new Button("Fortsæt");
+		back = new Button("Tilbage");
 
 		dateFormat = DateTimeFormat.getFormat("dd/MM-yyyy");
 
@@ -74,6 +75,7 @@ public class Rejse extends Composite {
 		vPanel.add(fTable);
 		save.addStyleName("alignButtomRight");
 		vPanel.add(save);
+		vPanel.add(back);
 	}
 	
 	public void setRejse(RejseDTO rejse) {
@@ -185,6 +187,10 @@ public class Rejse extends Composite {
 	public Button getSaveButton()
 	{
 		return save;
+	}
+	
+	public Button getBackButton() {
+		return back;
 	}
 	
 	public String getCountry() {

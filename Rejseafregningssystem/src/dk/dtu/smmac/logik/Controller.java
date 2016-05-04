@@ -277,6 +277,7 @@ public class Controller {
 		nyKodePage.getBtnNyKodeUdfoer().addClickHandler(new ChangePasswordHandler());
 		afslutningPage.getGodkendButton().addClickHandler(new GodkendHandler());
 		afslutningPage.getAfvisButton().addClickHandler(new AfvisHandler());
+		rejsePage.getBackButton().addClickHandler(new RejseBackHandler());
 
 		//BlurHandler
 		oplysningerPage.getName().addBlurHandler(new UpdateAnsatHandler());
@@ -422,6 +423,25 @@ public class Controller {
 			mainView.showContentWidget(mainPage);
 		}
 	}
+	
+	private class RejseBackHandler implements ClickHandler {
+//TODO virker ikke?
+		@Override
+		public void onClick(ClickEvent event) {
+			rejseService.deleteRejse(rejsePage.getRejse(), new AsyncCallback<Void>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert(caught.getMessage());
+				}
+
+				@Override
+				public void onSuccess(Void result) {
+					mainView.showContentWidget(rejseafregningPage);
+				}
+			});
+		}
+	}
 
 	private class ChangePasswordHandler implements ClickHandler {
 
@@ -467,7 +487,6 @@ public class Controller {
 			RejseDTO rejse = rejseafregningPage.getModel().getSelectedObject();
 			rejsePage.setRejse(rejse);
 			projektopgaveService.getOpgave(rejse.getProjekt(), asyncOpgave);
-			//TODO skal loade bilag og udgift
 			bilagService.getBilag(rejseafregningPage.getRejseafregning().getId(), new AsyncCallback<List<BilagDTO>>() {
 
 				@Override
@@ -555,12 +574,8 @@ public class Controller {
 							rejseafregningPage.getModel().setSelected(null, true);
 						}
 					});
-
-
 				}
-
 			});
-
 		}
 	}
 
@@ -999,7 +1014,7 @@ public class Controller {
 	{
 		@Override
 		public void onClick(ClickEvent event) {
-			rejseService.getSize(new AsyncCallback<Integer>() {
+			rejseService.getLast(new AsyncCallback<Integer>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -1063,7 +1078,7 @@ public class Controller {
 	}
 
 	public void addUdgift() {
-		udgifterService.getSize(new AsyncCallback<Integer>() {
+		udgifterService.getLast(new AsyncCallback<Integer>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -1080,7 +1095,7 @@ public class Controller {
 	}
 
 	public void addBilag() {
-		bilagService.getSize(new AsyncCallback<Integer>() {
+		bilagService.getLast(new AsyncCallback<Integer>() {
 
 			@Override
 			public void onFailure(Throwable caught) {

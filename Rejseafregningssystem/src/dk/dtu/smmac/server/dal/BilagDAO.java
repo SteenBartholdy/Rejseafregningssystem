@@ -23,6 +23,7 @@ public class BilagDAO extends RemoteServiceServlet implements BilagService
 	private PreparedStatement deleteBilagStmt = null;
 	private PreparedStatement getSizeStmt = null;
 	private PreparedStatement updateBilagStmt = null;
+	private PreparedStatement getLastStmt = null;
 	
 	public BilagDAO() throws Exception
 	{
@@ -133,5 +134,22 @@ public class BilagDAO extends RemoteServiceServlet implements BilagService
 		catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
 		} 	
+	}
+	
+	@Override
+	public int getLast() throws Exception {
+		getLastStmt = connection.prepareStatement("SELECT BilagsNo FROM Bilag ORDER BY BilagsNo DESC LIMIT 1;");
+		
+		ResultSet resultSet = null;
+		
+		try {
+			resultSet = getLastStmt.executeQuery();
+			resultSet.next();
+			return resultSet.getInt(1);
+		} catch (SQLException sqlE) {
+			System.out.println(sqlE.getMessage());
+		}
+		
+		return 0;
 	}
 }

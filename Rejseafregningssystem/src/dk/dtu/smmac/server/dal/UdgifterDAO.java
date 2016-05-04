@@ -21,6 +21,7 @@ public class UdgifterDAO extends RemoteServiceServlet implements UdgifterService
 	private PreparedStatement createUdgifterStmt = null;
 	private PreparedStatement deleteUdgifterStmt = null;
 	private PreparedStatement getSizeStmt = null;
+	private PreparedStatement getLastStmt = null;
 	
 	public UdgifterDAO() throws Exception
 	{
@@ -152,6 +153,23 @@ public class UdgifterDAO extends RemoteServiceServlet implements UdgifterService
 		} catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
 		}
+		return 0;
+	}
+	
+	@Override
+	public int getLast() throws Exception {
+		getLastStmt = connection.prepareStatement("SELECT Id FROM Udgifter ORDER BY Id DESC LIMIT 1;");
+		
+		ResultSet resultSet = null;
+		
+		try {
+			resultSet = getLastStmt.executeQuery();
+			resultSet.next();
+			return resultSet.getInt(1);
+		} catch (SQLException sqlE) {
+			System.out.println(sqlE.getMessage());
+		}
+		
 		return 0;
 	}
 }

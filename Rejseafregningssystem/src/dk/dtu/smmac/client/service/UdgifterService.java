@@ -15,4 +15,5 @@ public interface UdgifterService extends RemoteService
 	public void createUdgifter(UdgifterDTO udgift) throws Exception;
 	public void deleteUdgifter(UdgifterDTO udgift) throws Exception;
 	public int getSize() throws Exception;	
+	public int getLast() throws Exception;
 }

@@ -9,5 +9,5 @@ public interface BankServiceAsync {
 	void updateBank(BankDTO bank, AsyncCallback<Void> callback);
 	void createBank(BankDTO bank, AsyncCallback<Void> callback);
 	void getBank(int id, AsyncCallback<BankDTO> callback);
-	
+
 }

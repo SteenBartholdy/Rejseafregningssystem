@@ -11,4 +11,5 @@ public interface UdgifterServiceAsync
 	void createUdgifter(UdgifterDTO udgift, AsyncCallback<Void> callback);
 	void deleteUdgifter(UdgifterDTO udgift, AsyncCallback<Void> callback);
 	void getSize(AsyncCallback<Integer> callback);
+	void getLast(AsyncCallback<Integer> callback);
 }

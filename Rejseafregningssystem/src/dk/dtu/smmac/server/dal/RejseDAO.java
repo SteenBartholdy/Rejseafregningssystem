@@ -25,6 +25,7 @@ public class RejseDAO extends RemoteServiceServlet implements RejseService
 	private PreparedStatement createRejseStmt = null;
 	private PreparedStatement deleteRejseStmt = null;
 	private PreparedStatement getSizeStmt = null;
+	private PreparedStatement getLastStmt = null;
 	
 	public RejseDAO() throws Exception {
 		try {
@@ -46,9 +47,6 @@ public class RejseDAO extends RemoteServiceServlet implements RejseService
 			createRejseStmt = connection.prepareStatement("INSERT INTO Rejse "
 					+ "( RejseID, Nummer, Land, DatoFra, DatoTil, Projekt, Opgave) "
 					+ "VALUES ( ?, ?, ?, ?, ?, ?, ? );");
-
-			//Laver query, der sletter en rejse
-			deleteRejseStmt = connection.prepareStatement("DELETE FROM Rejse WHERE RejseID = ? AND Nummer = ?;");
 
 			//Laver query, der finder størrelsen på tabellen
 			getSizeStmt = connection.prepareStatement("SELECT COUNT(*) FROM Rejse;");
@@ -139,8 +137,12 @@ public class RejseDAO extends RemoteServiceServlet implements RejseService
 	@Override
 	public void deleteRejse(RejseDTO rejse) throws Exception 
 	{
+		//Laver query, der sletter en rejse
+		deleteRejseStmt = connection.prepareStatement("DELETE FROM Rejse WHERE RejseID = ? AND Nummer = ?;");
+		
 		try {
 			deleteRejseStmt.setInt(1, rejse.getRejseID());
+			deleteRejseStmt.setInt(2, rejse.getNummer());
 
 			deleteRejseStmt.executeUpdate();
 		} 
@@ -193,6 +195,23 @@ public class RejseDAO extends RemoteServiceServlet implements RejseService
 		}
 		
 		return list;
+	}
+	
+	@Override
+	public int getLast() throws Exception {
+		getLastStmt = connection.prepareStatement("SELECT RejseID FROM Rejse ORDER BY RejseID DESC LIMIT 1;");
+		
+		ResultSet resultSet = null;
+		
+		try {
+			resultSet = getLastStmt.executeQuery();
+			resultSet.next();
+			return resultSet.getInt(1);
+		} catch (SQLException sqlE) {
+			System.out.println(sqlE.getMessage());
+		}
+		
+		return 0;
 	}
 	
 }
