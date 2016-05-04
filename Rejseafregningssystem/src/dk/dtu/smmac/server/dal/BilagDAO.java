@@ -92,8 +92,8 @@ public class BilagDAO extends RemoteServiceServlet implements BilagService
 		deleteBilagStmt = connection.prepareStatement("DELETE FROM Bilag WHERE Nummer = ? AND BilagsNo = ?;");
 		
 		try {
-			deleteBilagStmt.setInt(1, bilag.getID());
-			deleteBilagStmt.setInt(2, bilag.getNr());
+			deleteBilagStmt.setInt(1, bilag.getNr());
+			deleteBilagStmt.setInt(2, bilag.getID());
 
 			deleteBilagStmt.executeUpdate();
 		} 

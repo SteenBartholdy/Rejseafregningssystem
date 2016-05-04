@@ -3,12 +3,12 @@ package dk.dtu.smmac.client.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.cell.client.ButtonCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.SelectionCell;
 import com.google.gwt.cell.client.TextInputCell;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
-import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
@@ -23,10 +23,11 @@ import dk.dtu.smmac.shared.UdgifterDTO;
 public class Udgifter extends Composite
 {
 	private VerticalPanel vPanel = new VerticalPanel();
+	private HorizontalPanel hPanel = new HorizontalPanel();
 	private Button btnTilbage, btnNyUdgift;
 	private CellTable<UdgifterDTO> table;
 	private ListDataProvider<UdgifterDTO> dataProvider;
-
+	private Column<UdgifterDTO, String> buttonColumn;
 
 	private static final ProvidesKey<UdgifterDTO> KEY_PROVIDER = new ProvidesKey<UdgifterDTO>() {
 		@Override
@@ -52,7 +53,7 @@ public class Udgifter extends Composite
 		initWidget(this.vPanel);
 
 		btnTilbage = new Button("Tilbage");
-		btnNyUdgift = new Button("Tilføj ny udgift");
+		btnNyUdgift = new Button("Tilføj");
 
 		// **** Add column that shows "Udgiftstype" ****
 
@@ -166,13 +167,27 @@ public class Udgifter extends Composite
 				table.redraw();
 			}
 		});
+		
+		ButtonCell buttonCell = new ButtonCell();
+		buttonColumn = new Column<UdgifterDTO, String>(buttonCell) {
+		  @Override
+		  public String getValue(UdgifterDTO object) {
+		    return "Slet";
+		  }
+		};
+		table.addColumn(buttonColumn, "Slet");
 
 		vPanel.setStyleName("margin");
 		vPanel.add(table);
-		vPanel.add(btnNyUdgift);
-		btnNyUdgift.setStyleName("marginTop");
-		vPanel.add(btnTilbage);
-		btnTilbage.setStyleName("marginTop");
+		vPanel.add(hPanel);
+		hPanel.add(btnTilbage);
+		hPanel.add(btnNyUdgift);
+		btnTilbage.setStyleName("marginRight");
+		btnNyUdgift.setStyleName("marginLeft");
+	}
+	
+	public Column<UdgifterDTO, String> getButtonColumn() {
+		return buttonColumn;
 	}
 
 	public Button getBtnNyUdgift()

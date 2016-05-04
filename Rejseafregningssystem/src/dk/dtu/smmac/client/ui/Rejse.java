@@ -52,8 +52,8 @@ public class Rejse extends Composite {
 		project = new ListBox();
 		assignment = new ListBox();
 		
-		save = new Button("Fortsæt");
-		back = new Button("Tilbage");
+		save = new Button("Gem");
+		back = new Button("Slet");
 
 		dateFormat = DateTimeFormat.getFormat("dd/MM-yyyy");
 

@@ -2,6 +2,7 @@ package dk.dtu.smmac.logik;
 
 import java.util.List;
 
+import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.BlurEvent;
 import com.google.gwt.event.dom.client.BlurHandler;
@@ -247,6 +248,20 @@ public class Controller {
 			}
 
 		};
+		
+		//ButtonColumn
+		udgifterPage.getButtonColumn().setFieldUpdater(new FieldUpdater<UdgifterDTO, String>() {
+			  public void update(int index, UdgifterDTO object, String value) {
+			    udgifterService.deleteUdgifter(object, asyncEmpty);
+			    udgifterPage.getData().remove(index);
+			  }
+			});
+		bilagPage.getButtonColumn().setFieldUpdater(new FieldUpdater<BilagDTO, String>() {
+			  public void update(int index, BilagDTO object, String value) {
+			    bilagService.deleteBilag(object, asyncEmpty);
+			    bilagPage.getData().remove(index);
+			  }
+			});
 
 		//SelectionChangehandler
 		rejseafregningPage.getModel().addSelectionChangeHandler(new RejseClickHandler());
@@ -390,7 +405,7 @@ public class Controller {
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Skal sætte registrering til anvisning
-			mainView.showContentWidget(rejseafregningerPage);
+			showRejseafregninger();
 		}
 	}
 	
@@ -399,6 +414,7 @@ public class Controller {
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Mangler at delete den pågældende registrering
+			//Ikke testet ordenligt igennem
 			//Sletter rejsedage
 			for (DageInfoDTO dag : dageInfoPage.getData()) {
 				dageInfoService.deleteDageInfo(dag, asyncEmpty);
@@ -573,20 +589,7 @@ public class Controller {
 	{
 		@Override
 		public void onClick(ClickEvent event) {
-			rejseafregningService.getRejser(oplysningerPage.getAnsat().getID(), new AsyncCallback<List<RejseafregningerDTO>>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					Window.alert(caught.getMessage());
-				}
-
-				@Override
-				public void onSuccess(List<RejseafregningerDTO> result) {
-					rejseafregningerPage.setData(result);
-					mainView.showContentWidget(rejseafregningerPage);
-				}
-
-			});
+			showRejseafregninger();
 		}
 	}
 
@@ -1097,6 +1100,22 @@ public class Controller {
 				BilagDTO bilag = new BilagDTO(result+1, rejseafregningPage.getRejseafregning().getId());
 				bilagService.createBilag(bilag, asyncEmpty);
 				bilagPage.addBilag(bilag);
+			}
+		});
+	}
+	
+	public void showRejseafregninger() {
+		rejseafregningService.getRejser(oplysningerPage.getAnsat().getID(), new AsyncCallback<List<RejseafregningerDTO>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert(caught.getMessage());
+			}
+
+			@Override
+			public void onSuccess(List<RejseafregningerDTO> result) {
+				rejseafregningerPage.setData(result);
+				mainView.showContentWidget(rejseafregningerPage);
 			}
 		});
 	}

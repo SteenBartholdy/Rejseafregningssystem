@@ -2,6 +2,7 @@ package dk.dtu.smmac.client.ui;
 
 import java.util.List;
 
+import com.google.gwt.cell.client.ButtonCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.TextInputCell;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -16,18 +17,21 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FormPanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 
 import dk.dtu.smmac.shared.BilagDTO;
+import dk.dtu.smmac.shared.UdgifterDTO;
 
 public class BilagPage extends Composite{
 	
 	private VerticalPanel vPanel = new VerticalPanel();
+	private HorizontalPanel hPanel = new HorizontalPanel();
 	private ListDataProvider<BilagDTO> dataProvider;
 	private CellTable<BilagDTO> table;
-	private Anchor addBilag;
-	private Button save;
+	private Button save, add;
+	private Column<BilagDTO, String> buttonColumn;
 	
 	public BilagPage() {
 		
@@ -59,30 +63,41 @@ public class BilagPage extends Composite{
 			}
 		});
 		
+		ButtonCell buttonCell = new ButtonCell();
+		buttonColumn = new Column<BilagDTO, String>(buttonCell) {
+		  @Override
+		  public String getValue(BilagDTO object) {
+		    return "Slet";
+		  }
+		};
+		
 		table.addColumn(bilagsNoColumn);
 		table.addColumn(forklaringsColumn);
+		table.addColumn(buttonColumn, "Slet");
 		
 		dataProvider = new ListDataProvider<BilagDTO>();
 		dataProvider.addDataDisplay(table);
 		
-		addBilag = new Anchor();
-		addBilag.setText("Tilføj bilag");
-		addBilag.setStyleName("anchorStyle");
-		
-		save = new Button();
-		save.setText("Fortsæt");
-		save.setStyleName("alignButtom");
+		add = new Button("Tilføj");
+		save = new Button("Tilbage");
 		
 		vPanel.setStyleName("margin");
 
 		vPanel.add(table);	
-		vPanel.add(addBilag);
-		vPanel.add(save);
+		vPanel.add(hPanel);
+		hPanel.add(save);
+		hPanel.add(add);
+		save.setStyleName("marginLeft");
+		add.setStyleName("marginRight");
 	}
 	
-	public Anchor getAddBilag()
+	public Column<BilagDTO, String> getButtonColumn() {
+		return buttonColumn;
+	}
+	
+	public Button getAddBilag()
 	{
-		return addBilag;
+		return add;
 	}
 	
 	public CellTable<BilagDTO> getTable() {
