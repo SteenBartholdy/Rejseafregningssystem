@@ -179,7 +179,7 @@ public class RejseDAO extends RemoteServiceServlet implements RejseService
 			list = new ArrayList<RejseDTO>();
 			
 			while(resultSet.next()) {
-				list.add(new RejseDTO(
+				RejseDTO rejse = new RejseDTO(
 						resultSet.getInt("RejseID"),
 						resultSet.getInt("Nummer"),
 						resultSet.getString("Land"),
@@ -187,7 +187,12 @@ public class RejseDAO extends RemoteServiceServlet implements RejseService
 						resultSet.getDate("DatoTil"),
 						resultSet.getString("Projekt"),
 						resultSet.getString("Opgave")
-						));
+						);
+				if (rejse.getLand() == null) {
+					deleteRejse(rejse);
+				} else {
+					list.add(rejse);
+				}
 			}
 			
 		} catch (SQLException sqlE) {

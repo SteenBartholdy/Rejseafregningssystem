@@ -135,7 +135,11 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 						resultSet.getDate("Rejse.DatoTil")
 						);
 				
-				list.add(rejse);
+				if (rejse.getLand() == null) {
+					
+				} else {
+					list.add(rejse);
+				}
 			}
 			
 			for (RejseafregningerDTO rejsen : list) {
