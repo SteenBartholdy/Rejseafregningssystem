@@ -1,13 +1,15 @@
 package dk.dtu.smmac.client.ui;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.core.client.GWT;
+import com.google.gwt.cell.client.ButtonCell;
+import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.cell.client.TextInputCell;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.thirdparty.javascript.rhino.head.ast.FunctionNode.Form;
+import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.Column;
+import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -15,183 +17,111 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FormPanel;
-import com.google.gwt.user.client.ui.Frame;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ScrollPanel;
-import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.ListDataProvider;
 
+import dk.dtu.smmac.shared.BilagDTO;
+import dk.dtu.smmac.shared.UdgifterDTO;
 
-public class Bilag extends Composite {
+public class Bilag extends Composite{
 	
-	private final FormPanel form = new FormPanel();
 	private VerticalPanel vPanel = new VerticalPanel();
-	private FlexTable fTable;
-	private Button cont;
-	private Anchor addBilag;
-	private List<Button> bList;
-	private List<HandlerRegistration> hList;
-	private List<FileUpload> fList;
-	private List<TextBox> tList;
-	private List<Label> lList;
+	private HorizontalPanel hPanel = new HorizontalPanel();
+	private ListDataProvider<BilagDTO> dataProvider;
+	private CellTable<BilagDTO> table;
+	private Button save, add;
+	private Column<BilagDTO, String> buttonColumn;
 	
-	public Bilag()
-	{
-		initWidget(vPanel);
+	public Bilag() {
 		
-		fTable = new FlexTable();
+		initWidget(this.vPanel);
 
-		form.setEncoding(FormPanel.ENCODING_MULTIPART);
-	    form.setMethod(FormPanel.METHOD_POST);
-	    form.setSize("100%", "100%");
-	    
-	    form.setWidget(fTable);
+		table = new CellTable<BilagDTO>();
 		
-		bList = new ArrayList<Button>();
-		hList = new ArrayList<HandlerRegistration>();
-		fList = new ArrayList<FileUpload>();
-		tList = new ArrayList<TextBox>();
-		lList = new ArrayList<Label>();
+		TextColumn<BilagDTO> bilagsNoColumn = new TextColumn<BilagDTO>() {
 
-		addBilag = new Anchor();
-		addBilag.setText("Tilføj bilag");
+			@Override
+			public String getValue(BilagDTO obj) {
+				return "Bilag " + obj.getID();
+			}
+		};
 		
-		cont = new Button();
-		cont.setText("Forstæt");
-		cont.setStyleName("marginTop");
+		final TextInputCell forklaringsCell = new TextInputCell();
+		Column<BilagDTO, String> forklaringsColumn = new Column<BilagDTO, String>(forklaringsCell) {
+			@Override
+			public String getValue(BilagDTO object) {
+				return object.getForklaring();
+			}
+		};
 		
-		fTable.setStyleName("flextable");
+		forklaringsColumn.setFieldUpdater(new FieldUpdater<BilagDTO, String>() {
+			@Override
+			public void update(int index, BilagDTO object, String value) {
+				object.setForklaring(value);
+				table.redraw();
+			}
+		});
+		
+		ButtonCell buttonCell = new ButtonCell();
+		buttonColumn = new Column<BilagDTO, String>(buttonCell) {
+		  @Override
+		  public String getValue(BilagDTO object) {
+		    return "Slet";
+		  }
+		};
+		
+		table.addColumn(bilagsNoColumn);
+		table.addColumn(forklaringsColumn);
+		table.addColumn(buttonColumn, "Slet");
+		
+		dataProvider = new ListDataProvider<BilagDTO>();
+		dataProvider.addDataDisplay(table);
+		
+		add = new Button("Tilføj");
+		save = new Button("Tilbage");
 		
 		vPanel.setStyleName("margin");
-		
-		vPanel.add(fTable);
-		vPanel.add(addBilag);
-		vPanel.add(cont);
-	}
-	
-	public void addNewBilag()
-	{
-		int numRows = fTable.getRowCount();
 
-		fTable.setWidget(numRows, 0, addLabel());
-		fTable.setWidget(numRows, 1, addTextBox());
-		fTable.setWidget(numRows, 2, addFileButton());
-		fTable.setWidget(numRows, 4, addSletButton(numRows));
+		vPanel.add(table);	
+		vPanel.add(hPanel);
+		hPanel.add(save);
+		hPanel.add(add);
+		save.setStyleName("marginLeft");
+		add.setStyleName("marginRight");
 	}
 	
-	public void addBilagRow(String s)
-	{
-		int numRows = fTable.getRowCount();
-		
-		TextBox tx = new TextBox();
-		tx.setText(s);
-
-		fTable.setWidget(numRows, 0, addLabel());
-		fTable.setWidget(numRows, 1, tx);
-		fTable.setWidget(numRows, 2, addFileButton());
-		fTable.setWidget(numRows, 4, addSletButton(numRows));
+	public Column<BilagDTO, String> getButtonColumn() {
+		return buttonColumn;
 	}
 	
-	public static void deleteNewBilag(FlexTable flextable)
+	public Button getAddBilag()
 	{
-		flextable.removeRow(flextable.getRowCount());
+		return add;
 	}
 	
-	public void deleteNewBilag(FlexTable flexTable, int i)
-	{
-		flexTable.removeRow(i);
-		bList.remove(i);
-		lList.remove(i);
-		updateLabels(lList);
-		clickHandler(bList, hList);
-	}
-
-	public Anchor getAddBilag()
-	{
-		return addBilag;
-	}
-
-	public FlexTable getFlexTable()
-	{
-		return fTable;
+	public CellTable<BilagDTO> getTable() {
+		return this.table;
 	}
 	
-	public List<TextBox> getTList()
+	public Button getSaveButton() 
 	{
-		return tList;
+		return save;
 	}
 	
-	public Button getCont()
+	public void addBilag(BilagDTO bilag)
 	{
-		return cont;
+		dataProvider.getList().add(bilag);
 	}
 	
-	public Label addLabel()
+	public List<BilagDTO> getData()
 	{
-		Label l = new Label();
-		lList.add(l);
-		l.setText("Bilag: " + lList.size());
-		
-		return l;
+		return dataProvider.getList();
 	}
 	
-	public Button addSletButton(int row)
+	public void reset()
 	{
-		Button b = new Button();
-		bList.add(b);
-		hList.add(addClickHandlerDelete(b, row));
-		
-		b.setText("Slet");
-		return b;
+		dataProvider.getList().clear();
 	}
 	
-	public FileUpload addFileButton()
-	{
-		FileUpload file = new FileUpload();
-		fList.add(file);
-		
-		file.setName("Tilføj fil");
-		return file;
-	}
-	
-	public TextBox addTextBox()
-	{
-		TextBox t = new TextBox();
-		tList.add(t);
-		
-		t.setSize("500px", "20px");
-		return t;
-	}
-	
-	public void clickHandler(List<Button> b, List<HandlerRegistration> h)
-	{
-		for (int i = 0; i <= hList.size(); i++){
-			final int x = i;
-			hList.get(x).removeHandler();
-			hList.remove(x);
-			hList.add(x, addClickHandlerDelete(b.get(x), x));
-		}
-	}
-	
-	public HandlerRegistration addClickHandlerDelete(Button b, int i)
-	{
-		HandlerRegistration handler;
-		final int x = i;
-		handler = b.addClickHandler(new ClickHandler(){
-					@Override
-					public void onClick(ClickEvent event) {
-						deleteNewBilag(fTable, x);
-				}
-		});
-		return handler;
-	}
-	
-	public void updateLabels(List<Label> l)
-	{
-		int x;
-		for (int i = 0; i < l.size(); i++){
-			x = i+1;
-			l.get(i).setText("Bilag: " + x);
-		}
-	}
 }

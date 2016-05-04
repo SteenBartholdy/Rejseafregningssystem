@@ -47,7 +47,7 @@ import dk.dtu.smmac.client.service.UdgifterService;
 import dk.dtu.smmac.client.service.UdgifterServiceAsync;
 import dk.dtu.smmac.client.ui.AfslutningsInfo;
 import dk.dtu.smmac.client.ui.Bilag;
-import dk.dtu.smmac.client.ui.BilagPage;
+import dk.dtu.smmac.client.ui.Bilag;
 import dk.dtu.smmac.client.ui.DageInfo;
 import dk.dtu.smmac.client.ui.GlemtPassword;
 import dk.dtu.smmac.client.ui.LoginPage;
@@ -85,7 +85,7 @@ public class Controller {
 
 	private MainPage mainPage;
 
-	private BilagPage bilagPage;
+	private Bilag bilagPage;
 
 	private Oplysninger oplysningerPage;
 
@@ -248,20 +248,20 @@ public class Controller {
 			}
 
 		};
-		
+
 		//ButtonColumn
 		udgifterPage.getButtonColumn().setFieldUpdater(new FieldUpdater<UdgifterDTO, String>() {
-			  public void update(int index, UdgifterDTO object, String value) {
-			    udgifterService.deleteUdgifter(object, asyncEmpty);
-			    udgifterPage.getData().remove(index);
-			  }
-			});
+			public void update(int index, UdgifterDTO object, String value) {
+				udgifterService.deleteUdgifter(object, asyncEmpty);
+				udgifterPage.getData().remove(index);
+			}
+		});
 		bilagPage.getButtonColumn().setFieldUpdater(new FieldUpdater<BilagDTO, String>() {
-			  public void update(int index, BilagDTO object, String value) {
-			    bilagService.deleteBilag(object, asyncEmpty);
-			    bilagPage.getData().remove(index);
-			  }
-			});
+			public void update(int index, BilagDTO object, String value) {
+				bilagService.deleteBilag(object, asyncEmpty);
+				bilagPage.getData().remove(index);
+			}
+		});
 
 		//SelectionChangehandler
 		rejseafregningPage.getModel().addSelectionChangeHandler(new RejseClickHandler());
@@ -399,7 +399,7 @@ public class Controller {
 		//Rootpanel
 		RootLayoutPanel.get().add(mainView);
 	}
-	
+
 	private class GodkendHandler implements ClickHandler {
 
 		@Override
@@ -408,7 +408,7 @@ public class Controller {
 			showRejseafregninger();
 		}
 	}
-	
+
 	private class AfvisHandler implements ClickHandler {
 
 		@Override
@@ -433,19 +433,38 @@ public class Controller {
 			}
 			//Sletter rejseafregning
 			rejseafregningService.deleteRejse(rejseafregningPage.getRejseafregning(), asyncEmpty);
-			
+
 			Window.alert("Din rejseafregning er blevet slettet!");
-			
+
 			mainView.showContentWidget(mainPage);
 		}
 	}
-	
+
 	private class RejseBackHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			rejseService.deleteRejse(rejsePage.getRejse(), asyncEmpty);
-			mainView.showContentWidget(rejseafregningPage);
+			RejseDTO rejse = rejsePage.getRejse();
+			rejseService.deleteRejse(rejse, asyncEmpty);
+			rejseafregningPage.reset();
+			rejseService.getRejser(rejse.getNummer(), new AsyncCallback<List<RejseDTO>>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert(caught.getMessage());
+				}
+
+				@Override
+				public void onSuccess(List<RejseDTO> result) {
+					for(RejseDTO rejse : result) {
+						rejseafregningPage.addTravelSummary(rejse);
+					}
+					rejseafregningPage.setStartDateLabel();
+					rejseafregningPage.setEndDateLabel();
+					mainView.showContentWidget(rejseafregningPage);
+					rejseafregningPage.getModel().setSelected(null, true);
+				}
+			});
 		}
 	}
 
@@ -493,44 +512,6 @@ public class Controller {
 			RejseDTO rejse = rejseafregningPage.getModel().getSelectedObject();
 			rejsePage.setRejse(rejse);
 			projektopgaveService.getOpgave(rejse.getProjekt(), asyncOpgave);
-			bilagService.getBilag(rejseafregningPage.getRejseafregning().getId(), new AsyncCallback<List<BilagDTO>>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					Window.alert(caught.getMessage());
-				}
-
-				@Override
-				public void onSuccess(List<BilagDTO> result) {
-					bilagPage.reset();
-					if (result.isEmpty()) {
-						addBilag();
-					} else {
-						for (BilagDTO bilag : result) {
-							bilagPage.addBilag(bilag);
-						} 
-					}
-				}
-			});
-			udgifterService.getUdgifter(rejseafregningPage.getRejseafregning().getId(), new AsyncCallback<List<UdgifterDTO>>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					Window.alert(caught.getMessage());	
-				}
-
-				@Override
-				public void onSuccess(List<UdgifterDTO> result) {
-					udgifterPage.reset();
-					if (result.isEmpty()) {
-						addUdgift();
-					} else {
-						for (UdgifterDTO udgift : result) {
-							udgifterPage.addUdgiftPost(udgift);
-						}
-					}
-				}
-			});
 			mainView.showContentWidget(rejsePage);
 		}
 	}
@@ -580,6 +561,44 @@ public class Controller {
 							rejseafregningPage.getModel().setSelected(null, true);
 						}
 					});
+				}
+			});
+			bilagService.getBilag(rejseafregningPage.getRejseafregning().getId(), new AsyncCallback<List<BilagDTO>>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert(caught.getMessage());
+				}
+
+				@Override
+				public void onSuccess(List<BilagDTO> result) {
+					bilagPage.reset();
+					if (result.isEmpty()) {
+						addBilag();
+					} else {
+						for (BilagDTO bilag : result) {
+							bilagPage.addBilag(bilag);
+						} 
+					}
+				}
+			});
+			udgifterService.getUdgifter(rejseafregningPage.getRejseafregning().getId(), new AsyncCallback<List<UdgifterDTO>>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert(caught.getMessage());	
+				}
+
+				@Override
+				public void onSuccess(List<UdgifterDTO> result) {
+					udgifterPage.reset();
+					if (result.isEmpty()) {
+						addUdgift();
+					} else {
+						for (UdgifterDTO udgift : result) {
+							udgifterPage.addUdgiftPost(udgift);
+						}
+					}
 				}
 			});
 		}
@@ -1103,7 +1122,7 @@ public class Controller {
 			}
 		});
 	}
-	
+
 	public void showRejseafregninger() {
 		rejseafregningService.getRejser(oplysningerPage.getAnsat().getID(), new AsyncCallback<List<RejseafregningerDTO>>() {
 
