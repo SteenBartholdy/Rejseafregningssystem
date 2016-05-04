@@ -27,6 +27,7 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 	private PreparedStatement createRejsStmt = null;
 	private PreparedStatement getSizeStmt = null;
 	private PreparedStatement getLastStmt = null;
+	private PreparedStatement deleteRejseStmt = null;
 
 	public RejseafregningDAO() throws Exception {
 		try {
@@ -184,7 +185,7 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 
 	@Override
 	public int getLast() throws Exception {
-		getLastStmt = connection.prepareStatement("SELECT LAST(Nummer) FROM Rejseafregning;");
+		getLastStmt = connection.prepareStatement("SELECT Nummer FROM Rejseafregning ORDER BY Nummer DESC LIMIT 1;");
 		
 		ResultSet resultSet = null;
 		
@@ -201,8 +202,13 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 
 	@Override
 	public void deleteRejse(RejseafregningDTO rejse) throws Exception {
-		// TODO Auto-generated method stub
-		
+		deleteRejseStmt = connection.prepareStatement("DELETE FROM Rejseafregning WHERE Nummer = ?;");
+		try {
+			deleteRejseStmt.setInt(1, rejse.getId());
+			deleteRejseStmt.executeUpdate();
+		} catch (SQLException sqlE) {
+			System.out.println(sqlE.getMessage());
+		} 
 	}
 
 }
