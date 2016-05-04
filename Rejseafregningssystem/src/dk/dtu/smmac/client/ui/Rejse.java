@@ -8,6 +8,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -18,6 +19,7 @@ import dk.dtu.smmac.shared.RejseDTO;
 public class Rejse extends Composite {
 
 	private VerticalPanel vPanel = new VerticalPanel();
+	private HorizontalPanel hPanel = new HorizontalPanel();
 	private FlexTable fTable;
 	private Label countryL, dateL, dateToL, projectL, assignmentL;
 	private ListBox country, project, assignment;
@@ -73,9 +75,11 @@ public class Rejse extends Composite {
 
 		vPanel.setStyleName("margin");
 		vPanel.add(fTable);
-		save.addStyleName("alignButtomRight");
-		vPanel.add(save);
-		vPanel.add(back);
+		vPanel.add(hPanel);
+		hPanel.add(back);
+		hPanel.add(save);
+		save.setStyleName("marginLeft");
+		back.setStyleName("marginRight");
 	}
 	
 	public void setRejse(RejseDTO rejse) {
