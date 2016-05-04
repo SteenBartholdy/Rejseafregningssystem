@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class NyKode extends Composite 
 {
 	private VerticalPanel vPanel = new VerticalPanel();
+	private HorizontalPanel hPanel = new HorizontalPanel();
 	private Label lNyKode, lNyKodeVeri, lGammelKode, lBrugernavn, lBrugernavnHentet;
 	private Button btnTilbage, btnUdfoer;
 	private PasswordTextBox tbNyKode, tbNyKodeVeri, tbGammelKode;
@@ -33,9 +34,9 @@ public class NyKode extends Composite
 		lBrugernavnHentet.setStyleName("marginButtom");
 		
 		btnTilbage = new Button("Tilbage");
-		btnTilbage.setStyleName("buttonNyKode");
+		btnTilbage.setStyleName("buttonNyKodeRight");
 		btnUdfoer = new Button("Udfør");
-		btnUdfoer.setStyleName("buttonNyKode");
+		btnUdfoer.setStyleName("buttonNyKodeLeft");
 				
 		tbNyKode = new PasswordTextBox();
 		tbNyKode.setWidth(lwidth);
@@ -58,8 +59,9 @@ public class NyKode extends Composite
 		vPanel.add(tbNyKode);
 		vPanel.add(lNyKodeVeri);
 		vPanel.add(tbNyKodeVeri);
-		vPanel.add(btnUdfoer);
-		vPanel.add(btnTilbage);	
+		vPanel.add(hPanel);
+		hPanel.add(btnTilbage);	
+		hPanel.add(btnUdfoer);
 		
 		vPanel.setStyleName("margin");
 	}

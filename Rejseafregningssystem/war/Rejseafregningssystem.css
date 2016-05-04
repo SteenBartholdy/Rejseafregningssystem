@@ -121,8 +121,14 @@ table.flextable td:nth-child(6) {
 	
 }
 
-.buttonNyKode {
+.buttonNyKodeRight {
 	height: 30px;
 	width: 100px;
-	margin-bottom: 10px;
+	margin-Right: 10px;
+}
+
+.buttonNyKodeLeft {
+	height: 30px;
+	width: 100px;
+	margin-Left: 10px;
 }
