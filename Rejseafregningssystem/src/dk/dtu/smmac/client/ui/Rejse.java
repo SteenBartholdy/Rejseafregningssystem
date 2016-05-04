@@ -89,11 +89,15 @@ public class Rejse extends Composite {
 	}
 	
 	public RejseDTO getRejse() {
+		try {
 		this.rejse.setDatoFra(getDate());
 		this.rejse.setDatoTil(getDateTo());
 		this.rejse.setLand(country.getValue(country.getSelectedIndex()));
 		this.rejse.setOpgave(assignment.getValue(assignment.getSelectedIndex()));
 		this.rejse.setProjekt(project.getValue(project.getSelectedIndex()));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		
 		return this.rejse;
 	}

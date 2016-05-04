@@ -425,21 +425,11 @@ public class Controller {
 	}
 	
 	private class RejseBackHandler implements ClickHandler {
-//TODO virker ikke?
+
 		@Override
 		public void onClick(ClickEvent event) {
-			rejseService.deleteRejse(rejsePage.getRejse(), new AsyncCallback<Void>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					Window.alert(caught.getMessage());
-				}
-
-				@Override
-				public void onSuccess(Void result) {
-					mainView.showContentWidget(rejseafregningPage);
-				}
-			});
+			rejseService.deleteRejse(rejsePage.getRejse(), asyncEmpty);
+			mainView.showContentWidget(rejseafregningPage);
 		}
 	}
 
