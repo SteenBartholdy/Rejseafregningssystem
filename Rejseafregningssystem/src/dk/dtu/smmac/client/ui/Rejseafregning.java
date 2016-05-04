@@ -22,6 +22,7 @@ import com.google.gwt.view.client.SingleSelectionModel;
 
 import dk.dtu.smmac.shared.RejseDTO;
 import dk.dtu.smmac.shared.RejseafregningDTO;
+import dk.dtu.smmac.shared.UdgifterDTO;
 
 public class Rejseafregning extends Composite {
 
@@ -276,4 +277,8 @@ public class Rejseafregning extends Composite {
 		return this.model;
 	}
 
+	public List<RejseDTO> getData()
+	{
+		return dataProvider.getList();
+	}
 }

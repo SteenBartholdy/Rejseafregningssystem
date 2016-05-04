@@ -275,6 +275,8 @@ public class Controller {
 		oplysningerPage.getBtnNyKode().addClickHandler(new ShowNyKodeHandler());
 		nyKodePage.getBtnNyKodeTilbage().addClickHandler(new ShowOplysningHandler());
 		nyKodePage.getBtnNyKodeUdfoer().addClickHandler(new ChangePasswordHandler());
+		afslutningPage.getGodkendButton().addClickHandler(new GodkendHandler());
+		afslutningPage.getAfvisButton().addClickHandler(new AfvisHandler());
 
 		//BlurHandler
 		oplysningerPage.getName().addBlurHandler(new UpdateAnsatHandler());
@@ -381,6 +383,45 @@ public class Controller {
 		//Rootpanel
 		RootLayoutPanel.get().add(mainView);
 	}
+	
+	private class GodkendHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Skal sætte registrering til anvisning
+			mainView.showContentWidget(rejseafregningerPage);
+		}
+	}
+	
+	private class AfvisHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Mangler at delete den pågældende registrering
+			//Sletter rejsedage
+			for (DageInfoDTO dag : dageInfoPage.getData()) {
+				dageInfoService.deleteDageInfo(dag, asyncEmpty);
+			}
+			//Sletter udgifter
+			for (UdgifterDTO udgift : udgifterPage.getData()) {
+				udgifterService.deleteUdgifter(udgift, asyncEmpty);
+			}
+			//Sletter rejser
+			for (RejseDTO rejse : rejseafregningPage.getData()) {
+				rejseService.deleteRejse(rejse, asyncEmpty);
+			}
+			//Sletter bilag
+			for (BilagDTO bilag : bilagPage.getData()) {
+				bilagService.deleteBilag(bilag, asyncEmpty);
+			}
+			//Sletter rejseafregning
+			rejseafregningService.deleteRejse(rejseafregningPage.getRejseafregning(), asyncEmpty);
+			
+			Window.alert("Din rejseafregning er blevet slettet!");
+			
+			mainView.showContentWidget(mainPage);
+		}
+	}
 
 	private class ChangePasswordHandler implements ClickHandler {
 
@@ -426,6 +467,45 @@ public class Controller {
 			RejseDTO rejse = rejseafregningPage.getModel().getSelectedObject();
 			rejsePage.setRejse(rejse);
 			projektopgaveService.getOpgave(rejse.getProjekt(), asyncOpgave);
+			//TODO skal loade bilag og udgift
+			bilagService.getBilag(rejseafregningPage.getRejseafregning().getId(), new AsyncCallback<List<BilagDTO>>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert(caught.getMessage());
+				}
+
+				@Override
+				public void onSuccess(List<BilagDTO> result) {
+					bilagPage.reset();
+					if (result.isEmpty()) {
+						addBilag();
+					} else {
+						for (BilagDTO bilag : result) {
+							bilagPage.addBilag(bilag);
+						} 
+					}
+				}
+			});
+			udgifterService.getUdgifter(rejseafregningPage.getRejseafregning().getId(), new AsyncCallback<List<UdgifterDTO>>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert(caught.getMessage());	
+				}
+
+				@Override
+				public void onSuccess(List<UdgifterDTO> result) {
+					udgifterPage.reset();
+					if (result.isEmpty()) {
+						addUdgift();
+					} else {
+						for (UdgifterDTO udgift : result) {
+							udgifterPage.addUdgiftPost(udgift);
+						}
+					}
+				}
+			});
 			mainView.showContentWidget(rejsePage);
 		}
 	}
@@ -837,7 +917,7 @@ public class Controller {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			rejseafregningService.getSize(new AsyncCallback<Integer>() {
+			rejseafregningService.getLast(new AsyncCallback<Integer>() {
 
 				@Override
 				public void onFailure(Throwable caught) {

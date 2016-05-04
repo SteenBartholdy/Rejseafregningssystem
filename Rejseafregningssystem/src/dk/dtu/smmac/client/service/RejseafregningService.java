@@ -16,5 +16,6 @@ public interface RejseafregningService extends RemoteService {
 	public RejseafregningDTO getRejse(int id, int ansatId) throws Exception;
 	public List<RejseafregningerDTO> getRejser(int ansatId) throws Exception;
 	public int getSize() throws Exception;
-	
+	public int getLast() throws Exception;
+	public void deleteRejse(RejseafregningDTO rejse) throws Exception;
 }
