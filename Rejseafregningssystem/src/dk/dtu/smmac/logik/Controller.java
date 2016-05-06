@@ -47,7 +47,6 @@ import dk.dtu.smmac.client.service.UdgifterService;
 import dk.dtu.smmac.client.service.UdgifterServiceAsync;
 import dk.dtu.smmac.client.ui.AfslutningsInfo;
 import dk.dtu.smmac.client.ui.Bilag;
-import dk.dtu.smmac.client.ui.Bilag;
 import dk.dtu.smmac.client.ui.DageInfo;
 import dk.dtu.smmac.client.ui.GlemtPassword;
 import dk.dtu.smmac.client.ui.LoginPage;
@@ -262,6 +261,11 @@ public class Controller {
 				bilagPage.getData().remove(index);
 			}
 		});
+		bilagPage.getFileColumn().setFieldUpdater(new FieldUpdater<BilagDTO, String>() {
+			public void update(int index, BilagDTO object, String value) {
+				//show upload dialog
+			}
+		});
 
 		//SelectionChangehandler
 		rejseafregningPage.getModel().addSelectionChangeHandler(new RejseClickHandler());
@@ -293,6 +297,8 @@ public class Controller {
 		afslutningPage.getGodkendButton().addClickHandler(new GodkendHandler());
 		afslutningPage.getAfvisButton().addClickHandler(new AfvisHandler());
 		rejsePage.getBackButton().addClickHandler(new RejseBackHandler());
+		dageInfoPage.getBack().addClickHandler(new backToRejseafregning());
+		afslutningPage.getBackButton().addClickHandler(new backToDageInfo());
 
 		//BlurHandler
 		oplysningerPage.getName().addBlurHandler(new UpdateAnsatHandler());
@@ -437,6 +443,22 @@ public class Controller {
 			Window.alert("Din rejseafregning er blevet slettet!");
 
 			mainView.showContentWidget(mainPage);
+		}
+	}
+	
+	private class backToRejseafregning implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			mainView.showContentWidget(rejseafregningPage);
+		}
+	}
+	
+	private class backToDageInfo implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			mainView.showContentWidget(dageInfoPage);
 		}
 	}
 

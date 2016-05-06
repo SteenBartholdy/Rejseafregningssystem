@@ -47,6 +47,11 @@ h1 {
 	margin-right: 10px;
 }
 
+.marginRightLeft {
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
 .marginButtom {
 	margin-bottom: 10px;
 }

@@ -3,6 +3,7 @@ package dk.dtu.smmac.client.ui;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -12,14 +13,16 @@ public class AfslutningsInfo extends Composite {
 
 	
 	private VerticalPanel vPanel;
+	private HorizontalPanel hPanel;
 	private FlexTable fTable;
 	private Label oversigt, befordringL, befordring, dagpengeL, dagpenge, udgifterL, udgifter, afregningTotalL, afregningTotal, refunderingL, refundering, forskudL, forskud, afregningL, afregning;
-	private Button godkend, afvis;
+	private Button godkend, afvis, back;
 	
 	public AfslutningsInfo()
 	{
 		vPanel = new VerticalPanel();
 		initWidget(this.vPanel);
+		hPanel = new HorizontalPanel();
 		
 		fTable = new FlexTable();
 		fTable.setStyleName("flextable");
@@ -50,6 +53,7 @@ public class AfslutningsInfo extends Composite {
 		
 		godkend = new Button("Godkend");
 		afvis = new Button("Afvis og slet");
+		back = new Button("Tilbage");
 		
 		fTable.setWidget(0, 0, oversigt);
 		fTable.setWidget(1, 0, befordringL);
@@ -66,11 +70,16 @@ public class AfslutningsInfo extends Composite {
 		fTable.setWidget(6, 1, forskud);
 		fTable.setWidget(7, 0, afregningL);
 		fTable.setWidget(7, 1, afregning);
-		fTable.setWidget(8, 0, godkend);
-		fTable.setWidget(8, 1, afvis);
 		
 		vPanel.setStyleName("margin");
 		vPanel.add(fTable);
+		vPanel.add(hPanel);
+		hPanel.add(back);
+		hPanel.add(godkend);
+		hPanel.add(afvis);
+		back.setStyleName("marginRight");
+		godkend.setStyleName("marginRight");
+		afvis.setStyleName("marginLeft");
 	}
 	
 	
@@ -117,6 +126,11 @@ public class AfslutningsInfo extends Composite {
 	public Button getAfvisButton()
 	{
 		return afvis;
+	}
+	
+	public Button getBackButton() 
+	{
+		return back;
 	}
 	
 }

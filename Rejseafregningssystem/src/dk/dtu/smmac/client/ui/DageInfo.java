@@ -11,6 +11,7 @@ import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
@@ -21,7 +22,8 @@ public class DageInfo extends Composite
 {
 	private CellTable<DageInfoDTO> table;
 	private VerticalPanel vPanel = new VerticalPanel();
-	private Button btn;
+	private HorizontalPanel hPanel = new HorizontalPanel();
+	private Button btn, back;
 	private DateTimeFormat dtFmt = DateTimeFormat.getFormat("dd/MM yyyy");
 	private SimplePager pager;
 	private ListDataProvider<DageInfoDTO> dataProvider;
@@ -44,7 +46,8 @@ public class DageInfo extends Composite
 		initWidget(this.vPanel);
 
 		btn = new Button("Fortsæt");
-
+		back = new Button("Tilbage");
+		
 		// **** Add column that shows "Dato" ****
 
 		TextColumn<DageInfoDTO> datoColumn = new TextColumn<DageInfoDTO>() {
@@ -193,12 +196,20 @@ public class DageInfo extends Composite
 		vPanel.setStyleName("margin");
 		vPanel.add(table);
 		vPanel.add(pager);
-		vPanel.add(btn);
+		vPanel.add(hPanel);
+		hPanel.add(back);
+		hPanel.add(btn);
+		back.setStyleName("marginRight");
+		btn.setStyleName("marginLeft");
 	}
 
 	public Button getBtn()
 	{
 		return btn;
+	}
+	
+	public Button getBack() {
+		return back;
 	}
 
 	public void addData(DageInfoDTO dag)

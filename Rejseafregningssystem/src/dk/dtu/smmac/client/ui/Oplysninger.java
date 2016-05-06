@@ -149,6 +149,8 @@ public class Oplysninger extends Composite {
 		fTable.setWidget(5, 1, email);
 		fTable.setWidget(6, 1, btnNyKode);
 		
+		btnNyKode.setStyleName("marginRightLeft");
+		
 		fTable.setWidget(0, 4, h2);
 		fTable.setWidget(1, 3, lZipcode);
 		fTable.setWidget(1, 4, zip);
