@@ -1,5 +1,7 @@
 package dk.dtu.smmac.server.dal;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -195,6 +197,15 @@ public class UdgifterDAO extends RemoteServiceServlet implements UdgifterService
 			System.out.println(sqlE.getMessage());
 		}
 		
-		return udgifter;
+		return round(udgifter, 2);
+	}
+	
+	public static double round(double value, int places) {
+		if (places < 0) throw new IllegalArgumentException();
+
+	    long factor = (long) Math.pow(10, places);
+	    value = value * factor;
+	    long tmp = Math.round(value);
+	    return (double) tmp / factor;
 	}
 }

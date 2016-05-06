@@ -1,5 +1,7 @@
 package dk.dtu.smmac.server.dal;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -42,16 +44,37 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 	@Override
 	public List<DageInfoDTO> getDageInfo(int nummer) throws Exception 
 	{
-		//Laver query, der finder alle rejserne
-		getRejseStmt = connection.prepareStatement("SELECT * FROM Rejse WHERE Nummer = ?");
-
 		List<DageInfoDTO> list = null;
+		List<DageInfoDTO> fulllist = null;
 		ResultSet resultSet = null;
 		DageInfoDTO dag = null;
 		Date fra = null;
 		Date til = null;
 
 		try {
+			//Laver query, der finder alle rejserne
+			getRejseStmt = connection.prepareStatement("SELECT * FROM RejseDag WHERE Nummer = ?");
+			getRejseStmt.setInt(1, nummer);
+			resultSet = getRejseStmt.executeQuery();
+			fulllist = new ArrayList<DageInfoDTO>();
+
+			while(resultSet.next()) {
+				fulllist.add(new DageInfoDTO(
+						resultSet.getDate("Dato"),
+						resultSet.getInt("Nummer"),
+						resultSet.getBoolean("Morgenmad"),
+						resultSet.getBoolean("Frokost"),
+						resultSet.getBoolean("Aftensmad"),
+						resultSet.getBoolean("Nattilaeg"),
+						resultSet.getBoolean("RejseAfbrudt"),
+						resultSet.getBoolean("UdokNat"),
+						resultSet.getBoolean("Refunderes"),
+						resultSet.getString("Land")
+						));
+			}
+
+			//Laver query, der finder alle rejserne
+			getRejseStmt = connection.prepareStatement("SELECT * FROM Rejse WHERE Nummer = ?");
 			getRejseStmt.setInt(1, nummer);
 			resultSet = getRejseStmt.executeQuery();
 			list = new ArrayList<DageInfoDTO>();
@@ -112,9 +135,25 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 
 		} catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
-		} 
+		}
+		
+		for (DageInfoDTO fDag : fulllist) {
+			if(checkDay(fDag, list)) {
+				deleteDageInfo(fDag);
+			}
+		}
 
 		return list;
+	}
+	
+	public boolean checkDay(DageInfoDTO dag, List<DageInfoDTO> list) {
+		for (DageInfoDTO lDag : list) {
+			if (dag.getDageInfoDato().compareTo(lDag.getDageInfoDato()) == 0) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 
 	@Override
@@ -292,7 +331,7 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 			System.out.println(sqlE.getMessage());
 		}
 
-		return dagpenge;
+		return round(dagpenge, 2);
 	}
 
 	@Override
@@ -343,7 +382,16 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 			System.out.println(sqlE.getMessage());
 		}
 
-		return dagpenge;
+		return round(dagpenge, 2);
+	}
+
+	public static double round(double value, int places) {
+		if (places < 0) throw new IllegalArgumentException();
+
+		long factor = (long) Math.pow(10, places);
+		value = value * factor;
+		long tmp = Math.round(value);
+		return (double) tmp / factor;
 	}
 
 }
