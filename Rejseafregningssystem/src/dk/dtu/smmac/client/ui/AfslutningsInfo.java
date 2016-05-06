@@ -11,12 +11,12 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class AfslutningsInfo extends Composite {
 
-	
 	private VerticalPanel vPanel;
 	private HorizontalPanel hPanel;
 	private FlexTable fTable;
 	private Label oversigt, befordringL, befordring, dagpengeL, dagpenge, udgifterL, udgifter, afregningTotalL, afregningTotal, refunderingL, refundering, forskudL, forskud, afregningL, afregning;
 	private Button godkend, afvis, back;
+	private double bef, dag, ud, af, ref, afto, fo;
 	
 	public AfslutningsInfo()
 	{
@@ -83,39 +83,46 @@ public class AfslutningsInfo extends Composite {
 	}
 	
 	
-	public void setBefordring(String befordring)
+	public void setBefordring(double befordring)
 	{
+		this.bef = befordring;
 		this.befordring.setText(befordring + " DKK"); 
 	}
 	
-	public void setDagpenge(String dagpenge)
+	public void setDagpenge(double dagpenge)
 	{
+		this.dag = dagpenge;
 		this.dagpenge.setText(dagpenge + " DKK");
 	}
 	
-	public void setUdgifter(String udgifter)
+	public void setUdgifter(double udgifter)
 	{
+		this.ud = udgifter;
 		this.udgifter.setText(udgifter + " DKK");
 	}
 	
-	public void setAfregningTotal(String afregningTotal)
+	public void setAfregningTotal()
 	{
-		this.afregningTotal.setText(afregningTotal + " DKK");
+		this.afto = bef + dag + ud;
+		this.afregningTotal.setText(this.afto + " DKK");
 	}
 	
-	public void setRefundering(String refundering)
+	public void setRefundering(double refundering)
 	{
+		this.ref = refundering;
 		this.refundering.setText(refundering + " DKK");
 	}
 	
-	public void setForskud(String forskud)
+	public void setForskud(double forskud)
 	{
+		this.fo = forskud;
 		this.forskud.setText(forskud + " DKK");
 	}
 	
-	public void setAfregning(String afregning)
+	public void setAfregning()
 	{
-		this.afregning.setText(afregning + " DKK");
+		this.af = bef + ud + ref - fo;
+		this.afregning.setText(af + " DKK");
 	}
 	
 	public Button getGodkendButton()

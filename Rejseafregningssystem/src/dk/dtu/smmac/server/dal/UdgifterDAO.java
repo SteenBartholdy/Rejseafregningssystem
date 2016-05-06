@@ -22,6 +22,7 @@ public class UdgifterDAO extends RemoteServiceServlet implements UdgifterService
 	private PreparedStatement deleteUdgifterStmt = null;
 	private PreparedStatement getSizeStmt = null;
 	private PreparedStatement getLastStmt = null;
+	private PreparedStatement getSumUdgifterStmt = null;
 	
 	public UdgifterDAO() throws Exception
 	{
@@ -171,5 +172,29 @@ public class UdgifterDAO extends RemoteServiceServlet implements UdgifterService
 		}
 		
 		return 0;
+	}
+
+
+	@Override
+	public double getUdgifterSum(int nr) throws Exception {
+		getSumUdgifterStmt = connection.prepareStatement("SELECT Beloeb FROM Udgifter WHERE Nummer = ?;");
+		
+		ResultSet resultSet = null;
+		double udgifter = 0;
+		
+		try {
+			getSumUdgifterStmt.setInt(1, nr);
+			resultSet = getSumUdgifterStmt.executeQuery();
+			
+			while (resultSet.next())
+			{
+				udgifter = udgifter + resultSet.getInt("Beloeb");
+			}
+			
+		} catch (SQLException sqlE) {
+			System.out.println(sqlE.getMessage());
+		}
+		
+		return udgifter;
 	}
 }

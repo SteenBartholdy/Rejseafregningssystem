@@ -17,4 +17,6 @@ public interface DageInfoService extends RemoteService
 	public void deleteDageInfo(DageInfoDTO dag) throws Exception;
 	public int getSize() throws Exception;
 	public DageInfoDTO getDageInfo(Date dato, int nummer) throws Exception;
+	public double getDagpenge(int nummer) throws Exception;
+	public double getRefundering(int nummer) throws Exception;
 }

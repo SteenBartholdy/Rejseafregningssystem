@@ -15,4 +15,6 @@ public interface DageInfoServiceAsync
 	void deleteDageInfo(DageInfoDTO dag, AsyncCallback<Void> callback);
 	void getSize(AsyncCallback<Integer> callback);
 	void getDageInfo(Date dato, int nummer, AsyncCallback<DageInfoDTO> callback);
+	void getDagpenge(int nummer, AsyncCallback<Double> callback);
+	void getRefundering(int nummer, AsyncCallback<Double> callback);
 }

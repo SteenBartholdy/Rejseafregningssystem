@@ -443,7 +443,7 @@ public class Controller {
 			mainView.showContentWidget(mainPage);
 		}
 	}
-	
+
 	private class backToRejseafregning implements ClickHandler {
 
 		@Override
@@ -451,7 +451,7 @@ public class Controller {
 			mainView.showContentWidget(rejseafregningPage);
 		}
 	}
-	
+
 	private class backToDageInfo implements ClickHandler {
 
 		@Override
@@ -583,44 +583,6 @@ public class Controller {
 					});
 				}
 			});
-			bilagService.getBilag(rejseafregningPage.getRejseafregning().getId(), new AsyncCallback<List<BilagDTO>>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					Window.alert(caught.getMessage());
-				}
-
-				@Override
-				public void onSuccess(List<BilagDTO> result) {
-					bilagPage.reset();
-					if (result.isEmpty()) {
-						addBilag();
-					} else {
-						for (BilagDTO bilag : result) {
-							bilagPage.addBilag(bilag);
-						} 
-					}
-				}
-			});
-			udgifterService.getUdgifter(rejseafregningPage.getRejseafregning().getId(), new AsyncCallback<List<UdgifterDTO>>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					Window.alert(caught.getMessage());	
-				}
-
-				@Override
-				public void onSuccess(List<UdgifterDTO> result) {
-					udgifterPage.reset();
-					if (result.isEmpty()) {
-						addUdgift();
-					} else {
-						for (UdgifterDTO udgift : result) {
-							udgifterPage.addUdgiftPost(udgift);
-						}
-					}
-				}
-			});
 		}
 	}
 
@@ -639,7 +601,58 @@ public class Controller {
 			for (DageInfoDTO dag : dageInfoPage.getData()) {
 				dageInfoService.updateDageInfo(dag, asyncEmpty);
 			}
-			mainView.showContentWidget(afslutningPage);
+			final int nummer = rejseafregningPage.getRejseafregning().getId();
+
+			double befordring = 0;
+			afslutningPage.setBefordring(befordring);
+
+			dageInfoService.getDagpenge(nummer, new AsyncCallback<Double>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert(caught.getMessage());
+				}
+
+				@Override
+				public void onSuccess(Double dagpenge) {
+					afslutningPage.setDagpenge(dagpenge);
+
+					udgifterService.getUdgifterSum(nummer, new AsyncCallback<Double>() {
+
+						@Override
+						public void onFailure(Throwable caught) {
+							Window.alert(caught.getMessage());
+						}
+
+						@Override
+						public void onSuccess(Double udgifter) {
+							afslutningPage.setUdgifter(udgifter);
+
+							afslutningPage.setAfregningTotal();
+
+							dageInfoService.getRefundering(nummer, new AsyncCallback<Double>() {
+
+								@Override
+								public void onFailure(Throwable caught) {
+									Window.alert(caught.getMessage());
+								}
+
+								@Override
+								public void onSuccess(Double refundering) {
+									afslutningPage.setRefundering(refundering);
+
+									double forskud = 0;
+									afslutningPage.setForskud(forskud);
+
+									afslutningPage.setAfregning();
+
+									mainView.showContentWidget(afslutningPage);
+								} 
+							});
+						}
+					});
+				}
+			});
 		}
 
 	}

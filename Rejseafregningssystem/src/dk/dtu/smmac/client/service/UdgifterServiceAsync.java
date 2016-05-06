@@ -12,4 +12,5 @@ public interface UdgifterServiceAsync
 	void deleteUdgifter(UdgifterDTO udgift, AsyncCallback<Void> callback);
 	void getSize(AsyncCallback<Integer> callback);
 	void getLast(AsyncCallback<Integer> callback);
+	void getUdgifterSum(int nr, AsyncCallback<Double> callback);
 }
