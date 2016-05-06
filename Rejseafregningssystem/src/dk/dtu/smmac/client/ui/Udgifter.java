@@ -175,7 +175,7 @@ public class Udgifter extends Composite
 		    return "Slet";
 		  }
 		};
-		table.addColumn(buttonColumn, "Slet");
+		table.addColumn(buttonColumn);
 
 		vPanel.setStyleName("margin");
 		vPanel.add(table);
