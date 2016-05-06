@@ -9,11 +9,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import dk.dtu.smmac.client.service.RejseafregningService;
-import dk.dtu.smmac.shared.AnsatDTO;
 import dk.dtu.smmac.shared.RejseafregningDTO;
 import dk.dtu.smmac.shared.RejseafregningerDTO;
 
