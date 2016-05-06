@@ -178,6 +178,7 @@ public class DageInfoDAO extends RemoteServiceServlet implements DageInfoService
 		
 		try {
 			deleteDageInfoStmt.setDate(1, dag.getDageInfoDato());
+			deleteDageInfoStmt.setInt(2, dag.getNummer());
 
 			deleteDageInfoStmt.executeUpdate();
 		} 

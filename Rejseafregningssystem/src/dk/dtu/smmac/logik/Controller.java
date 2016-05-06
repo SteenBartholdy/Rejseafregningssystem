@@ -419,8 +419,6 @@ public class Controller {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			// TODO Mangler at delete den pågældende registrering
-			//Ikke testet ordenligt igennem
 			//Sletter rejsedage
 			for (DageInfoDTO dag : dageInfoPage.getData()) {
 				dageInfoService.deleteDageInfo(dag, asyncEmpty);
