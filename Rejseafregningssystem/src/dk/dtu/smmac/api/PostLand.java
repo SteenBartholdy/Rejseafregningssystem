@@ -1,10 +1,13 @@
 package dk.dtu.smmac.api;
 
+import java.io.IOException;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import brugerautorisation.data.Bruger;
 import dk.dtu.smmac.server.dal.LandDAO;
@@ -20,7 +23,9 @@ public class PostLand {
 	
 	@POST
 	@Produces("text/plain")
-	public String addLand(@QueryParam("user") String username, @QueryParam("pass") String password, @QueryParam("land") String land, @QueryParam("takst") int takst)
+	@Consumes("text/plain")
+	public Response addLand(@FormParam("user") String username, @FormParam("pass") String password, 
+	@FormParam("land") String land, @FormParam("takst") String takst) throws IOException 
 	{
 		login = null;
 		bruger = null;
@@ -30,13 +35,15 @@ public class PostLand {
 			login = new Login();
 			lande = new LandDAO();
 			bruger = login.logIn(username, password);
-			lande.createLand(new LandDTO(land, takst));
+			int takstInt = Integer.parseInt(takst);
+			lande.createLand(new LandDTO(land, takstInt));
 			
 		} catch (Exception e) {
-			return "Der skete en fejl. Tjek brugernavn og kodeord. " + e.getMessage();
+			String result = "Der skete en fejl. Tjek brugernavn og kodeord. " + e.getMessage();
+			return Response.status(500).entity(result).build();
 		}
-		
-		return bruger.fornavn + " " + bruger.efternavn + " har oprettet " + land + " med en takst på " + takst + " kr.";
+		String result = bruger.fornavn + " " + bruger.efternavn + " har oprettet " + land + " med en takst på " + takst + " kr.";
+		return Response.status(200).entity(result).build();
 	}
 
 }

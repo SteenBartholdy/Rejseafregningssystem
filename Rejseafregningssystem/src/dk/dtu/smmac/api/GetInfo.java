@@ -47,7 +47,7 @@ public class GetInfo {
 		
 		
         
-		return "Velkommen " + navn + " " + efternavn + ". Afdeling: " + afdeling + " - Telefonnummer: " + telefon + " - Email: " + email;
+		return "Velkommen " + navn + " " + efternavn + ". " + "\n" + "Afdeling: " + afdeling + "\n" +  "Telefonnummer: " + telefon + "\n" + "Email: " + email;
     }
 	
 }
