@@ -70,10 +70,11 @@ public class Bilag extends Composite{
 		    return "Slet";
 		  }
 		};
+
 		
-		table.addColumn(bilagsNoColumn);
-		table.addColumn(forklaringsColumn);
-		table.addColumn(buttonColumn, "Slet");
+		table.addColumn(bilagsNoColumn, "Bilags nummer");
+		table.addColumn(forklaringsColumn, "Forklaring");
+		table.addColumn(buttonColumn);
 		
 		dataProvider = new ListDataProvider<BilagDTO>();
 		dataProvider.addDataDisplay(table);
