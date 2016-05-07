@@ -2,8 +2,8 @@ package dk.dtu.smmac.api;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import brugerautorisation.data.Bruger;
@@ -11,7 +11,7 @@ import dk.dtu.smmac.server.dal.AnsatteDAO;
 import dk.dtu.smmac.server.dal.Login;
 import dk.dtu.smmac.shared.AnsatDTO;
 
-@Path("info")
+@Path("/info")
 public class GetInfo {
 	
 	private Login login;
@@ -21,8 +21,9 @@ public class GetInfo {
 	private String navn, efternavn, afdeling, telefon, email;
 
 	@GET
+	@Path("{user}/{pass}")
     @Produces(MediaType.TEXT_PLAIN)
-    public String getIt(@QueryParam("user") String username, @QueryParam("pass") String password) {
+    public String getInfo(@PathParam("user") String username, @PathParam("pass") String password) {
 		
 		login = null;
 		ansatte = null;
@@ -42,7 +43,7 @@ public class GetInfo {
 			email = ansat.getEmail();
 			
 		} catch (Exception e) {
-			return "Der skete en fejl. Tjek brugernavn og kodeord. " + e.getMessage();
+			return "Der skete en fejl. Tjek brugernavn og kodeord. ";
 		}
 		
 		
