@@ -31,26 +31,6 @@ public class RejseDAO extends RemoteServiceServlet implements RejseService
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(DAO.URL, DAO.USERNAME, DAO.PASSWORD);
-
-			//Laver query, der henter alle rejser
-			getRejseStmt = connection.prepareStatement("SELECT * FROM Rejse;");
-			
-			//Laver query, der henter alle rejserne fra en rejseafregning
-			getRejserStmt = connection.prepareStatement("SELECT * FROM Rejse WHERE Nummer = ?;");
-
-			//Laver query, der opdaterer en rejse
-			updateRejseStmt = connection.prepareStatement("UPDATE Rejse "
-					+ "SET Land = ?, DatoFra = ?, DatoTil = ?, Projekt = ?, Opgave = ? "
-					+ "WHERE RejseID = ? AND Nummer = ?;");
-
-			//Laver query, der opretter en rejse
-			createRejseStmt = connection.prepareStatement("INSERT INTO Rejse "
-					+ "( RejseID, Nummer, Land, DatoFra, DatoTil, Projekt, Opgave) "
-					+ "VALUES ( ?, ?, ?, ?, ?, ?, ? );");
-
-			//Laver query, der finder størrelsen på tabellen
-			getSizeStmt = connection.prepareStatement("SELECT COUNT(*) FROM Rejse;");
-
 		} catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
 		}
@@ -58,6 +38,9 @@ public class RejseDAO extends RemoteServiceServlet implements RejseService
 	
 	@Override
 	public List<RejseDTO> getRejse() throws Exception {
+		//Laver query, der henter alle rejser
+		getRejseStmt = connection.prepareStatement("SELECT * FROM Rejse;");
+		
 		List<RejseDTO> list = null;
 		ResultSet resultSet = null;
 		
@@ -97,6 +80,11 @@ public class RejseDAO extends RemoteServiceServlet implements RejseService
 	@Override
 	public void updateRejse(RejseDTO rejse) throws Exception 
 	{
+		//Laver query, der opdaterer en rejse
+		updateRejseStmt = connection.prepareStatement("UPDATE Rejse "
+				+ "SET Land = ?, DatoFra = ?, DatoTil = ?, Projekt = ?, Opgave = ? "
+				+ "WHERE RejseID = ? AND Nummer = ?;");
+		
 		try {
 			updateRejseStmt.setString(1, rejse.getLand());
 			updateRejseStmt.setDate(2, rejse.getDatoFra());
@@ -117,6 +105,11 @@ public class RejseDAO extends RemoteServiceServlet implements RejseService
 	@Override
 	public void createRejse(RejseDTO rejse) throws Exception 
 	{
+		//Laver query, der opretter en rejse
+		createRejseStmt = connection.prepareStatement("INSERT INTO Rejse "
+				+ "( RejseID, Nummer, Land, DatoFra, DatoTil, Projekt, Opgave) "
+				+ "VALUES ( ?, ?, ?, ?, ?, ?, ? );");
+		
 		try {
 			createRejseStmt.setInt(1, rejse.getRejseID());
 			createRejseStmt.setInt(2, rejse.getNummer());
@@ -155,6 +148,9 @@ public class RejseDAO extends RemoteServiceServlet implements RejseService
 	@Override
 	public int getSize() throws Exception 
 	{
+		//Laver query, der finder størrelsen på tabellen
+		getSizeStmt = connection.prepareStatement("SELECT COUNT(*) FROM Rejse;");
+		
 		ResultSet resultSet = null;
 
 		try {
@@ -170,6 +166,10 @@ public class RejseDAO extends RemoteServiceServlet implements RejseService
 
 	@Override
 	public List<RejseDTO> getRejser(int nr) throws Exception {
+		//Laver query, der henter alle rejserne fra en rejseafregning
+		getRejserStmt = connection.prepareStatement("SELECT * FROM Rejse WHERE Nummer = ?;");
+
+		
 		List<RejseDTO> list = null;
 		ResultSet resultSet = null;
 		
