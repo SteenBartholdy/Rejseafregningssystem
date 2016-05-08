@@ -430,7 +430,7 @@ public class Controller {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			int nummer = rejseafregningPage.getRejseafregning().getId();
+			final int nummer = rejseafregningPage.getRejseafregning().getId();
 
 			//Sletter rejsedage
 			dageInfoService.getDageInfo(nummer, new AsyncCallback<List<DageInfoDTO>>() {
@@ -445,64 +445,63 @@ public class Controller {
 					for (DageInfoDTO dag : result) {
 						dageInfoService.deleteDageInfo(dag, asyncEmpty);
 					}
-				} 
+					
+					//Sletter udgifter
+					udgifterService.getUdgifter(nummer, new AsyncCallback<List<UdgifterDTO>>() {
+
+						@Override
+						public void onFailure(Throwable caught) {
+							Window.alert(caught.getMessage());
+						}
+
+						@Override
+						public void onSuccess(List<UdgifterDTO> result) {
+							for (UdgifterDTO udgift : result) {
+								udgifterService.deleteUdgifter(udgift, asyncEmpty);
+							}
+							
+							//Sletter rejser
+							rejseService.getRejser(nummer, new AsyncCallback<List<RejseDTO>>() {
+
+								@Override
+								public void onFailure(Throwable caught) {
+									Window.alert(caught.getMessage());
+								}
+
+								@Override
+								public void onSuccess(List<RejseDTO> result) {
+									for (RejseDTO rejse : result) {
+										rejseService.deleteRejse(rejse, asyncEmpty);
+									}
+									
+									//Sletter bilag
+									bilagService.getBilag(nummer, new AsyncCallback<List<BilagDTO>>() {
+
+										@Override
+										public void onFailure(Throwable caught) {
+											Window.alert(caught.getMessage());
+										}
+
+										@Override
+										public void onSuccess(List<BilagDTO> result) {
+											for (BilagDTO bilag : result) {
+												bilagService.deleteBilag(bilag, asyncEmpty);
+											}
+											
+											//Sletter rejseafregning
+											rejseafregningService.deleteRejse(rejseafregningPage.getRejseafregning(), asyncEmpty);
+
+											Window.alert("Din rejseafregning er blevet slettet!");
+
+											mainView.showContentWidget(mainPage);
+										}
+									});
+								}
+							});
+						}
+					});
+				}
 			});
-
-			//Sletter udgifter
-			udgifterService.getUdgifter(nummer, new AsyncCallback<List<UdgifterDTO>>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					Window.alert(caught.getMessage());
-				}
-
-				@Override
-				public void onSuccess(List<UdgifterDTO> result) {
-					for (UdgifterDTO udgift : result) {
-						udgifterService.deleteUdgifter(udgift, asyncEmpty);
-					}
-				}
-
-			});
-
-			//Sletter rejser
-			rejseService.getRejser(nummer, new AsyncCallback<List<RejseDTO>>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					Window.alert(caught.getMessage());
-				}
-
-				@Override
-				public void onSuccess(List<RejseDTO> result) {
-					for (RejseDTO rejse : result) {
-						rejseService.deleteRejse(rejse, asyncEmpty);
-					}
-				}
-			});
-
-			//Sletter bilag
-			bilagService.getBilag(nummer, new AsyncCallback<List<BilagDTO>>() {
-
-				@Override
-				public void onFailure(Throwable caught) {
-					Window.alert(caught.getMessage());
-				}
-
-				@Override
-				public void onSuccess(List<BilagDTO> result) {
-					for (BilagDTO bilag : result) {
-						bilagService.deleteBilag(bilag, asyncEmpty);
-					}
-				}
-			});
-
-			//Sletter rejseafregning
-			rejseafregningService.deleteRejse(rejseafregningPage.getRejseafregning(), asyncEmpty);
-
-			Window.alert("Din rejseafregning er blevet slettet!");
-
-			mainView.showContentWidget(mainPage);
 		}
 	}
 
