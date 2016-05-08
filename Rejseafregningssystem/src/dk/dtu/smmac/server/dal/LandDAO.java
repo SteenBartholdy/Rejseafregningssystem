@@ -26,6 +26,7 @@ public class LandDAO extends RemoteServiceServlet implements LandeService {
 	private PreparedStatement setTakstStmt = null;
 	private PreparedStatement getAllLandeStmt = null;
 	private PreparedStatement createLandStmt = null;
+	private PreparedStatement getAllLandeDTOStmt = null;
 	
 	public LandDAO() throws Exception
 	{
@@ -141,6 +142,30 @@ public class LandDAO extends RemoteServiceServlet implements LandeService {
 		catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
 		} 
+	}
+
+	@Override
+	public List<LandDTO> getAllLandeDTO() throws Exception {
+		// TODO Auto-generated method stub
+		getAllLandeDTOStmt = connection.prepareStatement("SELECT * FROM Lande;");
+		
+		List<LandDTO> land = null;
+		ResultSet resultSet = null;
+		
+		try{
+			land = new ArrayList<LandDTO>();
+			resultSet = getAllLandeDTOStmt.executeQuery();
+			while(resultSet.next())
+			{
+				land.add(new LandDTO(resultSet.getString("Lande.Land"),resultSet.getInt("Lande.Takst")));
+			}
+			
+		} 
+		catch (SQLException sqlE) {
+			System.out.println(sqlE.getMessage());
+		}
+		
+		return land;
 	}
 
 	
