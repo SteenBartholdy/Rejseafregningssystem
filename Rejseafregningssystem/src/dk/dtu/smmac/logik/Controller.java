@@ -430,22 +430,73 @@ public class Controller {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			int nummer = rejseafregningPage.getRejseafregning().getId();
+
 			//Sletter rejsedage
-			for (DageInfoDTO dag : dageInfoPage.getData()) {
-				dageInfoService.deleteDageInfo(dag, asyncEmpty);
-			}
+			dageInfoService.getDageInfo(nummer, new AsyncCallback<List<DageInfoDTO>>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert(caught.getMessage());
+				}
+
+				@Override
+				public void onSuccess(List<DageInfoDTO> result) {
+					for (DageInfoDTO dag : result) {
+						dageInfoService.deleteDageInfo(dag, asyncEmpty);
+					}
+				} 
+			});
+
 			//Sletter udgifter
-			for (UdgifterDTO udgift : udgifterPage.getData()) {
-				udgifterService.deleteUdgifter(udgift, asyncEmpty);
-			}
+			udgifterService.getUdgifter(nummer, new AsyncCallback<List<UdgifterDTO>>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert(caught.getMessage());
+				}
+
+				@Override
+				public void onSuccess(List<UdgifterDTO> result) {
+					for (UdgifterDTO udgift : result) {
+						udgifterService.deleteUdgifter(udgift, asyncEmpty);
+					}
+				}
+
+			});
+
 			//Sletter rejser
-			for (RejseDTO rejse : rejseafregningPage.getData()) {
-				rejseService.deleteRejse(rejse, asyncEmpty);
-			}
+			rejseService.getRejser(nummer, new AsyncCallback<List<RejseDTO>>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert(caught.getMessage());
+				}
+
+				@Override
+				public void onSuccess(List<RejseDTO> result) {
+					for (RejseDTO rejse : result) {
+						rejseService.deleteRejse(rejse, asyncEmpty);
+					}
+				}
+			});
+
 			//Sletter bilag
-			for (BilagDTO bilag : bilagPage.getData()) {
-				bilagService.deleteBilag(bilag, asyncEmpty);
-			}
+			bilagService.getBilag(nummer, new AsyncCallback<List<BilagDTO>>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert(caught.getMessage());
+				}
+
+				@Override
+				public void onSuccess(List<BilagDTO> result) {
+					for (BilagDTO bilag : result) {
+						bilagService.deleteBilag(bilag, asyncEmpty);
+					}
+				}
+			});
+
 			//Sletter rejseafregning
 			rejseafregningService.deleteRejse(rejseafregningPage.getRejseafregning(), asyncEmpty);
 
@@ -1131,7 +1182,7 @@ public class Controller {
 				oplysningerPage.setKontoNo(""+result.getKontoNo());
 			}
 		});
-		
+
 		mainPage.setGodkendelserVisible(result.getGodkender());;
 		mainPage.setAnvisningVisible(result.getAnviser());
 	}
