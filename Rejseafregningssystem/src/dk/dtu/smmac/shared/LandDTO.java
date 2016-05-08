@@ -2,6 +2,9 @@ package dk.dtu.smmac.shared;
 
 import java.io.Serializable;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class LandDTO implements Serializable {
 	
 	private static final long serialVersionUID = 30L;
