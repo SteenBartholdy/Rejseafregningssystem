@@ -1131,6 +1131,9 @@ public class Controller {
 				oplysningerPage.setKontoNo(""+result.getKontoNo());
 			}
 		});
+		
+		mainPage.setGodkendelserVisible(result.getGodkender());;
+		mainPage.setAnvisningVisible(result.getAnviser());
 	}
 
 	public void addUdgift() {

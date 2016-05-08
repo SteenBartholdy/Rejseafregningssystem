@@ -145,6 +145,7 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 		ResultSet resultSet = null;
 		List<RejseafregningerDTO> listen = null;
 		int nr = 0;
+		String status = "Udkast";
 
 		try {
 			getRejserStmt.setInt(1, ansatId);
@@ -154,13 +155,24 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 
 			while(resultSet.next())
 			{
+				if (resultSet.getBoolean("Rejseafregning.Done")) {
+					status = "Sendt til godkendelse";
+				}
+				if (resultSet.getBoolean("Rejseafregning.Godkendt")) {
+					status = "Godkendt";
+				}
+				if (resultSet.getBoolean("Rejseafregning.Anvist")) {
+					status = "Anvist";
+				}
+				
 				rejse = new RejseafregningerDTO(
 						resultSet.getInt("Rejseafregning.Nummer"),
 						resultSet.getInt("Rejseafregning.Starttid"),
 						resultSet.getInt("Rejseafregning.Sluttid"),
 						resultSet.getString("Rejse.Land"),
 						resultSet.getDate("Rejse.DatoFra"),
-						resultSet.getDate("Rejse.DatoTil")
+						resultSet.getDate("Rejse.DatoTil"),
+						status
 						);
 				
 				if (rejse.getLand() == null) {

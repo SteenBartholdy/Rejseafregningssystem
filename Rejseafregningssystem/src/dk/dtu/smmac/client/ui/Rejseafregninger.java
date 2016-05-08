@@ -79,12 +79,21 @@ public class Rejseafregninger extends Composite {
 			}
 		};
 		
+		TextColumn<RejseafregningerDTO> statusColumn = new TextColumn<RejseafregningerDTO>() {
+
+			@Override
+			public String getValue(RejseafregningerDTO obj) {
+				return obj.getStatus();
+			}
+		};
+		
 		table.addColumn(nummerColumn, "Nummer");
 		table.addColumn(landColumn, "Lande");
 		table.addColumn(datoFraColumn, "Fra dato");
 		table.addColumn(datoTilColumn, "Til dato");
 		table.addColumn(startTidColumn, "Starttid");
 		table.addColumn(slutTidColumn, "Sluttid");
+		table.addColumn(statusColumn, "Status");
 
 		dataProvider = new ListDataProvider<RejseafregningerDTO>();
 		dataProvider.addDataDisplay(table);

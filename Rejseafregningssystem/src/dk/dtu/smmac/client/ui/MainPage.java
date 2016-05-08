@@ -20,8 +20,6 @@ public class MainPage extends Composite {
 	Button godkendelser;
 	@UiField
 	Button anvisning;
-	@UiField
-	Button beskeder;
 	
 	public MainPage() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -51,12 +49,12 @@ public class MainPage extends Composite {
 		this.anvisning = anvisning;
 	}
 
-	public Button getBeskeder() {
-		return beskeder;
+	public void setGodkendelserVisible(boolean visible) {
+		this.godkendelser.setVisible(visible);
 	}
-
-	public void setBeskeder(Button beskeder) {
-		this.beskeder = beskeder;
+	
+	public void setAnvisningVisible(boolean visible) {
+		this.anvisning.setVisible(visible);
 	}
 
 }

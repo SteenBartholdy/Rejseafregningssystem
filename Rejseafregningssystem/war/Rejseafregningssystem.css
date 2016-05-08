@@ -137,3 +137,9 @@ table.flextable td:nth-child(6) {
 	width: 100px;
 	margin-Left: 10px;
 }
+
+.buttomForside {
+	height: 70px;
+	width: 225px;
+	margin-bottom: 20px;
+}

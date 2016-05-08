@@ -5,10 +5,8 @@
 	
 	</ui:style>
 	<g:VerticalPanel styleName="margin">
-		<g:Button text="Opret nyt dokument" ui:field="opret" styleName="marginButtom"/>
-		<g:Button text="Dokumenter til godkendelse" ui:field="godkendelser" styleName="marginButtom"/>
-		<g:Button text="Til anvisning" ui:field="anvisning" styleName="marginButtom"/>
-		<g:Label styleName="marginButtom">Beskeder</g:Label>
-		<g:Button text="Vis alle beskeder" ui:field="beskeder" styleName="marginButtom"/>
+		<g:Button text="Opret nyt dokument" ui:field="opret" styleName="buttomForside"/>
+		<g:Button text="Dokumenter til godkendelse" ui:field="godkendelser" styleName="buttomForside"/>
+		<g:Button text="Dokumenter til anvisning" ui:field="anvisning" styleName="buttomForside"/>
 	</g:VerticalPanel>
 </ui:UiBinder> 

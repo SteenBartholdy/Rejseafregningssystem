@@ -10,12 +10,13 @@ public class RejseafregningerDTO implements Serializable {
 	private int nr, startTid, slutTid;
 	private String land;
 	private Date datoFra, datoTil;
+	private String status;
 	
 	public RejseafregningerDTO() {
 		super();
 	}
 	
-	public RejseafregningerDTO(int nummer, int startTid, int sluttid, String land, Date datoFra, Date datoTil) {
+	public RejseafregningerDTO(int nummer, int startTid, int sluttid, String land, Date datoFra, Date datoTil, String status) {
 		super();
 		this.nr = nummer;
 		this.startTid = startTid;
@@ -23,6 +24,7 @@ public class RejseafregningerDTO implements Serializable {
 		this.land = land;
 		this.datoFra = datoFra;
 		this.datoTil = datoTil;
+		this.status = status;
 	}
 	
 	public int getNr() {
@@ -71,6 +73,14 @@ public class RejseafregningerDTO implements Serializable {
 
 	public void setDatoTil(Date datoTil) {
 		this.datoTil = datoTil;
+	}
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 }
