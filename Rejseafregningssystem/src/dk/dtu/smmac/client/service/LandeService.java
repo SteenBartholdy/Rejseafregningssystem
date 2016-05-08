@@ -15,5 +15,6 @@ public interface LandeService extends RemoteService {
 	public void setTakst(int takst, String land) throws Exception;
 	public List<String> getAllLande() throws Exception;
 	public void createLand(LandDTO land) throws Exception;
+	public List<LandDTO> getAllLandeDTO() throws Exception;
 	
 }

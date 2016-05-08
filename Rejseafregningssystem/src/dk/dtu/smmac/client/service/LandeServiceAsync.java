@@ -13,5 +13,6 @@ public interface LandeServiceAsync {
 	void setTakst(int takst, String land, AsyncCallback<Void> callback);
 	void getAllLande(AsyncCallback<List<String>> callback);
 	void createLand(LandDTO land, AsyncCallback<Void> callback);
+	void getAllLandeDTO(AsyncCallback<List<LandDTO>> callback);
 	
 }
