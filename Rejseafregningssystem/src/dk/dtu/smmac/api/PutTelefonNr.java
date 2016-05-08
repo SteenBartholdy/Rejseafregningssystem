@@ -6,6 +6,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 import brugerautorisation.data.Bruger;
@@ -25,6 +26,7 @@ public class PutTelefonNr {
 	@PUT
 	@Path("{user}/{pass}/{telefon}")
 	@Consumes("application/x-www-form-urlencoded")
+	@Produces("text/plain")
 	public String updateTlfNR(@PathParam("user") String username, @PathParam("pass") String password, 
 	@PathParam("telefon") int telefon) throws IOException 
 	{
@@ -44,7 +46,7 @@ public class PutTelefonNr {
 			ansatte.updateAnsat(ansat);
 			
 		} catch (Exception e) {
-			String result = "Der skete en fejl. Tjek brugernavn og kodeord. ";
+			String result = "Der skete en fejl. Tjek brugernavn og kodeord.";
 			return result;
 		}
 		String result = bruger.fornavn + " " + bruger.efternavn +  "'s telefonnummer er blevet ændret fra " + gammeltTlfNr + " til " + telefon + ".";
