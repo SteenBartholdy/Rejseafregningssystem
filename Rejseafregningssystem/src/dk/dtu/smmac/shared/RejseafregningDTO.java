@@ -10,15 +10,42 @@ public class RejseafregningDTO implements Serializable {
 	private int ansatId;
 	private int startTid;
 	private int slutTid;
+	private double befordring, dagpenge, udgifter, afregningtotal, refundering, forskud, afregning;
+	private boolean godkendt, anvist;
 	
+	public boolean isGodkendt() {
+		return godkendt;
+	}
+
+	public void setGodkendt(boolean godkendt) {
+		this.godkendt = godkendt;
+	}
+
+	public boolean isAnvist() {
+		return anvist;
+	}
+
+	public void setAnvist(boolean anvist) {
+		this.anvist = anvist;
+	}
+
 	public RejseafregningDTO() { }
 	
-	public RejseafregningDTO(int id, int ansatId, int startTid, int slutTid) {
+	public RejseafregningDTO(int id, int ansatId, int startTid, int slutTid, double befordring, double dagpenge, double udgifter, double afregningtotal, double refundering, double forskud, double afregning, boolean godkendt, boolean anvist) {
 		super();
 		this.nr = id;
 		this.ansatId = ansatId;
 		this.startTid = startTid;
 		this.slutTid = slutTid;
+		this.befordring = befordring;
+		this.dagpenge = dagpenge;
+		this.udgifter = udgifter;
+		this.afregningtotal = afregningtotal;
+		this.refundering = refundering;
+		this.forskud = forskud;
+		this.afregning = afregning;
+		this.godkendt = godkendt;
+		this.anvist = anvist;
 	}
 	
 	public RejseafregningDTO(int id, int ansatId) {
@@ -49,6 +76,62 @@ public class RejseafregningDTO implements Serializable {
 	
 	public void setSlutTid(int tid) {
 		this.slutTid = tid;
+	}
+	
+	public double getBefordring() {
+		return befordring;
+	}
+
+	public void setBefordring(double befordring) {
+		this.befordring = befordring;
+	}
+
+	public double getDagpenge() {
+		return dagpenge;
+	}
+
+	public void setDagpenge(double dagpenge) {
+		this.dagpenge = dagpenge;
+	}
+
+	public double getUdgifter() {
+		return udgifter;
+	}
+
+	public void setUdgifter(double udgifter) {
+		this.udgifter = udgifter;
+	}
+
+	public double getAfregningtotal() {
+		return afregningtotal;
+	}
+
+	public void setAfregningtotal(double afregningtotal) {
+		this.afregningtotal = afregningtotal;
+	}
+
+	public double getRefundering() {
+		return refundering;
+	}
+
+	public void setRefundering(double refundering) {
+		this.refundering = refundering;
+	}
+
+	public double getForskud() {
+		return forskud;
+	}
+
+	public void setForskud(double forskud) {
+		this.forskud = forskud;
+	}
+
+	public double getAfregning() {
+		return afregning;
+	}
+
+	public void setAfregning(double afregning) {
+		this.afregning = afregning;
 	}
 	
 }

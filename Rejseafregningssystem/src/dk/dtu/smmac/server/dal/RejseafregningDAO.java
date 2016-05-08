@@ -40,14 +40,23 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 	public void updateRejse(RejseafregningDTO rejse) throws Exception {
 		//Laver query, der opdaterer en rejse
 		updateRejsStmt = connection.prepareStatement("UPDATE Rejseafregning "
-				+ "SET Starttid = ?, Sluttid = ? "
+				+ "SET Starttid = ?, Sluttid = ?, Befordring = ?, Dagpenge = ?, Udgifter = ?, Afregningstotal = ?, Refundering = ?, Forskud = ?, Afregning = ?, Godkendt = ?, Anvist = ? "
 				+ "WHERE Nummer = ? AND Id = ?;");
 		
 		try {
 			updateRejsStmt.setInt(1, rejse.getStartTid());
 			updateRejsStmt.setInt(2, rejse.getSlutTid());
-			updateRejsStmt.setInt(3, rejse.getId());
-			updateRejsStmt.setInt(4, rejse.getAnsatId());
+			updateRejsStmt.setDouble(3, rejse.getBefordring());
+			updateRejsStmt.setDouble(4, rejse.getDagpenge());
+			updateRejsStmt.setDouble(5, rejse.getUdgifter());
+			updateRejsStmt.setDouble(6, rejse.getAfregningtotal());
+			updateRejsStmt.setDouble(7, rejse.getRefundering());
+			updateRejsStmt.setDouble(8, rejse.getForskud());
+			updateRejsStmt.setDouble(9, rejse.getAfregning());
+			updateRejsStmt.setBoolean(10, rejse.isGodkendt());
+			updateRejsStmt.setBoolean(11, rejse.isAnvist());
+			updateRejsStmt.setInt(12, rejse.getId());
+			updateRejsStmt.setInt(13, rejse.getAnsatId());
 			updateRejsStmt.executeUpdate();
 		} 
 		catch (SQLException sqlE) {
@@ -59,14 +68,23 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 	public void createRejse(RejseafregningDTO rejse) throws Exception {
 		//Laver query, der opretter en rejse
 		createRejsStmt = connection.prepareStatement("INSERT INTO Rejseafregning "
-				+ "( Nummer, Id, Starttid, Sluttid ) "
-				+ "VALUES ( ?, ?, ?, ? );");
+				+ "( Nummer, Id, Starttid, Sluttid, Befordring, Dagpenge, Udgifter, Afregningstotal, Refundering, Forskud, Afregning, Godkendt, Anvist ) "
+				+ "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );");
 		
 		try {
 			createRejsStmt.setInt(1, rejse.getId());
 			createRejsStmt.setInt(2, rejse.getAnsatId());
 			createRejsStmt.setInt(3, rejse.getStartTid());
 			createRejsStmt.setInt(4, rejse.getSlutTid());
+			createRejsStmt.setDouble(5, rejse.getBefordring());
+			createRejsStmt.setDouble(6, rejse.getDagpenge());
+			createRejsStmt.setDouble(7, rejse.getUdgifter());
+			createRejsStmt.setDouble(8, rejse.getAfregningtotal());
+			createRejsStmt.setDouble(9, rejse.getRefundering());
+			createRejsStmt.setDouble(10, rejse.getForskud());
+			createRejsStmt.setDouble(11, rejse.getAfregning());
+			createRejsStmt.setBoolean(12, rejse.isGodkendt());
+			createRejsStmt.setBoolean(13, rejse.isAnvist());
 			createRejsStmt.executeUpdate();
 		} 
 		catch (SQLException sqlE) {
@@ -92,7 +110,16 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 					resultSet.getInt("Nummer"),
 					resultSet.getInt("Id"),
 					resultSet.getInt("Sluttid"),
-					resultSet.getInt("Starttid")
+					resultSet.getInt("Starttid"),
+					resultSet.getDouble("Befordring"),
+					resultSet.getDouble("Dagpenge"),
+					resultSet.getDouble("Udgifter"),
+					resultSet.getDouble("Afregningstotal"),
+					resultSet.getDouble("Refundering"),
+					resultSet.getDouble("Forskud"),
+					resultSet.getDouble("Afregning"),
+					resultSet.getBoolean("Godkendt"),
+					resultSet.getBoolean("Anvist")
 					);
 			
 		} catch (SQLException sqlE) {
