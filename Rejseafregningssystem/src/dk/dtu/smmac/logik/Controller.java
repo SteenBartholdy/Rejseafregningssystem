@@ -410,7 +410,18 @@ public class Controller {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			// TODO Skal sætte registrering til anvisning
+			RejseafregningDTO rejse = rejseafregningPage.getRejseafregning();
+			rejse.setBefordring(afslutningPage.getBef());
+			rejse.setDagpenge(afslutningPage.getDag());
+			rejse.setUdgifter(afslutningPage.getUd());
+			rejse.setAfregningtotal(afslutningPage.getAfto());
+			rejse.setRefundering(afslutningPage.getRef());
+			rejse.setForskud(afslutningPage.getFo());
+			rejse.setAfregning(afslutningPage.getAf());
+			rejse.setDone(true);
+			rejse.setAnvist(false);
+			rejse.setGodkendt(false);
+			rejseafregningService.updateRejse(rejse, asyncEmpty);
 			showRejseafregninger();
 		}
 	}

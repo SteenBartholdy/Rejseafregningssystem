@@ -18,6 +18,76 @@ public class AfslutningsInfo extends Composite {
 	private Button godkend, afvis, back;
 	private double bef, dag, ud, af, ref, afto, fo;
 	
+	public double getBef() {
+		return bef;
+	}
+
+
+	public void setBef(double bef) {
+		this.bef = bef;
+	}
+
+
+	public double getDag() {
+		return dag;
+	}
+
+
+	public void setDag(double dag) {
+		this.dag = dag;
+	}
+
+
+	public double getUd() {
+		return ud;
+	}
+
+
+	public void setUd(double ud) {
+		this.ud = ud;
+	}
+
+
+	public double getAf() {
+		return af;
+	}
+
+
+	public void setAf(double af) {
+		this.af = af;
+	}
+
+
+	public double getRef() {
+		return ref;
+	}
+
+
+	public void setRef(double ref) {
+		this.ref = ref;
+	}
+
+
+	public double getAfto() {
+		return afto;
+	}
+
+
+	public void setAfto(double afto) {
+		this.afto = afto;
+	}
+
+
+	public double getFo() {
+		return fo;
+	}
+
+
+	public void setFo(double fo) {
+		this.fo = fo;
+	}
+
+
 	public AfslutningsInfo()
 	{
 		vPanel = new VerticalPanel();

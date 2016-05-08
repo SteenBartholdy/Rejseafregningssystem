@@ -105,8 +105,18 @@ CREATE TABLE Rejseafregning
 (
 	Nummer int(10) NOT NULL,
 	Id int NOT NULL,
-	Starttid int NOT NULL,
-	Sluttid int NOT NULL,
+	Starttid int,
+	Sluttid int,
+	Befordring double,
+	Dagpenge double,
+	Udgifter double,
+	Afregningstotal double,
+	Refundering double,
+	Forskud double,
+	Afregning double,
+	Godkendt tinyint,
+	Anvist tinyint,
+	Done tinyint,
 	PRIMARY KEY (Nummer)
 );
 
@@ -135,7 +145,7 @@ CREATE TABLE Udgifter
 	Udgiftstype varchar(40),
 	Dato varchar(10),
 	Beloeb varchar(10),
-	PRIMARY KEY (Id, Nummer)
+	PRIMARY KEY (Id)
 );
 
 

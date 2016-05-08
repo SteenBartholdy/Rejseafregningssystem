@@ -11,7 +11,41 @@ public class RejseafregningDTO implements Serializable {
 	private int startTid;
 	private int slutTid;
 	private double befordring, dagpenge, udgifter, afregningtotal, refundering, forskud, afregning;
-	private boolean godkendt, anvist;
+	private boolean godkendt, anvist, done;
+
+	public boolean isDone() {
+		return done;
+	}
+
+	public void setDone(boolean done) {
+		this.done = done;
+	}
+
+	public RejseafregningDTO() { }
+	
+	public RejseafregningDTO(int id, int ansatId, int startTid, int slutTid, double befordring, double dagpenge, double udgifter, double afregningtotal, double refundering, double forskud, double afregning, boolean godkendt, boolean anvist, boolean done) {
+		super();
+		this.nr = id;
+		this.ansatId = ansatId;
+		this.startTid = startTid;
+		this.slutTid = slutTid;
+		this.befordring = befordring;
+		this.dagpenge = dagpenge;
+		this.udgifter = udgifter;
+		this.afregningtotal = afregningtotal;
+		this.refundering = refundering;
+		this.forskud = forskud;
+		this.afregning = afregning;
+		this.godkendt = godkendt;
+		this.anvist = anvist;
+		this.done = done;
+	}
+	
+	public RejseafregningDTO(int id, int ansatId) {
+		super();
+		this.nr = id;
+		this.ansatId = ansatId;
+	}
 	
 	public boolean isGodkendt() {
 		return godkendt;
@@ -27,31 +61,6 @@ public class RejseafregningDTO implements Serializable {
 
 	public void setAnvist(boolean anvist) {
 		this.anvist = anvist;
-	}
-
-	public RejseafregningDTO() { }
-	
-	public RejseafregningDTO(int id, int ansatId, int startTid, int slutTid, double befordring, double dagpenge, double udgifter, double afregningtotal, double refundering, double forskud, double afregning, boolean godkendt, boolean anvist) {
-		super();
-		this.nr = id;
-		this.ansatId = ansatId;
-		this.startTid = startTid;
-		this.slutTid = slutTid;
-		this.befordring = befordring;
-		this.dagpenge = dagpenge;
-		this.udgifter = udgifter;
-		this.afregningtotal = afregningtotal;
-		this.refundering = refundering;
-		this.forskud = forskud;
-		this.afregning = afregning;
-		this.godkendt = godkendt;
-		this.anvist = anvist;
-	}
-	
-	public RejseafregningDTO(int id, int ansatId) {
-		super();
-		this.nr = id;
-		this.ansatId = ansatId;
 	}
 	
 	public int getId() {
