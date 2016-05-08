@@ -26,6 +26,7 @@ public class PostLand {
 	@POST
 	@Path("{user}/{pass}/{land}/{takst}")
 	@Consumes("application/x-www-form-urlencoded")
+	@Produces("text/plain")
 	public String addLand(@PathParam("user") String username, @PathParam("pass") String password, 
 			@PathParam("land") String land, @PathParam("takst") int takst) throws IOException 
 	{
@@ -40,7 +41,7 @@ public class PostLand {
 			lande.createLand(new LandDTO(land, takst));
 
 		} catch (Exception e) {
-			String result = "Der skete en fejl. Tjek brugernavn og kodeord. ";
+			String result = "Der skete en fejl. Tjek brugernavn og kodeord.";
 
 			return result;
 		}
