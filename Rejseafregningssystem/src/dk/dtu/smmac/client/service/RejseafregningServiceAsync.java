@@ -16,5 +16,7 @@ public interface RejseafregningServiceAsync {
 	void getSize(AsyncCallback<Integer> callback);
 	void getLast(AsyncCallback<Integer> callback);
 	void deleteRejse(RejseafregningDTO rejse, AsyncCallback<Void> callback);
-	
+	void getGodkend(AsyncCallback<List<RejseafregningerDTO>> callback);
+	void getAnvis(AsyncCallback<List<RejseafregningerDTO>> callback);
+	void updateRejsen(RejseafregningerDTO rejse, AsyncCallback<Void> callback);
 }

@@ -11,6 +11,8 @@ public class RejseafregningerDTO implements Serializable {
 	private String land;
 	private Date datoFra, datoTil;
 	private String status;
+	private boolean done, anvist, godkendt;
+	private double afregning;
 	
 	public RejseafregningerDTO() {
 		super();
@@ -27,6 +29,28 @@ public class RejseafregningerDTO implements Serializable {
 		this.status = status;
 	}
 	
+	public RejseafregningerDTO(int nummer, int startTid, int sluttid, String land, Date datoFra, Date datoTil, boolean done, boolean godkendt, boolean anvist, double afregning) {
+		super();
+		this.nr = nummer;
+		this.startTid = startTid;
+		this.slutTid = sluttid;
+		this.land = land;
+		this.datoFra = datoFra;
+		this.datoTil = datoTil;
+		this.done = done;
+		this.anvist = anvist;
+		this.godkendt = godkendt;
+		this.afregning = afregning;
+	}
+	
+	public double getAfregning() {
+		return afregning;
+	}
+
+	public void setAfregning(double afregning) {
+		this.afregning = afregning;
+	}
+
 	public int getNr() {
 		return nr;
 	}
@@ -81,6 +105,30 @@ public class RejseafregningerDTO implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public boolean isDone() {
+		return done;
+	}
+
+	public void setDone(boolean done) {
+		this.done = done;
+	}
+
+	public boolean isAnvist() {
+		return anvist;
+	}
+
+	public void setAnvist(boolean anvist) {
+		this.anvist = anvist;
+	}
+
+	public boolean isGodkendt() {
+		return godkendt;
+	}
+
+	public void setGodkendt(boolean godkendt) {
+		this.godkendt = godkendt;
 	}
 	
 }

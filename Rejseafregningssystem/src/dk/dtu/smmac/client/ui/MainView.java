@@ -50,6 +50,8 @@ public class MainView extends Composite {
 	private AfslutningsInfo afslutningPage;
 	
 	private NyKode nyKodePage;
+	
+	private Godkend godkendPage;
 
 	private HTML emptyView;
 	private HTML emptyTopView;
@@ -81,6 +83,7 @@ public class MainView extends Composite {
 		udgifterPage = new Udgifter();
 		afslutningPage = new AfslutningsInfo();
 		nyKodePage = new NyKode();
+		godkendPage = new Godkend();
 		
 		//Tilføjer til top bunken
 		topPanel.add(emptyTopView);
@@ -104,6 +107,7 @@ public class MainView extends Composite {
 		contentPanel.add(udgifterPage);
 		contentPanel.add(afslutningPage);
 		contentPanel.add(nyKodePage);
+		contentPanel.add(godkendPage);
 		
 		//Load
 		showContentWidget(loginPage);
@@ -210,5 +214,9 @@ public class MainView extends Composite {
 	public AfslutningsInfo getAfslutningsInfoPage()
 	{
 		return afslutningPage;
+	}
+	
+	public Godkend getGodkend() {
+		return godkendPage;
 	}
 }

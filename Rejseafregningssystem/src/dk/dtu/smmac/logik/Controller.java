@@ -49,6 +49,7 @@ import dk.dtu.smmac.client.ui.AfslutningsInfo;
 import dk.dtu.smmac.client.ui.Bilag;
 import dk.dtu.smmac.client.ui.DageInfo;
 import dk.dtu.smmac.client.ui.GlemtPassword;
+import dk.dtu.smmac.client.ui.Godkend;
 import dk.dtu.smmac.client.ui.LoginPage;
 import dk.dtu.smmac.client.ui.LoginTopView;
 import dk.dtu.smmac.client.ui.MainPage;
@@ -103,6 +104,8 @@ public class Controller {
 	private AfslutningsInfo afslutningPage;
 
 	private NyKode nyKodePage;
+
+	private Godkend godkendPage;
 
 	private HTML emptyView;
 	private HTML emptyTopView;
@@ -160,6 +163,8 @@ public class Controller {
 		afslutningPage = mainView.getAfslutningsInfoPage();
 
 		nyKodePage = mainView.getNykodePage();
+
+		godkendPage = mainView.getGodkend();
 
 		//Async
 		asyncEmpty = new AsyncCallback<Void>() {
@@ -266,6 +271,18 @@ public class Controller {
 				//show upload dialog
 			}
 		});
+		godkendPage.getButtonColumn().setFieldUpdater(new FieldUpdater<RejseafregningerDTO, String>() {
+
+			@Override
+			public void update(int index, RejseafregningerDTO object, String value) {
+				RejseafregningerDTO rejse = object;
+				if (Window.confirm("Vil du godkende rejseafregningen med nummer " + rejse.getNr() + "?")) {
+					rejse.setGodkendt(true);
+					rejseafregningService.updateRejsen(rejse, asyncEmpty);
+					godkendPage.getData().remove(index);
+				}
+			}
+		});
 
 		//SelectionChangehandler
 		rejseafregningPage.getModel().addSelectionChangeHandler(new RejseClickHandler());
@@ -299,6 +316,8 @@ public class Controller {
 		rejsePage.getBackButton().addClickHandler(new RejseBackHandler());
 		dageInfoPage.getBack().addClickHandler(new backToRejseafregning());
 		afslutningPage.getBackButton().addClickHandler(new backToDageInfo());
+		mainPage.getGodkendelser().addClickHandler(new ShowGodkendHandler());
+		godkendPage.getBackButton().addClickHandler(new CloseGodkendHandler());
 
 		//BlurHandler
 		oplysningerPage.getName().addBlurHandler(new UpdateAnsatHandler());
@@ -445,7 +464,7 @@ public class Controller {
 					for (DageInfoDTO dag : result) {
 						dageInfoService.deleteDageInfo(dag, asyncEmpty);
 					}
-					
+
 					//Sletter udgifter
 					udgifterService.getUdgifter(nummer, new AsyncCallback<List<UdgifterDTO>>() {
 
@@ -459,7 +478,7 @@ public class Controller {
 							for (UdgifterDTO udgift : result) {
 								udgifterService.deleteUdgifter(udgift, asyncEmpty);
 							}
-							
+
 							//Sletter rejser
 							rejseService.getRejser(nummer, new AsyncCallback<List<RejseDTO>>() {
 
@@ -473,7 +492,7 @@ public class Controller {
 									for (RejseDTO rejse : result) {
 										rejseService.deleteRejse(rejse, asyncEmpty);
 									}
-									
+
 									//Sletter bilag
 									bilagService.getBilag(nummer, new AsyncCallback<List<BilagDTO>>() {
 
@@ -487,7 +506,7 @@ public class Controller {
 											for (BilagDTO bilag : result) {
 												bilagService.deleteBilag(bilag, asyncEmpty);
 											}
-											
+
 											//Sletter rejseafregning
 											rejseafregningService.deleteRejse(rejseafregningPage.getRejseafregning(), asyncEmpty);
 
@@ -546,6 +565,35 @@ public class Controller {
 					rejseafregningPage.getModel().setSelected(null, true);
 				}
 			});
+		}
+	}
+
+	private class ShowGodkendHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			godkendPage.reset();
+			rejseafregningService.getGodkend(new AsyncCallback<List<RejseafregningerDTO>>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert(caught.getMessage());
+				}
+
+				@Override
+				public void onSuccess(List<RejseafregningerDTO> result) {
+					godkendPage.setData(result);
+					mainView.showContentWidget(godkendPage);
+				}
+			});
+		}
+	}
+
+	private class CloseGodkendHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {	
+			mainView.showContentWidget(mainPage);
 		}
 	}
 
