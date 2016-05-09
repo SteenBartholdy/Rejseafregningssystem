@@ -33,6 +33,8 @@ import dk.dtu.smmac.client.service.DAWAService;
 import dk.dtu.smmac.client.service.DAWAServiceAsync;
 import dk.dtu.smmac.client.service.DageInfoService;
 import dk.dtu.smmac.client.service.DageInfoServiceAsync;
+import dk.dtu.smmac.client.service.FileSystemService;
+import dk.dtu.smmac.client.service.FileSystemServiceAsync;
 import dk.dtu.smmac.client.service.LandeService;
 import dk.dtu.smmac.client.service.LandeServiceAsync;
 import dk.dtu.smmac.client.service.LoginService;
@@ -126,6 +128,7 @@ public class Controller {
 	private DageInfoServiceAsync dageInfoService = GWT.create(DageInfoService.class);
 	private UdgifterServiceAsync udgifterService = GWT.create(UdgifterService.class);
 	private LandeServiceAsync landeService = GWT.create(LandeService.class);
+	private FileSystemServiceAsync fileService = GWT.create(FileSystemService.class);
 
 	AsyncCallback<Void> asyncEmpty;
 	AsyncCallback<String> asyncCity;
@@ -274,6 +277,7 @@ public class Controller {
 		bilagPage.getFileColumn().setFieldUpdater(new FieldUpdater<BilagDTO, String>() {
 			public void update(int index, BilagDTO object, String value) {
 				//show upload dialog
+				fileService.chooseFile(asyncEmpty);
 			}
 		});
 		godkendPage.getButtonColumn().setFieldUpdater(new FieldUpdater<RejseafregningerDTO, String>() {
