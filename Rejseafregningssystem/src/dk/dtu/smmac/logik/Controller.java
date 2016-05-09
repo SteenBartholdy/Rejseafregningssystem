@@ -46,6 +46,7 @@ import dk.dtu.smmac.client.service.RejseafregningServiceAsync;
 import dk.dtu.smmac.client.service.UdgifterService;
 import dk.dtu.smmac.client.service.UdgifterServiceAsync;
 import dk.dtu.smmac.client.ui.AfslutningsInfo;
+import dk.dtu.smmac.client.ui.Anvis;
 import dk.dtu.smmac.client.ui.Bilag;
 import dk.dtu.smmac.client.ui.DageInfo;
 import dk.dtu.smmac.client.ui.GlemtPassword;
@@ -106,6 +107,8 @@ public class Controller {
 	private NyKode nyKodePage;
 
 	private Godkend godkendPage;
+	
+	private Anvis anvisPage;
 
 	private HTML emptyView;
 	private HTML emptyTopView;
@@ -165,6 +168,8 @@ public class Controller {
 		nyKodePage = mainView.getNykodePage();
 
 		godkendPage = mainView.getGodkend();
+		
+		anvisPage = mainView.getAnvis();
 
 		//Async
 		asyncEmpty = new AsyncCallback<Void>() {
@@ -274,12 +279,22 @@ public class Controller {
 		godkendPage.getButtonColumn().setFieldUpdater(new FieldUpdater<RejseafregningerDTO, String>() {
 
 			@Override
-			public void update(int index, RejseafregningerDTO object, String value) {
-				RejseafregningerDTO rejse = object;
+			public void update(int index, RejseafregningerDTO rejse, String value) {
 				if (Window.confirm("Vil du godkende rejseafregningen med nummer " + rejse.getNr() + "?")) {
 					rejse.setGodkendt(true);
 					rejseafregningService.updateRejsen(rejse, asyncEmpty);
 					godkendPage.getData().remove(index);
+				}
+			}
+		});
+		anvisPage.getButtonColumn().setFieldUpdater(new FieldUpdater<RejseafregningerDTO, String>() {
+
+			@Override
+			public void update(int index, RejseafregningerDTO rejse, String value) {
+				if (Window.confirm("Vil du anvise rejseafregningen med nummer " + rejse.getNr() + "?")) {
+					rejse.setAnvist(true);
+					rejseafregningService.updateRejsen(rejse, asyncEmpty);
+					anvisPage.getData().remove(index);
 				}
 			}
 		});
@@ -317,7 +332,9 @@ public class Controller {
 		dageInfoPage.getBack().addClickHandler(new backToRejseafregning());
 		afslutningPage.getBackButton().addClickHandler(new backToDageInfo());
 		mainPage.getGodkendelser().addClickHandler(new ShowGodkendHandler());
-		godkendPage.getBackButton().addClickHandler(new CloseGodkendHandler());
+		mainPage.getAnvisning().addClickHandler(new ShowAnvisHandler());
+		godkendPage.getBackButton().addClickHandler(new ShowOpgaveHandler());
+		anvisPage.getBackButton().addClickHandler(new ShowOpgaveHandler());
 
 		//BlurHandler
 		oplysningerPage.getName().addBlurHandler(new UpdateAnsatHandler());
@@ -588,12 +605,25 @@ public class Controller {
 			});
 		}
 	}
-
-	private class CloseGodkendHandler implements ClickHandler {
+	
+	private class ShowAnvisHandler implements ClickHandler {
 
 		@Override
-		public void onClick(ClickEvent event) {	
-			mainView.showContentWidget(mainPage);
+		public void onClick(ClickEvent event) {
+			anvisPage.reset();
+			rejseafregningService.getAnvis(new AsyncCallback<List<RejseafregningerDTO>>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert(caught.getMessage());
+				}
+
+				@Override
+				public void onSuccess(List<RejseafregningerDTO> result) {
+					anvisPage.setData(result);
+					mainView.showContentWidget(anvisPage);
+				}
+			});
 		}
 	}
 

@@ -321,22 +321,79 @@ public class RejseafregningDAO extends RemoteServiceServlet implements Rejseafre
 
 	@Override
 	public List<RejseafregningerDTO> getAnvis() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		anvisStmt = connection.prepareStatement("SELECT * FROM Rejseafregning INNER JOIN Rejse ON Rejseafregning.Nummer=Rejse.Nummer WHERE Rejseafregning.Done = 1 AND Rejseafregning.Godkendt = 1 AND Rejseafregning.Anvist = 0;");
+
+		List<RejseafregningerDTO> list = null;
+		RejseafregningerDTO rejse;
+		ResultSet resultSet = null;
+		List<RejseafregningerDTO> listen = null;
+		int nr = 0;
+
+		try {
+			resultSet = anvisStmt.executeQuery();
+			list = new ArrayList<RejseafregningerDTO>();
+			listen = new ArrayList<RejseafregningerDTO>();
+
+			while(resultSet.next())
+			{
+				rejse = new RejseafregningerDTO(
+						resultSet.getInt("Rejseafregning.Nummer"),
+						resultSet.getInt("Rejseafregning.Starttid"),
+						resultSet.getInt("Rejseafregning.Sluttid"),
+						resultSet.getString("Rejse.Land"),
+						resultSet.getDate("Rejse.DatoFra"),
+						resultSet.getDate("Rejse.DatoTil"),
+						resultSet.getBoolean("Rejseafregning.Done"),
+						resultSet.getBoolean("Rejseafregning.Godkendt"),
+						resultSet.getBoolean("Rejseafregning.Anvist"), 
+						resultSet.getDouble("Rejseafregning.Afregning")
+						);
+
+				if (rejse.getLand() == null) {
+
+				} else {
+					list.add(rejse);
+				}
+			}
+
+			for (RejseafregningerDTO rejsen : list) {
+				if (rejsen.getNr() == nr) {
+					for (RejseafregningerDTO rejs : listen) {
+						if (rejs.getNr() == nr) {
+							rejs.setLand(rejs.getLand() + ", " + rejsen.getLand());
+							if (rejs.getDatoFra().compareTo(rejsen.getDatoFra()) > 0) {
+								rejs.setDatoFra(rejsen.getDatoFra());
+							}
+							if (rejs.getDatoTil().compareTo(rejsen.getDatoTil()) < 0) {
+								rejs.setDatoTil(rejsen.getDatoTil());
+							}
+						}
+					}
+				} else {
+					listen.add(rejsen);
+				}
+
+				nr = rejsen.getNr();
+			}
+
+		} catch (SQLException sqlE) {
+			System.out.println(sqlE.getMessage());
+		}
+
+		return listen;
 	}
 
 	@Override
 	public void updateRejsen(RejseafregningerDTO rejse) throws Exception {
 		updateStmt = connection.prepareStatement("UPDATE Rejseafregning "
-				+ "SET Godkendt = ?, Anvist = ?, Done = ? "
+				+ "SET Godkendt = ?, Anvist = ? "
 				+ "WHERE Nummer = ?;");
 
 		try {
-			updateRejsStmt.setBoolean(1, rejse.isGodkendt());
-			updateRejsStmt.setBoolean(2, rejse.isAnvist());
-			updateRejsStmt.setBoolean(3, rejse.isDone());
-			updateRejsStmt.setInt(4, rejse.getNr());
-			updateRejsStmt.executeUpdate();
+			updateStmt.setBoolean(1, rejse.isGodkendt());
+			updateStmt.setBoolean(2, rejse.isAnvist());
+			updateStmt.setInt(3, rejse.getNr());
+			updateStmt.executeUpdate();
 		} 
 		catch (SQLException sqlE) {
 			System.out.println(sqlE.getMessage());
